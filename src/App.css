@@ -1,38 +1,49 @@
-.App {
+.header{
+  height: 110px;
+  font-family: 'GmarketSansMedium', sans-serif!important;
+}
+.header1{
+  /* display: flex; */
+  height: 60px;
+  background-color: #00AAF0;
+  /* flex-direction: row; */
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 20px;
+}
+.header2{
+  height: 50px;
+  background-color: #2D3040;
+  color: white;
+  align-items: center;
+  padding-left: 30px;
+}
+.header1_1{
+  /* display: flex;
+  flex-grow: 1; */
+}
+.header1_2{
+  display: flex;
+  flex-grow: 3;
+  color: white;
+}
+.logo{
+  color:white;
+  font-size: x-large;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* 폰트 설정 - 본문 : 나눔스퀘어 */
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css); 
+ 
+/* 폰트 설정 - 헤더 & 메뉴 : G마켓 */
+@font-face {
+  font-family: 'GmarketSansMedium';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+* {
+  font-family: 'NanumSquare', sans-serif;
 }
