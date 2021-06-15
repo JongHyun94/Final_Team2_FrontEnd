@@ -10,7 +10,7 @@ function AppRoute() {
         <Switch>
             {/* <Route path="/" exact component={Login}/> */}
             <Route path="/Patient" component={Patient}/>
-            <Route path="/" component={Register}/>
+            <Route path="/Register" component={Register}/>
             <Route path="/Treatment" component={Treatment}/>
             <Route path="/Inspection" component={Inspection}/>
             <Redirect to="/"/>
