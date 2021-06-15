@@ -1,0 +1,37 @@
+/* 좌측 컴포넌트 */
+.left {
+  width: 60%;
+  margin: 1rem;
+  padding: 1rem;
+  margin-left: 2rem;
+  margin-right: 0;
+}
+
+/* 우측 컴포넌트 */
+.right {
+  width: 35%;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+/* title */
+.title {
+  font-size: larger;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+/* PatientList */
+.PatientList {
+  height: 52.5rem;
+}
+
+.PatientList_Table {
+  background-color: lightgray
+}
+
+/* PatientUpdateForm */
+.button1 {
+  /* float:right; */
+  background-color: #00AAF0;
+}
