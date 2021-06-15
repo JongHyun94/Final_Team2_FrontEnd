@@ -1,0 +1,113 @@
+.Inspection_1{
+  height: 48%;
+}
+.Inspection_2{
+  height: 48%;
+}
+
+/* InspectionPatientList */
+.InspectionPatientList{
+  padding-left: 10px;
+}
+.InspectionPatientList_title{
+  font-weight: bold;
+}
+.InspectionPatientList_1{
+  border: 1px solid black;
+  padding-top: 10px;
+}
+.InspectionPatientList_1_1{
+  border: 1px solid black;
+  margin-left: 10px;
+}
+.InspectionPatientList_1_2{
+  width: 10px;
+}
+.InspectionPatientList_1_3_1{
+  margin-right: 6px;
+  color: orange;
+}
+.InspectionPatientList_1_3_2{
+  margin-right: 6px;
+  color: green;
+}
+.InspectionPatientList_1_3_3{
+  margin-right: 6px;
+  color: blue;
+}
+.InspectionPatientList_2_1{
+  text-align: center;
+  font-size: small;
+}
+.InspectionPatientList_2_2{
+  background-color: gray;
+  color: white;
+}
+
+/* InspectionList */
+.InspectionList_title{
+  font-weight: bold;
+}
+.InspectionList_1{
+  border: 1px solid black;
+  padding-top: 10px;
+}
+.InspectionList_1_1{
+  display: flex;
+  margin-left: 10px;
+  justify-content: flex-end;
+}
+.InspectionList_1_2{
+  margin-right: 10px;
+}
+.InspectionList_2_1{
+  text-align: center;
+  font-size: x-small;
+}
+.InspectionList_2_2{
+  background-color: gray;
+  color: white;
+}
+
+/* InspectionImgCreateForm */
+.InspectionImgCreateForm{
+  padding-right: 10px;
+  height: 100%;
+}
+.InspectionImgCreateForm_title{
+  font-weight: bold;
+}
+.InspectionImgCreateForm_1{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  padding: 10px;
+  justify-content: center;
+  height: 90%;
+}
+.InspectionImgCreateForm_1_1{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.InspectionImgCreateForm_1_2{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-right: 10px;
+}
+
+/* InspectionImgForm */
+.InspectionImgForm{
+  padding-right: 10px;
+  height: 100%;
+}
+.InspectionImgForm_title{
+  font-weight: bold;
+}
+.InspectionImgForm_1{
+  border: 1px solid black;
+  padding: 10px;
+  height: 100%;
+}

@@ -13,7 +13,7 @@ function AppRoute() {
             <Route path="/Register" component={Register}/>
             <Route path="/Treatment" component={Treatment}/>
             <Route path="/Inspection" component={Inspection}/>
-            <Redirect to="/"/>
+            <Redirect to="/Register"/>
         </Switch>
     );
 }
