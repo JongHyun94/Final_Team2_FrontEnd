@@ -7,14 +7,14 @@
 .Register_1{
   display: flex;
   flex-direction: row;
-  height: 40%;
   background-color: blue;
+  height: 400px;
 }
 .Register_2{
   display: flex;
   flex-direction: row;
-  height: 50%;
   background-color: blueviolet;
+  height: 420px;
 }
 
 
@@ -23,11 +23,22 @@
 .RegisterList{
   display: flex;
   flex-direction: column;
+  width: 70%;
   background-color: aqua;
+  margin: 1%;
 }
 .RegisterList_header{
   display: flex;
   flex-direction: row;
+}
+.RegisterList_header_content{
+  flex-grow: 9;
+}
+.RegisterList_header_button{
+  flex-grow: 3;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 5px;
 }
 .RegisterList_content{
   display: flex;
@@ -50,16 +61,95 @@
 .RegisterRead{
   display: flex;
   flex-direction: column;
+  width: 30%;
+  height: 100%;
   background-color: brown;
+  margin: 1%;
 }
-
+.RegisterRead_content{
+  display: flex;
+  flex-direction: row;
+}
+.RegisterRead_content_form{
+  width: 85%;
+}
+.RegisterRead_content_list{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5px;
+}
+.RegisterRead_content_list_label{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 38%;
+}
+.RegisterRead_content_list_input{
+  display: flex;
+  width: 62%;
+}
+.RegisterRead_content_button{
+  margin-right: 5%;
+  margin-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 15%;
+}
 /* RegisterPatientList */
 .RegisterPatientList{
   display: flex;
   flex-direction: column;
+  flex-grow: 3;
   background-color: cadetblue;
+  margin: 1%;
 }
 .RegisterPatientList_search{
   display: flex;
   flex-direction: row;
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+.RegisterPatientList_search_input{
+  display: flex;
+  flex-grow: 9;
+}
+.RegisterPatientList_search_input_1{
+  width: 100%;
+}
+.RegisterPatientList_search_button{
+  display: flex;
+  flex-grow: 3;
+  align-items: center;
+  justify-content: center;
+}
+
+/* RegisterCreateForm */
+.RegisterCreateForm{
+  flex-grow: 1;
+  background-color: crimson;
+  margin:1%
+}
+.RegisterCreateForm_cal{
+  display: flex;
+  justify-content: center;
+}
+.RegisterCreateForm_input_select{
+  width: 100%;
+}
+.RegisterCreateForm_input_textarea{
+  width: 100%;
+  resize: none;
+}
+
+/* RegisterTimeTable */
+.RegisterTimeTable{
+  background-color: darksalmon;
+  flex-grow: 8;
+  height: 100%;
+}
+.RegisterTimeTable_content{
+  text-align: center;
+  height: 100%;
 }
