@@ -1,18 +1,29 @@
 import "./Register.css";
+import { AutoSizer, List } from "react-virtualized";
 function RegisterList(props) {
+
+  // const rowRenderer = ({index, key, style}) => {
+  //   return (
+  //     <div key={key} style={style}>
+  //       <BoardListItem board={boards[index]} 
+  //                      changeBoard={changeBoard} 
+  //                      removeBoard={removeBoard}/>        
+  //     </div>
+  //   );
+  // };
   return (
-    <div className="RegisterList">
+    <div className="border">
       {/* 상단 메뉴 이름 + 버튼 */}
       <div className="RegisterList_header">
-        <div>
-          <h3>접수 내역</h3>
+        <div className="RegisterList_header_content">
+          <h4>접수 내역</h4>
         </div>
-        <div>
+        <div className="RegisterList_header_button">
           <button className="btn btn-primary btn-sm">신규 환자 등록</button>
         </div>
       </div>
       {/* 하단 내용 */}
-      <div className="RegisterList_content">
+      <div className="RegisterList_content border">
         {/* 달력 , 상태 , 완료 버튼 */}
         <div className="RegisterList_content_1">
           <div className="RegisterList_content_1_1">
@@ -57,6 +68,20 @@ function RegisterList(props) {
               </tr>
             </thead>
             <tbody>
+              {/* <AutoSizer disableHeight>
+                {({ width, height }) => {
+                  return (
+                    <List width={width} height={300}
+                      list={boards}
+                      rowCount={boards.length}
+                      rowHeight={40}
+                      rowRenderer={rowRenderer}
+                      overscanRowCount={5}
+                    // style={{outline:"none"}}
+                    />
+                  );
+                }}
+              </AutoSizer> */}
               <tr>
                 <td><input type="checkbox"/></td>
                 <td>1</td>
@@ -71,7 +96,7 @@ function RegisterList(props) {
                 <td>접수 상태</td>
               </tr>
               <tr>
-                <td><input type="checkbox"/></td>
+                <td><input type="checkbox" /></td>
                 <td>2</td>
                 <td>11:30</td>
                 <td>33334</td>
@@ -84,7 +109,7 @@ function RegisterList(props) {
                 <td>접수 상태</td>
               </tr>
               <tr>
-                <td><input type="checkbox"/></td>
+                <td><input type="checkbox" /></td>
                 <td>3</td>
                 <td>12:30</td>
                 <td>33335</td>
@@ -97,7 +122,7 @@ function RegisterList(props) {
                 <td>접수 상태</td>
               </tr>
               <tr>
-                <td><input type="checkbox"/></td>
+                <td><input type="checkbox" /></td>
                 <td>4</td>
                 <td>13:30</td>
                 <td>33336</td>
@@ -105,19 +130,6 @@ function RegisterList(props) {
                 <td>960708</td>
                 <td>F</td>
                 <td>나의사</td>
-                <td>접수 메모</td>
-                <td>의사소통 메모</td>
-                <td>접수 상태</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"/></td>
-                <td>5</td>
-                <td>14:30</td>
-                <td>33337</td>
-                <td>박빛나</td>
-                <td>생년월일</td>
-                <td>성별</td>
-                <td>담당의</td>
                 <td>접수 메모</td>
                 <td>의사소통 메모</td>
                 <td>접수 상태</td>
