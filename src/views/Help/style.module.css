@@ -1,0 +1,40 @@
+.Help {
+  padding: 15rem;
+  padding-top: 7rem;
+  color: white;
+}
+
+/* user_guide */
+.user_guide {
+  width: 25rem;
+  height: 32rem;
+  padding: 2rem;
+  background-color: #0070C0;
+  font-size: 2rem;
+}
+
+/* online_center */
+.online_center {
+  width: 25rem;
+  height: 32rem;
+  padding: 2rem;
+  background-color: #0283EE;
+  font-size: 2rem;
+  color: white;
+}
+
+/* as */
+.as {
+  width: 25rem;
+  height: 32rem;
+  padding: 2rem;
+  background-color: #65BFF7;
+  font-size: 2rem;
+}
+
+/* icon */
+.icon {
+  font-size: 9rem;
+  text-align: center;
+  padding-top: 5rem;
+}

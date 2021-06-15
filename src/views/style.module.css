@@ -1,0 +1,66 @@
+.box {
+  margin-top: 7rem;
+}
+
+.Login {
+  width: 30rem;
+  padding: 1rem;
+  margin-right: 10rem;
+  padding-top: 9rem;
+}
+
+.Register_box {
+  background-color: #00AAF0;
+  color: white;
+  width: 20rem;
+  height: 10rem;
+  margin: 1.5rem;
+  margin-left: 3rem;
+  margin-top: 0;
+  padding: 1rem;
+  font-size: 1.6rem;
+}
+
+.Treatment_box {
+  background-color: #3399FF;
+  color: white;
+  width: 20rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  font-size: 1.6rem;
+}
+
+.Inspection_box {
+  background-color: #0283EE;
+  color: white;
+  width: 20rem;
+  height: 10rem;
+  margin: 1.5rem;
+  margin-left: 3rem;
+  margin-top: 0;
+  padding: 1rem;
+  font-size: 1.6rem;
+}
+
+.DataAnalysis_box {
+  background-color: #65BFF7;
+  color: white;
+  width: 20rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  font-size: 1.6rem;
+}
+
+.Help_box {
+  background-color: #0070C0;
+  color: white;
+  width: 26em;
+  height: 10rem;
+  margin-left: 2rem;
+  padding: 1rem;
+  font-size: 1.6rem;
+}
+
+.icon {
+  font-size: 5.2rem;
+}
