@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 function Header(props) {
   return (
     <div className="header">
@@ -13,16 +14,16 @@ function Header(props) {
       </div>
       <div className="header2 row">
         <div className="col-6 row d-flex justify-content-between">
-          <div>환자관리</div>
-          <div>접수</div>
-          <div>진료</div>
-          <div>검사 및 치료</div>
-          <div>데이터분석</div>
+          <div><Link to="/Patient">환자관리</Link></div>
+          <div><Link to="/Register">접수</Link></div>
+          <div><Link to="/Treatment">진료</Link></div>
+          <div><Link to="/Inspection">검사 및 치료</Link></div>
+          <div><Link to="/DataAnalysis">데이터분석</Link></div>
         </div>
         <div className="col-4"></div>
         <div className="col-2 row d-flex justify-content-between">
-          <div>비밀번호 수정</div>
-          <div>도움말</div>
+          <div><Link to="/Auth">비밀번호 수정</Link></div>
+          <div><Link to="/Help">도움말</Link></div>
         </div>
       </div>
     </div>
