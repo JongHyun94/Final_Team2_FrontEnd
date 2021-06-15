@@ -1,0 +1,26 @@
+/* Treatment 컴포넌트 배치 CSS */
+
+.Treatment{
+  display: flex;
+  flex-direction: column;
+
+}
+
+.Treatmentup{
+  display: flex;
+  flex-direction: row;
+  height: 40%;
+  background-color: salmon;
+}
+.Treatmentdown{
+  display: flex;
+  flex-direction: row;
+  height: 50%;
+  background-color: seagreen;
+}
+
+.TreatmentPatientList{
+  display: flex;
+  flex-direction: column;
+  background-color: orange;
+} 
