@@ -6,12 +6,12 @@ function TreatmentHistoryList(props) {
            <div className="TreatmentHistoryList_title">
            진료기록
            </div>
-           <div className="TreatmentHistoryList_border">
+           <div className="TreatmentHistoryList_border border">
 
             <table className="table table-bordered TreatmentHistoryList_table">
                 <thead className="TreatmentHistoryList_table_thead">
                     <tr>
-                        <th>check</th>
+                        <th></th>
                         <th>진료 번호</th>
                         <th>진료 날짜</th>
                         <th>담당의</th>

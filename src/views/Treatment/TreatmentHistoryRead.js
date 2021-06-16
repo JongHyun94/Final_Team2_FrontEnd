@@ -5,23 +5,23 @@ function TreatmentHistoryRead(props) {
            <div className="TreatmentHistoryRead_title">
            진료상세
            </div>
-           <div className="TreatmentHistoryRead_border">
+           <div className="TreatmentHistoryRead_border border">
                 <div className="TreatmentHistoryRead_1">
                 <table className="table table-bordered TreatmentHistoryRead_1_table">
                     <tr>
-                        <th className="text-center" bgcolor="lightgrey" bordercolor="white">Subjective</th>
+                        <th className="text-center border" bgcolor="lightgrey">Subjective</th>
                             <td width="80%">목 아픔</td>
                     </tr>
                     <tr>
-                        <th className="text-center" bgcolor="lightgrey" bordercolor="white">Objective</th>
+                        <th className="text-center border" bgcolor="lightgrey" >Objective</th>
                         <td width="80%">인후염</td>
                     </tr>
                     <tr>
-                        <th className="text-center" bgcolor="lightgrey" bordercolor="white">Assessment</th>
+                        <th className="text-center border" bgcolor="lightgrey">Assessment</th>
                         <td width="80%">온열찜질기 실행</td>
                     </tr>
                     <tr>
-                        <th className="text-center" bgcolor="lightgrey" bordercolor="white">Plan</th>
+                        <th className="text-center border" bgcolor="lightgrey">Plan</th>
                         <td width="80%">다음 내원시 Lab test</td>
                     </tr>
         
@@ -29,12 +29,12 @@ function TreatmentHistoryRead(props) {
             </div>
                 <div className="TreatmentHistoryRead_2">
 
-                <div className="TreatmentCreateForm_2_title">
+                <div className="TreatmentHistoryRead_2_title">
                     검사 기록 상세
                 </div>
-                <table className="table table-bordered TreatmentHistoryRead_2_table">
+                <table className="table table-bordered TreatmentHistoryRead_2_table border">
                     <thead className="TreatmentHistoryRead_2_table_thead">
-                        <tr>
+                        <tr className="TreatmentHistoryRead_2_table_tbody">
                             <th>진단검사명</th>
                             <th>검사 날짜</th>
                             <th>검사자</th>

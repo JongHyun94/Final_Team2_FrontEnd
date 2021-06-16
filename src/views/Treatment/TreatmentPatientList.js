@@ -6,11 +6,11 @@ function TreatmentPatientList(props) {
         접수완료환자
         </div>
 
-        <div className="TreatmentPatientList_border">
+        <div className="TreatmentPatientList_border border">
             
             <div className="TreatmentPatientList_search">
                 <div className="row">
-                    <input type="text"/>
+                    <input type="date"/>
                     <button className="button_team2_fill">이동</button>  
 
                         <div className="row_1">대기:2명</div>
@@ -23,7 +23,7 @@ function TreatmentPatientList(props) {
         <table className="table table-bordered TreatmentPatientList_table">
             <thead className="TreatmentPatientList_table_thead">
                 <tr>
-                    <th>check</th>
+                    <th></th>
                     <th>접수 번호</th>
                     <th>환자명</th>
                     <th>생년월일</th>
@@ -96,24 +96,7 @@ function TreatmentPatientList(props) {
                     <td></td>
                     <td></td>
                 </tr>
-                <tr>   
-                <td><input type="checkbox"/></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>   
-                <td><input type="checkbox"/></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>  
+               
             </tbody>
         </table>
         </div>
