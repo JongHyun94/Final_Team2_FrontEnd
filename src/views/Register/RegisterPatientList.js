@@ -13,7 +13,7 @@ function RegisterPatientList(props) {
             <button className="button_team2_fill">환자 검색</button>
           </div>
         </div>
-        <div className="RegisterPatientList_contnet">
+        <div className="RegisterPatientList_content_table">
           <table className="table">
             <thead>
               <tr>

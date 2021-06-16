@@ -16,6 +16,7 @@
   flex-direction: row;
   /* background-color: blueviolet; */
   height: 50%;
+  margin-top: 10px;
 }
 
 
@@ -47,6 +48,7 @@
 .RegisterList_content{
   display: flex;
   flex-direction: column;
+  height: 100%;
   margin-top: 3px;
   padding: 10px 10px 0 10px;
 }
@@ -105,9 +107,10 @@ thead {
 .RegisterRead_content{
   display: flex;
   flex-direction: row;
+  font-size: small;
 }
 .RegisterRead_content_form{
-  width: 85%;
+  width: 100%;
 }
 .RegisterRead_content_list{
   display: flex;
@@ -125,22 +128,20 @@ thead {
   display: flex;
   width: 62%;
 }
+.RegisterRead_content_list_input>input, select{
+  width: 95%;
+}
 .RegisterRead_content_button{
-  margin-right: 5%;
-  margin-bottom: 5%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-end;
-  align-items: flex-end;
-  width: 15%;
+  padding: 18px;
 }
 /* RegisterPatientList */
 .RegisterPatientList{
   display: flex;
   flex-direction: column;
   flex-grow: 3;
-  /* background-color: cadetblue; */
-  margin: 3px 1% 3px 1%;
 }
 .RegisterPatientList_header{
   font-size: larger;
@@ -149,29 +150,41 @@ thead {
 .RegisterPatientList_search{
   display: flex;
   flex-direction: row;
-  margin-left: 5px;
   margin-bottom: 5px;
+  padding: 10px 0 10px 0;
 }
 .RegisterPatientList_search_input{
   display: flex;
-  flex-grow: 9;
+  flex-grow: 10;
 }
 .RegisterPatientList_search_input_1{
   width: 100%;
 }
 .RegisterPatientList_search_button{
   display: flex;
-  flex-grow: 3;
+  flex-grow: 2;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
 }
-
+.RegisterPatientList_content{
+  text-align: center;
+  padding: 10px;
+  height: 100%;
+}
+.RegisterPatientList_content_table{
+  font-size: small;
+}
 /* RegisterCreateForm */
 .RegisterCreateForm{
   flex-grow: 1;
   /* background-color: crimson; */
-  margin: 3px 1% 3px 1%;
+  margin: 28px 1% 0 1%;
+  font-size: small;
 }
+.RegisterCreateForm_content{
+  padding: 10px;
+}
+
 .RegisterCreateForm_cal{
   display: flex;
   justify-content: center;
