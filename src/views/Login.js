@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import style from "./style.module.css";
 
 function Login(props) {
@@ -22,7 +23,7 @@ function Login(props) {
         </form>
       </div>
       <div>
-        <div className="row">
+        {/* <div className="row">
           <div className={`${style.Register_box} d-flex justify-content-between`}>
             <div>접수</div>
             <div className={style.icon}><i className="bi bi-card-list"></i></div>
@@ -41,10 +42,13 @@ function Login(props) {
             <div>데이터 분석</div>
             <div className={style.icon}><i className="bi bi-file-earmark-bar-graph"></i></div>
           </div>
-        </div>
+        </div> */}
+        <div className={style.img}><img src="/resources/img/login_img.png" alt="" width="664rem"></img></div>
         <div className={`${style.Help_box} d-flex justify-content-between`}>
           <div>도움말</div>
-          <div className={style.icon}><i className="bi bi-question-circle"></i></div>
+          <Link to="/Help" className="link_team2">
+            <div className={style.icon}><i className="bi bi-question-circle"></i></div>
+          </Link>
         </div>
       </div>
     </div>
