@@ -8,7 +8,7 @@ import RegisterUpdateForm from "./RegisterUpdateForm";
 
 function Register(props) {
   return (
-    <div className="Register border">
+    <div className="Register">
     {/* 상단 */}
       <div className="Register_1">
         {/* 접수 내역 */}
