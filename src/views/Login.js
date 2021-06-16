@@ -18,7 +18,7 @@ function Login(props) {
               <input type="password" className="form-control" name=""></input>
             </div>
           </div>
-          <div className="d-flex justify-content-end"><button className="btn btn-sm btn-info button1">LOGIN</button></div>
+          <div className="d-flex justify-content-end"><button className="button_team2_fill">LOGIN</button></div>
         </form>
       </div>
       <div>

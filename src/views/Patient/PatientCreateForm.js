@@ -42,7 +42,7 @@ function PatientCreateForm(props) {
               {/* <button>검색</button> */}
             </div>
           </div>
-          <div className="d-flex justify-content-end"><button className="btn btn-sm btn-info button1">등록</button></div>
+          <div className="d-flex justify-content-end"><button className="button_team2_fill">등록</button></div>
         </form>
       </div>
     </div>

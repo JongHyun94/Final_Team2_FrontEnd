@@ -3,7 +3,7 @@ function RegisterRead(props) {
     <div>
       {/* 상단 메뉴 이름 */}
       <div className="RegisterRead_header">
-        <h4>접수 상세 내역</h4>
+        접수 상세 내역
       </div>
       {/* 하단 내용 */}
       <div className="RegisterRead_content border">
@@ -78,8 +78,8 @@ function RegisterRead(props) {
         </div>
         {/* 수정 취소 버튼 */}
         <div className="RegisterRead_content_button">
-          <button className="btn btn-primary btn-sm mb-2">수정</button>
-          <button className="btn btn-primary btn-sm">취소</button>
+          <button className="button_team2_fill">수정</button>
+          <button className="button_team2_empty">취소</button>
         </div>
       </div>
     </div>

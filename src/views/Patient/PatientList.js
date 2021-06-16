@@ -10,7 +10,7 @@ function PatientList(props) {
           <div className="col-sm-6">
             <input type="text" className="form-control" name="" placeholder="이름/생년월일을 입력하세요"></input>
           </div>
-          <button className="btn btn-sm btn-info ml-3">검색</button>
+          <button className="button_team2_fill">검색</button>
         </div>
         <table className="table table-bordered text-center">
           <thead>

@@ -2,7 +2,7 @@ function RegisterPatientList(props) {
   return (
     <div className="RegisterPatientList">
       <div className="RegisterPatientList_header">
-        <h4>환자 검색</h4>
+        환자 검색
       </div>
       <div className="RegisterPatientList_content border">
         <div className="RegisterPatientList_search mt-1">
@@ -10,7 +10,7 @@ function RegisterPatientList(props) {
             <input type="text" className="RegisterPatientList_search_input_1" placeholder="이름/생년월일을 입력해 주세요." />
           </div>
           <div className="RegisterPatientList_search_button">
-            <button className="btn btn-primary btn-sm">환자 검색</button>
+            <button className="button_team2_fill">환자 검색</button>
           </div>
         </div>
         <div className="RegisterPatientList_contnet">

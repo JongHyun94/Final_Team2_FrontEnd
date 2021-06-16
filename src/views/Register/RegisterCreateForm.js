@@ -42,7 +42,7 @@ function RegisterCreateForm(props) {
       </div>
       {/* 등록 버튼 */}
       <div className="RegisterCreateForm_button">
-        <button className="btn btn-primary btn-sm">등록</button>
+        <button className="button_team2_fill">등록</button>
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ function InspectionImgCreateForm(props) {
           </div>
         </div>
         <div className="InspectionImgCreateForm_1_2">
-          <button className="btn btn-sm btn-primary">등록</button>
+          <button className="button_team2_fill">등록</button>
         </div>
       </div>
       

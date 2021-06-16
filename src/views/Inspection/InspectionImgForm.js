@@ -23,8 +23,8 @@ function InspectionImgForm(props) {
             </div>
           </div>
           <div className="InspectionBarcodePop_1_3">
-            <button className="btn btn-sm btn-primary mr-3">확인</button>
-            <button className="btn btn-sm btn-outline-primary">취소</button>
+            <button className="button_team2_fill">확인</button>
+            <button className="button_team2_empty">취소</button>
           </div>
 
       </div>

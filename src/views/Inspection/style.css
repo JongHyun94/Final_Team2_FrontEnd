@@ -1,16 +1,25 @@
 .Inspection{
   height: 100%;
+  padding: 1%;
+  display: flex;
+  flex-direction: row;
 }
 .Inspection_1{
   height: 100%;
+  width: 25%;
 }
 .Inspection_2{
   height: 100%;
+  width: 60%;
 }
 .Inspection_3{
+  height: 100%;
+  width: 15%;
+}
+.Inspection_3_1{
   height: 48%;
 }
-.Inspection_4{
+.Inspection_3_2{
   height: 48%;
 }
 
@@ -20,11 +29,13 @@
   padding-right: 10px;
 }
 .InspectionPatientList_title{
+  font-size: larger;
   font-weight: bold;
 }
 .InspectionPatientList_1{
   border: 1px solid black;
   padding-top: 10px;
+  padding: 10px;
 }
 .InspectionPatientList_1_1{
   /* border: 1px solid black; */
@@ -35,15 +46,15 @@
 }
 .InspectionPatientList_1_3_1{
   margin-right: 6px;
-  color: orange;
+  color: #009900;
 }
 .InspectionPatientList_1_3_2{
   margin-right: 6px;
-  color: green;
+  color: #ff6600;
 }
 .InspectionPatientList_1_3_3{
   margin-right: 6px;
-  color: blue;
+  color: #00AAF0;
 }
 .InspectionPatientList_2_1{
   text-align: center;
@@ -59,11 +70,13 @@
   padding-right: 10px;
 }
 .InspectionList_title{
+  font-size: larger;
   font-weight: bold;
 }
 .InspectionList_1{
   border: 1px solid black;
   padding-top: 10px;
+  padding: 10px;
 }
 .InspectionList_1_1{
   display: flex;
@@ -75,7 +88,7 @@
 }
 .InspectionList_2_1{
   text-align: center;
-  font-size: x-small;
+  font-size: small;
 }
 .InspectionList_2_2{
   background-color: gray;
@@ -88,6 +101,7 @@
   height: 100%;
 }
 .InspectionImgCreateForm_title{
+  font-size: larger;
   font-weight: bold;
 }
 .InspectionImgCreateForm_1{
@@ -117,6 +131,7 @@
   height: 100%;
 }
 .InspectionImgForm_title{
+  font-size: larger;
   font-weight: bold;
 }
 .InspectionImgForm_1{

@@ -11,7 +11,7 @@ function TreatmentPatientList(props) {
             <div className="TreatmentPatientList_search">
                 <div className="row">
                     <input type="text"/>
-                    <button className="btn btn-primary">이동</button>  
+                    <button className="button_team2_fill">이동</button>  
 
                         <div className="row_1">대기:2명</div>
                         <div className="row_2">완료:3명</div>
