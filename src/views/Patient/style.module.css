@@ -5,6 +5,7 @@
   padding: 1rem;
   margin-left: 2rem;
   margin-right: 0;
+  margin-bottom: 0;
 }
 
 /* 우측 컴포넌트 */
@@ -23,15 +24,14 @@
 
 /* PatientList */
 .PatientList {
-  height: 52.5rem;
+  height: 48rem;
 }
 
 .PatientList_Table {
-  background-color: lightgray
+  background-color: lightgray;
 }
 
 /* PatientUpdateForm */
 .button1 {
-  /* float:right; */
   background-color: #00AAF0;
 }

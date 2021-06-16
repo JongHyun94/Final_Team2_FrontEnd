@@ -1,6 +1,6 @@
 function RegisterTimeTable(props) {
   return (
-    <div className="border">
+    <div>
       <table className="table table-bordered RegisterTimeTable_content">
         <thead>
           <tr>

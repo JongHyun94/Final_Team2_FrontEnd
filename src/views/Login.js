@@ -2,7 +2,7 @@ import style from "./style.module.css";
 
 function Login(props) {
   return (
-    <div className={`${style.box} row d-flex justify-content-center`}>
+    <div className={`${style.box} row d-flex justify-content-center no-gutters`}>
       <div className={`${style.Login}`}>
         <h2 className="text-center mb-5">의료정보 시스템</h2>
         <form>
