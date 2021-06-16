@@ -2,7 +2,7 @@ import style from "./style.module.css";
 
 function Help(props) {
   return (
-    <div className={`${style.Help} row d-flex justify-content-between`}>
+    <div className={`${style.Help} row d-flex justify-content-between no-gutters`}>
       <div className={`${style.user_guide}`}>
         <div>사용자 가이드</div>
         <div className={`${style.icon}`}><i className="bi bi-question-circle"></i></div>        

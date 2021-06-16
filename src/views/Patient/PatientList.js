@@ -19,7 +19,7 @@ function PatientList(props) {
               <th style={{width: "9%"}}>환자 코드</th>
               <th style={{width: "10%"}}>환자명</th>
               <th style={{width: "9%"}}>생년월일</th>
-              <th style={{width: "5%"}}>성별</th>
+              <th style={{width: "6%"}}>성별</th>
               <th style={{width: "15%"}}>전화번호</th>
               <th>주소</th>
               <th style={{width: "13%"}}>등록 날짜</th>

@@ -20,13 +20,13 @@ function PatientCreateForm(props) {
           </div>
           <div className="form-group row">
             <label className="col-sm-3 col-form-label">성별: </label>
-            <div className="col-sm">
+            <div className="col-sm d-flex align-items-center">
               <input type="radio" name="patient_sex" value="M"></input>
-              <label className="ml-3">남</label>
+              <label className="ml-3 mb-0">남</label>
             </div>
-            <div className="col-sm">
+            <div className="col-sm d-flex align-items-center">
               <input type="radio" name="patient_sex" value="F"></input>
-              <label className="ml-3">여</label>
+              <label className="ml-3 mb-0">여</label>
             </div>
           </div>
           <div className="form-group row">

@@ -5,7 +5,7 @@ import style from "./style.module.css";
 
 function Patient(props) {
   return (
-    <div className="row">
+    <div className="row no-gutters">
       {/* 좌측 */}
       <div className={style.left}>
         {/* 환자 목록 */}
