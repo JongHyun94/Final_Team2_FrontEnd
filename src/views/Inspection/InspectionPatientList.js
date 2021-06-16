@@ -6,32 +6,32 @@ function InspectionPatientList(props) {
       <div className="InspectionPatientList_title">
         환자검색
       </div>
-      <div className="InspectionPatientList_1">
-        <div className="row mb-2 pl-2">
-        <div className="col-4 InspectionPatientList_1_1">
-          <input type="date"/>
-        </div>
-        <div className="col-3 InspectionPatientList_1_2">
-          <button className="button_team2_fill">이동</button>
-        </div>
-        <div className="row">
-          <div className="InspectionPatientList_1_3_1">대기:1명</div>
-          <div className="InspectionPatientList_1_3_2">검사중:1명</div>
-          <div className="InspectionPatientList_1_3_3">완료:3명</div>
-        </div>
+      <div className="InspectionPatientList_1 border">
+        <div className="InspectionPatientList_1_1 mb-2">
+          <div className="col-4 p-0">
+            <input type="date"/>
+          </div>
+          <div className="col-3 InspectionPatientList_1_2 p-0">
+            <button className="button_team2_fill">이동</button>
+          </div>
+          <div className="row p-0">
+            <div className="InspectionPatientList_1_3_1">대기:1명</div>
+            <div className="InspectionPatientList_1_3_2">검사:1명</div>
+            <div className="InspectionPatientList_1_3_3">완료:3명</div>
+          </div>
         </div>
         
         <div>
-          <table className="table table-bordered InspectionPatientList_2_1">
+          <table className="table InspectionPatientList_2_1">
             <thead className="InspectionPatientList_2_2">
-              <td></td>
-              <td>진료 번호</td>
-              <td>환자명</td>
-              <td>생년월일</td>
-              <td>성별</td>
-              <td>검사실</td>
-              <td>상태</td>
-              <td>의사소통메모</td>
+              <th></th>
+              <th>진료 번호</th>
+              <th>환자명</th>
+              <th>생년월일</th>
+              <th>성별</th>
+              <th>검사실</th>
+              <th>상태</th>
+              <th>의사소통메모</th>
             </thead>
             <tbody>
               <tr>

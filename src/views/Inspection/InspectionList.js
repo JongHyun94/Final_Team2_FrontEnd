@@ -4,7 +4,7 @@ function InspectionList(props) {
       <div className="InspectionList_title">
         검사 상세 내역
       </div>
-      <div className="InspectionList_1">
+      <div className="InspectionList_1 border">
         <div className="InspectionList_1_1">
           <button className="button_team2_fill InspectionList_1_2">바코드 출력</button>
           <button className="button_team2_empty InspectionList_1_2">접수 취소</button>
@@ -13,20 +13,20 @@ function InspectionList(props) {
         </div>
 
         <div>
-        <table className="table table-bordered InspectionList_2_1">
+        <table className="table InspectionList_2_1">
           <thead className="InspectionList_2_2">
-            <td style={{width: "1%"}}></td>
-            <td style={{width: "9%"}}>진단검사명</td>
-            <td style={{width: "5%"}}>검체명</td>
-            <td style={{width: "10%"}}>검사명</td>
-            <td style={{width: "8%"}}>결과</td>
-            <td>참고치</td>
-            <td style={{width: "9%"}}>검사 시간</td>
-            <td style={{width: "7%"}}>용기</td>
-            <td style={{width: "7%"}}>담당의</td>
-            <td style={{width: "7%"}}>검사자</td>
-            <td style={{width: "8%"}}>검사실</td>
-            <td style={{width: "7%"}}>상태</td>
+            <th style={{width: "1%"}}></th>
+            <th style={{width: "9%"}}>진단검사명</th>
+            <th style={{width: "5%"}}>검체명</th>
+            <th style={{width: "20%"}}>검사명</th>
+            <th style={{width: "8%"}}>결과</th>
+            <th>참고치</th>
+            <th style={{width: "9%"}}>검사 시간</th>
+            <th style={{width: "7%"}}>용기</th>
+            <th style={{width: "7%"}}>담당의</th>
+            <th style={{width: "7%"}}>검사자</th>
+            <th style={{width: "8%"}}>검사실</th>
+            <th style={{width: "7%"}}>상태</th>
           </thead>
           <tbody>
             <tr>
