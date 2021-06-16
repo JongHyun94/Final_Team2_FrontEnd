@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 function Header(props) {
   return (
     <div className="header">
-      <div className="header1 row">
+      <div className="header1 row no-gutters">
         <div className="header1_1 col-10">
           <span className="logo">TEAM2</span>
         </div>
@@ -12,7 +12,7 @@ function Header(props) {
           <div><button className="btn btn-sm btn-info">LOGOUT</button></div>
         </div>
       </div>
-      <div className="header2 row">
+      <div className="header2 row no-gutters">
         <div className="col-6 row d-flex justify-content-between">
           <div><Link to="/Patient">환자관리</Link></div>
           <div><Link to="/Register">접수</Link></div>

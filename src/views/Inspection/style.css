@@ -1,13 +1,24 @@
+.Inspection{
+  height: 100%;
+  background-color: aqua;
+}
 .Inspection_1{
-  height: 48%;
+  height: 100%;
 }
 .Inspection_2{
+  height: 100%;
+}
+.Inspection_3{
+  height: 48%;
+}
+.Inspection_4{
   height: 48%;
 }
 
 /* InspectionPatientList */
 .InspectionPatientList{
   padding-left: 10px;
+  padding-right: 10px;
 }
 .InspectionPatientList_title{
   font-weight: bold;
@@ -17,8 +28,8 @@
   padding-top: 10px;
 }
 .InspectionPatientList_1_1{
-  border: 1px solid black;
-  margin-left: 10px;
+  /* border: 1px solid black; */
+  /* margin-left: 10px; */
 }
 .InspectionPatientList_1_2{
   width: 10px;
@@ -45,6 +56,9 @@
 }
 
 /* InspectionList */
+.InspectionList{
+  padding-right: 10px;
+}
 .InspectionList_title{
   font-weight: bold;
 }
@@ -110,4 +124,31 @@
   border: 1px solid black;
   padding: 10px;
   height: 100%;
+}
+
+/* InspectionBarcodePop */
+.InspectionBarcodePop_1{
+  border: 1px solid black;
+  padding: 10px;
+  height: 100%;
+}
+.InspectionBarcodePop_1_1{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  height: 40%;
+  margin-bottom: 10px;
+}
+.InspectionBarcodePop_1_2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  margin-bottom: 10px;
+}
+.InspectionBarcodePop_1_3{
+  display: flex;
+  justify-content: center;
 }
