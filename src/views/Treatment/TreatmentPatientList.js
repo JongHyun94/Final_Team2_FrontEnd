@@ -1,7 +1,7 @@
 function TreatmentPatientList(props) {
     return(
 
-       <div className="TreatmentPatientList">
+       <div>
         <div className="TreatmentPatientList_title">
         접수완료환자
         </div>

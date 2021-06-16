@@ -1,7 +1,7 @@
 function TreatmentHistoryRead(props) {
     return(
 
-       <div className="TreatmentHistoryRead">
+       <div>
            <div className="TreatmentHistoryRead_title">
            진료상세
            </div>

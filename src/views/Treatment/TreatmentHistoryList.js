@@ -2,7 +2,7 @@
 function TreatmentHistoryList(props) {
     return(
 
-       <div className="TreatmentHistoryList">
+       <div>
            <div className="TreatmentHistoryList_title">
            진료기록
            </div>
