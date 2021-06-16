@@ -6,27 +6,27 @@ function InspectionList(props) {
       </div>
       <div className="InspectionList_1">
         <div className="InspectionList_1_1">
-          <button className="btn btn-sm btn-primary InspectionList_1_2">바코드 출력</button>
-          <button className="btn btn-sm btn-outline-primary InspectionList_1_2">접수 취소</button>
-          <button className="btn btn-sm btn-primary InspectionList_1_2">엑셀 저장</button>
-          <button className="btn btn-sm btn-outline-primary InspectionList_1_2">검사 완료</button>
+          <button className="button_team2_fill InspectionList_1_2">바코드 출력</button>
+          <button className="button_team2_empty InspectionList_1_2">접수 취소</button>
+          <button className="button_team2_fill InspectionList_1_2">엑셀 저장</button>
+          <button className="button_team2_empty InspectionList_1_2">검사 완료</button>
         </div>
 
         <div>
         <table className="table table-bordered InspectionList_2_1">
           <thead className="InspectionList_2_2">
             <td style={{width: "1%"}}></td>
-            <td style={{width: "5%"}}>진단검사명</td>
+            <td style={{width: "9%"}}>진단검사명</td>
             <td style={{width: "5%"}}>검체명</td>
             <td style={{width: "10%"}}>검사명</td>
             <td style={{width: "8%"}}>결과</td>
             <td>참고치</td>
-            <td style={{width: "3%"}}>검사 시간</td>
-            <td style={{width: "3%"}}>검사 용기</td>
-            <td style={{width: "10%"}}>담당의</td>
-            <td style={{width: "10%"}}>검사자명</td>
-            <td style={{width: "12%"}}>검사실</td>
-            <td style={{width: "10%"}}>상태</td>
+            <td style={{width: "9%"}}>검사 시간</td>
+            <td style={{width: "7%"}}>용기</td>
+            <td style={{width: "7%"}}>담당의</td>
+            <td style={{width: "7%"}}>검사자</td>
+            <td style={{width: "8%"}}>검사실</td>
+            <td style={{width: "7%"}}>상태</td>
           </thead>
           <tbody>
             <tr>
@@ -35,7 +35,7 @@ function InspectionList(props) {
               <td>EDTA BLood</td>
               <td>백혈구 백분율</td>
               <td></td>
-              <td>4000~1000</td>
+              <td>4000~10000/µL</td>
               <td>16:00</td>
               <td>EDTA</td>
               <td>김더존</td>
@@ -47,9 +47,9 @@ function InspectionList(props) {
               <td><input type="checkbox"/></td>
               <td>Whole Blood</td>
               <td>EDTA BLood</td>
-              <td>백혈구 백분율</td>
+              <td>리튬 치료적 약물농도 감시(Lithium therapeutic drug monitoring)</td>
               <td></td>
-              <td>4000~1000</td>
+              <td>남성 10~71U/L/<br></br>여성 6~42U/L</td>
               <td>16:00</td>
               <td>EDTA</td>
               <td>김더존</td>

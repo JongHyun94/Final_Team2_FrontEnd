@@ -90,7 +90,7 @@ function TreatmentHistoryRead(props) {
                             <td>박사능</td>
                             <td>X-Ray 흉부</td>
                             <td></td>
-                            <td> <button className="btn btn-primary btn-sm">보기</button></td>
+                            <td> <button className="button_team2_empty">보기</button></td>
                         </tr>
                         
                     </tbody>

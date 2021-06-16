@@ -16,10 +16,10 @@ function RegisterList(props) {
       {/* 상단 메뉴 이름 + 버튼 */}
       <div className="RegisterList_header">
         <div className="RegisterList_header_content">
-          <h4>접수 내역</h4>
+          접수 내역
         </div>
         <div className="RegisterList_header_button">
-          <button className="btn btn-primary btn-sm">신규 환자 등록</button>
+          <button className="button_team2_fill">신규 환자 등록</button>
         </div>
       </div>
       {/* 하단 내용 */}
@@ -31,7 +31,7 @@ function RegisterList(props) {
               <input type="date" />
             </div>
             <div>
-              <button className="btn btn-primary btn-sm">이동</button>
+              <button className="button_team2_fill">이동</button>
             </div>
           </div>
           <div className="RegisterList_content_1_2">
@@ -46,7 +46,7 @@ function RegisterList(props) {
             </div>
           </div>
           <div className="RegisterList_content_1_3">
-            <button className="btn btn-primary btn-sm">접수 완료</button>
+            <button className="button_team2_fill">접수 완료</button>
           </div>
         </div>
         {/* 접수 내역 테이블 */}

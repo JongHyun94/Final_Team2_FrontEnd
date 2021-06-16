@@ -31,7 +31,7 @@ function Auth(props) {
               <input type="text" className="form-control" name="" value=""></input>
             </div>
           </div>
-          <div className="d-flex justify-content-center"><button className={`btn btn-sm btn-info`}>수정</button></div>
+          <div className="d-flex justify-content-center"><button className={`button_team2_fill`}>수정</button></div>
         </form>
       </div>
     </div>

@@ -12,7 +12,7 @@ function InspectionPatientList(props) {
           <input type="date"/>
         </div>
         <div className="col-3 InspectionPatientList_1_2">
-          <button className="btn btn-sm btn-outline-primary">이동</button>
+          <button className="button_team2_fill">이동</button>
         </div>
         <div className="row">
           <div className="InspectionPatientList_1_3_1">대기:1명</div>

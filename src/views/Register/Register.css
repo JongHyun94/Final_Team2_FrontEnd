@@ -3,6 +3,7 @@
 .Register{
   display: flex;
   flex-direction: column;
+  margin: 1% 1% 1% 1%;
 }
 .Register_1{
   display: flex;
@@ -25,7 +26,7 @@
   flex-direction: column;
   width: 70%;
   /* background-color: aqua; */
-  margin: 3px 1% 1% 1%;
+  /* margin: 1% 1% 1% 1%; */
   height: 100%;
 }
 .RegisterList_header{
@@ -34,6 +35,8 @@
 }
 .RegisterList_header_content{
   flex-grow: 9;
+  font-size: larger;
+  font-weight: bold;
 }
 .RegisterList_header_button{
   flex-grow: 3;
@@ -45,6 +48,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 3px;
+  padding: 10px 10px 0 10px;
 }
 .RegisterList_content_1{
   display: flex;
@@ -63,13 +67,13 @@
   justify-content: space-between;
 }
 .RegisterList_content_1_2_ready{
-  color:brown;
+  color:#009900;
 }
 .RegisterList_content_1_2_finish{
-  color:chartreuse;
+  color:#00AAF0;
 }
 .RegisterList_content_1_2_cancel{
-  color:darkblue;
+  color:#ff6600;
 }
 .RegisterList_content_1_3{
   display: flex;
@@ -79,8 +83,12 @@
 }
 .RegisterList_content_2{
   margin-top: 5px;
+  text-align: center;
+  font-size: small;
 }
-
+thead {
+  background-color: lightgray;
+}
 /* RegisterRead */
 .RegisterRead{
   display: flex;
@@ -89,6 +97,10 @@
   height: 100% !important;
   /* background-color: brown; */
   margin: 3px 1% 1% 1%;
+}
+.RegisterRead_header{
+  font-size: larger;
+  font-weight: bold;
 }
 .RegisterRead_content{
   display: flex;
@@ -129,6 +141,10 @@
   flex-grow: 3;
   /* background-color: cadetblue; */
   margin: 3px 1% 3px 1%;
+}
+.RegisterPatientList_header{
+  font-size: larger;
+  font-weight: bold;
 }
 .RegisterPatientList_search{
   display: flex;

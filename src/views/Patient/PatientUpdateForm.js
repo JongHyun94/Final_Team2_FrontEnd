@@ -38,7 +38,7 @@ function PatientUpdateForm(props) {
             <label className="col-sm-3 col-form-label pl-3 p-0">등록 날짜: </label>
             <div className="col-sm d-flex align-items-center">2021-06-01</div>
           </div>
-          <div className="d-flex justify-content-end"><button className={`btn btn-sm btn-info`}>수정</button></div>
+          <div className="d-flex justify-content-end"><button className="button_team2_fill">수정</button></div>
         </form>
       </div>
     </div>
