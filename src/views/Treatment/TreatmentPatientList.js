@@ -2,28 +2,27 @@ function TreatmentPatientList(props) {
     return(
 
        <div className="TreatmentPatientList">
-           <div>
-           접수완료환자
-           </div>
-        <div className="row">
-            <div className="col-2">
-                <input type="text"/>
-                <button className="btn btn-primary">이동</button>
-            </div>
-    
-            <div className="row_1">
-                대기:2명
-            </div>
-            <div className="row_2">
-                완료:3명
-            </div>
- 
-          
+        <div className="TreatmentPatientList_title">
+        접수완료환자
         </div>
+
+        <div className="TreatmentPatientList_border">
+            
+            <div className="TreatmentPatientList_search">
+                <div className="row">
+                    <input type="text"/>
+                    <button className="btn btn-primary">이동</button>  
+
+                        <div className="row_1">대기:2명</div>
+                        <div className="row_2">완료:3명</div>
+                
+                </div>
+            </div>
+      
         
-        <table border="1" width="500" height="200" >
-            <thead>
-                <tr className="text-center" bgcolor="lightgrey" bordercolor="white">
+        <table className="table table-bordered TreatmentPatientList_table">
+            <thead className="TreatmentPatientList_table_thead">
+                <tr>
                     <th>check</th>
                     <th>접수 번호</th>
                     <th>환자명</th>
@@ -117,7 +116,7 @@ function TreatmentPatientList(props) {
                 </tr>  
             </tbody>
         </table>
-
+        </div>
         </div> 
     );
 }
