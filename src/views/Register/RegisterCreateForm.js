@@ -5,7 +5,7 @@ function RegisterCreateForm(props) {
 
   const [startDate, setStartDate] = useState(new Date());
   return (
-    <div>
+    <div className="border p-1">
       {/* 달력 */}
       <div className="RegisterCreateForm_cal">
         <DatePicker

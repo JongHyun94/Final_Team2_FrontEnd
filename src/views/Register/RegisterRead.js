@@ -1,12 +1,12 @@
 function RegisterRead(props) {
   return (
-    <div className="border">
+    <div>
       {/* 상단 메뉴 이름 */}
       <div className="RegisterRead_header">
         <h4>접수 상세 내역</h4>
       </div>
       {/* 하단 내용 */}
-      <div className="RegisterRead_content">
+      <div className="RegisterRead_content border">
         {/* 접수 상세 내역 내용 */}
         <div className="RegisterRead_content_form">
           <form>
