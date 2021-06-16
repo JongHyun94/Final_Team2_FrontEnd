@@ -7,14 +7,14 @@
 .Register_1{
   display: flex;
   flex-direction: row;
-  background-color: blue;
-  height: 400px;
+  /* background-color: blue; */
+  height: 40%;
 }
 .Register_2{
   display: flex;
   flex-direction: row;
-  background-color: blueviolet;
-  height: 420px;
+  /* background-color: blueviolet; */
+  height: 50%;
 }
 
 
@@ -24,8 +24,9 @@
   display: flex;
   flex-direction: column;
   width: 70%;
-  background-color: aqua;
-  margin: 1%;
+  /* background-color: aqua; */
+  margin: 3px 1% 1% 1%;
+  height: 100%;
 }
 .RegisterList_header{
   display: flex;
@@ -43,18 +44,41 @@
 .RegisterList_content{
   display: flex;
   flex-direction: column;
+  margin-top: 3px;
 }
 .RegisterList_content_1{
   display: flex;
   flex-direction: row;
+  margin: 3px;
 }
 .RegisterList_content_1_1{
   display: flex;
   flex-direction: row;
+  flex-grow: 4;
 }
 .RegisterList_content_1_2{
   display: flex;
   flex-direction: row;
+  flex-grow: 4;
+  justify-content: space-between;
+}
+.RegisterList_content_1_2_ready{
+  color:brown;
+}
+.RegisterList_content_1_2_finish{
+  color:chartreuse;
+}
+.RegisterList_content_1_2_cancel{
+  color:darkblue;
+}
+.RegisterList_content_1_3{
+  display: flex;
+  flex-direction: row;
+  flex-grow: 4;
+  justify-content: flex-end;
+}
+.RegisterList_content_2{
+  margin-top: 5px;
 }
 
 /* RegisterRead */
@@ -62,9 +86,9 @@
   display: flex;
   flex-direction: column;
   width: 30%;
-  height: 100%;
-  background-color: brown;
-  margin: 1%;
+  height: 100% !important;
+  /* background-color: brown; */
+  margin: 3px 1% 1% 1%;
 }
 .RegisterRead_content{
   display: flex;
@@ -76,7 +100,8 @@
 .RegisterRead_content_list{
   display: flex;
   flex-direction: row;
-  margin-bottom: 5px;
+  margin-top: 3px;
+  margin-bottom: 3px;
 }
 .RegisterRead_content_list_label{
   display: flex;
@@ -102,8 +127,8 @@
   display: flex;
   flex-direction: column;
   flex-grow: 3;
-  background-color: cadetblue;
-  margin: 1%;
+  /* background-color: cadetblue; */
+  margin: 3px 1% 3px 1%;
 }
 .RegisterPatientList_search{
   display: flex;
@@ -128,12 +153,14 @@
 /* RegisterCreateForm */
 .RegisterCreateForm{
   flex-grow: 1;
-  background-color: crimson;
-  margin:1%
+  /* background-color: crimson; */
+  margin: 3px 1% 3px 1%;
 }
 .RegisterCreateForm_cal{
   display: flex;
   justify-content: center;
+}
+.RegisterCreateForm_input{
 }
 .RegisterCreateForm_input_select{
   width: 100%;
@@ -142,14 +169,22 @@
   width: 100%;
   resize: none;
 }
+.RegisterCreateForm_button{
+  display: flex;
+  justify-content: flex-end;
+}
 
 /* RegisterTimeTable */
 .RegisterTimeTable{
-  background-color: darksalmon;
+  /* background-color: darksalmon; */
   flex-grow: 8;
+  margin: 3px 1% 3px 1%;
   height: 100%;
 }
 .RegisterTimeTable_content{
   text-align: center;
   height: 100%;
+}
+.RegisterTimeTable_content td, th {
+  padding: 7.5px!important;
 }

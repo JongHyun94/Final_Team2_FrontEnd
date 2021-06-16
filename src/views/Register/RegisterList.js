@@ -12,7 +12,7 @@ function RegisterList(props) {
   //   );
   // };
   return (
-    <div className="border">
+    <div>
       {/* 상단 메뉴 이름 + 버튼 */}
       <div className="RegisterList_header">
         <div className="RegisterList_header_content">
@@ -35,13 +35,13 @@ function RegisterList(props) {
             </div>
           </div>
           <div className="RegisterList_content_1_2">
-            <div>
+            <div className="RegisterList_content_1_2_ready">
               대기: 2명
             </div>
-            <div>
+            <div className="RegisterList_content_1_2_finish">
               완료: 1명
             </div>
-            <div>
+            <div className="RegisterList_content_1_2_cancel">
               취소: 1명
             </div>
           </div>
