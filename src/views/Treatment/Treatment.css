@@ -1,14 +1,14 @@
 /* 화면레이아웃 */
-.Treatment{
+.Treatment {
   display: flex;
   flex-direction: column;
 }
-.Treatmentup{
+.Treatmentup {
   display: flex;
   flex-direction: row;
   height: 50%;
 }
-.Treatmentdown{
+.Treatmentdown {
   display: flex;
   flex-direction: row;
   height: 50%;
@@ -16,176 +16,180 @@
 
 /* TreatmentPatientList */
 
-.TreatmentPatientList{
+.TreatmentPatientList {
   display: flex;
   flex-direction: column;
-  width: 35%;
+  width: 33%;
+}
 
-} 
-
-.TreatmentPatientList_title{
+.TreatmentPatientList_title {
   font-weight: bold;
   font-size: larger;
   margin-left: 20px;
 }
 
-.TreatmentPatientList_border{
+.TreatmentPatientList_border {
   border: 1px solid black;
   padding-top: 5%;
-  width: 760px;
   margin-left: 20px;
 }
 
-.TreatmentPatientList_search{
+.TreatmentPatientList_search {
   margin-left: 5%;
   margin-bottom: 1%;
 }
 
-.row_1{
+.row_1 {
   color: orange;
   margin-left: 40%;
 }
 
-.row_2{
+.row_2 {
   color: blue;
   margin-left: 3%;
 }
 
-.TreatmentPatientList_table{
+.TreatmentPatientList_table {
   text-align: center;
-
-  width: 750px;
 }
 
-.TreatmentPatientList_table_thead{
+.TreatmentPatientList_table_thead {
   background-color: lightgray;
 }
 
 /* TreatmentCreateForm*/
-.TreatmentCreateForm{
+.TreatmentCreateForm {
   margin-left: 20px;
-  width: 100%;
-} 
-.TreatmentCreateForm_title{
+  width: 65%;
+}
+.TreatmentCreateForm_title {
   font-weight: bold;
   font-size: larger;
   margin-left: 20px;
 }
-.TreatmentCreateForm_border{
+.TreatmentCreateForm_border {
   display: flex;
   flex-direction: row;
   border: 1px solid black;
   margin-top: 10px;
-  width: 1400px;
-  height: 500px;
+
   margin-left: 20px;
 }
 
-.TreatmentCreateForm_1{
+.TreatmentCreateForm_1 {
   width: 30%;
 }
-.TreatmentCreateForm_1_title{
+.TreatmentCreateForm_1_title {
   margin-top: 10px;
   background-color: lightgray;
 }
-.TreatmentCreateForm_1_content{
+.TreatmentCreateForm_1_content {
   margin-left: 10px;
 }
-.TreatmentCreateForm_s{
+.TreatmentCreateForm_s {
   width: 100%;
 }
-.TreatmentCreateForm_o{
+.TreatmentCreateForm_o {
   width: 100%;
 }
-.TreatmentCreateForm_a{
+.TreatmentCreateForm_a {
   width: 100%;
 }
-.TreatmentCreateForm_p{
+.TreatmentCreateForm_p {
   width: 100%;
 }
-
-.TreatmentCreateForm_2_content{
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-}
-
-.reatmentCreateForm_checkbox{
+.TreatmentCreateForm_2 {
   display: flex;
   flex-direction: column;
+  width: 40%;
+}
+.TreatmentCreateForm_2_content {
+  display: flex;
+  flex-direction: row;
+}
+.reatmentCreateForm_select {
+  flex-grow: 4;
+}
+.reatmentCreateForm_checkbox {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 8;
   border: 1px solid black;
+}
+.TreatmentCreateForm_3 {
+  width: 30%;
+}
+.TreatmentCreateForm_3_content {
+  resize: none;
 }
 
 /* TreatmentHistoryList */
-.TreatmentHistoryList{
+.TreatmentHistoryList {
   margin-top: 30px;
   display: flex;
   flex-direction: column;
   width: 35%;
-} 
+}
 
-.TreatmentHistoryList_title{
+.TreatmentHistoryList_title {
   font-weight: bold;
   font-size: larger;
   margin-left: 20px;
   margin-top: 10px;
 }
 
-.TreatmentHistoryList_border{
-
+.TreatmentHistoryList_border {
   padding-top: 5%;
   width: 770px;
 
   margin-left: 20px;
 }
-.TreatmentHistoryList_table{
+.TreatmentHistoryList_table {
   text-align: center;
   height: 100%;
   width: 70px;
 }
 
-.TreatmentHistoryList_table_thead{
+.TreatmentHistoryList_table_thead {
   background-color: lightgray;
 }
 
 /* TreatmentHistoryRead */
-.TreatmentHistoryRead{
+.TreatmentHistoryRead {
   display: flex;
   flex-direction: column;
   width: 95%;
   margin-left: 25px;
-} 
+}
 
-.TreatmentHistoryRead_title{
+.TreatmentHistoryRead_title {
   font-weight: bold;
   font-size: larger;
   margin-left: 20px;
   margin-top: 20px;
 }
-.TreatmentHistoryRead_border{
+.TreatmentHistoryRead_border {
   border: 1px solid black;
   padding-top: 5%;
   width: 1300px;
   margin-left: 20px;
 }
-.TreatmentHistoryRead_1_table{
+.TreatmentHistoryRead_1_table {
   text-align: center;
   height: 100%;
   width: 750px;
 }
-.TreatmentHistoryRead_2_title{
+.TreatmentHistoryRead_2_title {
   font-weight: bold;
   font-size: larger;
   margin-left: 20px;
   margin-top: 20px;
 }
-.TreatmentHistoryRead_2_table{
+.TreatmentHistoryRead_2_table {
   text-align: center;
   height: 100%;
   width: 750px;
 }
-.TreatmentHistoryRead_2_table_thead{
+.TreatmentHistoryRead_2_table_thead {
   background-color: lightgray;
 }
-
-
