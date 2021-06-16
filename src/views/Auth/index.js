@@ -5,33 +5,33 @@ function Auth(props) {
     <div className={`d-flex justify-content-center`}>
       <div className={`${style.Auth}`}>
         <form>
-          <div className="form-group row">
+          <div className="form-group row mb-5">
             <label className="col-sm-4 col-form-label">회원 코드: </label>
             <div className="col-sm d-flex align-items-center">D13801001001</div>
           </div>
-          <div className="form-group row">
+          <div className="form-group row mb-5">
             <label className="col-sm-4 col-form-label">회원 이름: </label>
             <div className="col-sm d-flex align-items-center">김더존</div>
           </div>
-          <div className="form-group row">
+          <div className="form-group row mb-5">
             <label className="col-sm-4 col-form-label">기존 비밀번호: </label>
             <div className="col-sm">
               <input type="text" className="form-control" name="" value=""></input>
             </div>
           </div>
-          <div className="form-group row">
+          <div className="form-group row mb-5">
             <label className="col-sm-4 col-form-label">새로운 비밀번호: </label>
             <div className="col-sm">
               <input type="text" className="form-control" name="" value=""></input>
             </div>
           </div>
-          <div className="form-group row">
+          <div className="row">
             <label className="col-sm-4 col-form-label">비밀번호 재입력: </label>
             <div className="col-sm">
               <input type="text" className="form-control" name="" value=""></input>
             </div>
           </div>
-          <div className="d-flex justify-content-center"><button className={`button_team2_fill`}>수정</button></div>
+          <div className="d-flex justify-content-center mt-5"><button className={`button_team2_fill`}>수정</button></div>
         </form>
       </div>
     </div>

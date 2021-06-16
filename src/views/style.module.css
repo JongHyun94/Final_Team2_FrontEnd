@@ -9,7 +9,27 @@
   padding-top: 9rem;
 }
 
-.Register_box {
+.img {
+  width: 100%;
+  margin-left: 2rem;
+  padding-bottom: 1rem;
+}
+
+.icon {
+  font-size: 5.2rem;
+}
+
+.Help_box {
+  background-color: #0070C0;
+  color: white;
+  width: 26em;
+  height: 10rem;
+  margin-left: 2rem;
+  padding: 1rem;
+  font-size: 1.6rem;
+}
+
+/* .Register_box {
   background-color: #00AAF0;
   color: white;
   width: 20rem;
@@ -49,18 +69,4 @@
   margin-bottom: 1.5rem;
   padding: 1rem;
   font-size: 1.6rem;
-}
-
-.Help_box {
-  background-color: #0070C0;
-  color: white;
-  width: 26em;
-  height: 10rem;
-  margin-left: 2rem;
-  padding: 1rem;
-  font-size: 1.6rem;
-}
-
-.icon {
-  font-size: 5.2rem;
-}
+} */

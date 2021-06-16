@@ -4,13 +4,13 @@ function InspectionImgForm(props) {
       <div className="InspectionImgForm_title">
         검사 사진
       </div>
-      <div className="InspectionImgForm_1">
+      <div className="InspectionImgForm_1 border">
 
           {/* InspectionBarcodePop */}
-          <div className="InspectionBarcodePop_1_1">
+          <div className="InspectionBarcodePop_1_1 border">
             바코드 이미지
           </div>
-          <div className="InspectionBarcodePop_1_2">
+          <div className="InspectionBarcodePop_1_2 border">
             <div>
               <div className="mb-3">검사명 :</div>
               <div className="mb-3">피검사자 :</div>

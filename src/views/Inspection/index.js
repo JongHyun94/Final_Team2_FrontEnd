@@ -7,11 +7,11 @@ import InspectionImgCreateForm from "./InspectionImgCreateForm";
 function Inspection(props) {
   return (
       <div className="Inspection">
-        <div className="Inspection_1 ">
+        <div className="Inspection_1">
           {/* 환자검색 */}
           <InspectionPatientList/>
         </div>
-        <div className="Inspection_2 ">
+        <div className="Inspection_2">
           {/* 검사상세내역 */}
           <InspectionList/>
         </div>
