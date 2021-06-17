@@ -67,7 +67,7 @@ function RegisterCreateForm(props) {
                 {/* 임의의 데이터 넣어서 출력 해보기 */}
                 {doctors.map(doctor => {
                   return (
-                    <option value={doctor.Doctor_Name}>{doctor.Doctor_Name}</option>
+                    <option key={doctor.Doctor_Name} value={doctor.Doctor_Name}>{doctor.Doctor_Name}</option>
                   );
                 })}
               </select>

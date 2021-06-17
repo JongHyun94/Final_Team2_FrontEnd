@@ -15,7 +15,7 @@ function RegisterUpdateForm(props) {
                 환자명:
               </div>
               <div className="RegisterUpdateForm_content_list_input">
-                <input type="text" value="민지현" />
+                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value="민지현"  />
               </div>
             </div>
             <div className="RegisterUpdateForm_content_list">
@@ -23,7 +23,7 @@ function RegisterUpdateForm(props) {
                 생년월일:
               </div>
               <div className="RegisterUpdateForm_content_list_input">
-                <input type="text" value="960119" />
+                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value="960119" />
               </div>
             </div>
             <div className="RegisterUpdateForm_content_list">
@@ -31,7 +31,7 @@ function RegisterUpdateForm(props) {
                 전화번호:
               </div>
               <div className="RegisterUpdateForm_content_list_input">
-                <input type="text" value="010-1234-5678" />
+                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value="010-1234-5678" />
               </div>
             </div>
             <div className="RegisterUpdateForm_content_list">
@@ -81,7 +81,7 @@ function RegisterUpdateForm(props) {
             </div>
           </form>
           {/* 수정 취소 버튼 */}
-          <div className="RegisterRead_content_button">
+          <div className="RegisterUpdateForm_content_button">
             <button className="button_team2_fill">수정</button>
             <button className="button_team2_empty">취소</button>
           </div>

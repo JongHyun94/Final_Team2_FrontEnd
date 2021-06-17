@@ -81,7 +81,7 @@ function RegisterRead(props) {
                 접수 메모:
               </div>
               <div className="RegisterRead_content_list_input">
-                <input className="RegisterRead_content_list_input_readOnly" type="text" value={patient.Treatment_Memo} />
+                <input className="RegisterRead_content_list_input_readOnly" type="text" value={patient.Treatment_Memo} readOnly/>
               </div>
             </div>
             <div className="RegisterRead_content_list">
@@ -89,7 +89,7 @@ function RegisterRead(props) {
                 의사소통 메모:
               </div>
               <div className="RegisterRead_content_list_input">
-                <input className="RegisterRead_content_list_input_readOnly" type="text" value={patient.Communication_Memo} />
+                <input className="RegisterRead_content_list_input_readOnly" type="text" value={patient.Communication_Memo} readOnly/>
               </div>
             </div>
           </form>

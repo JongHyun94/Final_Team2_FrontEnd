@@ -54,8 +54,8 @@ function Register(props) {
         </div>
         {/* 접수 상세 내역 or  접수 수정*/}
         <div className="RegisterRead">
-          <RegisterRead />
-          {/* <RegisterUpdateForm/> */}
+          {/* <RegisterRead /> */}
+          <RegisterUpdateForm/>
           {/* <Switch>
             <Route path="" exact component={}/>
           </Switch> */}
