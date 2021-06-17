@@ -1,6 +1,36 @@
+import { useState } from "react";
+import { AutoSizer, List } from "react-virtualized";
 import "./style.css";
 
+function getBoards() {
+  const boards = [];
+  for (var i = 50; i >= 1; i--) {
+    boards.push({ b1: i, b2: "환자" + i, b3: "910111", b4: "F", b5: "메모" + i, b6: "대기", b7: "의사소통메모" });
+  }
+  return boards;
+}
+
 function InspectionPatientList(props) {
+  const [boards, setBoards] = useState(getBoards);
+
+  const rowRenderer = ({index, key, style}) => {
+    return (
+      
+        <tr key={key}>
+              <td key={boards.b1}>
+                <input type="checkbox" />
+              </td>
+              <td style={{width:"5%"}}>{boards[index].b1}</td>
+              <td>{boards[index].b2}</td>
+              <td>{boards[index].b3}</td>
+              <td>{boards[index].b4}</td>
+              <td>{boards[index].b5}</td>
+              <td>{boards[index].b6}</td>
+              <td>{boards[index].b7}</td>
+        </tr>
+    );
+  };
+
   return (
     <div className="InspectionPatientList">
       <div className="InspectionPatientList_title">
@@ -34,127 +64,12 @@ function InspectionPatientList(props) {
               <th>의사소통메모</th>
             </thead>
             <tbody>
-              <tr>
-                <td><input type="checkbox"/></td>
-                <td>1312</td>
-                <td>김환자</td>
-                <td>940606</td>
-                <td>M</td>
-                <td>검사실1</td>
-                <td>대기</td>
-                <td>당일검사요청</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"/></td>
-                <td>1312</td>
-                <td>김환자</td>
-                <td>940606</td>
-                <td>M</td>
-                <td>검사실1</td>
-                <td>대기</td>
-                <td>당일검사요청</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"/></td>
-                <td>1312</td>
-                <td>김환자</td>
-                <td>940606</td>
-                <td>M</td>
-                <td>검사실1</td>
-                <td>대기</td>
-                <td>당일검사요청</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"/></td>
-                <td>1312</td>
-                <td>김환자</td>
-                <td>940606</td>
-                <td>M</td>
-                <td>검사실1</td>
-                <td>대기</td>
-                <td>당일검사요청</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"/></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"/></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"/></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"/></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"/></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"/></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"/></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"/></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
+            <AutoSizer disableHeight>
+              {({ width, height }) => {
+                return <List width={width} height={500} list={boards} rowCount={boards.length} rowHeight={44} rowRenderer={rowRenderer} overscanRowCount={5} />;
+              }}
+            </AutoSizer>
+          </tbody>
           </table>
         </div>
       </div>
