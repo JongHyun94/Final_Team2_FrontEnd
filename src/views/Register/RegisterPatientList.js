@@ -10,7 +10,7 @@ function RegisterPatientList(props) {
             <input type="text" className="RegisterPatientList_search_input_1" placeholder="이름/생년월일을 입력해 주세요." />
           </div>
           <div className="RegisterPatientList_search_button">
-            <button className="button_team2_fill">환자 검색</button>
+            <button className="button_team2_fill">검색</button>
           </div>
         </div>
         <div className="RegisterPatientList_content_table">

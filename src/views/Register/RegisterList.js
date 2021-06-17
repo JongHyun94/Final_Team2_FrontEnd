@@ -1,5 +1,6 @@
 import "./Register.css";
 import { AutoSizer, List } from "react-virtualized";
+import { useState } from "react";
 function RegisterList(props) {
 
   // const rowRenderer = ({index, key, style}) => {
@@ -11,6 +12,8 @@ function RegisterList(props) {
   //     </div>
   //   );
   // };
+
+  const [dateForRegister, setDateForRegister] = useState(new Date());
   return (
     <div>
       {/* 상단 메뉴 이름 + 버튼 */}

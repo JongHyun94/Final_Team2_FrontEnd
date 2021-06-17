@@ -12,13 +12,20 @@
   height: 40%;
 }
 .Register_2{
+
+}
+.Register_2_header{
+  font-size: larger;
+  font-weight: bold;
+}
+.Register_Components{
   display: flex;
   flex-direction: row;
   /* background-color: blueviolet; */
   height: 50%;
   margin-top: 10px;
+  padding: 10px;
 }
-
 
 /* RegisterList */
 
@@ -98,7 +105,7 @@ thead {
   width: 30%;
   height: 100% !important;
   /* background-color: brown; */
-  margin: 3px 1% 1% 1%;
+  margin: 3px 0 1% 1%;
 }
 .RegisterRead_header{
   font-size: larger;
@@ -144,7 +151,7 @@ thead {
   flex-grow: 3;
 }
 .RegisterPatientList_header{
-  font-size: larger;
+  font-size: medium;
   font-weight: bold;
 }
 .RegisterPatientList_search{
@@ -155,14 +162,14 @@ thead {
 }
 .RegisterPatientList_search_input{
   display: flex;
-  flex-grow: 10;
+  flex-grow: 2;
 }
 .RegisterPatientList_search_input_1{
   width: 100%;
 }
 .RegisterPatientList_search_button{
   display: flex;
-  flex-grow: 2;
+
   align-items: center;
   justify-content: flex-end;
 }
@@ -188,6 +195,7 @@ thead {
 .RegisterCreateForm_cal{
   display: flex;
   justify-content: center;
+  zoom: 80%;
 }
 .RegisterCreateForm_input{
 }
@@ -211,6 +219,7 @@ thead {
   height: 100%;
 }
 .RegisterTimeTable_content{
+  font-size: small;
   text-align: center;
   height: 100%;
 }
