@@ -59,9 +59,6 @@
   margin-right: 6px;
   color: #00AAF0;
 }
-.dd{
-  height: 98%;
-}
 .InspectionPatientList_2_1{
   text-align: center;
   font-size: small;
@@ -69,6 +66,12 @@
 }
 .InspectionPatientList_2_2{
   background-color: lightgray;
+  position:sticky;
+  top:-1px;
+}
+.InspectionPatientList_list{
+  overflow-y: auto;
+  height: 600px;
 }
 
 /* InspectionList */
@@ -100,6 +103,42 @@
 }
 .InspectionList_2_2{
   background-color: lightgray;
+  position:sticky;
+  top:-1px;
+}
+.InspectionList_list{
+  overflow-y: auto;
+  height: 600px;
+}
+
+/* InspectionCreateForm */
+.InspectionCreateForm{
+  height: 100%;
+}
+.InspectionCreateForm_title{
+  font-size: larger;
+  font-weight: bold;
+}
+.InspectionCreateForm_1{
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid black; */
+  padding: 10px;
+  justify-content: center;
+  height: 90%;
+}
+.InspectionCreateForm_1_1{
+  /* display: flex;
+  flex-direction: row; */
+  justify-content: center;
+  margin-bottom: 5px;
+  font-size: small;
+}
+.InspectionCreateForm_1_2{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-right: 10px;
 }
 
 /* InspectionImgCreateForm */

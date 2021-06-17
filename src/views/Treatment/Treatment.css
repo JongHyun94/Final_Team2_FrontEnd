@@ -61,6 +61,7 @@
 
 .TreatmentPatientList_table_thead {
   background-color: lightgray;
+  /* width: 100%; */
 }
 
 /* TreatmentCreateForm*/
