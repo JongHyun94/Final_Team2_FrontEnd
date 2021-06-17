@@ -52,8 +52,14 @@
   margin-left: 3%;
 }
 
+.TreatmentPatientList_Totaltable{
+  overflow-y: auto;
+  height: 500px;
+}
+
 .TreatmentPatientList_table {
- 
+  
+  
   text-align: center;
   font-size: small;
  
@@ -74,6 +80,15 @@
   font-weight: bold;
   font-size: larger;
 }
+
+.TreatmentCreateForm_pop{
+ float: right; 
+ margin-right: 20px;
+ height: 0.7px;
+ cursor: pointer;
+ 
+}
+
 .TreatmentCreateForm_border {
   display: flex;
   flex-direction: row;
@@ -234,8 +249,14 @@
 }
 
 .TreatmentHistoryList_border {
+ 
   padding: 10px 10px 0 10px;
   font-size: small;
+}
+
+.TreatmentHistoryList_Totaltable{
+  overflow-y: auto;
+  height: 550px;
 }
 
 .TreatmentHistoryList_table {
