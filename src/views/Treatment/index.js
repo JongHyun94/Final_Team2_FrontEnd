@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './Treatment.css';
 import TreatmentCreateForm from './TreatmentCreateForm';
 import TreatmentHistoryList from './TreatmentHistoryList';
@@ -6,6 +7,17 @@ import TreatmentPatientList from './TreatmentPatientList';
 
 
 function Treatment(props) {
+
+    //TreatmentHistoryList 상태
+    // const [] = useState();
+
+      // const [historyValue, setHistoryValue] = useState("상태");
+
+      // const getHistoryValue = (text) => {
+      //   setHistoryValue(text);
+      // }
+
+
   return (
     <div className="Treatment">
 
@@ -24,6 +36,8 @@ function Treatment(props) {
       <div className="Treatmentdown">
         {/* 진료 기록 */}
         <div className="TreatmentHistoryList">
+          {/* value={ text }
+          getHistoryValue={getHistoryValue} */}
           <TreatmentHistoryList />
         </div>
 
