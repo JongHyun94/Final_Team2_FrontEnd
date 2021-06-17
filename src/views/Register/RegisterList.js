@@ -1,7 +1,105 @@
 import "./Register.css";
-import { AutoSizer, List } from "react-virtualized";
+// import { AutoSizer, List } from "react-virtualized";
+import DatePicker from "react-datepicker";
 import { useState } from "react";
+import "react-datepicker/dist/react-datepicker.css";
+import { Link } from "react-router-dom";
+
+
+// 임의의 접수 내역 목록 만들기
+function getRegisters() {
+  const registers = [];
+  for (var i = 1; i <= 50; i++) {
+    // 컬럼 : 순번(index), 예약시간, 접수번호(pk), 환자명, 생년월일, 성별, 담당의, 접수메모, 의사소통메모, 접수상태
+    registers.push({
+      index: i,
+      REGISTER_TIME: "10:" + i,
+      REGISTER_ID: "10000" + i,
+      Patient_Name: "환자" + i,
+      Patient_Birth: "" + i,
+      Sex: "F",
+      Doctor_Name: "의사" + i,
+      REGISTER_MEMO: "메모" + i,
+      REGISTER_COMMUNICATION: "의사소통메모" + i,
+      REGISTER_STATE: "대기"
+    });
+  }
+  for (i ; i <= 100; i++) {
+    registers.push({
+      index: i,
+      REGISTER_TIME: "10:" + i,
+      REGISTER_ID: "10000" + i,
+      Patient_Name: "환자" + i,
+      Patient_Birth: "" + i,
+      Sex: "F",
+      Doctor_Name: "의사" + i,
+      REGISTER_MEMO: "메모" + i,
+      REGISTER_COMMUNICATION: "의사소통메모" + i,
+      REGISTER_STATE: "완료"
+    });
+  }
+  for (i ; i <= 120; i++) {
+    registers.push({
+      index: i,
+      REGISTER_TIME: "10:" + i,
+      REGISTER_ID: "10000" + i,
+      Patient_Name: "환자" + i,
+      Patient_Birth: "" + i,
+      Sex: "M",
+      Doctor_Name: "의사" + i,
+      REGISTER_MEMO: "메모" + i,
+      REGISTER_COMMUNICATION: "의사소통메모" + i,
+      REGISTER_STATE: "취소"
+    });
+  }
+  return registers;
+}
+
+function getRegistersState(registerList) {
+  const registerState = [];
+  var count1 = 0;
+  var count2 = 0;
+  var count3 = 0;
+  for (var i = 0; i < registerList.length; i++) {
+    if (registerList[i].REGISTER_STATE === "대기") {
+      count1++;
+    } else if (registerList[i].REGISTER_STATE === "완료") {
+      count2++;
+    } else if (registerList[i].REGISTER_STATE === "취소") {
+      count3++;
+    }
+  }
+  registerState.push(count1); // 대기
+  registerState.push(count2); // 완료
+  registerState.push(count3); // 취소
+
+  return registerState;
+}
+
 function RegisterList(props) {
+  // 접수 날짜 검색
+  const [startDate, setStartDate] = useState(new Date());
+
+  // 접수 목록 상태
+  const [registerList, setRegisterList] = useState(getRegisters);
+
+  // 접수 상태 (대기, 완료, 취소)
+  const [registerState, setRegisterState] = useState(() => getRegistersState(registerList));
+
+  const [registerStateReady, setRegisterStateReady] = useState(registerState[0]);
+  const [registerStateFinish, setRegisterStateFinish] = useState(registerState[1]);
+  const [registerStateCancel, setRegisterStateCancel] = useState(registerState[2]);
+
+
+  // 진료 상태 대기 -> 완료로 
+  const changeRegisterStateToFinish = () => {
+    
+  };
+
+  // 체크박스 클릭시 체크 됨
+  const checkboxHandler = (item) => {
+    console.log(item);
+  }
 
   // const rowRenderer = ({index, key, style}) => {
   //   return (
@@ -13,6 +111,7 @@ function RegisterList(props) {
   //   );
   // };
 
+
   const [dateForRegister, setDateForRegister] = useState(new Date());
   return (
     <div>
@@ -22,7 +121,7 @@ function RegisterList(props) {
           접수 내역
         </div>
         <div className="RegisterList_header_button">
-          <button className="button_team2_fill">신규 환자 등록</button>
+          <Link to="/Patient" ><button className="button_team2_fill">신규 환자 등록</button></Link>
         </div>
       </div>
       {/* 하단 내용 */}
@@ -31,7 +130,7 @@ function RegisterList(props) {
         <div className="RegisterList_content_1">
           <div className="RegisterList_content_1_1">
             <div>
-              <input type="date" />
+              <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
             </div>
             <div>
               <button className="button_team2_fill">이동</button>
@@ -39,17 +138,17 @@ function RegisterList(props) {
           </div>
           <div className="RegisterList_content_1_2">
             <div className="RegisterList_content_1_2_ready">
-              대기: 2명
+              대기: {registerStateReady}명
             </div>
             <div className="RegisterList_content_1_2_finish">
-              완료: 1명
+              완료: {registerStateFinish}명
             </div>
             <div className="RegisterList_content_1_2_cancel">
-              취소: 1명
+              취소: {registerStateCancel}명
             </div>
           </div>
           <div className="RegisterList_content_1_3">
-            <button className="button_team2_fill">접수 완료</button>
+            <button className="button_team2_fill" onClick={changeRegisterStateToFinish}>접수 완료</button>
           </div>
         </div>
         {/* 접수 내역 테이블 */}
@@ -71,6 +170,24 @@ function RegisterList(props) {
               </tr>
             </thead>
             <tbody>
+              {/* 임의의 데이터 넣어서 출력 해보기 */}
+              {registerList.map(register => {
+                return (
+                  <tr key={register.index}>
+                    <td><input type="checkbox" name="chk" value={register.REGISTER_ID} onChange={(event) => checkboxHandler(register.REGISTER_ID)} /></td>
+                    <td>{register.index}</td>
+                    <td>{register.REGISTER_TIME}</td>
+                    <td>{register.REGISTER_ID}</td>
+                    <td>{register.Patient_Name}</td>
+                    <td>{register.Patient_Birth}</td>
+                    <td>{register.Sex}</td>
+                    <td>{register.Doctor_Name}</td>
+                    <td>{register.REGISTER_MEMO}</td>
+                    <td>{register.REGISTER_COMMUNICATION}</td>
+                    <td>{register.REGISTER_STATE}</td>
+                  </tr>
+                );
+              })}
               {/* <AutoSizer disableHeight>
                 {({ width, height }) => {
                   return (
@@ -85,7 +202,7 @@ function RegisterList(props) {
                   );
                 }}
               </AutoSizer> */}
-              <tr>
+              {/* <tr>
                 <td><input type="checkbox"/></td>
                 <td>1</td>
                 <td>10:30</td>
@@ -136,7 +253,7 @@ function RegisterList(props) {
                 <td>접수 메모</td>
                 <td>의사소통 메모</td>
                 <td>접수 상태</td>
-              </tr>
+              </tr> */}
             </tbody>
           </table>
         </div>

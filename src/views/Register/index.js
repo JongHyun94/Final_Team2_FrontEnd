@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Switch from "react-router-dom";
 import RegisterCreateForm from "./RegisterCreateForm";
 import RegisterList from "./RegisterList";
@@ -6,7 +7,43 @@ import RegisterRead from "./RegisterRead";
 import RegisterTimeTable from "./RegisterTimeTable";
 import RegisterUpdateForm from "./RegisterUpdateForm";
 
+
+// 부모 상태 
+
+// 임의의 접수 내역 목록 만들기
+// function getRegisters() {
+//   const registers = [];
+//   for (var i = 1; i <= 50; i++) {
+//     // 컬럼 : 순번(index), 예약시간, 접수번호(pk), 환자명, 생년월일, 성별, 담당의, 접수메모, 의사소통메모, 접수상태
+//     registers.push({ 
+//       index: i, 
+//       REGISTER_TIME: "10:" + i, 
+//       REGISTER_ID: "10000" + i,
+//       Patient_Name: "환자" + i,
+//       Patient_Birth: "" + i,
+//       Sex: "F", 
+//       Doctor_Name: "의사" + i,
+//       REGISTER_MEMO: "메모" + i, 
+//       REGISTER_COMMUNICATION: "의사소통메모" + i, 
+//       REGISTER_STATE: "대기"
+//     });
+//   }
+//   return registers;
+// }
+
 function Register(props) {
+  // 상태 
+
+  // 접수 DB 컬럼 REGISTERS TABLE
+  // REGISTER_ID, REGISTER_PATIENT_ID, REGISTER_USER_ID, 
+  // REGISTER_REGDATE, REGISTER_DATE, REGISTER_TIME, 
+  // REGISTER_MEMO, REGISTER_COMMUNICATION, REGISTER_STATE
+
+  // 접수 내역 배열 
+
+  // 접수 상태 (대기, 완료, 취소)
+  // const [registerState, setRegisterState] = useState();
+
   return (
     <div className="Register">
       {/* 상단 */}
