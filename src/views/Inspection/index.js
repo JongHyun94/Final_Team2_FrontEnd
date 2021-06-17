@@ -3,8 +3,11 @@ import InspectionPatientList from "./InspectionPatientList";
 import InspectionList from "./InspectionList";
 import InspectionImgForm from "./InspectionImgForm";
 import InspectionImgCreateForm from "./InspectionImgCreateForm";
+import InspectionCreateForm from "./InspectionCreateForm";
 
 function Inspection(props) {
+
+  
   return (
       <div className="Inspection">
         <div className="Inspection_1">
@@ -19,6 +22,7 @@ function Inspection(props) {
           <div className="Inspection_3_1">
             {/* 검사결과등록 */}
             <InspectionImgCreateForm/>
+            {/* <InspectionCreateForm/> */}
           </div>
           <div className="Inspection_3_2">
             {/* 검사사진 */}
