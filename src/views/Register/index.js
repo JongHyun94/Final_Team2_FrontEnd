@@ -9,15 +9,15 @@ import RegisterUpdateForm from "./RegisterUpdateForm";
 function Register(props) {
   return (
     <div className="Register">
-    {/* 상단 */}
+      {/* 상단 */}
       <div className="Register_1">
         {/* 접수 내역 */}
         <div className="RegisterList">
-          <RegisterList/>
+          <RegisterList />
         </div>
         {/* 접수 상세 내역 or  접수 수정*/}
         <div className="RegisterRead">
-          <RegisterRead/>
+          <RegisterRead />
           {/* <RegisterUpdateForm/> */}
           {/* <Switch>
             <Route path="" exact component={}/>
@@ -26,17 +26,22 @@ function Register(props) {
       </div>
       {/* 하단 */}
       <div className="Register_2">
-        {/* 환자 검색 */}
-        <div className="RegisterPatientList">
-          <RegisterPatientList/>
+        <div className="Register_2_header">
+          접수 등록
         </div>
-        {/* 접수 등록 */}
-        <div className="RegisterCreateForm">
-          <RegisterCreateForm/>
-        </div>
-        {/* 접수 타임테이블 */}
-        <div className="RegisterTimeTable">
-          <RegisterTimeTable/>
+        <div className="Register_Components border">
+          {/* 환자 검색 */}
+          <div className="RegisterPatientList">
+            <RegisterPatientList />
+          </div>
+          {/* 접수 등록 */}
+          <div className="RegisterCreateForm">
+            <RegisterCreateForm />
+          </div>
+          {/* 접수 타임테이블 */}
+          <div className="RegisterTimeTable">
+            <RegisterTimeTable />
+          </div>
         </div>
       </div>
     </div>

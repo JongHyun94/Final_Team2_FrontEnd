@@ -1,6 +1,6 @@
 function RegisterRead(props) {
   return (
-    <div>
+    <>
       {/* 상단 메뉴 이름 */}
       <div className="RegisterRead_header">
         접수 상세 내역
@@ -87,7 +87,7 @@ function RegisterRead(props) {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 export default RegisterRead;
