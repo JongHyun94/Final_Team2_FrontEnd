@@ -4,7 +4,7 @@ function Header(props) {
     <div className="header">
       <div className="header1 row no-gutters">
         <div className="header1_1 col-10">
-          <span className="logo">TEAM2</span>
+          <span className="logo">TEAM2<img src="/resources/img/logo_white_bold.png" alt="" width={30}></img></span>
         </div>
         <div className="header1_2 col-2 d-flex justify-content-between">
           <div>서울 아산 병원</div>
