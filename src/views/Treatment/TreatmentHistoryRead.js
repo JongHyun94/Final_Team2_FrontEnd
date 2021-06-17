@@ -1,4 +1,37 @@
+import { useState } from "react";
+
+
+function getBoards() {
+
+    const boards =  [
+        {Subjective:"목 아픔", Objective:"인후염", Assessment:"온열찜질기 실행",Plan:"다음 내원시 Lab test"}
+    ];
+
+
+    return boards;
+}
+
+function getBoardList() {
+    const boardlists = [
+        {inspectioncategory:"혈액검사", inspectiondate:"날짜",inspector:"김검사",inspectionname:"백혈구 백분율",inspectionref:"4000~10000μL",inspectionresult:"8000"},
+        {inspectioncategory:"혈액검사", inspectiondate:"날짜",inspector:"김검사",inspectionname:"순환기능검사-적혈구량측",inspectionref:"3000~7500/mm3",inspectionresult:"6000"},
+        {inspectioncategory:"혈액검사", inspectiondate:"날짜",inspector:"김검사",inspectionname:"백혈구 백분율",inspectionref:"12.0~16.0g/dL",inspectionresult:"14"},
+        {inspectioncategory:"혈액검사", inspectiondate:"날짜",inspector:"김검사",inspectionname:"백혈구 백분율",inspectionref:"",inspectionresult:""},
+        {inspectioncategory:"유리검사", inspectiondate:"날짜",inspector:"나꼼꼼",inspectionname:"백혈구 백분율",inspectionref:"",inspectionresult:""},
+        {inspectioncategory:"영상촬영", inspectiondate:"날짜",inspector:"박사능",inspectionname:"백혈구 백분율",inspectionref:"",inspectionresult:""},
+    ];
+    return boardlists;
+}
+
+
 function TreatmentHistoryRead(props) {
+    const [boards, setBoards] = useState(getBoards);
+    const [boardlists, setBoardlists] = useState(getBoardList);
+    const [img, setImg] = useState("");
+
+    const readResultImg = (event) => {
+         console.log("보기가 클릭되었습니다.");
+    };
     return(
 
        <div>
@@ -8,23 +41,63 @@ function TreatmentHistoryRead(props) {
            <div className="TreatmentHistoryRead_border border">
                 <div className="TreatmentHistoryRead_1">
                 <table className="table table-bordered TreatmentHistoryRead_1_table">
-                    <tr>
+                {boards.map(board => {
+                      return(
+                        <tr>
+                            <th className="text-center border" bgcolor="lightgrey">Subjective</th>
+                                 {/* <td width="80%">목 아픔</td> */}
+                            <td className="text-left" width="80%">{board.Subjective}</td>
+                        </tr>
+                        
+                      );
+                  })}
+                  {boards.map(board => {
+                      return(
+                        <tr>
+                            <th className="text-center border" bgcolor="lightgrey" >Objective</th>
+                            {/* <td width="80%">인후염</td> */}
+                            <td className="text-left" width="80%">{board.Objective}</td>
+                         </tr>
+                      );
+                  })}
+                  {boards.map(board => {
+                      return(
+                        <tr>
+                            <th className="text-center border" bgcolor="lightgrey">Assessment</th>
+                                {/* <td width="80%">온열찜질기 실행</td> */}
+                            <td className="text-left" width="80%">{board.Assessment}</td>
+
+                        </tr>
+                      );
+                  })}
+                  {boards.map(board => {
+                      return(
+                        <tr>
+                            <th className="text-center border" bgcolor="lightgrey">Plan</th>
+                                {/* <td width="80%">다음 내원시 Lab test</td> */}
+                            <td className="text-left" width="80%">{board.Plan}</td>
+                        </tr>
+                      );
+                  })}
+                    {/* <tr>
                         <th className="text-center border" bgcolor="lightgrey">Subjective</th>
-                            <td width="80%">목 아픔</td>
+                            <td width="80%">{boards.Subjective}</td>
                     </tr>
                     <tr>
                         <th className="text-center border" bgcolor="lightgrey" >Objective</th>
-                        <td width="80%">인후염</td>
+                        <td width="80%">{boards.Objective}</td>
+
                     </tr>
                     <tr>
                         <th className="text-center border" bgcolor="lightgrey">Assessment</th>
-                        <td width="80%">온열찜질기 실행</td>
+                        <td width="80%">{boards.Assessment}</td>
+
                     </tr>
                     <tr>
                         <th className="text-center border" bgcolor="lightgrey">Plan</th>
-                        <td width="80%">다음 내원시 Lab test</td>
-                    </tr>
-        
+                        <td width="80%">{boards.Plan}</td>
+
+                    </tr> */}
                 </table>
             </div>
                 <div className="TreatmentHistoryRead_2">
@@ -44,54 +117,32 @@ function TreatmentHistoryRead(props) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>   
-                            <td>혈액검사</td>
-                            <td>2021-06-01</td>
-                            <td>김검사</td>
-                            <td>백혈구 백분율</td>
-                            <td>4000~10000μL</td>
-                            <td>8000</td>
-                        </tr>
-                        <tr>   
-                            <td></td>
-                            <td>2021-06-01</td>
-                            <td>김검사</td>
-                            <td>순환기능검사-적혈구량측</td>
-                            <td>3000~7500/mm3</td>
-                            <td>6000</td>
-                        </tr>
-                        <tr>   
-                            <td></td>
-                            <td>2021-06-01</td>
-                            <td>김검사</td>
-                            <td>헤마토크리트</td>
-                            <td>12.0~16.0g/dL</td>
-                            <td>14</td>
-                        </tr>
-                        <tr>   
-                            <td></td>
-                            <td>2021-06-01</td>
-                            <td>김검사</td>
-                            <td>EKG 심전도검사</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>   
-                            <td>유리검사</td>
-                            <td>2021-06-01</td>
-                            <td>나꼼꼼</td>
-                            <td>Urine 7종</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>   
+                        {boardlists.map(boardlist=>{
+                            return(
+                                <tr key={boardlist.inspectioncategory}>   
+                                <td>{boardlist.inspectioncategory}</td>
+                                <td>{boardlist.inspectiondate}</td>
+                                <td>{boardlist.inspector}</td>
+                                <td>{boardlist.inspectionname}</td>
+                                <td>{boardlist.inspectionref}</td>
+                                {boardlist.inspectioncategory ==="영상촬영"
+                                ?  <td> <button className="button_team2_empty" onClick={readResultImg}>보기</button></td>
+                                : <td>{boardlist.inspectionresult}</td>
+                                }
+                            </tr>
+                      
+                            );
+                        })}
+
+                    
+                        {/* <tr>   
                             <td>영상촬영</td>
                             <td>2021-06-01</td>
                             <td>박사능</td>
                             <td>X-Ray 흉부</td>
                             <td></td>
                             <td> <button className="button_team2_empty">보기</button></td>
-                        </tr>
+                        </tr> */}
                         
                     </tbody>
                 </table>
