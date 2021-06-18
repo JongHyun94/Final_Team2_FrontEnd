@@ -6,6 +6,7 @@ export const TreatmentImgRead = (props) => {
   const {open, close, inspectionImg, inspection_list_name, inspection_list_category, inspection_treatment_id, inspection_date } = props;
   // const [imgSrc, setImgSrc] = useState("xray01.jpg");
   return(
+    <div className="TreatmentImgReadmain">
     <div className={open ? 'openModal modal':'modal'}>
       {open? (
         <section>
@@ -41,6 +42,7 @@ export const TreatmentImgRead = (props) => {
           </main>
         </section>
       ):null}
+    </div>
     </div>
   )
 }
