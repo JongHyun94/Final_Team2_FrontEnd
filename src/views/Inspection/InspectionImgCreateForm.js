@@ -39,8 +39,8 @@ function InspectionImgCreateForm(props) {
       <div className="InspectionImgCreateForm_title">
         검사 결과 등록
       </div>
-      <form onSubmit={inspectionImgResultBtn}>
       <div className="InspectionImgCreateForm_1 border">
+        <form onSubmit={inspectionImgResultBtn}>
         <div className="InspectionImgCreateForm_1_1 row">
           <div className="col-6">
             <div className="mb-1">진단검사명 :</div>
@@ -48,8 +48,7 @@ function InspectionImgCreateForm(props) {
             <div className="mb-1">검사번호 :</div>
             <div className="mb-1">담당의 :</div>
             <div className="mb-1">검사자 :</div>
-            <div className="mb-1">검사실 :</div>
-            <div>첨부파일 :</div>
+            <div>검사실 :</div>
           </div>
           <div className="col-6">
             <div className="mb-1">{inspectionImgResult.inspection_list_category}</div>
@@ -57,19 +56,21 @@ function InspectionImgCreateForm(props) {
             <div className="mb-1">{inspectionImgResult.inspection_id}</div>
             <div className="mb-1">{inspectionImgResult.inspection_doctor_name}</div>
             <div className="mb-1">{inspectionImgResult.inspection_inspector_name}</div>
-            <div className="mb-1">{inspectionImgResult.inspection_list_lab}</div>
+            <div>{inspectionImgResult.inspection_list_lab}</div>
             <div></div>
           </div>
         </div>
         <div className="InspectionImgCreateForm_1_1_1">
+          <div className="col-4">첨부파일 : </div>
           <input name="battach" type="file" style={{width:"100%"}} ref={inputFile}/>
         </div>
         <div className="InspectionImgCreateForm_1_2">
-          <button className="button_team2_fill">등록</button>
+          <button className="button_team2_fill m-0">등록</button>
         </div>
+        </form>
       </div>
-      </form>
     </div>
+
   );
 }
 

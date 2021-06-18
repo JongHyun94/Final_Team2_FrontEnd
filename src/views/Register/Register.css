@@ -155,6 +155,61 @@ select {
   justify-content: flex-end;
   padding: 18px;
 }
+
+/* RegisterUpdateForm */
+.RegisterUpdateForm {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  height: 100% !important;
+  /* background-color: brown; */
+  margin: 3px 0 1% 1%;
+}
+.RegisterUpdateForm_header {
+  font-size: larger;
+  font-weight: bold;
+}
+.RegisterUpdateForm_content {
+  display: flex;
+  flex-direction: row;
+  font-size: small;
+}
+.RegisterUpdateForm_content_form {
+  width: 100%;
+}
+.RegisterUpdateForm_content_list {
+  display: flex;
+  flex-direction: row;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+.RegisterUpdateForm_content_list_label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 38%;
+}
+.RegisterUpdateForm_content_list_input {
+  display: flex;
+  width: 62%;
+}
+.RegisterUpdateForm_content_list_input > input,
+select {
+  width: 95%;
+}
+.RegisterUpdateForm_content_list_input_readOnly{
+  border:none;
+}
+.RegisterUpdateForm_content_list_input_readOnly:focus{
+  outline:none;
+}
+.RegisterUpdateForm_content_button {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 18px;
+}
+
 /* RegisterPatientList */
 .RegisterPatientList {
   display: flex;
@@ -173,17 +228,17 @@ select {
 }
 .RegisterPatientList_search_input {
   display: flex;
-  flex-grow: 2;
   font-size: small;
+  flex-grow: 3;
 }
 .RegisterPatientList_search_input_1 {
   width: 100%;
+  display: flex;
 }
 .RegisterPatientList_search_button {
   display: flex;
-
+  flex-grow: 9;
   align-items: center;
-  justify-content: flex-end;
 }
 .RegisterPatientList_content {
   text-align: center;

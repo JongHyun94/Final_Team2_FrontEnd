@@ -16,6 +16,10 @@ function InspectionList(props) {
   // 모달 상태(open일 떄 true로 바뀌어 열림)
   const [modalOpen, setModalOpen] = useState(false);
 
+  const changeCreateForm = (event) => {
+    props.changeCreateForm();
+  };
+
   const cancelBtn = (event) => {
     //검사결과: 검사중 ~> 대기
     console.log("접수 취소 버튼 클릭");
@@ -52,6 +56,7 @@ function InspectionList(props) {
       </div>
       <div className="InspectionList_1 border">
         <div className="InspectionList_1_1">
+        <button className="button_team2_empty InspectionList_1_2" onClick={changeCreateForm}>검사결과등록변경(임의)</button>
           <React.Fragment>
             <button className="button_team2_fill InspectionList_1_2" onClick={openModal}>바코드 출력</button>
             <InspectionBarcodePop open={modalOpen} closeCheck={closeCheckModal} closeCancel={closeCancelModal} barcodeImg="barcode01.png" inspection_list_name={inspections[0].inspection_list_name} patient_name="김환자" inspection_inspector_name={inspections[0].inspection_inspector_name}/>
@@ -64,26 +69,26 @@ function InspectionList(props) {
         <div className="InspectionList_list">
           <table className="table InspectionList_2_1">
             <thead className="InspectionList_2_2">
-              <th style={{width: "1%"}}></th>
-              <th style={{width: "9%"}}>진단검사명</th>
-              <th style={{width: "5%"}}>검체명</th>
-              <th style={{width: "20%"}}>검사명</th>
-              <th style={{width: "8%"}}>결과</th>
-              <th>참고치</th>
-              <th style={{width: "9%"}}>검사 시간</th>
-              <th style={{width: "7%"}}>용기</th>
-              <th style={{width: "7%"}}>담당의</th>
-              <th style={{width: "7%"}}>검사자</th>
-              <th style={{width: "8%"}}>검사실</th>
-              <th style={{width: "7%"}}>상태</th>
+              <tr>
+                <th style={{width: "1%"}}></th>
+                <th style={{width: "9%"}}>진단검사명</th>
+                <th style={{width: "5%"}}>검체명</th>
+                <th style={{width: "20%"}}>검사명</th>
+                <th style={{width: "8%"}}>결과</th>
+                <th>참고치</th>
+                <th style={{width: "9%"}}>검사 시간</th>
+                <th style={{width: "7%"}}>용기</th>
+                <th style={{width: "7%"}}>담당의</th>
+                <th style={{width: "7%"}}>검사자</th>
+                <th style={{width: "8%"}}>검사실</th>
+                <th style={{width: "7%"}}>상태</th>
+              </tr>
             </thead>
             <tbody>
               {inspections.map(inspection => {
                 return(
-                  <tr>
-                    <td key={inspection.inspection_id}>
-                      <input type="checkbox"/>
-                    </td>
+                  <tr key={inspection.inspection_id}>
+                    <td><input type="checkbox"/></td>
                     <td>{inspection.inspection_list_category}</td>
                     <td>{inspection.inspection_list_specimen}</td>
                     <td>{inspection.inspection_list_name}</td>
