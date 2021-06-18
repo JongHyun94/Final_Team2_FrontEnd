@@ -1,6 +1,5 @@
 import React, { Component, useState } from "react";
 import moment from "moment";
-
 import TimeTable from "react-timetable-events";
 
 function RegisterTimeTable(props) {
