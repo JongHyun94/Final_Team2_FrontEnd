@@ -5,7 +5,8 @@ export const InspectionBarcodePop = (props) => {
   const {open, closeCheck, closeCancel, barcodeImg, inspection_list_name, patient_name, inspection_inspector_name} = props;
 
   return(
-    <div className={open ? 'openModal modal':'modal'}>
+    <div className="InspectionModal">
+    <div className={open ? 'openModal modal':'modal'} >
       {open? (
         <section>
             {/* InspectionBarcodePop */}
@@ -32,6 +33,7 @@ export const InspectionBarcodePop = (props) => {
           </div>
         </section>
       ):null}
+    </div>
     </div>
   )
 }
