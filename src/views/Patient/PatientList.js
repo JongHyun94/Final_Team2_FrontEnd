@@ -1,7 +1,6 @@
-import { Modal } from "./Modal";
+import { Modal } from "./AddressModal";
 import React, { useContext, useState } from "react";
 import { AutoSizer, List } from "react-virtualized";
-import style from "./style.module.css";
 import PatientContext from "./PatientContext";
 
 function getPatientList() {
@@ -57,44 +56,44 @@ function PatientList(props) {
   const rowRenderer = ({index, key, style}) => {
     return (
       <tr key={key} style={style} onClick={() => handleClick(patients[index].patientId)}>
-        <td key={patients.patientId}><input type="radio" name="patientCheck" value={patient.patientCheck}></input></td>
+        <td key={patients.patientId}><input type="radio" name="patientCheck" value={patient.patientCheck} width={50}></input></td>
         <td width={100}>{patients[index].patientId}</td>
-        <td>{patients[index].patientName}</td>
-        <td>{patients[index].patientSsn}</td>
+        <td width={100}>{patients[index].patientName}</td>
+        <td width={120}>{patients[index].patientSsn}</td>
         <td>{patients[index].patientSex}</td>
-        <td>{patients[index].patientTel}</td>
-        <td width={400}>{patients[index].paritentAddress}</td>
+        <td width={190}>{patients[index].patientTel}</td>
+        <td width={350}>{patients[index].paritentAddress}</td>
         <td>{patients[index].patientRegDate}</td>
       </tr>
     );
   };
 
   // 모달 상태(open일 떄 true로 바뀌어 열림)
-  const [modalOpen, setModalOpen] = useState(false);
+  /* const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
     setModalOpen(true);
   };
   const closeModal = () => {
     setModalOpen(false);
-  }
+  } */
 
   return (
     
-      <div className={style.PatientList}>
-        <div className={`${style.title}`}>환자 목록</div>
-        <div className={`${style.PatientList_content} border`}>
+      <div className="PatientList">
+        <div className={`title`}>환자 목록</div>
+        <div className={`PatientList_content border`}>
           <div className="mb-2">
             <input type="text" className="col-3" name="search" placeholder="이름/생년월일을 입력하세요." onChange={handleChange}></input>
             <button className="button_team2_fill" onClick={handleSearch}>검색</button>
-            <React.Fragment>
+            {/* <React.Fragment>
               <button className="button_team2_empty" onClick={openModal}>모달</button>
-              <Modal open={modalOpen} close={closeModal} header="Modal Heading">모달 내용</Modal>
-            </React.Fragment>   
+              <Modal open={modalOpen} close={closeModal} header="Modal Heading"></Modal>
+            </React.Fragment>    */}
           </div>
           <table className="table text-center">
             <thead>
-              <tr className={`${style.PatientList_Table}`}>
+              <tr className={`PatientList_Table`}>
                 <th style={{width: "5%"}}></th>
                 <th style={{width: "9%"}}>환자 코드</th>
                 <th style={{width: "10%"}}>환자명</th>

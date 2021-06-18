@@ -1,5 +1,5 @@
-import { useState } from "react";
-import style from "./style.module.css";
+import { Modal } from "./AddressModal";
+import React, { useState } from "react";
 
 function PatientCreateForm(props) {
   // 환자 상태
@@ -9,7 +9,7 @@ function PatientCreateForm(props) {
     patientSsn2: "",
     patientSex: "", 
     patientTel: "",
-    patientTel1: "", 
+    patientTel1: "010", 
     patientTel2: "", 
     patientTel3: "", 
     paritentZipcode: "", 
@@ -35,10 +35,31 @@ function PatientCreateForm(props) {
     console.log(newPatient);
   }; 
 
+  // 모달 상태(open일 떄 true로 바뀌어 열림)
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = (event) => {
+    event.preventDefault();
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  const sendModal = () => {
+    // setModalOpen(false);
+    console.log("send 실행");
+  };
+
+  // 주소
+  const getAddress = (event) => {
+    props.handleComplete();
+    console.log(props);
+  }
+  
   return (
     <div className="mt-4">
-      <div className={`${style.title}`}>환자 등록</div>
-      <div className={`border p-3 ${style.PatientCreateForm}`}>
+      <div className={`title`}>환자 등록</div>
+      <div className={`border p-3 PatientCreateForm`}>
         <form>
           <div className="row align-items-center mb-2">
             <label className="col-sm-3 m-0">환자명: </label>
@@ -69,7 +90,7 @@ function PatientCreateForm(props) {
             <label className="col-sm-3 m-0">전화 번호: </label>
             <div className="row col-sm">
               <select className="col-sm-2 ml-3" name="patientTel1" onChange={handleChange}>
-                <option selectd value="010">010</option>
+                <option value="010">010</option>
                 <option value="011">011</option>
                 <option value="016">016</option>
                 <option value="017">017</option>
@@ -102,7 +123,10 @@ function PatientCreateForm(props) {
             <div className="col-sm">
               <div className="row mb-2"> 
                 <input type="text" className="col-sm-2 ml-3" name="paritentZipcode" placeholder="우편번호" onChange={handleChange}></input>
-                <button className="button_team2_empty">우편번호 찾기</button>
+                <React.Fragment>
+                  <button className="button_team2_empty" onClick={openModal}>우편번호 찾기</button>
+                  <Modal open={modalOpen} close={closeModal} send={sendModal}></Modal>
+                </React.Fragment>   
               </div>
               <input type="text" className=" mb-2" name="paritentAddress" placeholder="주소" onChange={handleChange}></input>
               <div className="row no-gutters mb-2">
@@ -114,6 +138,7 @@ function PatientCreateForm(props) {
           <div className="d-flex justify-content-end"><button className="button_team2_fill" onClick={handleCreate}>등록</button></div>
         </form>
       </div>
+      
     </div>
   );
 }

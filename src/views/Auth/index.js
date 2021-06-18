@@ -1,5 +1,5 @@
 import { useState } from "react";
-import style from "./style.module.css"
+import "./Auth.css"
 
 function Auth(props) {
   // 회원 상태
@@ -42,7 +42,7 @@ function Auth(props) {
 
   return (
     <div className={`d-flex justify-content-center`}>
-      <div className={`${style.Auth}`}>
+      <div className="Auth">
         <form>
           <div className="row mb-5 d-flex align-items-center">
             <label className="col-sm-4 m-0">회원 코드: </label>
