@@ -44,6 +44,25 @@ function Register(props) {
   // 접수 상태 (대기, 완료, 취소)
   // const [registerState, setRegisterState] = useState();
 
+  // 접수 상세 내역 & 접수 수정 체인지
+  const [registerRead, setRegisterRead] = useState(true);
+
+  const changeRegister = (event) => {
+    if(registerRead === true){
+      setRegisterRead(false);
+    } else {
+      setRegisterRead(true);
+    }
+  };
+
+  const cancelRegister = (event) => {
+    if(registerRead === true){
+      setRegisterRead(false);
+    } else {
+      setRegisterRead(true);
+    }
+  };
+
   return (
     <div className="Register">
       {/* 상단 */}
@@ -54,11 +73,11 @@ function Register(props) {
         </div>
         {/* 접수 상세 내역 or  접수 수정*/}
         <div className="RegisterRead">
-          {/* <RegisterRead /> */}
-          <RegisterUpdateForm/>
-          {/* <Switch>
-            <Route path="" exact component={}/>
-          </Switch> */}
+          {registerRead ? 
+            <RegisterRead registerRead={registerRead} changeRegister={changeRegister} cancelRegister={cancelRegister}/> 
+            : 
+            <RegisterUpdateForm registerRead={registerRead} changeRegister={changeRegister} cancelRegister={cancelRegister}/>
+          }
         </div>
       </div>
       {/* 하단 */}

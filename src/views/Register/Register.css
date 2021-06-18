@@ -228,17 +228,17 @@ select {
 }
 .RegisterPatientList_search_input {
   display: flex;
-  flex-grow: 2;
   font-size: small;
+  flex-grow: 3;
 }
 .RegisterPatientList_search_input_1 {
   width: 100%;
+  display: flex;
 }
 .RegisterPatientList_search_button {
   display: flex;
-
+  flex-grow: 9;
   align-items: center;
-  justify-content: flex-end;
 }
 .RegisterPatientList_content {
   text-align: center;

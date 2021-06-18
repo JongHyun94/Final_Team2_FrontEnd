@@ -5,11 +5,11 @@ function getPatientList() {
   const patients = [];
   for(var i = 1; i <= 50; i++) {
     patients.push({
-      Patient_Code: "20000" + i,
-      Patient_Name: "환자" + i,
-      Patient_Birth: "940606" ,
-      Patient_Sex: "M",
-      Patient_Tel: "010-9947-7430"
+      patientCode: "20000" + i,
+      patientName: "환자" + i,
+      patientBirth: "940606" ,
+      patientSex: "M",
+      patientTel: "010-9947-7430"
     });
   }
 
@@ -58,13 +58,13 @@ function RegisterPatientList(props) {
               {/* 임의의 데이터 넣어서 출력 해보기 */}
               {patientList.map(patient => {
                 return (
-                  <tr key={patient.Patient_Code}>
-                    <td><input type="checkbox" name="chk" value={patient.Patient_Code}/></td>
-                    <td>{patient.Patient_Code}</td>
-                    <td>{patient.Patient_Name}</td>
-                    <td>{patient.Patient_Birth}</td>
-                    <td>{patient.Patient_Sex}</td>
-                    <td>{patient.Patient_Tel}</td>
+                  <tr key={patient.patientCode}>
+                    <td><input type="checkbox" name="chk" value={patient.patientCode}/></td>
+                    <td>{patient.patientCode}</td>
+                    <td>{patient.patientName}</td>
+                    <td>{patient.patientBirth}</td>
+                    <td>{patient.patientSex}</td>
+                    <td>{patient.patientTel}</td>
                   </tr>
                 );
               })}

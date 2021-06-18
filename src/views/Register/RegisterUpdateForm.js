@@ -14,18 +14,25 @@ function getDoctors() {
 
 function getPatient() {
   const selectedPatient = {
-    Patient_Name : "이종현",
-    Patient_Birth : "940606",
-    Patient_Tel : "01099477430",
-    Patient_Doctor : "김더존(D13801001001)_3",
-    Patient_Date : "2021-06-17",
-    Patient_Time : "10:00",
-    Patient_Memo : "복통심함",
-    Patient_Communication : "15분 뒤에 들어감."
+    patientName : "이종현",
+    patientBirth : "940606",
+    patientTel : "010-9947-7430",
+    doctorName : "김더존(D13801001001)_3",
+    treatmentDate : "2021-06-17",
+    treatmentTime : "10:00",
+    treatmentMemo : "복통심함",
+    communicationMemo : "15분 뒤에 들어감."
   };
   return selectedPatient;
 }
 function RegisterUpdateForm(props) {
+
+  const updateRegister = (event) => {
+    props.changeRegister();
+  }
+  const cancelRegisterForm = (event) => {
+    props.cancelRegister();
+  }
 
   // 환자 상태
 
@@ -33,14 +40,14 @@ function RegisterUpdateForm(props) {
 
   // 진료 날짜 상태
 
-  const [startDate, setStartDate] = useState(new Date(patient.Patient_Date));
+  const [startDate, setStartDate] = useState(new Date(patient.treatmentDate));
 
   // 담당의 상태
 
   // 다른 의사들
   const [doctors, setDoctors] = useState(getDoctors);
   // 선택된 의사
-  const [newDoctor, setNewDoctor] = useState(patient.Patient_Doctor);
+  const [newDoctor, setNewDoctor] = useState(patient.doctorName);
 
   const changeNewDoctor = (event) => {
     setNewDoctor(event.target.value);
@@ -48,7 +55,7 @@ function RegisterUpdateForm(props) {
 
   // 진료 시간 상태
 
-  const [newTime, setNewTime] = useState(patient.Patient_Time);
+  const [newTime, setNewTime] = useState(patient.treatmentTime);
 
   const changeNewTime = (event) => {
     setNewTime(event.target.value);
@@ -56,7 +63,7 @@ function RegisterUpdateForm(props) {
 
   // 접수 메모 상태
 
-  const [newMemo, setNewMemo] = useState(patient.Patient_Memo);
+  const [newMemo, setNewMemo] = useState(patient.treatmentMemo);
 
   const changeNewMemo = (event) => {
     setNewMemo(event.target.value);
@@ -64,7 +71,7 @@ function RegisterUpdateForm(props) {
 
   // 의사소통 메모 상태
 
-  const [newCommunication, setNewCommunication] = useState(patient.Patient_Communication);
+  const [newCommunication, setNewCommunication] = useState(patient.communicationMemo);
 
   const changeNewCommunication = (event) => {
     setNewCommunication(event.target.value);
@@ -86,7 +93,7 @@ function RegisterUpdateForm(props) {
                 환자명:
               </div>
               <div className="RegisterUpdateForm_content_list_input">
-                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={patient.Patient_Name} readOnly />
+                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={patient.patientName} readOnly />
               </div>
             </div>
             <div className="RegisterUpdateForm_content_list">
@@ -94,7 +101,7 @@ function RegisterUpdateForm(props) {
                 생년월일:
               </div>
               <div className="RegisterUpdateForm_content_list_input">
-                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={patient.Patient_Birth} readOnly />
+                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={patient.patientBirth} readOnly />
               </div>
             </div>
             <div className="RegisterUpdateForm_content_list">
@@ -102,7 +109,7 @@ function RegisterUpdateForm(props) {
                 전화번호:
               </div>
               <div className="RegisterUpdateForm_content_list_input">
-                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={patient.Patient_Tel} readOnly/>
+                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={patient.patientTel} readOnly/>
               </div>
             </div>
             <div className="RegisterUpdateForm_content_list">
@@ -167,8 +174,8 @@ function RegisterUpdateForm(props) {
           </form>
           {/* 수정 취소 버튼 */}
           <div className="RegisterUpdateForm_content_button">
-            <button className="button_team2_fill" type="submit">수정</button>
-            <button className="button_team2_empty">취소</button>
+            <button className="button_team2_fill" type="submit" onClick={updateRegister} >수정</button>
+            <button className="button_team2_empty" onClick={cancelRegisterForm} >취소</button>
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ function getDoctors() {
   const doctors = [];
   for (var i = 1; i <= 5; i++) {
     doctors.push({
-      Doctor_Name: "김더존(D13801001001)_" + i,
+      doctorName: "김더존(D13801001001)_" + i,
     });
   }
   return doctors;
@@ -67,7 +67,7 @@ function RegisterCreateForm(props) {
                 {/* 임의의 데이터 넣어서 출력 해보기 */}
                 {doctors.map(doctor => {
                   return (
-                    <option key={doctor.Doctor_Name} value={doctor.Doctor_Name}>{doctor.Doctor_Name}</option>
+                    <option key={doctor.doctorName} value={doctor.doctorName}>{doctor.doctorName}</option>
                   );
                 })}
               </select>

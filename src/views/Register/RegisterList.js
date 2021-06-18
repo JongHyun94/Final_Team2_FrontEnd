@@ -13,43 +13,43 @@ function getRegisters() {
     // 컬럼 : 순번(index), 예약시간, 접수번호(pk), 환자명, 생년월일, 성별, 담당의, 접수메모, 의사소통메모, 접수상태
     registers.push({
       index: i,
-      REGISTER_TIME: "10:" + i,
-      REGISTER_ID: "10000" + i,
-      Patient_Name: "환자" + i,
-      Patient_Birth: "" + i,
-      Sex: "F",
-      Doctor_Name: "의사" + i,
-      REGISTER_MEMO: "메모" + i,
-      REGISTER_COMMUNICATION: "의사소통메모" + i,
-      REGISTER_STATE: "대기"
+      registerTime: "10:" + i,
+      registerId: "10000" + i,
+      patientCode: "환자" + i,
+      patientBirth: "" + i,
+      patientSex: "F",
+      doctorName: "의사" + i,
+      registerMemo: "메모" + i,
+      registerCommunication: "의사소통메모" + i,
+      registerState: "대기"
     });
   }
   for (i ; i <= 100; i++) {
     registers.push({
       index: i,
-      REGISTER_TIME: "10:" + i,
-      REGISTER_ID: "10000" + i,
-      Patient_Name: "환자" + i,
-      Patient_Birth: "" + i,
-      Sex: "F",
-      Doctor_Name: "의사" + i,
-      REGISTER_MEMO: "메모" + i,
-      REGISTER_COMMUNICATION: "의사소통메모" + i,
-      REGISTER_STATE: "완료"
+      registerTime: "10:" + i,
+      registerId: "10000" + i,
+      patientCode: "환자" + i,
+      patientBirth: "" + i,
+      patientSex: "F",
+      doctorName: "의사" + i,
+      registerMemo: "메모" + i,
+      registerCommunication: "의사소통메모" + i,
+      registerState: "완료"
     });
   }
   for (i ; i <= 120; i++) {
     registers.push({
       index: i,
-      REGISTER_TIME: "10:" + i,
-      REGISTER_ID: "10000" + i,
-      Patient_Name: "환자" + i,
-      Patient_Birth: "" + i,
-      Sex: "M",
-      Doctor_Name: "의사" + i,
-      REGISTER_MEMO: "메모" + i,
-      REGISTER_COMMUNICATION: "의사소통메모" + i,
-      REGISTER_STATE: "취소"
+      registerTime: "10:" + i,
+      registerId: "10000" + i,
+      patientCode: "환자" + i,
+      patientBirth: "" + i,
+      patientSex: "M",
+      doctorName: "의사" + i,
+      registerMemo: "메모" + i,
+      registerCommunication: "의사소통메모" + i,
+      registerState: "취소"
     });
   }
   return registers;
@@ -61,11 +61,11 @@ function getRegistersState(registerList) {
   var count2 = 0;
   var count3 = 0;
   for (var i = 0; i < registerList.length; i++) {
-    if (registerList[i].REGISTER_STATE === "대기") {
+    if (registerList[i].registerState === "대기") {
       count1++;
-    } else if (registerList[i].REGISTER_STATE === "완료") {
+    } else if (registerList[i].registerState === "완료") {
       count2++;
-    } else if (registerList[i].REGISTER_STATE === "취소") {
+    } else if (registerList[i].registerState === "취소") {
       count3++;
     }
   }
@@ -174,17 +174,17 @@ function RegisterList(props) {
               {registerList.map(register => {
                 return (
                   <tr key={register.index}>
-                    <td><input type="checkbox" name="chk" value={register.REGISTER_ID} onChange={(event) => checkboxHandler(register.REGISTER_ID)} /></td>
+                    <td><input type="checkbox" name="chk" value={register.registerId} onChange={(event) => checkboxHandler(register.registerId)} /></td>
                     <td>{register.index}</td>
-                    <td>{register.REGISTER_TIME}</td>
-                    <td>{register.REGISTER_ID}</td>
-                    <td>{register.Patient_Name}</td>
-                    <td>{register.Patient_Birth}</td>
-                    <td>{register.Sex}</td>
-                    <td>{register.Doctor_Name}</td>
-                    <td>{register.REGISTER_MEMO}</td>
-                    <td>{register.REGISTER_COMMUNICATION}</td>
-                    <td>{register.REGISTER_STATE}</td>
+                    <td>{register.registerTime}</td>
+                    <td>{register.registerId}</td>
+                    <td>{register.patientCode}</td>
+                    <td>{register.patientBirth}</td>
+                    <td>{register.patientSex}</td>
+                    <td>{register.doctorName}</td>
+                    <td>{register.registerMemo}</td>
+                    <td>{register.registerCommunication}</td>
+                    <td>{register.registerState}</td>
                   </tr>
                 );
               })}
