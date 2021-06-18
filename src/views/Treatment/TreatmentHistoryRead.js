@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { TreatmentImgRead } from "./TreatmentImgRead";
+import React, { useState } from "react";
 
 
 function getBoards() {
@@ -32,6 +33,17 @@ function TreatmentHistoryRead(props) {
     const readResultImg = (event) => {
          console.log("보기가 클릭되었습니다.");
     };
+
+      // 모달 상태(open일 떄 true로 바뀌어 열림)
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  }
+
     return(
 
        <div>
@@ -126,7 +138,12 @@ function TreatmentHistoryRead(props) {
                                 <td>{boardlist.inspectionname}</td>
                                 <td>{boardlist.inspectionref}</td>
                                 {boardlist.inspectioncategory ==="영상촬영"
-                                ?  <td> <button className="button_team2_empty" onClick={readResultImg}>보기</button></td>
+                                ?                                 
+                                <td><React.Fragment> <button className="button_team2_empty"  onClick={openModal} >보기</button>
+                                <TreatmentImgRead open={modalOpen} close={closeModal} inspectionImg="xray01.jpg" inspection_list_name={boardlists[5].inspectionname}
+                                 inspection_list_category={boardlists[5].inspectioncategory} 
+                                inspection_treatment_id="50546" inspection_date={boardlists[5].inspectiondate}>모달 내용</TreatmentImgRead>
+                                </React.Fragment></td>
                                 : <td>{boardlist.inspectionresult}</td>
                                 }
                             </tr>

@@ -1,4 +1,17 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { TreatmentSearchPop } from "./TreatmentSearchPop";
+
+// function getDrugList() {
+//   const druglists = [
+//       {drug_injection_id:"NIZA15", drug_injection_name:"AXID Cap 150mg",drug_injection_state:"약품"},
+//       {drug_injection_id:"IRES", drug_injection_name:"IRESSA Tab 250mg",drug_injection_state:"약품"},
+//       {drug_injection_id:"ROPIN1", drug_injection_name:"ONIROL Tab 1mg",drug_injection_state:"약품"},
+//       {drug_injection_id:"ROXN", drug_injection_name:"ROXAN Cap 75mg",drug_injection_state:"주사"},
+//       {drug_injection_id:"NIZA15", drug_injection_name:"AXID Cap 150mg",drug_injection_state:"약품"},
+//       {drug_injection_id:"NIZA15", drug_injection_name:"AXID Cap 150mg",drug_injection_state:"약품"},
+//   ];
+//   return druglists;
+// }
 
 function TreatmentCreateForm(props) {
 
@@ -16,8 +29,8 @@ function TreatmentCreateForm(props) {
         inspectioncategory:"",
         inspection:[]
       });
-
-
+      // const [druglists, setDrugLists] = useState(getDrugList);
+  
 
     const handleChange1 = (event) => {
         console.log("Subjective:",event.target.value);
@@ -40,8 +53,6 @@ function TreatmentCreateForm(props) {
         console.log("Memo:",event.target.value);
         setContent5(event.target.value);
       }
-
-
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("접수완료 : ",inspectionlist);
@@ -84,13 +95,27 @@ function TreatmentCreateForm(props) {
         console.log("팝업이 클릭되었습니다.");
       };
 
+            // 모달 상태(open일 떄 true로 바뀌어 열림)
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  }
+
+const readdruglist = () => {}
+
     return (
 
         <div>
             <form onSubmit={handleSubmit}>
             <div className="TreatmentCreateForm_title">
               진료 등록
-              <span className="TreatmentCreateForm_pop"><img src="/resources/img/pngwing.com.png" alt="" width={30}  onClick={readpopuplist}></img></span>
+              <React.Fragment> <span className="TreatmentCreateForm_pop"><img src="/resources/img/pngwing.com.png" alt="" width={30}  onClick={openModal}></img></span>
+              <TreatmentSearchPop open={modalOpen} close={closeModal} >모달 내용</TreatmentSearchPop>
+              </React.Fragment>
             </div>
             <div className="TreatmentCreateForm_border border">
                       <div className="TreatmentCreateForm_1">
@@ -110,7 +135,9 @@ function TreatmentCreateForm(props) {
                                   <div className="TreatmentCreateForm_1_1_title">
                                   Assessment
                                   </div>
-                                  <textarea className="TreatmentCreateForm_1_1_content border" rows="4" cols="40" onChange={handleChange3} value={content3}>
+                                  <textarea
+                                  
+                                  extarea className="TreatmentCreateForm_1_1_content border" rows="4" cols="40" onChange={handleChange3} value={content3}>
                                       당일 검사 요청
                                   </textarea>
                                   <div className="TreatmentCreateForm_1_1_title">

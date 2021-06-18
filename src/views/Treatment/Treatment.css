@@ -319,3 +319,28 @@
 .TreatmentHistoryRead_2_table_thead {
   background-color: lightgray;
 }
+.TreatmentImgRead_1{
+  display: flex;
+  flex-direction: row;
+  /* width: 100%; */
+ 
+}
+
+.TreatmentImgRead_1_1{
+
+  font-size: 5px;
+  /* margin-right: 50px; */
+  background-color: brown;
+}
+
+.TreatmentImgRead_1_2{
+background-color: cadetblue;
+/* width: 50%; */
+/* height: 50%; */
+}
+.TreatmentImgRead_1_1_1{
+background-color: coral;
+}
+.TreatmentImgRead_1_1_2{
+  background-color: cornflowerblue
+}
