@@ -2,11 +2,11 @@ import React, { useState } from "react";
 
 const PatientContext = React.createContext({
   patientId: "",
-  setPatientId: function(patientId) {}
+  setPatientId: () => {}
 });
 
 export function PatientContextProvider(props) {
-  const [patientId, setPatientId] = useState("011");
+  const [patientId, setPatientId] = useState("");
   const value = {
     patientId: patientId,
     setPatientId: setPatientId

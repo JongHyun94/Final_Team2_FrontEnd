@@ -1,23 +1,30 @@
-import { useContext, useState } from "react";
+import { Modal } from "./AddressModal";
+import React, { useContext, useState } from "react";
 import PatientContext from "./PatientContext";
-import style from "./style.module.css";
 
 function PatientUpdateForm(props) {
   const patientContext = useContext(PatientContext);
+  const id = patientContext.patientId;
+  console.log("id: ", id);
 
-  // 환자 d상태
-  const [patientId, setPatientId] = useState(patientContext.patientId);
-  console.log(patientContext);
+  // 환자 상태
+  const [patientId, setPatientId] = useState(id);
+  console.log("patientId:", patientId);
 
   // 환자 상태
   const [patient, setPatient] = useState({
     patientId: "",
-    patientName: "",
-    patientSsn: "",
-    patientSex: "",
-    patientTel: "",
-    patientAddress: "",
-    patientRegDate: ""
+    patientName: "홍길동",
+    patientSsn: "910612",
+    patientSex: "M",
+    patientTel1: "010",
+    patientTel2: "1234",
+    patientTel3: "5678", 
+    paritentZipcode: "01234", 
+    paritentAddress: "서울시 송파구", 
+    paritentDetailAddress1: "12층 1강의실", 
+    paritentDetailAddress2: "아이티벤처타워",
+    patientRegDate: "2021-06-01"
   });
 
   const handleChange = (event) => {
@@ -34,14 +41,31 @@ function PatientUpdateForm(props) {
     console.log(updatePatient);
   }; 
 
+  // 모달 상태(open일 떄 true로 바뀌어 열림)
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = (event) => {
+    event.preventDefault();
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  // 주소
+  const getAddress = (event) => {
+    props.handleComplete();
+    console.log(props);
+  }
+
   return (
     <div>
-      <div className={`${style.title}`}>환자 정보 수정</div>
-      <div className={`border p-3 ${style.PatientUpdateForm}`}>
+      <div className={`title`}>환자 정보 수정</div>
+      <div className={`border p-3 PatientUpdateForm`}>
         <form>
           <div className="row align-items-center mb-2">
             <label className="col-sm-3 pl-3 p-0 m-0">환자 코드: </label>
-            <div className="col-sm d-flex ">{patient.patientId}</div>
+            <div className="col-sm d-flex ">{patientId}</div>
           </div>
           <div className="row align-items-center mb-2">
             <label className="col-sm-3 pl-3 p-0 m-0">환자명: </label>
@@ -92,7 +116,10 @@ function PatientUpdateForm(props) {
             <div className="col-sm">
               <div className="row mb-2"> 
                 <input type="text" className="col-sm-2 ml-3" name="paritentZipcode" value={patient.paritentZipcode} placeholder="우편번호" onChange={handleChange}></input>
-                <button className="button_team2_empty">우편번호 찾기</button>
+                <React.Fragment>
+                  <button className="button_team2_empty" onClick={openModal}>우편번호 찾기</button>
+                  <Modal open={modalOpen} close={closeModal}></Modal>
+                </React.Fragment>   
               </div>
               <input type="text" className=" mb-2" name="paritentAddress" value={patient.paritentAddress} placeholder="주소" onChange={handleChange}></input>
               <div className="row no-gutters mb-2">
