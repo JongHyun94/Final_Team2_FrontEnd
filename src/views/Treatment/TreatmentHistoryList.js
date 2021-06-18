@@ -44,7 +44,7 @@ function TreatmentHistoryList(props) {
            진료기록
            </div>
            <div className="TreatmentHistoryList_border border">
-
+            <div className="TreatmentHistoryList_Totaltable">
             <table className="table table-bordered TreatmentHistoryList_table">
                 <thead className="TreatmentHistoryList_table_thead">
                     <tr>
@@ -84,6 +84,7 @@ function TreatmentHistoryList(props) {
                    
                 </tbody>
             </table>
+            </div>
         </div>
         </div> 
     );

@@ -24,10 +24,14 @@ function InspectionImgCreateForm(props) {
     event.preventDefault();
 
     const formData = new FormData();
+    console.log(formData);
     formData.append("inspection_id", inspectionImgResult.inspection_id);
     formData.append("battach", inputFile.current.files[0]);
 
-    console.log(formData);
+    // formData 콘솔 찍는 법
+    // for (let value of formData.values()) {
+    //   console.log(value);
+    // }
   };
 
   return (

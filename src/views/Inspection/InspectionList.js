@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { InspectionBarcodePop } from "./InspectionBarcodePop";
+import React, { useState } from "react";
 
 function getInspections() {
   const inspections = [];
@@ -10,13 +11,10 @@ function getInspections() {
 
 function InspectionList(props) {
   const [inspections, setInspections] = useState(getInspections);
-  //검사결과, 검사상태 state 추가
+  //총검사상태가 모두 완료될 때 변하는 state 추가
 
-  const barcodBtn = (event) => {
-    //검사결과: 대기 ~> 검사중
-    //팝업창
-    console.log("바코드 출력 버튼 클릭");
-  };
+  // 모달 상태(open일 떄 true로 바뀌어 열림)
+  const [modalOpen, setModalOpen] = useState(false);
 
   const cancelBtn = (event) => {
     //검사결과: 검사중 ~> 대기
@@ -33,6 +31,20 @@ function InspectionList(props) {
     console.log("검사 완료 버튼 클릭");
   };
 
+  const openModal = () => {
+    setModalOpen(true);
+    console.log("바코드 출력 버튼 클릭");
+  };
+  const closeCheckModal = () => {
+    //검사결과: 대기 ~> 검사중
+    setModalOpen(false);
+    console.log("확인 버튼 클릭");
+  }
+  const closeCancelModal = () => {
+    setModalOpen(false);
+    console.log("취소 버튼 클릭");
+  }
+
   return (
     <div className="InspectionList">
       <div className="InspectionList_title">
@@ -40,7 +52,10 @@ function InspectionList(props) {
       </div>
       <div className="InspectionList_1 border">
         <div className="InspectionList_1_1">
-          <button className="button_team2_fill InspectionList_1_2" onClick={barcodBtn}>바코드 출력</button>
+          <React.Fragment>
+            <button className="button_team2_fill InspectionList_1_2" onClick={openModal}>바코드 출력</button>
+            <InspectionBarcodePop open={modalOpen} closeCheck={closeCheckModal} closeCancel={closeCancelModal} barcodeImg="barcode01.png" inspection_list_name={inspections[0].inspection_list_name} patient_name="김환자" inspection_inspector_name={inspections[0].inspection_inspector_name}/>
+          </React.Fragment>  
           <button className="button_team2_empty InspectionList_1_2" onClick={cancelBtn}>접수 취소</button>
           <button className="button_team2_fill InspectionList_1_2" onClick={excelSaveBtn}>엑셀 저장</button>
           <button className="button_team2_empty InspectionList_1_2" onClick={completeBtn}>검사 완료</button>
