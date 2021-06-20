@@ -28,6 +28,17 @@ function RegisterPatientList(props) {
     );
   };
 
+  // 선택된 환자 상태
+  const [selectedPatient, setSelectedPatient] = useState();
+
+  const handlePatient = (patientCode) => {
+    if(patientCode === selectedPatient){
+      setSelectedPatient("");
+    } else {
+      setSelectedPatient(patientCode);
+      console.log(patientCode);
+    }
+  };
   return (
     <div className="RegisterPatientList">
       <div className="RegisterPatientList_header">
@@ -58,8 +69,8 @@ function RegisterPatientList(props) {
               {/* 임의의 데이터 넣어서 출력 해보기 */}
               {patientList.map(patient => {
                 return (
-                  <tr key={patient.patientCode}>
-                    <td><input type="checkbox" name="chk" value={patient.patientCode}/></td>
+                  <tr key={patient.patientCode} className="RegisterPatientList_content_table_tr" onClick={()=>handlePatient(patient.patientCode)}>
+                    <td><input type="checkbox" name="chk" checked={selectedPatient === patient.patientCode? true : false} /></td>
                     <td>{patient.patientCode}</td>
                     <td>{patient.patientName}</td>
                     <td>{patient.patientBirth}</td>

@@ -1,5 +1,4 @@
 import "./Register.css";
-// import { AutoSizer, List } from "react-virtualized";
 import DatePicker from "react-datepicker";
 import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
@@ -96,21 +95,18 @@ function RegisterList(props) {
     
   };
 
+  // 선택된 접수 상태
+  const [selectedRegister, setSelectedRegister] = useState();
+
   // 체크박스 클릭시 체크 됨
-  const checkboxHandler = (item) => {
-    console.log(item);
-  }
-
-  // const rowRenderer = ({index, key, style}) => {
-  //   return (
-  //     <div key={key} style={style}>
-  //       <BoardListItem board={boards[index]} 
-  //                      changeBoard={changeBoard} 
-  //                      removeBoard={removeBoard}/>        
-  //     </div>
-  //   );
-  // };
-
+  const checkboxHandler = (registerId) => {
+    if(registerId === selectedRegister){
+      setSelectedRegister("");
+    } else {
+      setSelectedRegister(registerId);
+      console.log(registerId);
+    }
+  };
 
   const [dateForRegister, setDateForRegister] = useState(new Date());
   return (
@@ -173,8 +169,8 @@ function RegisterList(props) {
               {/* 임의의 데이터 넣어서 출력 해보기 */}
               {registerList.map(register => {
                 return (
-                  <tr key={register.index}>
-                    <td><input type="checkbox" name="chk" value={register.registerId} onChange={(event) => checkboxHandler(register.registerId)} /></td>
+                  <tr key={register.index} className="RegisterList_content_2_tr" onClick={(event) => checkboxHandler(register.registerId)}>
+                    <td><input type="checkbox" name="chk" checked={selectedRegister === register.registerId? true : false}/></td>
                     <td>{register.index}</td>
                     <td>{register.registerTime}</td>
                     <td>{register.registerId}</td>
@@ -188,72 +184,6 @@ function RegisterList(props) {
                   </tr>
                 );
               })}
-              {/* <AutoSizer disableHeight>
-                {({ width, height }) => {
-                  return (
-                    <List width={width} height={300}
-                      list={boards}
-                      rowCount={boards.length}
-                      rowHeight={40}
-                      rowRenderer={rowRenderer}
-                      overscanRowCount={5}
-                    // style={{outline:"none"}}
-                    />
-                  );
-                }}
-              </AutoSizer> */}
-              {/* <tr>
-                <td><input type="checkbox"/></td>
-                <td>1</td>
-                <td>10:30</td>
-                <td>33333</td>
-                <td>박빛나</td>
-                <td>960903</td>
-                <td>F</td>
-                <td>나의사</td>
-                <td>접수 메모</td>
-                <td>의사소통 메모</td>
-                <td>접수 상태</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" /></td>
-                <td>2</td>
-                <td>11:30</td>
-                <td>33334</td>
-                <td>이종현</td>
-                <td>940606</td>
-                <td>M</td>
-                <td>나의사</td>
-                <td>접수 메모</td>
-                <td>의사소통 메모</td>
-                <td>접수 상태</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" /></td>
-                <td>3</td>
-                <td>12:30</td>
-                <td>33335</td>
-                <td>민지현</td>
-                <td>960119</td>
-                <td>F</td>
-                <td>나의사</td>
-                <td>접수 메모</td>
-                <td>의사소통 메모</td>
-                <td>접수 상태</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" /></td>
-                <td>4</td>
-                <td>13:30</td>
-                <td>33336</td>
-                <td>윤서영</td>
-                <td>960708</td>
-                <td>F</td>
-                <td>나의사</td>
-                <td>접수 메모</td>
-                <td>의사소통 메모</td>
-                <td>접수 상태</td>
-              </tr> */}
             </tbody>
           </table>
         </div>
