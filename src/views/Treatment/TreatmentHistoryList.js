@@ -5,7 +5,7 @@ import { AutoSizer, List } from "react-virtualized";
 function getBoards() {
     const boards = [];
     for(var i = 10; i >=1; i--){
-        boards.push({b1: i, b2:"aed158"+i,b3:"aed158", b4:"나의사"+i, b5:"메모"+i});
+        boards.push({b1: i, b2:"aed158"+i,b3:"2021-06-01", b4:"나의사"+i, b5:"메모"+i});
     }
     return boards;
 
