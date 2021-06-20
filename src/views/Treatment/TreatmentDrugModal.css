@@ -1,5 +1,5 @@
 
-.TreatmentImgReadmain > .modal {
+.TreatmentDrugmodal > .modal {
   display: none;
   position: fixed;
   top: 0;
@@ -10,15 +10,15 @@
   background-color: rgba(0, 0, 0, 0.6);
 
 }
-.TreatmentImgReadmain > .modal > button {
+.TreatmentDrugmodal > .modal > button {
   /* outline: none; */
   cursor: pointer;
   border: 0;
 }
-.TreatmentImgReadmain > .modal > section {
+.TreatmentDrugmodal > .modal > section {
   width: 100%;
-  /* max-width: 450px; */
-  /* margin:0 auto; */
+  max-width: 450px;
+  margin:0 auto;
   border-radius: .3rem;
   background-color: #fff;
   /* 팝업이 열릴때 스르륵 열리는 효과 */
@@ -26,20 +26,20 @@
   overflow: hidden;
 }
 
-.TreatmentImgReadmain > .modal > section > main {
+.TreatmentDrugmodal > .modal > section > main {
   padding: 16px;
-  /* border-bottom: 1px solid #dee2e6;
-  border-top: 1px solid #dee2e6; */
+  border-bottom: 1px solid #dee2e6;
+  border-top: 1px solid #dee2e6;
 }
 
-.TreatmentImgReadmain > .modal > section > main> button {
+.TreatmentDrugmodal > .modal > section > main> button {
   padding: 6px 12px;
   color: #fff;
   background-color: #6c757d;
   border-radius: 5px;
   font-size: 13px;
 }
-.TreatmentImgReadmain.modal.openModal {
+.TreatmentDrugmodal > .modal.openModal {
   display: flex;
   align-items: center;
   /* 팝업이 열릴때 스르륵 열리는 효과 */

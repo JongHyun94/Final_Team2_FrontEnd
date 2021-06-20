@@ -1531,6 +1531,7 @@
     "@react-spring/web" "9.1.2"
     lodash "^4.17.11"
 
+<<<<<<< HEAD
 "@nivo/arcs@0.70.1":
   version "0.70.1"
   resolved "https://registry.yarnpkg.com/@nivo/arcs/-/arcs-0.70.1.tgz#7a4bba83440724e9d1941f01921a1ee037343f0c"
@@ -1540,6 +1541,8 @@
     "@react-spring/web" "9.1.2"
     d3-shape "^1.3.5"
 
+=======
+>>>>>>> 3a05922716bee83d44104d9b3c4598fa63cd0a5b
 "@nivo/axes@0.70.1":
   version "0.70.1"
   resolved "https://registry.yarnpkg.com/@nivo/axes/-/axes-0.70.1.tgz#219bb7d0e76b1c516e0ac183af81186b02c22372"
@@ -1602,6 +1605,7 @@
   resolved "https://registry.yarnpkg.com/@nivo/legends/-/legends-0.70.1.tgz#78d4eb6f4257f14d5a4fc4981e3b72305977a2d4"
   integrity sha512-a+syic9S/PcnnGgeNCjgxgdnsXJ6tXEDrk+rTpOgFVRHBlqVa1TPT+HUGaDixqLv458RoVIbZmsr2RPTHvFF7Q==
 
+<<<<<<< HEAD
 "@nivo/pie@^0.70.1":
   version "0.70.1"
   resolved "https://registry.yarnpkg.com/@nivo/pie/-/pie-0.70.1.tgz#474cc66ec9d1834e4c80007dcdc74d18850d2f4c"
@@ -1613,6 +1617,8 @@
     "@nivo/tooltip" "0.70.1"
     d3-shape "^1.3.5"
 
+=======
+>>>>>>> 3a05922716bee83d44104d9b3c4598fa63cd0a5b
 "@nivo/recompose@0.70.0":
   version "0.70.0"
   resolved "https://registry.yarnpkg.com/@nivo/recompose/-/recompose-0.70.0.tgz#74c44ab0cb0f6f59e9cea91a9dd2dea1fb6fa405"
@@ -1932,18 +1938,6 @@
   integrity sha512-IR0iWbFkgd56Bu5ZI/ej8yQwrkCv8Qydx6RzwbKz9faXazR/+5tvYKsZQgyXJiwgpcva127YO6JcWy7YlCfofQ==
   dependencies:
     "@babel/runtime" "^7.12.5"
-
-"@toast-ui/chart@^4.3.2":
-  version "4.3.4"
-  resolved "https://registry.yarnpkg.com/@toast-ui/chart/-/chart-4.3.4.tgz#a5caa3becba58fb7e55c9fe9e04ddaea93fcc98a"
-  integrity sha512-WotuMGTJO7N8k7FoZar0oy7nWZP1ST1nj1wpTUWrcnfN4pSH06ihQFvg5n4pK+POzeaU4PfvmKNXhN2QUtJ4Zg==
-
-"@toast-ui/react-chart@^4.3.4":
-  version "4.3.4"
-  resolved "https://registry.yarnpkg.com/@toast-ui/react-chart/-/react-chart-4.3.4.tgz#5596ff32082fe5fac44332c4bb84036baa550f18"
-  integrity sha512-B7IJhSLlt3wt02Sw8ZJRHQPApOkeq7wV5DVSxlcfTCV6k3yjQ6DndvmbvuT1NNBgebNRIrHH/rY1o66GZP2Edg==
-  dependencies:
-    "@toast-ui/chart" "^4.3.2"
 
 "@types/anymatch@*":
   version "1.3.1"

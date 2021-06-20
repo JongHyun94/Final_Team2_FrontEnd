@@ -41,22 +41,24 @@ export const Modal = (props) => {
   }
 
   return(
-    <div className={open ? 'openModal modal':'modal'}>
-      {open? (
-        <section className="content">
-          <main>
-            <DaumPostcode
-              onComplete={handleComplete & close} 
-              { ...props }
-            />
-          </main>
-          <footer>
-            <div className="d-flex justify-content-end m-2">
-              <button className="button_team2_empty" onClick={close}>닫기</button>
-            </div>
-          </footer>
-        </section>
-      ):null}
+    <div className="patientModal">
+      <div className={open ? 'openModal modal':'modal'}>
+        {open? (
+          <section className="content">
+            <main>
+              <DaumPostcode
+                onComplete={handleComplete & close} 
+                { ...props }
+              />
+            </main>
+            <footer>
+              <div className="d-flex justify-content-end m-2">
+                <button className="button_team2_empty" onClick={close}>닫기</button>
+              </div>
+            </footer>
+          </section>
+        ):null}
+      </div>
     </div>
   )
 }

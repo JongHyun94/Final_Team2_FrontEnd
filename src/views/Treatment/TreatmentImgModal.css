@@ -1,4 +1,5 @@
-.patientModal > .modal {
+
+.TreatmentImgmodal > .modal {
   display: none;
   position: fixed;
   top: 0;
@@ -7,12 +8,16 @@
   left: 0;
   z-index: 99;
   background-color: rgba(0, 0, 0, 0.6);
+
 }
-.patientModal > .modal > section {
-  width: 100%;
-  max-width: 600px; 
-  height: 100%;
-  max-height: 500px;
+/* .TreatmentImgmodal > .modal > button {
+  outline: none;
+  cursor: pointer;
+  border: 0;
+} */
+.TreatmentImgmodal > .modal > section {
+  /* width: 100%; */
+  max-width: 1000px;
   margin:0 auto;
   border-radius: .3rem;
   background-color: #fff;
@@ -21,12 +26,20 @@
   overflow: hidden;
 }
 
-.patientModal > .modal > section > main {
+/* .TreatmentImgmodal > .modal > section {
   padding: 16px;
   border-bottom: 1px solid #dee2e6;
   border-top: 1px solid #dee2e6;
-}
-.patientModal > .modal.openModal {
+} */
+
+/* .TreatmentImgmodal > .modal > section > button {
+  padding: 6px 12px;
+  color: #fff;
+  background-color: #6c757d;
+  border-radius: 5px;
+  font-size: 13px;
+} */
+.TreatmentImgmodal > .modal.openModal {
   display: flex;
   align-items: center;
   /* 팝업이 열릴때 스르륵 열리는 효과 */
@@ -35,7 +48,7 @@
 @keyframes modal-show {
   from {
       opacity: 0;
-      /* margin-top: -50px; */
+      margin-top: -50px;
   }
   to {
       opacity: 1;
