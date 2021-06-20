@@ -39,6 +39,10 @@ function RegisterPatientList(props) {
       console.log(patientCode);
     }
   };
+
+  const handleSearch = () => {
+    console.log("입력된 내용:" + searchContent);
+  };
   return (
     <div className="RegisterPatientList">
       <div className="RegisterPatientList_header">
@@ -50,7 +54,7 @@ function RegisterPatientList(props) {
             <input type="text" className="RegisterPatientList_search_input_1" placeholder="이름/생년월일을 입력해 주세요." value={searchContent} onChange={changeSearchContent} />
           </div>
           <div className="RegisterPatientList_search_button">
-            <button className="button_team2_fill">검색</button>
+            <button className="button_team2_fill" onClick={handleSearch}>검색</button>
           </div>
         </div>
         <div className="RegisterPatientList_content_table">
@@ -79,45 +83,6 @@ function RegisterPatientList(props) {
                   </tr>
                 );
               })}
-              {/* <tr>
-                <td><input type="checkbox" /></td>
-                <td>326521</td>
-                <td>민지현</td>
-                <td>020603</td>
-                <td>F</td>
-                <td>010-1111-1111</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" /></td>
-                <td>326521</td>
-                <td>민지현</td>
-                <td>020603</td>
-                <td>F</td>
-                <td>010-1111-1111</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" /></td>
-                <td>326521</td>
-                <td>민지현</td>
-                <td>020603</td>
-                <td>F</td>
-                <td>010-1111-1111</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" /></td>
-                <td>326521</td>
-                <td>민지현</td>
-                <td>020603</td>
-                <td>F</td>
-                <td>010-1111-1111</td>
-              </tr>            <tr>
-                <td><input type="checkbox" /></td>
-                <td>326521</td>
-                <td>민지현</td>
-                <td>020603</td>
-                <td>F</td>
-                <td>010-1111-1111</td>
-              </tr> */}
             </tbody>
           </table>
         </div>
