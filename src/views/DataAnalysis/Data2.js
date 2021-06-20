@@ -60,7 +60,7 @@ function Data2(props) {
           },
         ]}
       />
-      <div>검사 현황</div>
+      <div className="text-center">검사 현황</div>
     </div>
   );
 }
