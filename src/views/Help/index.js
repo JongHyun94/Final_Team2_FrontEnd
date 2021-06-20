@@ -17,7 +17,7 @@ function Help(props) {
         <div>원격 A/S</div>
         <div className={`icon`}><i className="bi bi-laptop"></i></div>
         <div></div>
-        <div className="text-center"><i class="bi bi-telephone mr-1" style={{"font-size":"1.6rem"}}></i>1688-6000</div>
+        <div className="text-center"><i className="bi bi-telephone mr-1" style={{"fontSize":"1.6rem"}}></i>1688-6000</div>
       </div>
     </div>
   );

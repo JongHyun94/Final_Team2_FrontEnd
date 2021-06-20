@@ -1,7 +1,28 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import style from "./style.module.css";
 
 function Login(props) {
+  // 유저 상태
+  const [user, setUser] = useState({
+    userId: "",
+    userPassword: ""
+  });
+
+  const handleChange = (event) => {
+    setUser({
+      ...user,
+      [event.target.name]: event.target.value
+    })
+  }
+
+  // 로그인
+  const login = (event) => {
+    event.preventDefault();
+    console.log("로그인 성공");
+    console.log(user);
+  };
+  
   return (
     <div className={`${style.box} row d-flex justify-content-center no-gutters`}>
       <div className={`${style.Login}`}>
@@ -10,16 +31,16 @@ function Login(props) {
           <div className="form-group row">
             <label className="col-sm-3 col-form-label">아이디</label>
             <div className="col-sm">
-              <input type="text" className="form-control" name=""></input>
+              <input type="text" className="form-control" name="userId" onChange={handleChange}></input>
             </div>
           </div>
           <div className="form-group row">
             <label className="col-sm-3 col-form-label">비밀번호</label>
             <div className="col-sm">
-              <input type="password" className="form-control" name=""></input>
+              <input type="text" className="form-control" name="userPassword" onChange={handleChange}></input>
             </div>
           </div>
-          <div className="d-flex justify-content-end"><button className="button_team2_fill">LOGIN</button></div>
+          <div className="d-flex justify-content-end"><button className="button_team2_fill" onClick={login}>LOGIN</button></div>
         </form>
       </div>
       <div>

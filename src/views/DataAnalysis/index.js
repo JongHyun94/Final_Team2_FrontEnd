@@ -8,7 +8,7 @@ function DataAnalysis(props) {
     <>
     <div>
       <div><Data1/></div>
-      <div><Data2/></div>
+      <div><Data2  /></div>
     </div>
     <div>
       <div><Data3/></div>
