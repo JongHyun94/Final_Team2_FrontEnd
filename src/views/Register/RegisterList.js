@@ -1,6 +1,6 @@
 import "./Register.css";
 import DatePicker from "react-datepicker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 
@@ -77,7 +77,7 @@ function getRegistersState(registerList) {
 
 function RegisterList(props) {
   // 접수 날짜 검색
-  const [startDate, setStartDate] = useState(new Date());
+  const [dateForRegister, setDateForRegister] = useState(new Date());
 
   // 접수 목록 상태
   const [registerList, setRegisterList] = useState(getRegisters);
@@ -85,15 +85,24 @@ function RegisterList(props) {
   // 접수 상태 (대기, 완료, 취소)
   const [registerState, setRegisterState] = useState(() => getRegistersState(registerList));
 
-  const [registerStateReady, setRegisterStateReady] = useState(registerState[0]);
-  const [registerStateFinish, setRegisterStateFinish] = useState(registerState[1]);
-  const [registerStateCancel, setRegisterStateCancel] = useState(registerState[2]);
-
-
   // 진료 상태 대기 -> 완료로 
-  const changeRegisterStateToFinish = () => {
-    
+  const changeRegisterStateToFinish = (registerId) => {
+    console.log(registerId);
+    const newRegisters = registerList.map(register => {
+      if(register.registerId === registerId){
+        const newRegister = {...register, registerState: "완료"};
+        return newRegister;
+      } else {
+        return register;
+      }
+
+    });
+    setRegisterList(newRegisters);
   };
+  // registerList가 바뀔때 상태값 바꾸기
+  useEffect(()=>{
+    setRegisterState(getRegistersState(registerList));
+  },[registerList]);
 
   // 선택된 접수 상태
   const [selectedRegister, setSelectedRegister] = useState();
@@ -108,7 +117,6 @@ function RegisterList(props) {
     }
   };
 
-  const [dateForRegister, setDateForRegister] = useState(new Date());
   return (
     <div>
       {/* 상단 메뉴 이름 + 버튼 */}
@@ -126,7 +134,7 @@ function RegisterList(props) {
         <div className="RegisterList_content_1">
           <div className="RegisterList_content_1_1">
             <div>
-              <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+              <DatePicker selected={dateForRegister} onChange={(date) => setDateForRegister(date)} />
             </div>
             <div>
               <button className="button_team2_fill">이동</button>
@@ -134,17 +142,17 @@ function RegisterList(props) {
           </div>
           <div className="RegisterList_content_1_2">
             <div className="RegisterList_content_1_2_ready">
-              대기: {registerStateReady}명
+              대기: {registerState[0]}명
             </div>
             <div className="RegisterList_content_1_2_finish">
-              완료: {registerStateFinish}명
+              완료: {registerState[1]}명
             </div>
             <div className="RegisterList_content_1_2_cancel">
-              취소: {registerStateCancel}명
+              취소: {registerState[2]}명
             </div>
           </div>
           <div className="RegisterList_content_1_3">
-            <button className="button_team2_fill" onClick={changeRegisterStateToFinish}>접수 완료</button>
+            <button className="button_team2_fill" onClick={()=>changeRegisterStateToFinish(selectedRegister)}>접수 완료</button>
           </div>
         </div>
         {/* 접수 내역 테이블 */}
