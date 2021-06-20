@@ -358,14 +358,10 @@ background-color: coral;
   /* height: 100%; */
 }
 .TreatmentImgRead_1_1{
-  /* display: flex;
-  flex-direction: row; */
-  /* justify-content: center;
-  align-items: center; */
-  /* border: 1px solid black; */
-  /* height: 40%;
-  margin-bottom: 10px; */
-  /* width: 100px; */
+
+  margin-right: 50px;
+  margin-top: 100px;
+  font-size: 30px;
 }
 .TreatmentImgRead_1_2{
   /* display: flex;
