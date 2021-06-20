@@ -7,9 +7,10 @@ import { Link } from "react-router-dom";
 
 // 임의의 접수 내역 목록 만들기
 function getRegisters() {
-  const registers = [];
+  const registers = [];// 컬럼 : 순번(index), 예약시간, 접수번호(pk), 환자명, 생년월일, 성별, 담당의, 접수메모, 의사소통메모, 접수상태
+
+  // 대기 상태 50개
   for (var i = 1; i <= 50; i++) {
-    // 컬럼 : 순번(index), 예약시간, 접수번호(pk), 환자명, 생년월일, 성별, 담당의, 접수메모, 의사소통메모, 접수상태
     registers.push({
       index: i,
       registerTime: "10:" + i,
@@ -23,28 +24,32 @@ function getRegisters() {
       registerState: "대기"
     });
   }
+  
+  // 완료 상태 50개
   for (i ; i <= 100; i++) {
     registers.push({
       index: i,
-      registerTime: "10:" + i,
+      registerTime: "11:" + (i - 50),
       registerId: "10000" + i,
       patientCode: "환자" + i,
       patientBirth: "" + i,
-      patientSex: "F",
+      patientSex: "M",
       doctorName: "의사" + i,
       registerMemo: "메모" + i,
       registerCommunication: "의사소통메모" + i,
       registerState: "완료"
     });
   }
+  
+  // 취소 상태 20개
   for (i ; i <= 120; i++) {
     registers.push({
       index: i,
-      registerTime: "10:" + i,
+      registerTime: "12:" + (i - 100),
       registerId: "10000" + i,
       patientCode: "환자" + i,
       patientBirth: "" + i,
-      patientSex: "M",
+      patientSex: "F",
       doctorName: "의사" + i,
       registerMemo: "메모" + i,
       registerCommunication: "의사소통메모" + i,
@@ -89,6 +94,7 @@ function RegisterList(props) {
   const changeRegisterStateToFinish = (registerId) => {
     console.log(registerId);
     const newRegisters = registerList.map(register => {
+      // 해당 아이디의 정보를 찾아서 수정
       if(register.registerId === registerId){
         const newRegister = {...register, registerState: "완료"};
         return newRegister;
