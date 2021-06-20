@@ -2,7 +2,7 @@ import React from "react";
 import "./modal.css";
 
 export const InspectionBarcodePop = (props) => {
-  const {open, closeCheck, closeCancel, barcodeImg, inspection_list_name, patient_name, inspection_inspector_name} = props;
+  const {open, closeCheck, closeCancel, barcodeImg, inspectionListName, patientName, inspectionInspectorName} = props;
 
   return(
     <div className="InspectionModal">
@@ -21,9 +21,9 @@ export const InspectionBarcodePop = (props) => {
                 <div>검사자 :</div>
               </div>
               <div>
-                <div className="mb-3">{inspection_list_name}</div>
-                <div className="mb-3">{patient_name}</div>
-                <div>{inspection_inspector_name}</div>
+                <div className="mb-3">{inspectionListName}</div>
+                <div className="mb-3">{patientName}</div>
+                <div>{inspectionInspectorName}</div>
               </div>
             </div>
             <div className="InspectionBarcodePop_1_3">

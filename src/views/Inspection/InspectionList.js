@@ -4,7 +4,7 @@ import React, { useState } from "react";
 function getInspections() {
   const inspections = [];
   for(var i=1; i<20; i++){
-    inspections.push({inspection_id:i, inspection_list_category:"Whole Blood", inspection_list_specimen:"EDTA Blood", inspection_list_name:"백혈구 백분율", inspection_result: "", inspection_list_reference: "4000~10000ul", inspection_date: "16:00", inspection_list_container: "EDTA", inspection_doctor_name: "김더존", inspection_inspector_name: "박더존", inspection_list_lab: "검사실1", inspection_state: "대기"});
+    inspections.push({inspectionId:i, inspectionListCategory:"Whole Blood", inspectionListSpecimen:"EDTA Blood", inspectionListName:"백혈구 백분율", inspectionResult: "", inspectionListReference: "4000~10000ul", inspectionDate: "16:00", inspectionListContainer: "EDTA", inspectionDoctorName: "김더존", inspectionInspectorName: "박더존", inspectionListLab: "검사실1", inspectionState: "대기"});
   }
   return inspections;
 }
@@ -59,7 +59,7 @@ function InspectionList(props) {
         <button className="button_team2_empty InspectionList_1_2" onClick={changeCreateForm}>검사결과등록변경(임의)</button>
           <React.Fragment>
             <button className="button_team2_fill InspectionList_1_2" onClick={openModal}>바코드 출력</button>
-            <InspectionBarcodePop open={modalOpen} closeCheck={closeCheckModal} closeCancel={closeCancelModal} barcodeImg="barcode01.png" inspection_list_name={inspections[0].inspection_list_name} patient_name="김환자" inspection_inspector_name={inspections[0].inspection_inspector_name}/>
+            <InspectionBarcodePop open={modalOpen} closeCheck={closeCheckModal} closeCancel={closeCancelModal} barcodeImg="barcode01.png" inspection_list_name={inspections[0].inspectionListName} patient_name="김환자" inspection_inspector_name={inspections[0].inspectionInspectorName}/>
           </React.Fragment>  
           <button className="button_team2_empty InspectionList_1_2" onClick={cancelBtn}>접수 취소</button>
           <button className="button_team2_fill InspectionList_1_2" onClick={excelSaveBtn}>엑셀 저장</button>
@@ -87,19 +87,19 @@ function InspectionList(props) {
             <tbody>
               {inspections.map(inspection => {
                 return(
-                  <tr key={inspection.inspection_id}>
+                  <tr key={inspection.inspectionId}>
                     <td><input type="checkbox"/></td>
-                    <td>{inspection.inspection_list_category}</td>
-                    <td>{inspection.inspection_list_specimen}</td>
-                    <td>{inspection.inspection_list_name}</td>
-                    <td>{inspection.inspection_result}</td>
-                    <td>{inspection.inspection_list_reference}</td>
-                    <td>{inspection.inspection_date}</td>
-                    <td>{inspection.inspection_list_container}</td>
-                    <td>{inspection.inspection_doctor_name}</td>
-                    <td>{inspection.inspection_inspector_name}</td>
-                    <td>{inspection.inspection_list_lab}</td>
-                    <td>{inspection.inspection_state}</td>
+                    <td>{inspection.inspectionListCategory}</td>
+                    <td>{inspection.inspectionListSpecimen}</td>
+                    <td>{inspection.inspectionListName}</td>
+                    <td>{inspection.inspectionResult}</td>
+                    <td>{inspection.inspectionListReference}</td>
+                    <td>{inspection.inspectionDate}</td>
+                    <td>{inspection.inspectionListContainer}</td>
+                    <td>{inspection.inspectionDoctorName}</td>
+                    <td>{inspection.inspectionInspectorName}</td>
+                    <td>{inspection.inspectionListLab}</td>
+                    <td>{inspection.inspectionState}</td>
                   </tr>
                 );
               })}

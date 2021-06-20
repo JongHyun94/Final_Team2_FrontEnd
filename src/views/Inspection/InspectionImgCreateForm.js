@@ -2,12 +2,12 @@ import { useRef, useState } from "react";
 
 function getInspectionImgResults() {
   const inspectionImgResults = {
-    inspection_list_category: "x-ray",
-    inspection_list_name: "흉부 촬영",
-    inspection_id: "2001",
-    inspection_doctor_name: "김더존",
-    inspection_inspector_name: "박더존",
-    inspection_list_lab: "검사실1"
+    inspectionListCategory: "x-ray",
+    inspectionListName: "흉부 촬영",
+    inspectionId: "2001",
+    inspectionDoctorName: "김더존",
+    inspectionInspectorName: "박더존",
+    inspectionListLab: "검사실1"
   };
   return inspectionImgResults;
 }
@@ -25,7 +25,7 @@ function InspectionImgCreateForm(props) {
 
     const formData = new FormData();
     console.log(formData);
-    formData.append("inspection_id", inspectionImgResult.inspection_id);
+    formData.append("inspection_id", inspectionImgResult.inspectionId);
     formData.append("battach", inputFile.current.files[0]);
 
     // formData 콘솔 찍는 법
@@ -51,12 +51,12 @@ function InspectionImgCreateForm(props) {
             <div>검사실 :</div>
           </div>
           <div className="col-6">
-            <div className="mb-1">{inspectionImgResult.inspection_list_category}</div>
-            <div className="mb-1">{inspectionImgResult.inspection_list_name}</div>
-            <div className="mb-1">{inspectionImgResult.inspection_id}</div>
-            <div className="mb-1">{inspectionImgResult.inspection_doctor_name}</div>
-            <div className="mb-1">{inspectionImgResult.inspection_inspector_name}</div>
-            <div>{inspectionImgResult.inspection_list_lab}</div>
+            <div className="mb-1">{inspectionImgResult.inspectionListCategory}</div>
+            <div className="mb-1">{inspectionImgResult.inspectionListName}</div>
+            <div className="mb-1">{inspectionImgResult.inspectionId}</div>
+            <div className="mb-1">{inspectionImgResult.inspectionDoctorName}</div>
+            <div className="mb-1">{inspectionImgResult.inspectionInspectorName}</div>
+            <div>{inspectionImgResult.inspectionListLab}</div>
             <div></div>
           </div>
         </div>

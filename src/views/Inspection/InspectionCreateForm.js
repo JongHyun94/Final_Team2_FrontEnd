@@ -2,12 +2,12 @@ import { useState } from "react";
 
 function getInspectionResults() {
   const inspectionResults = {
-    inspection_list_category: "x-ray",
-    inspection_list_name: "흉부 촬영",
-    inspection_id: "2001",
-    inspection_doctor_name: "김더존",
-    inspection_inspector_name: "박더존",
-    inspection_list_lab: "검사실1"
+    inspectionListCategory: "x-ray",
+    inspectionListName: "흉부 촬영",
+    inspectionId: "2001",
+    inspectionDoctorName: "김더존",
+    inspectionInspectorName: "박더존",
+    inspectionListLab: "검사실1"
   };
   return inspectionResults;
 }
@@ -43,12 +43,12 @@ function InspectionCreateForm(props) {
             <div>결과 :</div>
           </div>
           <div className="col-6">
-            <div className="mb-1">{inspectionResult.inspection_list_category}</div>
-            <div className="mb-1">{inspectionResult.inspection_list_name}</div>
-            <div className="mb-1">{inspectionResult.inspection_id}</div>
-            <div className="mb-1">{inspectionResult.inspection_doctor_name}</div>
-            <div className="mb-1">{inspectionResult.inspection_inspector_name}</div>
-            <div className="mb-1">{inspectionResult.inspection_list_lab}</div>
+            <div className="mb-1">{inspectionResult.inspectionListCategory}</div>
+            <div className="mb-1">{inspectionResult.inspectionListName}</div>
+            <div className="mb-1">{inspectionResult.inspectionId}</div>
+            <div className="mb-1">{inspectionResult.inspectionDoctorName}</div>
+            <div className="mb-1">{inspectionResult.inspectionInspectorName}</div>
+            <div className="mb-1">{inspectionResult.inspectionListLab}</div>
             <div><input type="text" onChange={handleResultChange} style={{width:"100%"}}/></div>
           </div>
         </div>

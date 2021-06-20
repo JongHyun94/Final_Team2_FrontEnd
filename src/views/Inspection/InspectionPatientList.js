@@ -5,10 +5,10 @@ import DatePicker from "react-datepicker";
 function getPatient() {
   const patients = [];
   for(var i=1000; i<=1010; i++){
-    patients.push({ treatment_id: i, patient_name: "환자" + i, patient_birth: "910111", patient_sex: "F", treatment_istate: "대기", treatment_communication: "의사소통메모" });
+    patients.push({ treatmentId: i, patientName: "환자" + i, patientBirth: "910111", patientSex: "F", treatmentIstate: "대기", treatmentCommunication: "의사소통메모" });
   }
   for(var i=1011; i<=1020; i++){
-    patients.push({ treatment_id: i, patient_name: "환자" + i, patient_birth: "910111", patient_sex: "F", treatment_istate: "완료", treatment_communication: "의사소통메모" });
+    patients.push({ treatmentId: i, patientName: "환자" + i, patientBirth: "910111", patientSex: "F", treatmentIstate: "완료", treatmentCommunication: "의사소통메모" });
   }
   return patients;
 }
@@ -113,14 +113,14 @@ function InspectionPatientList(props) {
             </AutoSizer> */}
             {patients.map(paitent => {
               return(
-                <tr key={paitent.treatment_id}>
+                <tr key={paitent.treatmentId}>
                   <td><input type="checkbox"/></td>
-                  <td>{paitent.treatment_id}</td>
-                  <td>{paitent.patient_name}</td>
-                  <td>{paitent.patient_birth}</td>
-                  <td>{paitent.patient_sex}</td>
-                  <td>{paitent.treatment_istate}</td>
-                  <td>{paitent.treatment_communication}</td>
+                  <td>{paitent.treatmentId}</td>
+                  <td>{paitent.patientName}</td>
+                  <td>{paitent.patientBirth}</td>
+                  <td>{paitent.patientSex}</td>
+                  <td>{paitent.treatmentIstate}</td>
+                  <td>{paitent.treatmentCommunication}</td>
                 </tr>
               );
             })}
