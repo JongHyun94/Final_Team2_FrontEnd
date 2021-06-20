@@ -1,5 +1,5 @@
 import React from "react";
-import "./modal.css";
+import "./InspectionModal.css";
 
 export const InspectionBarcodePop = (props) => {
   const {open, closeCheck, closeCancel, barcodeImg, inspectionListName, patientName, inspectionInspectorName} = props;
