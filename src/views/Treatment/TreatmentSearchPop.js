@@ -7,8 +7,8 @@ function getDrugList() {
     { drugInjectionId: "IRES", drugInjectionName: "IRESSA Tab 250mg", drugInjectionState: "약품" },
     { drugInjectionId: "ROPIN1", drugInjectionName: "ONIROL Tab 1mg", drugInjectionState: "약품" },
     { drugInjectionId: "ROXN", drugInjectionName: "ROXAN Cap 75mg", drugInjectionState: "주사" },
-    { drugInjectionId: "NIZA15", drugInjectionName: "AXID Cap 150mg", drugInjectionState: "약품" },
-    { drugInjectionId: "NIZA15", drugInjectionName: "AXID Cap 150mg", drugInjectionState: "약품" },
+    { drugInjectionId: "NIZA16", drugInjectionName: "AXID Cap 150mg", drugInjectionState: "약품" },
+    { drugInjectionId: "NIZA17", drugInjectionName: "AXID Cap 150mg", drugInjectionState: "약품" },
   ];
   return druglists;
 }
