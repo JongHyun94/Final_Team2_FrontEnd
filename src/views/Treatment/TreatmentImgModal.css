@@ -1,4 +1,3 @@
-
 .TreatmentImgmodal > .modal {
   display: none;
   position: fixed;
@@ -10,11 +9,7 @@
   background-color: rgba(0, 0, 0, 0.6);
 
 }
-/* .TreatmentImgmodal > .modal > button {
-  outline: none;
-  cursor: pointer;
-  border: 0;
-} */
+
 .TreatmentImgmodal > .modal > section {
   /* width: 100%; */
   max-width: 1000px;
@@ -26,25 +21,13 @@
   overflow: hidden;
 }
 
-/* .TreatmentImgmodal > .modal > section {
-  padding: 16px;
-  border-bottom: 1px solid #dee2e6;
-  border-top: 1px solid #dee2e6;
-} */
-
-/* .TreatmentImgmodal > .modal > section > button {
-  padding: 6px 12px;
-  color: #fff;
-  background-color: #6c757d;
-  border-radius: 5px;
-  font-size: 13px;
-} */
 .TreatmentImgmodal > .modal.openModal {
   display: flex;
   align-items: center;
   /* 팝업이 열릴때 스르륵 열리는 효과 */
   animation: modal-bg-show .3s;
 }
+
 @keyframes modal-show {
   from {
       opacity: 0;

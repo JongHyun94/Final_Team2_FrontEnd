@@ -14,12 +14,12 @@ function getBoards() {
 
 function getBoardList() {
     const boardlists = [
-        {inspectioncategory:"혈액검사", inspectiondate:"날짜",inspector:"김검사",inspectionname:"백혈구 백분율",inspectionref:"4000~10000μL",inspectionresult:"8000"},
-        {inspectioncategory:"혈액검사", inspectiondate:"날짜",inspector:"김검사",inspectionname:"순환기능검사-적혈구량측",inspectionref:"3000~7500/mm3",inspectionresult:"6000"},
-        {inspectioncategory:"혈액검사", inspectiondate:"날짜",inspector:"김검사",inspectionname:"백혈구 백분율",inspectionref:"12.0~16.0g/dL",inspectionresult:"14"},
-        {inspectioncategory:"혈액검사", inspectiondate:"날짜",inspector:"김검사",inspectionname:"백혈구 백분율",inspectionref:"",inspectionresult:""},
-        {inspectioncategory:"유리검사", inspectiondate:"날짜",inspector:"나꼼꼼",inspectionname:"백혈구 백분율",inspectionref:"",inspectionresult:""},
-        {inspectioncategory:"영상촬영", inspectiondate:"날짜",inspector:"박사능",inspectionname:"백혈구 백분율",inspectionref:"",inspectionresult:""},
+        {inspectioncategory:"혈액검사", inspectiondate:"2021-06-01",inspector:"김검사",inspectionname:"백혈구 백분율",inspectionref:"4000~10000μL",inspectionresult:"8000"},
+        {inspectioncategory:"혈액검사", inspectiondate:"2021-06-01",inspector:"김검사",inspectionname:"순환기능검사-적혈구량측",inspectionref:"3000~7500/mm3",inspectionresult:"6000"},
+        {inspectioncategory:"혈액검사", inspectiondate:"2021-06-01",inspector:"김검사",inspectionname:"백혈구 백분율",inspectionref:"12.0~16.0g/dL",inspectionresult:"14"},
+        {inspectioncategory:"혈액검사", inspectiondate:"2021-06-01",inspector:"김검사",inspectionname:"백혈구 백분율",inspectionref:"",inspectionresult:""},
+        {inspectioncategory:"유리검사", inspectiondate:"2021-06-01",inspector:"나꼼꼼",inspectionname:"백혈구 백분율",inspectionref:"",inspectionresult:""},
+        {inspectioncategory:"영상촬영", inspectiondate:"2021-06-01",inspector:"박사능",inspectionname:"백혈구 백분율",inspectionref:"",inspectionresult:""},
     ];
     return boardlists;
 }
