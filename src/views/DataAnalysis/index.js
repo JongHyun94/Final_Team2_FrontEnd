@@ -6,6 +6,11 @@ import Data4 from "./Data4";
 import "./DataAnalysis.css"
 // import { BarChart, LineChart } from '@toast-ui/react-chart';
 
+
+
+
+
+
 function DataAnalysis(props) {
 
   return (

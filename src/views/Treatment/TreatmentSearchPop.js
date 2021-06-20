@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./TreatmentModal.css";
+import "./TreatmentDrugModal.css";
 
 function getDrugList() {
     const druglists = [
@@ -18,6 +18,7 @@ export const TreatmentSearchPop = (props) => {
   const {open, close} = props;
   const [druglists, setDrugLists] = useState(getDrugList);
   return(
+      <div className="TreatmentDrugmodal">
     <div className={open ? 'openModal modal':'modal'}>
       {open? (
         <section>
@@ -83,6 +84,7 @@ export const TreatmentSearchPop = (props) => {
           </main>
         </section>
       ):null}
+    </div>
     </div>
   )
 }
