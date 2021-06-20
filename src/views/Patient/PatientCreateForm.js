@@ -12,10 +12,10 @@ function PatientCreateForm(props) {
     patientTel1: "010", 
     patientTel2: "", 
     patientTel3: "", 
-    paritentZipcode: "", 
-    paritentAddress: "", 
-    paritentDetailAddress1: "", 
-    paritentDetailAddress2: ""
+    paitentZipcode: "", 
+    paitentAddress: "", 
+    paitentDetailAddress1: "", 
+    paitentDetailAddress2: ""
   })
 
   const handleChange = (event) => {
@@ -24,15 +24,13 @@ function PatientCreateForm(props) {
       [event.target.name]: event.target.value,
       patientTel: patient.patientTel1 + "-" + patient.patientTel2 + "-" + patient.patientTel3
     });
-    console.log(patient.patientTel1);
-    console.log(patient.patientTel);
   };
 
   // 환자 등록
   const handleCreate = (event) => {
     event.preventDefault();
     const newPatient = {...patient};
-    console.log(newPatient);
+    console.log("환자 등록: ", newPatient);
   }; 
 
   // 모달 상태(open일 떄 true로 바뀌어 열림)
@@ -45,16 +43,30 @@ function PatientCreateForm(props) {
   const closeModal = () => {
     setModalOpen(false);
   };
-  const sendModal = () => {
-    // setModalOpen(false);
-    console.log("send 실행");
+  const sendModal = (data) => {
+    setModalOpen(false);
+    console.log("send 실행", data);
+    setPatient({
+      ...patient,
+      paitentZipcode: data.zonecode, 
+      paitentAddress: data.address
+    })
+    if (data.buildingName === "") {
+      setPatient(prevPatient => {
+        return {
+          ...prevPatient,
+          paitentDetailAddress2: data.bname          
+        };
+      });
+    } else {
+      setPatient(prevPatient => {
+        return {
+          ...prevPatient,
+          paitentDetailAddress2: data.bname + ", " + data.buildingName   
+        };
+      });
+    }
   };
-
-  // 주소
-  const getAddress = (event) => {
-    props.handleComplete();
-    console.log(props);
-  }
   
   return (
     <div className="mt-4">
@@ -122,16 +134,16 @@ function PatientCreateForm(props) {
             <label className="col-sm-3 m-0">주소: </label>
             <div className="col-sm">
               <div className="row mb-2"> 
-                <input type="text" className="col-sm-2 ml-3" name="paritentZipcode" placeholder="우편번호" onChange={handleChange}></input>
+                <input type="text" className="col-sm-2 ml-3" name="paitentZipcode" value={patient.paitentZipcode} placeholder="우편번호" onChange={handleChange} readOnly></input>
                 <React.Fragment>
                   <button className="button_team2_empty" onClick={openModal}>우편번호 찾기</button>
-                  <Modal open={modalOpen} close={closeModal} send={sendModal}></Modal>
+                  <Modal open={modalOpen} close={closeModal} send={(addresss) => sendModal(addresss)}></Modal>
                 </React.Fragment>   
               </div>
-              <input type="text" className=" mb-2" name="paritentAddress" placeholder="주소" onChange={handleChange}></input>
+              <input type="text" className=" mb-2" name="paitentAddress" placeholder="주소" value={patient.paitentAddress} onChange={handleChange} readOnly></input>
               <div className="row no-gutters mb-2">
-                <input type="text" className="col-sm mr-2" name="paritentDetailAddress1" placeholder="상세주소" onChange={handleChange}></input>
-                <input type="text" className="col-sm" name="paritentDetailAddress2" placeholder="참고항목" onChange={handleChange}></input>
+                <input type="text" className="col-sm mr-2" name="paitentDetailAddress1" placeholder="상세주소" onChange={handleChange}></input>
+                <input type="text" className="col-sm" name="paitentDetailAddress2" value={patient.paitentDetailAddress2} placeholder="참고항목" onChange={handleChange} readOnly></input>
               </div>
             </div>
           </div>

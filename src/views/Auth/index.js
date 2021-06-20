@@ -16,7 +16,6 @@ function Auth(props) {
       ...user,
       [event.target.name]: event.target.value
     });
-    console.log(user);
   };
 
   // 비밀번호 수정
@@ -37,6 +36,7 @@ function Auth(props) {
     } else {
       alert("비밀번호가 동일하지 않습니다.");
     }
+    console.log("비밀번호 수정");
     console.log(newUser);
   };
 
@@ -54,15 +54,15 @@ function Auth(props) {
           </div>
           <div className="row mb-5 d-flex align-items-center">
             <label className="col-sm-4 m-0">기존 비밀번호: </label>
-            <input type="text" className="col-sm-8" name="oldPassword" value={user.oldPassword} onChange={handleChange}></input>
+            <input type="text" className="col-sm-8" name="oldPassword" onChange={handleChange}></input>
           </div>
           <div className="row mb-5 d-flex align-items-center">
             <label className="col-sm-4 m-0">새로운 비밀번호: </label>
-            <input type="text" className="col-sm-8" name="newPassword" value={user.newPassword} onChange={handleChange}></input>
+            <input type="text" className="col-sm-8" name="newPassword" onChange={handleChange}></input>
           </div>
           <div className="row d-flex align-items-center">
             <label className="col-sm-4 m-0">비밀번호 재입력: </label>
-            <input type="text" className="col-sm-8" name="rePassword" value={user.rePassword} onChange={handleChange}></input>
+            <input type="text" className="col-sm-8" name="rePassword" onChange={handleChange}></input>
           </div>
           <div className="d-flex justify-content-center mt-5"><button className={`button_team2_fill`} onClick={handleUpdate}>수정</button></div>
         </form>

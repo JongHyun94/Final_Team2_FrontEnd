@@ -5,10 +5,10 @@
   "dependencies": {
     "@nivo/bar": "^0.70.1",
     "@nivo/core": "^0.70.1",
+    "@nivo/pie": "^0.70.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "@toast-ui/react-chart": "^4.3.4",
     "axios": "^0.21.1",
     "bootstrap": "4.6.0",
     "classnames": "^2.3.1",

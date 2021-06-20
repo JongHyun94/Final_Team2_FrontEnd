@@ -1,4 +1,4 @@
-.modal {
+.patientModal > .modal {
   display: none;
   position: fixed;
   top: 0;
@@ -8,11 +8,11 @@
   z-index: 99;
   background-color: rgba(0, 0, 0, 0.6);
 }
-.modal > section {
+.patientModal > .modal > section {
   width: 100%;
   max-width: 600px; 
   height: 100%;
-  max-height: 800px;
+  max-height: 480px;
   margin:0 auto;
   border-radius: .3rem;
   background-color: #fff;
@@ -21,12 +21,13 @@
   overflow: hidden;
 }
 
-.modal > section > main {
+.patientModal > .modal > section > main {
   padding: 16px;
   border-bottom: 1px solid #dee2e6;
   border-top: 1px solid #dee2e6;
+  height: 1800px;
 }
-.modal.openModal {
+.patientModal > .modal.openModal {
   display: flex;
   align-items: center;
   /* 팝업이 열릴때 스르륵 열리는 효과 */

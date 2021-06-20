@@ -6,7 +6,7 @@ import PatientContext from "./PatientContext";
 function getPatientList() {
   const patients = [];
   for (var i = 50; i >= 1; i--) {
-    patients.push({patientCheck: "false", patientId: i, patientName: "환자"+i, patientSsn: "910612", patientSex: "M", patientTel: "010-1234-5678", paritentAddress: "서울시 송파구 아이티벤처타워 12층 1강의실", patientRegDate: "2021-06-01"})
+    patients.push({patientId: i, patientName: "환자"+i, patientSsn: "910612", patientSex: "M", patientTel: "010-1234-5678", paritentAddress: "서울시 송파구 아이티벤처타워 12층 1강의실", patientRegDate: "2021-06-01"})
   }
   return patients;
 }
@@ -14,6 +14,7 @@ function getPatientList() {
 function PatientList(props) {
   // 환자 목록 상태
   const [patients, setPatients] = useState(getPatientList);
+
   // 환자 상태
   const [patient, setPatient] = useState({
     patientId: "",
@@ -24,40 +25,40 @@ function PatientList(props) {
     patientAddress: "",
     patientRegDate: ""
   });
+
   // 검색 상태
-  const [search, setSearch] = useState("");
+  const [keyword, setKeyword] = useState("");
 
-  const patientContext = useContext(PatientContext);
+  // 환자 코드 비교를 위한 상태
+  const [id, setId] = useState("");
 
-  const [patientId, setPatientId] = useState("");
+  // const patientContext = useContext(PatientContext);
 
   const handleChange = (event) => {
-    setSearch(event.target.value);
+    setKeyword(event.target.value);
+    console.log(keyword);
   };
 
-  // 검색 실행
+  // 검색
   const handleSearch = (event) => {
     event.preventDefault();
-    const keyword = {...search};
-    console.log(keyword);
+    const data = {...keyword};
+    props.search(data);
   }
 
   // 환자 선택
-  const handleClick = async (patientId) => {
-    try {
-      console.log(patientId);
-      setPatientId(patientId);
-      patientContext.setPatientId(patientId);
-    } catch(error) {
-      console.log(error);
-    }
+  const handleClick = (patientId) => {
+    setId(patientId);
+    props.changeId(patientId);
+    // setPatientId(patientId);
+    // patientContext.setPatientId(patientId);
   };
 
   const rowRenderer = ({index, key, style}) => {
     return (
       <tr key={key} style={style} onClick={() => handleClick(patients[index].patientId)}>
-        <td key={patients.patientId}><input type="radio" name="patientCheck" value={patient.patientCheck} width={50}></input></td>
-        <td width={100}>{patients[index].patientId}</td>
+        <td key={patients.patientId}><input type="checkbox" name="patientCheck" checked={id === patients[index].patientId? true : false} width={50} readOnly></input></td>
+        <td width={110}>{patients[index].patientId}</td>
         <td width={100}>{patients[index].patientName}</td>
         <td width={120}>{patients[index].patientSsn}</td>
         <td>{patients[index].patientSex}</td>
