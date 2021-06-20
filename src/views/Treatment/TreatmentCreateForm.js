@@ -118,9 +118,7 @@ function TreatmentCreateForm(props) {
                                   <div className="TreatmentCreateForm_1_1_title">
                                   Assessment
                                   </div>
-                                  <textarea
-                                  
-                                  extarea className="TreatmentCreateForm_1_1_content border" rows="4" cols="40" onChange={handleChangeAmemo} value={amemo}>
+                                  <textarea className="TreatmentCreateForm_1_1_content border" rows="4" cols="40" onChange={handleChangeAmemo} value={amemo}>
                                       당일 검사 요청
                                   </textarea>
                                   <div className="TreatmentCreateForm_1_1_title">
