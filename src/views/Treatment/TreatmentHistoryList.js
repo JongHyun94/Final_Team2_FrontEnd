@@ -5,7 +5,7 @@ import { AutoSizer, List } from "react-virtualized";
 function getTreatmentHistory() {
     const treatmentHistoryList = [];
     for(var i = 10; i >=1; i--){
-        treatmentHistoryList.push({index: i, treatment_id:"aed158"+i,treatment_date:"2021-06-01", treatment_dname:"나의사"+i, treatment_memo:"메모"+i});
+        treatmentHistoryList.push({index: i, treatmentId:"aed158"+i,treatmentDate:"2021-06-01", treatmentDname:"나의사"+i, treatmentMemo:"메모"+i});
     }
     return treatmentHistoryList;
 
@@ -60,10 +60,10 @@ function TreatmentHistoryList(props) {
                         return(
                     <tr key={treatmentHistory.index}>   
                          <td><input type="checkbox"/></td>
-                         <th>{treatmentHistory.treatment_id}</th>
-                         <th>{treatmentHistory.treatment_date}</th>
-                         <th>{treatmentHistory.treatment_dname}</th>
-                         <th>{treatmentHistory.treatment_memo}</th>
+                         <th>{treatmentHistory.treatmentId}</th>
+                         <th>{treatmentHistory.treatmentDate}</th>
+                         <th>{treatmentHistory.treatmentDname}</th>
+                         <th>{treatmentHistory.treatmentMemo}</th>
                      </tr>
                      );
                 })}

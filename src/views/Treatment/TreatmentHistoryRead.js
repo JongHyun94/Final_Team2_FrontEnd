@@ -9,20 +9,20 @@ function getSOAP() {
 
 function getInspectionList() {
   const inspectionlists = [
-    { inspectionId: "1", inspectioncategory: "혈액검사", inspectiondate: "2021-06-01", inspector: "김검사", inspectionname: "백혈구 백분율", inspectionref: "4000~10000μL", inspectionresult: "8000" },
+    { inspectionId: "1", inspectionCategory: "혈액검사", inspectionDate: "2021-06-01", inspector: "김검사", inspectionName: "백혈구 백분율", inspectionRef: "4000~10000μL", inspectionResult: "8000" },
     {
       inspectionId: "2",
-      inspectioncategory: "혈액검사",
-      inspectiondate: "2021-06-01",
+      inspectionCategory: "혈액검사",
+      inspectionDate: "2021-06-01",
       inspector: "김검사",
-      inspectionname: "순환기능검사-적혈구량측",
-      inspectionref: "3000~7500/mm3",
-      inspectionresult: "6000",
+      inspectionName: "순환기능검사-적혈구량측",
+      inspectionRef: "3000~7500/mm3",
+      inspectionResult: "6000",
     },
-    { inspectionId: "3", inspectioncategory: "혈액검사", inspectiondate: "2021-06-01", inspector: "김검사", inspectionname: "백혈구 백분율", inspectionref: "12.0~16.0g/dL", inspectionresult: "14" },
-    { inspectionId: "4", inspectioncategory: "혈액검사", inspectiondate: "2021-06-01", inspector: "김검사", inspectionname: "백혈구 백분율", inspectionref: "", inspectionresult: "" },
-    { inspectionId: "5", inspectioncategory: "유리검사", inspectiondate: "2021-06-01", inspector: "나꼼꼼", inspectionname: "백혈구 백분율", inspectionref: "", inspectionresult: "" },
-    { inspectionId: "6", inspectioncategory: "영상촬영", inspectiondate: "2021-06-01", inspector: "박사능", inspectionname: "백혈구 백분율", inspectionref: "", inspectionresult: "" },
+    { inspectionId: "3", inspectionCategory: "혈액검사", inspectionDate: "2021-06-01", inspector: "김검사", inspectionName: "백혈구 백분율", inspectionRef: "12.0~16.0g/dL", inspectionResult: "14" },
+    { inspectionId: "4", inspectionCategory: "혈액검사", inspectionDate: "2021-06-01", inspector: "김검사", inspectionName: "백혈구 백분율", inspectionRef: "", inspectionResult: "" },
+    { inspectionId: "5", inspectionCategory: "유리검사", inspectionDate: "2021-06-01", inspector: "나꼼꼼", inspectionName: "백혈구 백분율", inspectionRef: "", inspectionResult: "" },
+    { inspectionId: "6", inspectionCategory: "영상촬영", inspectionDate: "2021-06-01", inspector: "박사능", inspectionName: "백혈구 백분율", inspectionRef: "", inspectionResult: "" },
   ];
   return inspectionlists;
 }
@@ -125,12 +125,12 @@ function TreatmentHistoryRead(props) {
               {inspectionlists.map((inspectionlist) => {
                 return (
                   <tr key={inspectionlist.inspectionId}>
-                    <td>{inspectionlist.inspectioncategory}</td>
-                    <td>{inspectionlist.inspectiondate}</td>
+                    <td>{inspectionlist.inspectionCategory}</td>
+                    <td>{inspectionlist.inspectionDate}</td>
                     <td>{inspectionlist.inspector}</td>
-                    <td>{inspectionlist.inspectionname}</td>
-                    <td>{inspectionlist.inspectionref}</td>
-                    {inspectionlist.inspectioncategory === "영상촬영" ? (
+                    <td>{inspectionlist.inspectionName}</td>
+                    <td>{inspectionlist.inspectionRef}</td>
+                    {inspectionlist.inspectionCategory === "영상촬영" ? (
                       <td>
                         <React.Fragment>
                           {" "}
@@ -141,17 +141,17 @@ function TreatmentHistoryRead(props) {
                             open={modalOpen}
                             close={closeModal}
                             inspectionImg="xray01.jpg"
-                            inspection_list_name={inspectionlists[5].inspectionname}
-                            inspection_list_category={inspectionlists[5].inspectioncategory}
-                            inspection_treatment_id="50546"
-                            inspection_date={inspectionlists[5].inspectiondate}
+                            inspectionlistName={inspectionlists[5].inspectionName}
+                            inspectionlistCategory={inspectionlists[5].inspectionCategory}
+                            inspectionTreatmentId="50546"
+                            inspectionDate={inspectionlists[5].inspectionDate}
                           >
                             모달 내용
                           </TreatmentImgRead>
                         </React.Fragment>
                       </td>
                     ) : (
-                      <td>{inspectionlists.inspectionresult}</td>
+                      <td>{inspectionlists.inspectionResult}</td>
                     )}
                   </tr>
                 );
