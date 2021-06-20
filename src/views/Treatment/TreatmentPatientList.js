@@ -9,7 +9,7 @@ function getPatientlists() {
     patientlists.push({ registerId:"aed158"+i, registerPatientName: "환자" + i, patientSsn: "910111", patientSex: "F", registerMemo: "의사 소통 메모" + i, registerState: "대기" });
   }
   for (var i = 20; i >= 1; i--) {
-    patientlists.push({ registerId:"aed158"+i, registerPatientName: "환자" + i, patientSsn: "910111", patientSex: "F", registerMemo: "의사 소통 메모" + i, registerState: "완료" });
+    patientlists.push({ registerId:"aed258"+i, registerPatientName: "환자" + i, patientSsn: "910111", patientSex: "F", registerMemo: "의사 소통 메모" + i, registerState: "완료" });
   }
 
   
@@ -102,12 +102,12 @@ function TreatmentPatientList(props) {
                         return(
                     <tr key={patientlist.registerId}>   
                          <td><input type="checkbox"/></td>
-                         <th>{patientlist.registerId}</th>
-                         <th>{patientlist.registerPatientName}</th>
-                         <th>{patientlist.patientSsn}</th>
-                         <th>{patientlist.patientSex}</th>
-                         <th>{patientlist.registerMemo}</th>
-                         <th>{patientlist.registerState}</th>
+                         <td>{patientlist.registerId}</td>
+                         <td>{patientlist.registerPatientName}</td>
+                         <td>{patientlist.patientSsn}</td>
+                         <td>{patientlist.patientSex}</td>
+                         <td>{patientlist.registerMemo}</td>
+                         <td>{patientlist.registerState}</td>
                      </tr>
                      );
                 })}
