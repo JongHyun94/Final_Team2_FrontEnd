@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import style from "./style.module.css";
+import "./Login.css";
 
 function Login(props) {
   // 유저 상태
@@ -24,8 +24,8 @@ function Login(props) {
   };
   
   return (
-    <div className={`${style.box} row d-flex justify-content-center no-gutters`}>
-      <div className={`${style.Login}`}>
+    <div className={`box row d-flex justify-content-center no-gutters`}>
+      <div className={`Login`}>
         <h2 className="text-center mb-5">의료정보 시스템</h2>
         <form>
           <div className="form-group row">
@@ -64,11 +64,11 @@ function Login(props) {
             <div className={style.icon}><i className="bi bi-file-earmark-bar-graph"></i></div>
           </div>
         </div> */}
-        <div className={style.img}><img src="/resources/img/login_img.png" alt="" width="664rem"></img></div>
-        <div className={`${style.Help_box} d-flex justify-content-between`}>
+        <div className="img"><img src="/resources/img/login_img.png" alt="" width="664rem"></img></div>
+        <div className={`Help_box d-flex justify-content-between`}>
           <div>도움말</div>
           <Link to="/Help" className="link_team2">
-            <div className={style.icon}><i className="bi bi-question-circle"></i></div>
+            <div className="Help_icon"><i className="bi bi-question-circle"></i></div>
           </Link>
         </div>
       </div>
