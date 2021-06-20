@@ -25,8 +25,8 @@ function InspectionImgCreateForm(props) {
 
     const formData = new FormData();
     console.log(formData);
-    formData.append("inspection_id", inspectionImgResult.inspectionId);
-    formData.append("battach", inputFile.current.files[0]);
+    formData.append("inspectionId", inspectionImgResult.inspectionId);
+    formData.append("iattach", inputFile.current.files[0]);
 
     // formData 콘솔 찍는 법
     // for (let value of formData.values()) {
@@ -62,7 +62,7 @@ function InspectionImgCreateForm(props) {
         </div>
         <div className="InspectionImgCreateForm_1_1_1">
           <div className="col-4">첨부파일 : </div>
-          <input name="battach" type="file" style={{width:"100%"}} ref={inputFile}/>
+          <input name="iattach" type="file" style={{width:"100%"}} ref={inputFile}/>
         </div>
         <div className="InspectionImgCreateForm_1_2">
           <button className="button_team2_fill m-0">등록</button>
