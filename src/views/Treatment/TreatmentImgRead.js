@@ -38,7 +38,7 @@ export const TreatmentImgRead = (props) => {
 
                   </div>
                   <div className="TreatmentImgRead_2">
-                      <button className="close" onClick={close}>close</button>
+                      <button className="button_team2_fill" onClick={close}>확인</button>
                   </div>
               </div>
           </section>

@@ -1,33 +1,31 @@
 import { TreatmentImgRead } from "./TreatmentImgRead";
 import React, { useState } from "react";
 
+function getSOAP() {
 
-function getBoards() {
-
-    const boards =  [
+    const soap =  [
         {Subjective:"목 아픔", Objective:"인후염", Assessment:"온열찜질기 실행",Plan:"다음 내원시 Lab test"}
     ];
 
-
-    return boards;
+    return soap;
 }
 
-function getBoardList() {
-    const boardlists = [
-        {inspectioncategory:"혈액검사", inspectiondate:"날짜",inspector:"김검사",inspectionname:"백혈구 백분율",inspectionref:"4000~10000μL",inspectionresult:"8000"},
-        {inspectioncategory:"혈액검사", inspectiondate:"날짜",inspector:"김검사",inspectionname:"순환기능검사-적혈구량측",inspectionref:"3000~7500/mm3",inspectionresult:"6000"},
-        {inspectioncategory:"혈액검사", inspectiondate:"날짜",inspector:"김검사",inspectionname:"백혈구 백분율",inspectionref:"12.0~16.0g/dL",inspectionresult:"14"},
-        {inspectioncategory:"혈액검사", inspectiondate:"날짜",inspector:"김검사",inspectionname:"백혈구 백분율",inspectionref:"",inspectionresult:""},
-        {inspectioncategory:"유리검사", inspectiondate:"날짜",inspector:"나꼼꼼",inspectionname:"백혈구 백분율",inspectionref:"",inspectionresult:""},
-        {inspectioncategory:"영상촬영", inspectiondate:"날짜",inspector:"박사능",inspectionname:"백혈구 백분율",inspectionref:"",inspectionresult:""},
+function getInspectionList() {
+    const inspectionlists = [
+        {inspectioncategory:"혈액검사", inspectiondate:"2021-06-01",inspector:"김검사",inspectionname:"백혈구 백분율",inspectionref:"4000~10000μL",inspectionresult:"8000"},
+        {inspectioncategory:"혈액검사", inspectiondate:"2021-06-01",inspector:"김검사",inspectionname:"순환기능검사-적혈구량측",inspectionref:"3000~7500/mm3",inspectionresult:"6000"},
+        {inspectioncategory:"혈액검사", inspectiondate:"2021-06-01",inspector:"김검사",inspectionname:"백혈구 백분율",inspectionref:"12.0~16.0g/dL",inspectionresult:"14"},
+        {inspectioncategory:"혈액검사", inspectiondate:"2021-06-01",inspector:"김검사",inspectionname:"백혈구 백분율",inspectionref:"",inspectionresult:""},
+        {inspectioncategory:"유리검사", inspectiondate:"2021-06-01",inspector:"나꼼꼼",inspectionname:"백혈구 백분율",inspectionref:"",inspectionresult:""},
+        {inspectioncategory:"영상촬영", inspectiondate:"2021-06-01",inspector:"박사능",inspectionname:"백혈구 백분율",inspectionref:"",inspectionresult:""},
     ];
-    return boardlists;
+    return inspectionlists;
 }
 
 
 function TreatmentHistoryRead(props) {
-    const [boards, setBoards] = useState(getBoards);
-    const [boardlists, setBoardlists] = useState(getBoardList);
+    const [soap, setSoap] = useState(getSOAP);
+    const [inspectionlists, setInspectionlists] = useState(getInspectionList);
     const [img, setImg] = useState("");
 
     const readResultImg = (event) => {
@@ -53,63 +51,45 @@ function TreatmentHistoryRead(props) {
            <div className="TreatmentHistoryRead_border border">
                 <div className="TreatmentHistoryRead_1">
                 <table className="table table-bordered TreatmentHistoryRead_1_table">
-                {boards.map(board => {
+                {soap.map(soap => {
                       return(
                         <tr>
                             <th className="text-center border" bgcolor="lightgrey">Subjective</th>
                                  {/* <td width="80%">목 아픔</td> */}
-                            <td className="text-left" width="80%">{board.Subjective}</td>
+                            <td className="text-left" width="80%">{soap.Subjective}</td>
                         </tr>
                         
                       );
                   })}
-                  {boards.map(board => {
+                  {soap.map(soap => {
                       return(
                         <tr>
                             <th className="text-center border" bgcolor="lightgrey" >Objective</th>
                             {/* <td width="80%">인후염</td> */}
-                            <td className="text-left" width="80%">{board.Objective}</td>
+                            <td className="text-left" width="80%">{soap.Objective}</td>
                          </tr>
                       );
                   })}
-                  {boards.map(board => {
+                  {soap.map(soap => {
                       return(
                         <tr>
                             <th className="text-center border" bgcolor="lightgrey">Assessment</th>
                                 {/* <td width="80%">온열찜질기 실행</td> */}
-                            <td className="text-left" width="80%">{board.Assessment}</td>
+                            <td className="text-left" width="80%">{soap.Assessment}</td>
 
                         </tr>
                       );
                   })}
-                  {boards.map(board => {
+                  {soap.map(soap => {
                       return(
                         <tr>
                             <th className="text-center border" bgcolor="lightgrey">Plan</th>
                                 {/* <td width="80%">다음 내원시 Lab test</td> */}
-                            <td className="text-left" width="80%">{board.Plan}</td>
+                            <td className="text-left" width="80%">{soap.Plan}</td>
                         </tr>
                       );
                   })}
-                    {/* <tr>
-                        <th className="text-center border" bgcolor="lightgrey">Subjective</th>
-                            <td width="80%">{boards.Subjective}</td>
-                    </tr>
-                    <tr>
-                        <th className="text-center border" bgcolor="lightgrey" >Objective</th>
-                        <td width="80%">{boards.Objective}</td>
 
-                    </tr>
-                    <tr>
-                        <th className="text-center border" bgcolor="lightgrey">Assessment</th>
-                        <td width="80%">{boards.Assessment}</td>
-
-                    </tr>
-                    <tr>
-                        <th className="text-center border" bgcolor="lightgrey">Plan</th>
-                        <td width="80%">{boards.Plan}</td>
-
-                    </tr> */}
                 </table>
             </div>
                 <div className="TreatmentHistoryRead_2">
@@ -129,38 +109,28 @@ function TreatmentHistoryRead(props) {
                         </tr>
                     </thead>
                     <tbody>
-                        {boardlists.map(boardlist=>{
+                        {inspectionlists.map(inspectionlist=>{
                             return(
-                                <tr key={boardlist.inspectioncategory}>   
-                                <td>{boardlist.inspectioncategory}</td>
-                                <td>{boardlist.inspectiondate}</td>
-                                <td>{boardlist.inspector}</td>
-                                <td>{boardlist.inspectionname}</td>
-                                <td>{boardlist.inspectionref}</td>
-                                {boardlist.inspectioncategory ==="영상촬영"
+                                <tr key={inspectionlist.inspectioncategory}>   
+                                <td>{inspectionlist.inspectioncategory}</td>
+                                <td>{inspectionlist.inspectiondate}</td>
+                                <td>{inspectionlist.inspector}</td>
+                                <td>{inspectionlist.inspectionname}</td>
+                                <td>{inspectionlist.inspectionref}</td>
+                                {inspectionlist.inspectioncategory ==="영상촬영"
                                 ?                                 
                                 <td><React.Fragment> <button className="button_team2_empty"  onClick={openModal} >보기</button>
-                                <TreatmentImgRead open={modalOpen} close={closeModal} inspectionImg="xray01.jpg" inspection_list_name={boardlists[5].inspectionname}
-                                 inspection_list_category={boardlists[5].inspectioncategory} 
-                                inspection_treatment_id="50546" inspection_date={boardlists[5].inspectiondate}>모달 내용</TreatmentImgRead>
+                                <TreatmentImgRead open={modalOpen} close={closeModal} inspectionImg="xray01.jpg" inspection_list_name={inspectionlists[5].inspectionname}
+                                 inspection_list_category={inspectionlists[5].inspectioncategory} 
+                                inspection_treatment_id="50546" inspection_date={inspectionlists[5].inspectiondate}>모달 내용</TreatmentImgRead>
                                 </React.Fragment></td>
-                                : <td>{boardlist.inspectionresult}</td>
+                                : <td>{inspectionlists.inspectionresult}</td>
                                 }
                             </tr>
                       
                             );
                         })}
 
-                    
-                        {/* <tr>   
-                            <td>영상촬영</td>
-                            <td>2021-06-01</td>
-                            <td>박사능</td>
-                            <td>X-Ray 흉부</td>
-                            <td></td>
-                            <td> <button className="button_team2_empty">보기</button></td>
-                        </tr> */}
-                        
                     </tbody>
                 </table>
             </div>

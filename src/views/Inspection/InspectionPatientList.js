@@ -4,10 +4,10 @@ import DatePicker from "react-datepicker";
 
 function getPatient() {
   const patients = [];
-  for(var i=1000; i<=1010; i++){
+  for (var i = 1000; i <= 1010; i++) {
     patients.push({ treatmentId: i, patientName: "환자" + i, patientBirth: "910111", patientSex: "F", treatmentIstate: "대기", treatmentCommunication: "의사소통메모" });
   }
-  for(var i=1011; i<=1020; i++){
+  for (var i = 1011; i <= 1020; i++) {
     patients.push({ treatmentId: i, patientName: "환자" + i, patientBirth: "910111", patientSex: "F", treatmentIstate: "완료", treatmentCommunication: "의사소통메모" });
   }
   return patients;
@@ -15,8 +15,8 @@ function getPatient() {
 
 function getIstateWaiting(patients) {
   let countWaiting = 0;
-  for(var i=0; i<patients.length; i++) {
-    if(patients[i].treatment_istate === "대기"){
+  for (var i = 0; i < patients.length; i++) {
+    if (patients[i].treatmentIstate === "대기") {
       countWaiting++;
     }
   }
@@ -25,8 +25,8 @@ function getIstateWaiting(patients) {
 
 function getIstateInspection(patients) {
   let countInspection = 0;
-  for(var i=0; i<patients.length; i++) {
-    if(patients[i].treatment_istate === "검사"){
+  for (var i = 0; i < patients.length; i++) {
+    if (patients[i].treatmentIstate === "검사") {
       countInspection++;
     }
   }
@@ -35,8 +35,8 @@ function getIstateInspection(patients) {
 
 function getIstateCompletion(patients) {
   let countCompletion = 0;
-  for(var i=0; i<patients.length; i++) {
-    if(patients[i].treatment_istate === "완료"){
+  for (var i = 0; i < patients.length; i++) {
+    if (patients[i].treatmentIstate === "완료") {
       countCompletion++;
     }
   }
@@ -73,9 +73,7 @@ function InspectionPatientList(props) {
 
   return (
     <div className="InspectionPatientList">
-      <div className="InspectionPatientList_title">
-        환자검색
-      </div>
+      <div className="InspectionPatientList_title">환자검색</div>
       <div className="InspectionPatientList_1 border">
         <div className="InspectionPatientList_1_1 mb-2">
           <div className="col-4 p-0">
@@ -83,7 +81,9 @@ function InspectionPatientList(props) {
             <DatePicker dateFormat="yyyy.MM.dd" selected={treatmentDate} onChange={(date) => setTreatmentDate(date)} />
           </div>
           <div className="col-3 InspectionPatientList_1_2 p-0">
-            <button className="button_team2_fill" onClick={searchDateBtn}>이동</button>
+            <button className="button_team2_fill" onClick={searchDateBtn}>
+              이동
+            </button>
           </div>
           <div className="row p-0">
             <div className="InspectionPatientList_1_3_1">대기:{istateWaiting}명</div>
@@ -91,11 +91,11 @@ function InspectionPatientList(props) {
             <div className="InspectionPatientList_1_3_3">완료:{istateCompletion}명</div>
           </div>
         </div>
-        
+
         <div className="InspectionPatientList_list">
           <table className="table InspectionPatientList_2_1">
             <thead className="InspectionPatientList_2_2">
-              <tr> 
+              <tr>
                 <th></th>
                 <th>진료 번호</th>
                 <th>환자명</th>
@@ -106,30 +106,30 @@ function InspectionPatientList(props) {
               </tr>
             </thead>
             <tbody>
-            {/* <AutoSizer disableHeight>
+              {/* <AutoSizer disableHeight>
               {({ width, height }) => {
                 return <List width={width} height={500} list={patient} rowCount={patient.length} rowHeight={44} rowRenderer={rowRenderer} overscanRowCount={11} />;
               }}
             </AutoSizer> */}
-            {patients.map(paitent => {
-              return(
-                <tr key={paitent.treatmentId}>
-                  <td><input type="checkbox"/></td>
-                  <td>{paitent.treatmentId}</td>
-                  <td>{paitent.patientName}</td>
-                  <td>{paitent.patientBirth}</td>
-                  <td>{paitent.patientSex}</td>
-                  <td>{paitent.treatmentIstate}</td>
-                  <td>{paitent.treatmentCommunication}</td>
-                </tr>
-              );
-            })}
-
-          </tbody>
+              {patients.map((paitent) => {
+                return (
+                  <tr key={paitent.treatmentId}>
+                    <td>
+                      <input type="checkbox" />
+                    </td>
+                    <td>{paitent.treatmentId}</td>
+                    <td>{paitent.patientName}</td>
+                    <td>{paitent.patientBirth}</td>
+                    <td>{paitent.patientSex}</td>
+                    <td>{paitent.treatmentIstate}</td>
+                    <td>{paitent.treatmentCommunication}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
           </table>
         </div>
       </div>
-      
     </div>
   );
 }
