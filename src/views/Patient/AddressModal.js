@@ -31,7 +31,7 @@ export const Modal = (props) => {
     <div className="patientModal">
       <div className={open ? 'openModal modal':'modal'}>
         {open? (
-          <section className="content">
+          <section>
             <main>
               <DaumPostcode
                 onComplete={handleComplete} 
