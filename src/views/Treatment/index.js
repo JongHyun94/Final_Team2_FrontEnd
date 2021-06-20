@@ -7,23 +7,24 @@ import TreatmentPatientList from "./TreatmentPatientList";
 function Treatment(props) {
   return (
     <div className="Treatment">
+      {/* 상단 */}
       <div className="Treatmentup">
         {/* 접수 완료 환자 */}
         <div className="TreatmentPatientList">
           <TreatmentPatientList />
         </div>
-
         {/* 진료 등록*/}
         <div className="TreatmentCreateForm">
           <TreatmentCreateForm />
         </div>
       </div>
+
+      {/* 하단 */}
       <div className="Treatmentdown">
         {/* 진료 기록 */}
         <div className="TreatmentHistoryList">
           <TreatmentHistoryList />
         </div>
-
         {/* 진료기록 상세 */}
         <div className="TreatmentHistoryRead">
           <TreatmentHistoryRead />

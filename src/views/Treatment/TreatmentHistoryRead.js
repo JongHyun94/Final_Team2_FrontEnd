@@ -151,7 +151,7 @@ function TreatmentHistoryRead(props) {
                         </React.Fragment>
                       </td>
                     ) : (
-                      <td>{inspectionlists.inspectionResult}</td>
+                      <td>{inspectionlist.inspectionResult}</td>
                     )}
                   </tr>
                 );
