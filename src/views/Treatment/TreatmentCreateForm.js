@@ -1,57 +1,43 @@
 import React, { useState } from "react";
 import { TreatmentSearchPop } from "./TreatmentSearchPop";
 
-// function getDrugList() {
-//   const druglists = [
-//       {drug_injection_id:"NIZA15", drug_injection_name:"AXID Cap 150mg",drug_injection_state:"약품"},
-//       {drug_injection_id:"IRES", drug_injection_name:"IRESSA Tab 250mg",drug_injection_state:"약품"},
-//       {drug_injection_id:"ROPIN1", drug_injection_name:"ONIROL Tab 1mg",drug_injection_state:"약품"},
-//       {drug_injection_id:"ROXN", drug_injection_name:"ROXAN Cap 75mg",drug_injection_state:"주사"},
-//       {drug_injection_id:"NIZA15", drug_injection_name:"AXID Cap 150mg",drug_injection_state:"약품"},
-//       {drug_injection_id:"NIZA15", drug_injection_name:"AXID Cap 150mg",drug_injection_state:"약품"},
-//   ];
-//   return druglists;
-// }
-
 function TreatmentCreateForm(props) {
 
     //soap 입력폼
-    const [content1, setContent1] = useState("");
-    const [content2, setContent2] = useState("");
-    const [content3, setContent3] = useState("");
-    const [content4, setContent4] = useState("");
+    const [smemo, setSmemo] = useState("");
+    const [omemo, setOmemo] = useState("");
+    const [amemo, setAmemo] = useState("");
+    const [pmemo, setPmemo] = useState("");
 
     //의사소통메모
-    const [content5, setContent5] = useState("");
+    const [cmemo, setCmemo] = useState("");
 
     //검사 checkbox
     const [inspectionlist, setInspectionlist] = useState({
         inspectioncategory:"",
         inspection:[]
       });
-      // const [druglists, setDrugLists] = useState(getDrugList);
-  
 
-    const handleChange1 = (event) => {
+    const handleChangeSmemo = (event) => {
         console.log("Subjective:",event.target.value);
-        setContent1(event.target.value);
+        setSmemo(event.target.value);
       }
-      const handleChange2= (event) => {
+      const handleChangeOmemo= (event) => {
         console.log("Objective:",event.target.value);
-        setContent2(event.target.value);
+        setOmemo(event.target.value);
       }
-      const handleChange3 = (event) => {
+      const handleChangeAmemo = (event) => {
         console.log("Assessment:",event.target.value);
-        setContent3(event.target.value);
+        setAmemo(event.target.value);
       }
-      const handleChange4 = (event) => {
+      const handleChangePmemo = (event) => {
         console.log("Plan:",event.target.value);
-        setContent4(event.target.value);
+        setPmemo(event.target.value);
       }
 
-      const handleChange5 = (event) => {
+      const handleChangeCmemo = (event) => {
         console.log("Memo:",event.target.value);
-        setContent5(event.target.value);
+        setCmemo(event.target.value);
       }
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -91,11 +77,9 @@ function TreatmentCreateForm(props) {
         }
   
       };
-      const readpopuplist = (event) => {
-        console.log("팝업이 클릭되었습니다.");
-      };
 
-            // 모달 상태(open일 떄 true로 바뀌어 열림)
+
+  // 모달 상태(open일 떄 true로 바뀌어 열림)
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -105,7 +89,6 @@ function TreatmentCreateForm(props) {
     setModalOpen(false);
   }
 
-const readdruglist = () => {}
 
     return (
 
@@ -123,13 +106,13 @@ const readdruglist = () => {}
                                   <div className="TreatmentCreateForm_1_1_title">
                                   Subjective
                                   </div>
-                                  <textarea className="TreatmentCreateForm_1_1_content border" rows="4" cols="40" onChange={handleChange1} value={content1}>
+                                  <textarea className="TreatmentCreateForm_1_1_content border" rows="4" cols="40" onChange={handleChangeSmemo} value={smemo}>
                                       당일 검사 요청
                                   </textarea>
                                   <div className="TreatmentCreateForm_1_1_title">
                                   Objective
                                   </div>
-                                  <textarea className="TreatmentCreateForm_1_1_content border" rows="4" cols="40" onChange={handleChange2} value={content2}>
+                                  <textarea className="TreatmentCreateForm_1_1_content border" rows="4" cols="40" onChange={handleChangeOmemo} value={omemo}>
                                       당일 검사 요청
                                   </textarea>
                                   <div className="TreatmentCreateForm_1_1_title">
@@ -137,13 +120,13 @@ const readdruglist = () => {}
                                   </div>
                                   <textarea
                                   
-                                  extarea className="TreatmentCreateForm_1_1_content border" rows="4" cols="40" onChange={handleChange3} value={content3}>
+                                  extarea className="TreatmentCreateForm_1_1_content border" rows="4" cols="40" onChange={handleChangeAmemo} value={amemo}>
                                       당일 검사 요청
                                   </textarea>
                                   <div className="TreatmentCreateForm_1_1_title">
                                   Plan
                                   </div>
-                                  <textarea className="TreatmentCreateForm_1_1_content border" rows="4" cols="40" onChange={handleChange4} value={content4}>
+                                  <textarea className="TreatmentCreateForm_1_1_content border" rows="4" cols="40" onChange={handleChangePmemo} value={pmemo}>
                                       당일 검사 요청
                                   </textarea>
                       </div>
@@ -155,12 +138,7 @@ const readdruglist = () => {}
                           </div>
                           <div className="TreatmentCreateForm_2_content">
                           <div className="reatmentCreateForm_select">
-                              {/* <select name="inspectioncategory">
-                                  <option value="진단검사선택" selected="selected">진단 검사 선택</option>
-                                  <option value="blood"  name="inspectioncategory" onChange={handleChange} checked={inspectionlist.inspectioncategory === "blood"}>혈액검사</option>
-                                  <option value="xray"  name="inspectioncategory" onChange={handleChange} checked={inspectionlist.inspectioncategory === "xray"}>영상검사</option>
-                                  <option value="glass" name="inspectioncategory" onChange={handleChange} checked={inspectionlist.inspectioncategory === "glass"}>유리검사</option>
-                              </select> */}
+             
                               <select name="inspectioncategory" onChange={handleChange}>
                                   <option selected value="">진단 검사 선택</option>
                                   <option value="blood"  >혈액검사</option>
@@ -184,7 +162,7 @@ const readdruglist = () => {}
                                   <div className="TreatmentCreateForm_3_title">
                                       의사소통 메모
                                   </div>
-                                  <textarea className="TreatmentCreateForm_3_content border" rows="7" cols="32" onChange={handleChange5} value={content5}>
+                                  <textarea className="TreatmentCreateForm_3_content border" rows="7" cols="32" onChange={handleChangeCmemo} value={cmemo}>
                                       당일 검사 요청
                                   </textarea>
                               </div>

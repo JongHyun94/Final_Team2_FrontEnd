@@ -44,7 +44,7 @@ function Data4() {
           padAngle={0.7}
           cornerRadius={3}
           activeOuterRadiusOffset={8}
-          colors={{ scheme: 'accent' }}
+          colors={{ scheme: 'category10' }}
           borderWidth={1}
           borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
           arcLinkLabelsSkipAngle={10}
