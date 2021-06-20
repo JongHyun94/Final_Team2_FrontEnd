@@ -18,7 +18,7 @@
   width: 15%;
 }
 .Inspection_3_1{
-  height:47%;
+  height:48%;
 }
 .Inspection_3_2{
   height:48%;
@@ -71,7 +71,7 @@
 }
 .InspectionPatientList_list{
   overflow-y: auto;
-  height: 600px;
+  height: 730px;
 }
 
 /* InspectionList */
@@ -108,7 +108,7 @@
 }
 .InspectionList_list{
   overflow-y: auto;
-  height: 600px;
+  height: 730px;
 }
 
 /* InspectionCreateForm */

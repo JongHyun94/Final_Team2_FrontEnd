@@ -12,11 +12,12 @@
 .img {
   width: 100%;
   margin-left: 2rem;
-  padding-bottom: 1rem;
+  padding-bottom: 0.8rem;
 }
 
-.icon {
-  font-size: 5.2rem;
+.Help_icon {
+  font-size: 6rem;
+  margin-right: 2rem;
 }
 
 .Help_box {

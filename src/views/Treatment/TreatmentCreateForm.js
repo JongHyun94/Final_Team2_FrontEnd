@@ -118,6 +118,8 @@ function TreatmentCreateForm(props) {
                                   <div className="TreatmentCreateForm_1_1_title">
                                   Assessment
                                   </div>
+                            
+                                  
                                   <textarea className="TreatmentCreateForm_1_1_content border" rows="4" cols="40" onChange={handleChangeAmemo} value={amemo}>
                                       당일 검사 요청
                                   </textarea>
@@ -138,7 +140,7 @@ function TreatmentCreateForm(props) {
                           <div className="reatmentCreateForm_select">
              
                               <select name="inspectioncategory" onChange={handleChange}>
-                                  <option selected value="">진단 검사 선택</option>
+                                  <option defaultValue value="">진단 검사 선택</option>
                                   <option value="blood"  >혈액검사</option>
                                   <option value="xray"  >영상검사</option>
                                   <option value="glass"  >유리검사</option>
