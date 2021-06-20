@@ -2,12 +2,12 @@ import { useState } from "react";
 
 function getInspectionResults() {
   const inspectionResults = {
-    inspectionListCategory: "x-ray",
-    inspectionListName: "흉부 촬영",
-    inspectionId: "2001",
+    inspectionListCategory: "whole Blood",
+    inspectionListName: "백혈구 백분율",
+    inspectionId: "2021",
     inspectionDoctorName: "김더존",
     inspectionInspectorName: "박더존",
-    inspectionListLab: "검사실1"
+    inspectionListLab: "검사실2"
   };
   return inspectionResults;
 }
@@ -18,12 +18,13 @@ function InspectionCreateForm(props) {
   const handleResultChange = (event) => {
     setInspecctionResult({
       ...inspectionResult,
-      inspection_result: event.target.value
+      inspectionResult: event.target.value
     });
   };
 
   const inspectionResultBtn = (event) => {
     console.log("등록 버튼 클릭");
+    console.log(inspectionResult);
   };
 
   return (
