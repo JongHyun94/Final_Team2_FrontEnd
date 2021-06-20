@@ -18,12 +18,13 @@ function InspectionCreateForm(props) {
   const handleResultChange = (event) => {
     setInspecctionResult({
       ...inspectionResult,
-      inspection_result: event.target.value
+      inspectionResult: event.target.value
     });
   };
 
   const inspectionResultBtn = (event) => {
     console.log("등록 버튼 클릭");
+    console.log(inspectionResult);
   };
 
   return (
