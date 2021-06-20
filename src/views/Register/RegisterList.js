@@ -170,7 +170,7 @@ function RegisterList(props) {
               {registerList.map(register => {
                 return (
                   <tr key={register.index} className="RegisterList_content_2_tr" onClick={(event) => checkboxHandler(register.registerId)}>
-                    <td><input type="checkbox" name="chk" checked={selectedRegister === register.registerId? true : false}/></td>
+                    <td><input type="checkbox" name="chk" checked={selectedRegister === register.registerId? true : false} readOnly/></td>
                     <td>{register.index}</td>
                     <td>{register.registerTime}</td>
                     <td>{register.registerId}</td>

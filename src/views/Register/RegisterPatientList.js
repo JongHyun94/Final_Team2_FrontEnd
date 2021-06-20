@@ -70,7 +70,7 @@ function RegisterPatientList(props) {
               {patientList.map(patient => {
                 return (
                   <tr key={patient.patientCode} className="RegisterPatientList_content_table_tr" onClick={()=>handlePatient(patient.patientCode)}>
-                    <td><input type="checkbox" name="chk" checked={selectedPatient === patient.patientCode? true : false} /></td>
+                    <td><input type="checkbox" name="chk" checked={selectedPatient === patient.patientCode? true : false} readOnly/></td>
                     <td>{patient.patientCode}</td>
                     <td>{patient.patientName}</td>
                     <td>{patient.patientBirth}</td>
