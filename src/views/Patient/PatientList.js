@@ -14,6 +14,7 @@ function getPatientList() {
 function PatientList(props) {
   // 환자 목록 상태
   const [patients, setPatients] = useState(getPatientList);
+
   // 환자 상태
   const [patient, setPatient] = useState({
     patientId: "",
@@ -24,33 +25,30 @@ function PatientList(props) {
     patientAddress: "",
     patientRegDate: ""
   });
+
   // 검색 상태
-  const [search, setSearch] = useState("");
+  const [keyword, setKeyword] = useState("");
 
-  const patientContext = useContext(PatientContext);
-
-  const [patientId, setPatientId] = useState("");
+  // const patientContext = useContext(PatientContext);
 
   const handleChange = (event) => {
-    setSearch(event.target.value);
+    setKeyword(event.target.value);
+    console.log(keyword);
   };
 
-  // 검색 실행
+  // 검색
   const handleSearch = (event) => {
     event.preventDefault();
-    const keyword = {...search};
-    console.log(keyword);
+    const data = {...keyword};
+    props.search(data);
   }
 
   // 환자 선택
-  const handleClick = async (patientId) => {
-    try {
-      console.log(patientId);
-      setPatientId(patientId);
-      patientContext.setPatientId(patientId);
-    } catch(error) {
-      console.log(error);
-    }
+  const handleClick = (patientId) => {
+    console.log(patientId);
+    props.changeId(patientId);
+    // setPatientId(patientId);
+    // patientContext.setPatientId(patientId);
   };
 
   const rowRenderer = ({index, key, style}) => {
