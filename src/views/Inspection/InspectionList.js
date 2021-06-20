@@ -59,7 +59,7 @@ function InspectionList(props) {
         <button className="button_team2_empty InspectionList_1_2" onClick={changeCreateForm}>검사결과등록변경(임의)</button>
           <React.Fragment>
             <button className="button_team2_fill InspectionList_1_2" onClick={openModal}>바코드 출력</button>
-            <InspectionBarcodePop open={modalOpen} closeCheck={closeCheckModal} closeCancel={closeCancelModal} barcodeImg="barcode01.png" inspection_list_name={inspections[0].inspectionListName} patient_name="김환자" inspection_inspector_name={inspections[0].inspectionInspectorName}/>
+            <InspectionBarcodePop open={modalOpen} closeCheck={closeCheckModal} closeCancel={closeCancelModal} barcodeImg="barcode01.png" inspectionListName={inspections[0].inspectionListName} patientName="김환자" inspectionInspectorName={inspections[0].inspectionInspectorName}/>
           </React.Fragment>  
           <button className="button_team2_empty InspectionList_1_2" onClick={cancelBtn}>접수 취소</button>
           <button className="button_team2_fill InspectionList_1_2" onClick={excelSaveBtn}>엑셀 저장</button>
