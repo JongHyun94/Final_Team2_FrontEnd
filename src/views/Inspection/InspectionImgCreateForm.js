@@ -14,7 +14,6 @@ function getInspectionImgResults() {
 
 function InspectionImgCreateForm(props) {
   const [inspectionImgResult, setInspecctionImgResult] = useState(getInspectionImgResults);
-  const [inspectionImg, setInspectionImg] = useState();
 
   const inputFile = useRef();
 
@@ -24,7 +23,6 @@ function InspectionImgCreateForm(props) {
     event.preventDefault();
 
     const formData = new FormData();
-    console.log(formData);
     formData.append("inspectionId", inspectionImgResult.inspectionId);
     formData.append("iattach", inputFile.current.files[0]);
 
