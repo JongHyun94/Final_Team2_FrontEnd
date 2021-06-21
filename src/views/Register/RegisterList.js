@@ -11,50 +11,96 @@ function getRegisters() {
 
   // 대기 상태 50개
   for (var i = 1; i <= 50; i++) {
-    registers.push({
-      index: i,
-      registerTime: "10:" + i,
-      registerId: "10000" + i,
-      patientCode: "환자" + i,
-      patientBirth: "" + i,
-      patientSex: "F",
-      doctorName: "의사" + i,
-      registerMemo: "메모" + i,
-      registerCommunication: "의사소통메모" + i,
-      registerState: "대기"
-    });
+    if (i < 10) {
+      registers.push({
+        index: i,
+        registerTime: "10:0" + i,
+        registerId: "10000" + i,
+        patientCode: "환자" + i,
+        patientBirth: "" + i,
+        patientSex: "F",
+        doctorName: "의사" + i,
+        registerMemo: "메모" + i,
+        registerCommunication: "의사소통메모" + i,
+        registerState: "대기"
+      });
+    } else {
+      registers.push({
+        index: i,
+        registerTime: "10:" + i,
+        registerId: "10000" + i,
+        patientCode: "환자" + i,
+        patientBirth: "" + i,
+        patientSex: "F",
+        doctorName: "의사" + i,
+        registerMemo: "메모" + i,
+        registerCommunication: "의사소통메모" + i,
+        registerState: "대기"
+      });
+    }
   }
-  
+
   // 완료 상태 50개
-  for (i ; i <= 100; i++) {
-    registers.push({
-      index: i,
-      registerTime: "11:" + (i - 50),
-      registerId: "10000" + i,
-      patientCode: "환자" + i,
-      patientBirth: "" + i,
-      patientSex: "M",
-      doctorName: "의사" + i,
-      registerMemo: "메모" + i,
-      registerCommunication: "의사소통메모" + i,
-      registerState: "완료"
-    });
+  for (i; i <= 100; i++) {
+    if (i < 60) {
+      registers.push({
+        index: i,
+        registerTime: "11:0" + (i - 50),
+        registerId: "10000" + i,
+        patientCode: "환자" + i,
+        patientBirth: "" + i,
+        patientSex: "M",
+        doctorName: "의사" + i,
+        registerMemo: "메모" + i,
+        registerCommunication: "의사소통메모" + i,
+        registerState: "완료"
+      });
+    } else {
+      registers.push({
+        index: i,
+        registerTime: "11:" + (i - 50),
+        registerId: "10000" + i,
+        patientCode: "환자" + i,
+        patientBirth: "" + i,
+        patientSex: "M",
+        doctorName: "의사" + i,
+        registerMemo: "메모" + i,
+        registerCommunication: "의사소통메모" + i,
+        registerState: "완료"
+      });
+    }
   }
-  
+
   // 취소 상태 20개
-  for (i ; i <= 120; i++) {
-    registers.push({
-      index: i,
-      registerTime: "12:" + (i - 100),
-      registerId: "10000" + i,
-      patientCode: "환자" + i,
-      patientBirth: "" + i,
-      patientSex: "F",
-      doctorName: "의사" + i,
-      registerMemo: "메모" + i,
-      registerCommunication: "의사소통메모" + i,
-      registerState: "취소"
-    });
+  for (i; i <= 120; i++) {
+    if (i < 110) {
+      registers.push({
+        index: i,
+        registerTime: "12:0" + (i - 100),
+        registerId: "10000" + i,
+        patientCode: "환자" + i,
+        patientBirth: "" + i,
+        patientSex: "F",
+        doctorName: "의사" + i,
+        registerMemo: "메모" + i,
+        registerCommunication: "의사소통메모" + i,
+        registerState: "취소"
+      });
+    } else {
+      registers.push({
+        index: i,
+        registerTime: "12:" + (i - 100),
+        registerId: "10000" + i,
+        patientCode: "환자" + i,
+        patientBirth: "" + i,
+        patientSex: "F",
+        doctorName: "의사" + i,
+        registerMemo: "메모" + i,
+        registerCommunication: "의사소통메모" + i,
+        registerState: "취소"
+      });
+    }
+
   }
   return registers;
 }
@@ -95,8 +141,8 @@ function RegisterList(props) {
     console.log(registerId);
     const newRegisters = registerList.map(register => {
       // 해당 아이디의 정보를 찾아서 수정
-      if(register.registerId === registerId){
-        const newRegister = {...register, registerState: "완료"};
+      if (register.registerId === registerId) {
+        const newRegister = { ...register, registerState: "완료" };
         return newRegister;
       } else {
         return register;
@@ -106,16 +152,16 @@ function RegisterList(props) {
     setRegisterList(newRegisters);
   };
   // registerList가 바뀔때 상태값 바꾸기
-  useEffect(()=>{
+  useEffect(() => {
     setRegisterState(getRegistersState(registerList));
-  },[registerList]);
+  }, [registerList]);
 
   // 선택된 접수 상태
   const [selectedRegister, setSelectedRegister] = useState();
 
   // 체크박스 클릭시 체크 됨
   const checkboxHandler = (registerId) => {
-    if(registerId === selectedRegister){
+    if (registerId === selectedRegister) {
       setSelectedRegister("");
     } else {
       setSelectedRegister(registerId);
@@ -158,7 +204,7 @@ function RegisterList(props) {
             </div>
           </div>
           <div className="RegisterList_content_1_3">
-            <button className="button_team2_fill" onClick={()=>changeRegisterStateToFinish(selectedRegister)}>접수 완료</button>
+            <button className="button_team2_fill" onClick={() => changeRegisterStateToFinish(selectedRegister)}>접수 완료</button>
           </div>
         </div>
         {/* 접수 내역 테이블 */}
@@ -184,7 +230,7 @@ function RegisterList(props) {
               {registerList.map(register => {
                 return (
                   <tr key={register.index} className="RegisterList_content_2_tr" onClick={(event) => checkboxHandler(register.registerId)}>
-                    <td><input type="checkbox" name="chk" checked={selectedRegister === register.registerId? true : false} readOnly/></td>
+                    <td><input type="checkbox" name="chk" checked={selectedRegister === register.registerId ? true : false} readOnly /></td>
                     <td>{register.index}</td>
                     <td>{register.registerTime}</td>
                     <td>{register.registerId}</td>
