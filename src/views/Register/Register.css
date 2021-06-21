@@ -97,6 +97,11 @@
   overflow-y: scroll;
   height: 250px;
 }
+.RegisterList_content_2_tr:hover{
+  background-color: #00AAF0;
+  color:white;
+  cursor: pointer;
+}
 thead {
   background-color: lightgray;
   position: sticky;
@@ -250,6 +255,12 @@ select {
   overflow-y: scroll;
   height: 310px;
 }
+.RegisterPatientList_content_table_tr:hover{
+  background-color: #00AAF0;
+  color:white;
+  cursor: pointer;
+}
+
 /* RegisterCreateForm */
 .RegisterCreateForm {
   flex-grow: 1;
