@@ -18,18 +18,6 @@ export const TreatmentImgRead = (props) => {
                   <div>진료 번호 : {inspectionTreatmentId}</div>
                   <div>검사 날짜 : {inspectionDate}</div>
                 </div>
-                {/* <div className="TreatmentImgRead_1_1_2">
-                            <div > X-Ray 흉부</div>
-                            <div >영상촬영 </div>
-                            <div> aed1586</div>
-                            <div> 2021-06-01</div>
-                        </div> */}
-                {/* 
-                          <div>검사명 : X-Ray 흉부</div>
-                          <div>진단 검사명 : 영상촬영</div>
-                          <div>진료 번호 : aed1586</div>
-                          <div>검사 날짜 : 2021-06-01</div> */}
-                {/* </div> */}
 
                 <div className="TreatmentImgRead_1_2">
                   <img src={`/resources/img/${inspectionImg}`} width="100%" height="100%" alt=""></img>
