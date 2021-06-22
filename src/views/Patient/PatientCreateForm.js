@@ -137,10 +137,10 @@ function PatientCreateForm(props) {
                 <input type="text" className="col-sm-2 ml-3" name="paitentZipcode" value={patient.paitentZipcode} placeholder="우편번호" onChange={handleChange} readOnly></input>
                 <React.Fragment>
                   <button className="button_team2_empty" onClick={openModal}>우편번호 찾기</button>
-                  <Modal open={modalOpen} close={closeModal} send={(addresss) => sendModal(addresss)}></Modal>
+                  <Modal open={modalOpen} close={closeModal} send={sendModal}></Modal>
                 </React.Fragment>   
               </div>
-              <input type="text" className=" mb-2" name="paitentAddress" placeholder="주소" value={patient.paitentAddress} onChange={handleChange} readOnly></input>
+              <input type="text" className="col-sm-5 mb-2" name="paitentAddress" placeholder="주소" value={patient.paitentAddress} onChange={handleChange} readOnly></input>
               <div className="row no-gutters mb-2">
                 <input type="text" className="col-sm mr-2" name="paitentDetailAddress1" placeholder="상세주소" onChange={handleChange}></input>
                 <input type="text" className="col-sm" name="paitentDetailAddress2" value={patient.paitentDetailAddress2} placeholder="참고항목" onChange={handleChange} readOnly></input>
