@@ -50,9 +50,18 @@ function InspectionPatientList(props) {
   const [istateInspection, setIstateInspection] = useState(getIstateInspection(patients));
   const [istateCompletion, setIstateCompletion] = useState(getIstateCompletion(patients));
 
+  // 진료번호 비교를 위한 상태
+  const [id, setId] = useState("");
+
   const searchDateBtn = (event) => {
     console.log(treatmentDate);
     console.log("이동 버튼 클릭");
+  };
+
+  //진료 완료 환자 체크(선택)
+  const handleChecked = (treatmentId) => {
+    setId(treatmentId);
+    props.checkedId(treatmentId);
   };
 
   // const rowRenderer = ({index, key, style}) => {
@@ -73,19 +82,19 @@ function InspectionPatientList(props) {
 
   return (
     <div className="InspectionPatientList">
-      <div className="InspectionPatientList_title">환자검색</div>
+      <div className="InspectionPatientList_title">진료 완료 환자</div>
       <div className="InspectionPatientList_1 border">
         <div className="InspectionPatientList_1_1 mb-2">
-          <div className="col-4 p-0">
+          <div className="InspectionPatientList_1_2_1 p-0">
             {/* <input type="date" value={date} onChange={handleChange}/> */}
-            <DatePicker dateFormat="yyyy.MM.dd" selected={treatmentDate} onChange={(date) => setTreatmentDate(date)} />
+            <DatePicker dateFormat="yyyy.MM.dd" selected={treatmentDate} onChange={(date) => setTreatmentDate(date)}/>
           </div>
-          <div className="col-3 InspectionPatientList_1_2 p-0">
+          <div className="col-3 InspectionPatientList_1_2_2 p-0">
             <button className="button_team2_fill" onClick={searchDateBtn}>
               이동
             </button>
           </div>
-          <div className="row p-0">
+          <div className="InspectionPatientList_1_2_3 row p-0">
             <div className="InspectionPatientList_1_3_1">대기:{istateWaiting}명</div>
             <div className="InspectionPatientList_1_3_2">검사:{istateInspection}명</div>
             <div className="InspectionPatientList_1_3_3">완료:{istateCompletion}명</div>
@@ -113,9 +122,9 @@ function InspectionPatientList(props) {
             </AutoSizer> */}
               {patients.map((paitent) => {
                 return (
-                  <tr key={paitent.treatmentId}>
+                  <tr key={paitent.treatmentId} onClick={() => handleChecked(paitent.treatmentId)}>
                     <td>
-                      <input type="checkbox" />
+                      <input type="checkbox" name="treatmentCheck" checked={id === paitent.treatmentId? true : false}/>
                     </td>
                     <td>{paitent.treatmentId}</td>
                     <td>{paitent.patientName}</td>

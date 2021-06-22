@@ -10,6 +10,8 @@ function getInspections() {
 }
 
 function InspectionList(props) {
+  console.log(props.treatmentId);
+
   const [inspections, setInspections] = useState(getInspections);
   //총검사상태가 모두 완료될 때 변하는 state 추가
 

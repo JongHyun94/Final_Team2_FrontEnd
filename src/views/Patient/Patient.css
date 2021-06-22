@@ -47,6 +47,12 @@
   height: 100%;
 }
 
+.PatientList_tr:hover {
+  background-color: #00AAF0;
+  color:white;
+  cursor: pointer;
+}
+
 /* PatientUpdateForm */
 .PatientUpdateForm {
   /* font-size: small; */

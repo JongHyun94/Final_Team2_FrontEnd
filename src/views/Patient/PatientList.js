@@ -15,17 +15,6 @@ function PatientList(props) {
   // 환자 목록 상태
   const [patients, setPatients] = useState(getPatientList);
 
-  // 환자 상태
-  const [patient, setPatient] = useState({
-    patientId: "",
-    patientName: "",
-    patientSsn: "",
-    patientSex: "",
-    patientTel: "",
-    patientAddress: "",
-    patientRegDate: ""
-  });
-
   // 검색 상태
   const [keyword, setKeyword] = useState("");
 
@@ -56,7 +45,7 @@ function PatientList(props) {
 
   const rowRenderer = ({index, key, style}) => {
     return (
-      <tr key={key} style={style} onClick={() => handleClick(patients[index].patientId)}>
+      <tr className="PatientList_tr" key={key} style={style} onClick={() => handleClick(patients[index].patientId)}>
         <td key={patients.patientId}><input type="checkbox" name="patientCheck" checked={id === patients[index].patientId? true : false} width={50} readOnly></input></td>
         <td width={110}>{patients[index].patientId}</td>
         <td width={100}>{patients[index].patientName}</td>

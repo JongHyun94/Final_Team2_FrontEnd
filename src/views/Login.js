@@ -19,7 +19,7 @@ function Login(props) {
   // 로그인
   const login = (event) => {
     event.preventDefault();
-    console.log("로그인 성공");
+    alert("로그인 성공");
     console.log(user);
   };
   
