@@ -70,7 +70,7 @@ function PatientCreateForm(props) {
   
   return (
     <div className="mt-4">
-      <div className={`title`}>환자 등록</div>
+      <div className={`Patient_title`}>환자 등록</div>
       <div className={`border p-3 PatientCreateForm`}>
         <form>
           <div className="row align-items-center mb-2">
