@@ -44,6 +44,12 @@ function Register(props) {
   // 접수 상태 (대기, 완료, 취소)
   // const [registerState, setRegisterState] = useState();
 
+
+  // 선택된 환자 내용
+  const [selectedPatient, setSelectedPatient] = useState({
+
+  });
+
   // 접수 상세 내역 & 접수 수정 체인지
   const [registerRead, setRegisterRead] = useState(true);
 
@@ -69,14 +75,23 @@ function Register(props) {
       <div className="Register_1">
         {/* 접수 내역 */}
         <div className="RegisterList">
-          <RegisterList />
+          <RegisterList setSelectedPatient={setSelectedPatient} />
         </div>
         {/* 접수 상세 내역 or 접수 수정*/}
         <div className="RegisterRead">
           {registerRead ? 
-            <RegisterRead registerRead={registerRead} changeRegister={changeRegister} cancelRegister={cancelRegister}/> 
+            <RegisterRead 
+              registerRead={registerRead} 
+              changeRegister={changeRegister} 
+              selectedPatient={selectedPatient}
+            /> 
             : 
-            <RegisterUpdateForm registerRead={registerRead} changeRegister={changeRegister} cancelRegister={cancelRegister}/>
+            <RegisterUpdateForm 
+              registerRead={registerRead} 
+              changeRegister={changeRegister} 
+              cancelRegister={cancelRegister} 
+              selectedPatient={selectedPatient}
+            />
           }
         </div>
       </div>

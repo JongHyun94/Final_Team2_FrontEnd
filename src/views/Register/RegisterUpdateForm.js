@@ -18,10 +18,10 @@ function getPatient() {
     patientBirth : "940606",
     patientTel : "010-9947-7430",
     doctorName : "김더존(D13801001001)_3",
-    treatmentDate : "2021-06-17",
-    treatmentTime : "10:00",
-    treatmentMemo : "복통심함",
-    communicationMemo : "15분 뒤에 들어감."
+    registerDate : "2021-06-17",
+    registerTime : "10:00",
+    registerMemo : "복통심함",
+    registerCommunication : "15분 뒤에 들어감."
   };
   return selectedPatient;
 }
@@ -36,18 +36,19 @@ function RegisterUpdateForm(props) {
 
   // 환자 상태
 
-  const [patient, setPatient] = useState(getPatient);
+  const [patient, setPatient] = useState();
+  const selectedPatient = props.selectedPatient;
 
   // 진료 날짜 상태
 
-  const [startDate, setStartDate] = useState(new Date(patient.treatmentDate));
+  const [startDate, setStartDate] = useState(new Date());
 
   // 담당의 상태
 
   // 다른 의사들
   const [doctors, setDoctors] = useState(getDoctors);
   // 선택된 의사
-  const [newDoctor, setNewDoctor] = useState(patient.doctorName);
+  const [newDoctor, setNewDoctor] = useState(selectedPatient.doctorName);
 
   const changeNewDoctor = (event) => {
     setNewDoctor(event.target.value);
@@ -55,7 +56,7 @@ function RegisterUpdateForm(props) {
 
   // 진료 시간 상태
 
-  const [newTime, setNewTime] = useState(patient.treatmentTime);
+  const [newTime, setNewTime] = useState(selectedPatient.registerTime);
 
   const changeNewTime = (event) => {
     setNewTime(event.target.value);
@@ -63,7 +64,7 @@ function RegisterUpdateForm(props) {
 
   // 접수 메모 상태
 
-  const [newMemo, setNewMemo] = useState(patient.treatmentMemo);
+  const [newMemo, setNewMemo] = useState(selectedPatient.registerMemo);
 
   const changeNewMemo = (event) => {
     setNewMemo(event.target.value);
@@ -71,7 +72,7 @@ function RegisterUpdateForm(props) {
 
   // 의사소통 메모 상태
 
-  const [newCommunication, setNewCommunication] = useState(patient.communicationMemo);
+  const [newCommunication, setNewCommunication] = useState(selectedPatient.registerCommunication);
 
   const changeNewCommunication = (event) => {
     setNewCommunication(event.target.value);
@@ -93,7 +94,7 @@ function RegisterUpdateForm(props) {
                 환자명:
               </div>
               <div className="RegisterUpdateForm_content_list_input">
-                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={patient.patientName} readOnly />
+                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={selectedPatient.patientName} readOnly />
               </div>
             </div>
             <div className="RegisterUpdateForm_content_list">
@@ -101,7 +102,7 @@ function RegisterUpdateForm(props) {
                 생년월일:
               </div>
               <div className="RegisterUpdateForm_content_list_input">
-                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={patient.patientBirth} readOnly />
+                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={selectedPatient.patientBirth} readOnly />
               </div>
             </div>
             <div className="RegisterUpdateForm_content_list">
@@ -109,7 +110,7 @@ function RegisterUpdateForm(props) {
                 전화번호:
               </div>
               <div className="RegisterUpdateForm_content_list_input">
-                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={patient.patientTel} readOnly/>
+                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={selectedPatient.patientTel} readOnly/>
               </div>
             </div>
             <div className="RegisterUpdateForm_content_list">

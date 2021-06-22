@@ -14,12 +14,14 @@ function getRegisters() {
     if (i < 10) {
       registers.push({
         index: i,
+        registerDate : "2021-06-17",
         registerTime: "10:0" + i,
         registerId: "10000" + i,
-        patientCode: "환자" + i,
+        patientName: "환자" + i,
         patientBirth: "" + i,
+        patientTel: "010-9947-7430",
         patientSex: "F",
-        doctorName: "의사" + i,
+        doctorName: "김더존(D13801001001)_3",
         registerMemo: "메모" + i,
         registerCommunication: "의사소통메모" + i,
         registerState: "대기"
@@ -27,10 +29,12 @@ function getRegisters() {
     } else {
       registers.push({
         index: i,
+        registerDate : "2021-06-17",
         registerTime: "10:" + i,
         registerId: "10000" + i,
-        patientCode: "환자" + i,
+        patientName: "환자" + i,
         patientBirth: "" + i,
+        patientTel: "010-9947-7430",
         patientSex: "F",
         doctorName: "의사" + i,
         registerMemo: "메모" + i,
@@ -45,10 +49,12 @@ function getRegisters() {
     if (i < 60) {
       registers.push({
         index: i,
+        registerDate : "2021-06-17",
         registerTime: "11:0" + (i - 50),
         registerId: "10000" + i,
-        patientCode: "환자" + i,
+        patientName: "환자" + i,
         patientBirth: "" + i,
+        patientTel: "010-9947-7430",
         patientSex: "M",
         doctorName: "의사" + i,
         registerMemo: "메모" + i,
@@ -58,10 +64,12 @@ function getRegisters() {
     } else {
       registers.push({
         index: i,
+        registerDate : "2021-06-17",
         registerTime: "11:" + (i - 50),
         registerId: "10000" + i,
-        patientCode: "환자" + i,
+        patientName: "환자" + i,
         patientBirth: "" + i,
+        patientTel: "010-9947-7430",
         patientSex: "M",
         doctorName: "의사" + i,
         registerMemo: "메모" + i,
@@ -76,10 +84,12 @@ function getRegisters() {
     if (i < 110) {
       registers.push({
         index: i,
+        registerDate : "2021-06-17",
         registerTime: "12:0" + (i - 100),
         registerId: "10000" + i,
-        patientCode: "환자" + i,
+        patientName: "환자" + i,
         patientBirth: "" + i,
+        patientTel: "010-9947-7430",
         patientSex: "F",
         doctorName: "의사" + i,
         registerMemo: "메모" + i,
@@ -89,10 +99,12 @@ function getRegisters() {
     } else {
       registers.push({
         index: i,
+        registerDate : "2021-06-17",
         registerTime: "12:" + (i - 100),
         registerId: "10000" + i,
-        patientCode: "환자" + i,
+        patientName: "환자" + i,
         patientBirth: "" + i,
+        patientTel: "010-9947-7430",
         patientSex: "F",
         doctorName: "의사" + i,
         registerMemo: "메모" + i,
@@ -165,7 +177,13 @@ function RegisterList(props) {
       setSelectedRegister("");
     } else {
       setSelectedRegister(registerId);
-      console.log(registerId);
+      const selectPatient = registerList.find(register => {
+        // 해당 아이디의 정보를 찾아서 수정
+        if (register.registerId === registerId) {
+          return true;
+        }
+      });
+      props.setSelectedPatient(selectPatient);
     }
   };
 
@@ -234,7 +252,7 @@ function RegisterList(props) {
                     <td>{register.index}</td>
                     <td>{register.registerTime}</td>
                     <td>{register.registerId}</td>
-                    <td>{register.patientCode}</td>
+                    <td>{register.patientName}</td>
                     <td>{register.patientBirth}</td>
                     <td>{register.patientSex}</td>
                     <td>{register.doctorName}</td>
