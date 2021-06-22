@@ -301,7 +301,7 @@ select {
 .RegisterTimeTable_content {
   font-size: small;
   text-align: center;
-  height: 100%;
+
 }
 .RegisterTimeTable_content td,
 th {
