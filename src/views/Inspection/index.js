@@ -9,6 +9,10 @@ import { useState } from "react";
 function Inspection(props) {
   //true이면 이미지 첨부파일 있는 검사결과등록
   const [createForm, setCreateForm] = useState(true);
+  //진료번호 상태
+  const [treatmentId, setTreatmentId] = useState("");
+
+  //검사번호 상태
 
   const changeCreateForm = () => {
     if(createForm === true){
@@ -18,15 +22,19 @@ function Inspection(props) {
     }
   };
 
+  const checkedId = (id) => {
+    setTreatmentId(id);
+  };
+
   return (
       <div className="Inspection">
         <div className="Inspection_1">
           {/* 환자검색 */}
-          <InspectionPatientList/>
+          <InspectionPatientList treatmentId={treatmentId} checkedId={(id) => checkedId(id)}/>
         </div>
         <div className="Inspection_2">
           {/* 검사상세내역 */}
-          <InspectionList createForm={createForm} changeCreateForm={changeCreateForm}/>
+          <InspectionList treatmentId={treatmentId} createForm={createForm} changeCreateForm={changeCreateForm}/>
         </div>
         <div className="Inspection_3">
           <div className="Inspection_3_1">
