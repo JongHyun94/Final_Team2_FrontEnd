@@ -27,7 +27,7 @@ function Patient(props) {
         {/* 좌측 */}
         <div className="left">
           {/* 환자 목록 */}
-          <PatientList patientId={patientId} changeId={(id) => changeId(id)} search={(keyword) => search(keyword)}/>
+          <PatientList patientId={patientId} changeId={changeId} search={search}/>
         </div>
 
         {/* 우측 */}
