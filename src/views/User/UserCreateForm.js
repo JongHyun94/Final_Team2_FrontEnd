@@ -1,5 +1,5 @@
 import { Modal } from "../Patient/AddressModal";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function UserCreateForm(props) {
   // 직원 상태
@@ -24,6 +24,7 @@ function UserCreateForm(props) {
       [event.target.name]: event.target.value
     });
   };
+
 
   // 직원 정보 수정
   const handleCreate = (event) => {
@@ -87,7 +88,7 @@ function UserCreateForm(props) {
             </div>
           </div>
           <div className="row align-items-center mb-2">
-            <label className="col-sm-3 m-0">직급:</label>
+            <label className="col-sm-3 m-0">직책:</label>
             <div className="col-sm d-flex align-items-center">
               <input type="radio" name="userAuthority" value="의사" onChange={handleChange}></input>
               <label className="ml-3 mb-0">의사</label>
@@ -154,7 +155,7 @@ function UserCreateForm(props) {
                   <Modal open={modalOpen} close={closeModal} send={sendModal}></Modal>
                 </React.Fragment>   
               </div>
-              <input type="text" className="col-sm-5 mb-2" name="userAddress" placeholder="주소" value={user.userAddress} onChange={handleChange} readOnly></input>
+              <input type="text" className="col-sm mb-2" name="userAddress" placeholder="주소" value={user.userAddress} onChange={handleChange} readOnly></input>
               <div className="row no-gutters mb-2">
                 <input type="text" className="col-sm mr-2" name="userDetailAddress1" placeholder="상세주소" onChange={handleChange}></input>
                 <input type="text" className="col-sm" name="userDetailAddress2" value={user.userDetailAddress2} placeholder="참고항목" onChange={handleChange} readOnly></input>

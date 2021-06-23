@@ -4,13 +4,13 @@ import { AutoSizer, List } from "react-virtualized";
 function getUserList() {
   const users = [];
   for (var i =1; i <= 10; i++) {
-    users.push({userId: i, userName: "직원"+i, userAuthority: "의사", userSsn: "751026", userSex: "M", userTel: "010-1234-5678", userAddress: "서울 송파구 아이티벤처타워 12층 1강의실", userRegDate:"2021-06-01"})
+    users.push({userId: i, userName: "직원"+i, userAuthority: "의사", userSsn: "751026", userSex: "M", userTel1: "010", userTel2: "1234", userTel3: "5678", userZipcode: "01234", userAddress: "서울 송파구", userDetailAddress1: "12층 1강의실", userDetailAddress2: "아이티벤처타워", userRegDate:"2021-06-01"})
   }
   for (i = 11; i <= 20; i++) {
-    users.push({userId: i, userName: "직원"+i, userAuthority: "간호사", userSsn: "751026", userSex: "M", userTel: "010-1234-5678", userAddress: "서울 송파구 아이티벤처타워 12층 1강의실", userRegDate:"2021-06-01"})
+    users.push({userId: i, userName: "직원"+i, userAuthority: "간호사", userSsn: "751026", userSex: "F", userTel1: "010", userTel2: "1234", userTel3: "5678", userZipcode: "01234", userAddress: "서울 송파구", userDetailAddress1: "12층 1강의실", userDetailAddress2: "아이티벤처타워", userRegDate:"2021-06-01"})
   }
   for (i = 21; i <= 30; i++) {
-    users.push({userId: i, userName: "직원"+i, userAuthority: "검사자", userSsn: "751026", userSex: "M", userTel: "010-1234-5678", userAddress: "서울 송파구 아이티벤처타워 12층 1강의실", userRegDate:"2021-06-01"})
+    users.push({userId: i, userName: "직원"+i, userAuthority: "임상병리사", userSsn: "751026", userSex: "M",  userTel1: "010", userTel2: "1234", userTel3: "5678", userZipcode: "01234", userAddress: "서울 송파구", userDetailAddress1: "12층 1강의실", userDetailAddress2: "아이티벤처타워", userRegDate:"2021-06-01"})
   }
   return users;
 }
@@ -39,22 +39,22 @@ function UserList(props) {
   };
 
   // 직원 선택
-  const handleClick = (userId) => {
-    setId(userId);
-    props.changeId(userId);
+  const handleClick = (user) => {
+    setId(user.userId);
+    props.changeUser(user)
   };
 
   const rowRenderer = ({index, key, style}) => {
     return (
-      <tr className="UserList_tr" key={key} style={style} onClick={() => handleClick(users[index].userId)}>
+      <tr className="UserList_tr" key={key} style={style} onClick={() => handleClick(users[index])}>
         <td key={users.userId}><input type="checkbox" width={50} checked={id === users[index].userId? true : false} readOnly></input></td>
         <td width={100}>{users[index].userId}</td>
         <td width={80}>{users[index].userName}</td>
-        <td width={80}>{users[index].userAuthority}</td>
+        <td width={100}>{users[index].userAuthority}</td>
         <td width={105}>{users[index].userSsn}</td>
         <td>{users[index].userSex}</td>
         <td>{users[index].userTel}</td>
-        <td width={330}>{users[index].userAddress}</td>
+        <td width={330}>{users[index].userAddress} {users[index].userDetailAddress1} ({users[index].userDetailAddress2})</td>
         <td>{users[index].userRegDate}</td>
       </tr>
     );
@@ -74,7 +74,7 @@ function UserList(props) {
               <th style={{width: "4%"}}></th>
               <th style={{width: "9%"}}>직원 코드</th>
               <th style={{width: "10%"}}>직원명</th>
-              <th style={{width: "10%"}}>직급</th>
+              <th style={{width: "10%"}}>직책</th>
               <th style={{width: "9%"}}>생년월일</th>
               <th style={{width: "6%"}}>성별</th>
               <th style={{width: "15%"}}>전화번호</th>

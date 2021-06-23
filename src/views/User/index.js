@@ -5,14 +5,28 @@ import UserList from "./UserList";
 import UserUpdateForm from "./UserUpdateForm";
 
 function User(props) {
-  // 직원 코드 상태
-  const [userId, setUserId] = useState("");
+  // 직원 상태
+  const [user, setUser] = useState({});
 
   // 검색 상태
   const [keyword, setKeyword] = useState("");
-  
-  function changeId(id) {
-    setUserId(id);
+
+  function changeUser(user) {
+    setUser({
+      userId: user.userId,
+      userName: user.userName,
+      userAuthority: user.userAuthority,
+      userSsn: user.userSsn,
+      userSex: user.userSex,
+      userTel1: user.userTel1,
+      userTel2: user.userTel2,
+      userTel3: user.userTel3,
+      userZipcode: user.userZipcode,
+      userAddress: user.userAddress,
+      userDetailAddress1: user.userDetailAddress1,
+      userDetailAddress2: user.userDetailAddress2,
+      userRegDate: user.userRegDate
+    });
   };
 
   function search(keyword) {
@@ -25,14 +39,14 @@ function User(props) {
       {/* 좌측 */}
       <div className="User_left UserList">
         {/* 직원 목록 */}
-        <UserList userId={userId} changeId={changeId} search={search}/>
+        <UserList user={user} changeUser={changeUser} search={search}/>
       </div>
 
       {/* 우측 */}
       <div className="User_right">
         <div>
           {/* 직원 정보 수정 */}
-          <UserUpdateForm userId={userId}/>
+          <UserUpdateForm user={user}/>
         </div>
         <div>
           {/* 직원 등록 */}

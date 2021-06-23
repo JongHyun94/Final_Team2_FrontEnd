@@ -143,7 +143,7 @@ function Auth(props) {
               <input type="text" className="col-sm-3" name="userTel3" value={user.userTel3} onChange={handleChange}></input>
             </div>
           </div>
-          <div className="row mb-3 d-flex align-items-center no-gutters">
+          <div className="row mb-3 d-flex align-items-center">
             <label className="col-sm-4 m-0">주소: </label>
             <div className="col-sm">
               <div className="row mb-2"> 
@@ -153,10 +153,10 @@ function Auth(props) {
                   <Modal open={modalOpen} close={closeModal} send={sendModal}></Modal>
                 </React.Fragment>   
               </div>
-              <input type="text" className="col-sm mb-2 " name="userAddress" value={user.userAddress} placeholder="주소" readOnly></input>
+              <div className="row mb-2"><input type="text" className="col-sm" name="userAddress" value={user.userAddress} placeholder="주소" readOnly></input></div>
               <div className="row mb-2">
-                <input type="text" className="col-sm-4 mr-2" name="userDetailAddress1" value={user.userDetailAddress1} placeholder="상세주소" onChange={handleChange}></input>
-                <input type="text" className="col-sm-4" name="userDetailAddress2" value={user.userDetailAddress2} placeholder="참고항목" readOnly></input>
+                <input type="text" className="col-sm mr-2" name="userDetailAddress1" value={user.userDetailAddress1} placeholder="상세주소" onChange={handleChange}></input>
+                <input type="text" className="col-sm" name="userDetailAddress2" value={user.userDetailAddress2} placeholder="참고항목" readOnly></input>
               </div>
             </div>
           </div>

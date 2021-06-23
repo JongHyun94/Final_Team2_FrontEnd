@@ -1,12 +1,11 @@
 import { Modal } from "./AddressModal";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { AutoSizer, List } from "react-virtualized";
-import PatientContext from "./PatientContext";
 
 function getPatientList() {
   const patients = [];
   for (var i = 50; i >= 1; i--) {
-    patients.push({patientId: i, patientName: "환자"+i, patientSsn: "910612", patientSex: "M", patientTel: "010-1234-5678", paritentAddress: "서울시 송파구 아이티벤처타워 12층 1강의실", patientRegDate: "2021-06-01"})
+    patients.push({patientId: i, patientName: "환자"+i, patientSsn: "910612", patientSex: "M", patientTel1: "010", patientTel2: "1234", patientTel3: "5678", patientZipcode: "01234", patientAddress: "서울시 송파구", patientDetailAddress1: "12층 강의실", patientDetailAddress2: "아이티벤처타워", patientRegDate: "2021-06-01"})
   }
   return patients;
 }
@@ -36,23 +35,21 @@ function PatientList(props) {
   };
 
   // 환자 선택
-  const handleClick = (patientId) => {
-    setId(patientId);
-    props.changeId(patientId);
-    // setPatientId(patientId);
-    // patientContext.setPatientId(patientId);
+  const handleClick = (patient) => {
+    setId(patient.patientId);
+    props.changePatient(patient);
   };
 
   const rowRenderer = ({index, key, style}) => {
     return (
-      <tr className="PatientList_tr" key={key} style={style} onClick={() => handleClick(patients[index].patientId)}>
+      <tr className="PatientList_tr" key={key} style={style} onClick={() => handleClick(patients[index])}>
         <td key={patients.patientId}><input type="checkbox" name="patientCheck" checked={id === patients[index].patientId? true : false} width={50} readOnly></input></td>
         <td width={110}>{patients[index].patientId}</td>
         <td width={100}>{patients[index].patientName}</td>
         <td width={120}>{patients[index].patientSsn}</td>
         <td>{patients[index].patientSex}</td>
-        <td width={190}>{patients[index].patientTel}</td>
-        <td width={350}>{patients[index].paritentAddress}</td>
+        <td width={190}>{patients[index].patientTel1}-{patients[index].patientTel2}-{patients[index].patientTel3}</td>
+        <td width={350}>{patients[index].patientAddress} {patients[index].patientDetailAddress1} {patients[index].patientDetailAddress2}</td>
         <td>{patients[index].patientRegDate}</td>
       </tr>
     );
