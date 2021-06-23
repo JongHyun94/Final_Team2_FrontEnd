@@ -25,18 +25,18 @@ function Patient(props) {
     <div className={`row no-gutters Patient`}>
       <PatientContextProvider>
         {/* 좌측 */}
-        <div className="left">
+        <div className="Patient_left">
           {/* 환자 목록 */}
           <PatientList patientId={patientId} changeId={changeId} search={search}/>
         </div>
 
         {/* 우측 */}
-        <div className="right">
-          <div className="right1">
+        <div className="Patient_right">
+          <div className="Patient_right1">
             {/* 환자 정보 수정 */}
             <PatientUpdateForm patientId={patientId}/>
           </div>
-          <div className="right2">
+          <div className="Patient_right2">
             {/* 환자 등록 */}
             <PatientCreateForm />
           </div>

@@ -20,9 +20,10 @@ function Header(props) {
           <div><Link to="/Inspection" className="link_team2">검사 및 치료</Link></div>
           <div><Link to="/DataAnalysis" className="link_team2">데이터분석</Link></div>
         </div>
-        <div className="col-4"></div>
-        <div className="col-2 row d-flex justify-content-between">
-          <div><Link to="/Auth" className="link_team2">비밀번호 수정</Link></div>
+        <div className="col-3"></div>
+        <div className="col-3 row d-flex justify-content-between">
+          <div><Link to="/User" className="link_team2">직원관리</Link></div>
+          <div><Link to="/Auth" className="link_team2">회원정보 수정</Link></div>
           <div><Link to="/Help" className="link_team2">도움말</Link></div>
         </div>
       </div>
