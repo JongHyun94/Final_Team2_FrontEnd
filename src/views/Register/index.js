@@ -68,6 +68,8 @@ function Register(props) {
       setRegisterRead(true);
     }
   };
+  const [today, setToday] = useState();
+
 
   return (
     <div className="Register">
@@ -107,10 +109,10 @@ function Register(props) {
           </div>
           {/* 접수 등록 */}
           <div className="RegisterCreateForm">
-            <RegisterCreateForm />
+            <RegisterCreateForm setToday={setToday}/>
           </div>
           {/* 접수 타임테이블 */}
-          <div className="RegisterTimeTable">
+          <div className="RegisterTimeTable" today={today}>
             <RegisterTimeTable />
           </div>
         </div>

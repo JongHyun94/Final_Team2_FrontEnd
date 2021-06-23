@@ -54,14 +54,14 @@ function RegisterTimeTable(props) {
 
   return (
     <div className="RegisterTimeTable_content">
-      <TimeTable
+      {/* <TimeTable
           events={events.events}
           renderHour={renderHour}
           renderEvent={renderEvent}
           hoursInterval={[9, 18]}
           timeLabel="접수 내역"
-        />
-      {/* <table className="table table-bordered RegisterTimeTable_content">
+        /> */}
+      <table className="table table-bordered RegisterTimeTable_content">
         <thead>
           <tr>
             <td></td>
@@ -77,7 +77,7 @@ function RegisterTimeTable(props) {
         <tbody>
           <tr>
             <th>09:00</th>
-            <td></td>
+            <td onDoubleClick={()=>{}}></td>
             <td></td>
             <td></td>
             <td></td>
@@ -176,7 +176,7 @@ function RegisterTimeTable(props) {
             <td></td>
           </tr>
         </tbody>
-      </table> */}
+      </table>
     </div>
   );
 }
