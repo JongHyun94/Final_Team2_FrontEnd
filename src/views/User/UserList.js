@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AutoSizer, List } from "react-virtualized";
+import { AutoSizer, List, Table, Column } from "react-virtualized";
 
 function getUserList() {
   const users = [];
@@ -46,17 +46,17 @@ function UserList(props) {
 
   const rowRenderer = ({index, key, style}) => {
     return (
-      <tr className="UserList_tr" key={key} style={style} onClick={() => handleClick(users[index])}>
-        <td key={users.userId}><input type="checkbox" width={50} checked={id === users[index].userId? true : false} readOnly></input></td>
-        <td width={100}>{users[index].userId}</td>
-        <td width={80}>{users[index].userName}</td>
-        <td width={100}>{users[index].userAuthority}</td>
-        <td width={105}>{users[index].userSsn}</td>
-        <td>{users[index].userSex}</td>
-        <td>{users[index].userTel}</td>
-        <td width={330}>{users[index].userAddress} {users[index].userDetailAddress1} ({users[index].userDetailAddress2})</td>
-        <td>{users[index].userRegDate}</td>
-      </tr>
+      <div className="UserList_tr" key={key} style={style} onClick={() => handleClick(users[index])}>
+        <div style={{width: "3%"}} key={users.userId}><input type="checkbox" width={50} checked={id === users[index].userId? true : false} readOnly></input></div>
+        <div style={{width: "11%"}}>{users[index].userId}</div>
+        <div style={{width: "10%"}}>{users[index].userName}</div>
+        <div style={{width: "10%"}}>{users[index].userAuthority}</div>
+        <div style={{width: "9%"}}>{users[index].userSsn}</div>
+        <div style={{width: "4%"}}>{users[index].userSex}</div>
+        <div style={{width: "17%"}}>{users[index].userTel1} - {users[index].userTel2} - {users[index].userTel3}</div>
+        <div style={{width: "35%"}}>{users[index].userAddress} {users[index].userDetailAddress1} ({users[index].userDetailAddress2})</div>
+        <div style={{width: "11%"}}>{users[index].userRegDate}</div>
+      </div>
     );
   };
 
@@ -68,29 +68,43 @@ function UserList(props) {
           <input type="text" className="col-3" name="search" placeholder="이름/생년월일을 입력하세요." onChange={handleChange}></input>
           <button className="button_team2_fill" onClick={handleSearch}>검색</button>
         </div>
-        <table className="table text-center">
-          <thead>
-            <tr className="UserList_Table">
-              <th style={{width: "4%"}}></th>
-              <th style={{width: "9%"}}>직원 코드</th>
-              <th style={{width: "10%"}}>직원명</th>
-              <th style={{width: "10%"}}>직책</th>
-              <th style={{width: "9%"}}>생년월일</th>
-              <th style={{width: "6%"}}>성별</th>
-              <th style={{width: "15%"}}>전화번호</th>
-              <th>주소</th>
-              <th style={{width: "13%"}}>등록일</th>
-              <th style={{width: "3%"}}></th>
-            </tr>
-          </thead>
-          <tbody>
+        <div className="text-center">
+            <div className="UserList_Table">
+              <div style={{width: "2%"}}></div>
+              <div style={{width: "11%"}}>직원 코드</div>
+              <div style={{width: "8%"}}>직원명</div>
+              <div style={{width: "10%"}}>직책</div>
+              <div style={{width: "7%"}}>생년월일</div>
+              <div style={{width: "5%"}}>성별</div>
+              <div style={{width: "13%"}}>전화번호</div>
+              <div style={{width: "32%"}}>주소</div>
+              <div style={{width: "11%"}}>등록일</div>
+            </div>
+          <div>
             <AutoSizer disableHeight>
               {({width, height}) => {
                 return <List width={width} height={660} list={users} rowCount={users.length} rowHeight={44} rowRenderer={rowRenderer} overscanRowCount={5}></List>
               }}
             </AutoSizer>
-          </tbody>
-        </table>
+          </div>
+        </div>
+        <div className="UserList_container">
+          <AutoSizer disableHeight>
+            {({width, height}) => {
+              return <Table headerHeight={44} width={width} height={500} rowHeight={200} rowCount={users.length} rowGetter={({index}) => users[index]}  overscanRowCount={5}>
+                <Column className="border" label="선택" dataKey="userId" width={width}><input type="checkbox"></input></Column>
+                <Column label="직원 코드" dataKey="userId" width={width}/>
+                <Column label="직원명" dataKey="userName" width={width}/>
+                <Column label="직책" dataKey="userAuthority" width={width}/>
+                <Column label="생년월일" dataKey="userSSn" width={width}/>
+                <Column label="성별" dataKey="userSex" width={width}/>
+                <Column label="전화번호" dataKey="userTel1" width={width}/>
+                <Column label="주소" dataKey="userAddress" width={width}/>
+                <Column label="등록일" dataKey="userRegDate" width={width}/>
+              </Table>
+            }}
+          </AutoSizer>
+        </div>
       </div>
     </div>
   );

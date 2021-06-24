@@ -40,7 +40,16 @@
 
 .PatientList_Table {
   background-color: lightgray;
-  height: 100%;
+  height: 2.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.PatientList_tr {
+  display: flex;
+  border-bottom: lightgray solid 0.5px;
+  align-items: center;
 }
 
 .PatientList_tr:hover {

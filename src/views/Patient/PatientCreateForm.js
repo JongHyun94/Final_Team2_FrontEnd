@@ -141,7 +141,7 @@ function PatientCreateForm(props) {
                 </React.Fragment>   
               </div>
               <input type="text" className="col-sm mb-2" name="patientAddress" placeholder="주소" value={patient.patientAddress} onChange={handleChange} readOnly></input>
-              <div className="row mb-2">
+              <div className="row  no-gutters mb-2">
                 <input type="text" className="col-sm mr-2" name="patientDetailAddress1" placeholder="상세주소" onChange={handleChange}></input>
                 <input type="text" className="col-sm" name="patientDetailAddress2" value={patient.patientDetailAddress2} placeholder="참고항목" onChange={handleChange} readOnly></input>
               </div>
