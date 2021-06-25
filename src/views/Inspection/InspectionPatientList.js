@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AutoSizer, List, Table } from "react-virtualized";
 import DatePicker from "react-datepicker";
+import InspectionPatientListItem from "./InspectionPatientListItem";
 
 function getPatient() {
   const patients = [];
@@ -53,6 +54,10 @@ function InspectionPatientList(props) {
   // 진료번호 비교를 위한 상태
   const [id, setId] = useState("");
 
+  useEffect(() => {
+    setPatients(patients);
+  }, [patients]);
+
   const searchDateBtn = (event) => {
     console.log(treatmentDate);
     console.log("이동 버튼 클릭");
@@ -60,9 +65,15 @@ function InspectionPatientList(props) {
 
   //진료 완료 환자 체크(선택)
   const handleChecked = (treatmentId) => {
+    // setPatients(patients);
     setId(treatmentId);
-    props.checkedId(treatmentId);
+    props.checkedtId(treatmentId);
+
+    setIstateWaiting(getIstateWaiting(patients));
+    setIstateInspection(getIstateInspection(patients));
+    setIstateCompletion(getIstateCompletion(patients));
   };
+
 
   // const rowRenderer = ({index, key, style}) => {
   //   return (
@@ -82,7 +93,7 @@ function InspectionPatientList(props) {
 
   return (
     <div className="InspectionPatientList">
-      <div className="InspectionPatientList_title">진료 완료 환자</div>
+      <div className="InspectionPatientList_title">검사 대기 환자</div>
       <div className="InspectionPatientList_1 border">
         <div className="InspectionPatientList_1_1 mb-2">
           <div className="InspectionPatientList_1_2_1 p-0">
@@ -120,19 +131,10 @@ function InspectionPatientList(props) {
                 return <List width={width} height={500} list={patient} rowCount={patient.length} rowHeight={44} rowRenderer={rowRenderer} overscanRowCount={11} />;
               }}
             </AutoSizer> */}
-              {patients.map((paitent) => {
+              {patients.map((patient) => {
                 return (
-                  <tr key={paitent.treatmentId} onClick={() => handleChecked(paitent.treatmentId)}>
-                    <td>
-                      <input type="checkbox" name="treatmentCheck" checked={id === paitent.treatmentId? true : false}/>
-                    </td>
-                    <td>{paitent.treatmentId}</td>
-                    <td>{paitent.patientName}</td>
-                    <td>{paitent.patientBirth}</td>
-                    <td>{paitent.patientSex}</td>
-                    <td>{paitent.treatmentIstate}</td>
-                    <td>{paitent.treatmentCommunication}</td>
-                  </tr>
+                  <InspectionPatientListItem key={patient.treatmentId} patient={patient} id={id} handleChecked={(treatmentId) => handleChecked(treatmentId)} 
+                                              iState={props.iState} handleBarcodeBack={props.handleBarcodeBack}/>
                 );
               })}
             </tbody>
