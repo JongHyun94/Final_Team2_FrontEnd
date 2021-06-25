@@ -192,7 +192,7 @@ function RegisterTimeSchedule(props) {
                   </div>
                   <div className="RegisterTimeSchedule_content_title_hours_hour_downside">
                     {mins.map(min => {
-                      let currentTime = moment().format("YYYY-MM-DD h:m");
+                      let currentTime = moment().format("YYYY-MM-DD H:m");
                       let minCurrentTime = moment(startDate).format("YYYY-MM-DD") + " " + hour + ":" + min;
                       let maxCurrentTime = moment(minCurrentTime).add(15, "m");
                       if (moment(currentTime).isBetween(minCurrentTime, maxCurrentTime, undefined, '[)')) {
@@ -235,8 +235,8 @@ function RegisterTimeSchedule(props) {
                                   if (register.registerState === "대기") {
                                     return (
                                       <React.Fragment>
-                                        <div 
-                                          className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip" 
+                                        <div
+                                          className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip"
                                           onClick={() => { openRegisterModal(register.registerId) }}
                                         >
                                           {register.patientName}<br></br>{register.registerState}
@@ -261,11 +261,19 @@ function RegisterTimeSchedule(props) {
                                   else if (register.registerState === "완료") {
                                     return (
                                       <React.Fragment>
-                                        <div 
-                                          className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip" 
+                                        <div
+                                          className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip"
                                           onClick={() => { openRegisterModal(register.registerId) }}
                                         >
                                           {register.patientName}<br></br>{register.registerState}
+                                          <span className="balloon_success">
+                                            <div>
+                                              환자명:{register.patientName}
+                                            </div>
+                                            <div>
+                                              담당의:{register.doctorName}
+                                            </div>
+                                          </span>
                                         </div>
                                         <RegisterCreateModal
                                           open={modalRegisterOpen}
@@ -279,11 +287,19 @@ function RegisterTimeSchedule(props) {
                                   else if (register.registerState === "취소") {
                                     return (
                                       <React.Fragment>
-                                        <div 
+                                        <div
                                           className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip"
                                           onClick={() => { openRegisterModal(register.registerId) }}
                                         >
                                           {register.patientName}<br></br>{register.registerState}
+                                          <span className="balloon_cancel">
+                                            <div>
+                                              환자명:{register.patientName}
+                                            </div>
+                                            <div>
+                                              담당의:{register.doctorName}
+                                            </div>
+                                          </span>
                                         </div>
                                         <RegisterCreateModal
                                           open={modalRegisterOpen}
@@ -296,9 +312,19 @@ function RegisterTimeSchedule(props) {
                                   }
                                   else {
                                     return (
-                                      <div className="RegisterTimeSchedule_content_timetable_doctors_registers_register_nothing">
-
-                                      </div>
+                                      <React.Fragment>
+                                        <div
+                                          className="RegisterTimeSchedule_content_timetable_doctors_registers_register_nothing"
+                                          onClick={() => { openModal() }}
+                                        >
+                                          <RegisterCreateModal
+                                            open={modalOpen}
+                                            close={closeModal}
+                                            header="신규 접수 등록"
+                                            doctors={doctors}
+                                          />
+                                        </div>
+                                      </React.Fragment>
                                     )
                                   }
                                 }
