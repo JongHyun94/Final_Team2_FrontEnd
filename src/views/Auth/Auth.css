@@ -2,3 +2,11 @@
   width: 40rem;
   padding-top: 7rem;
 }
+
+.Auth_content {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  /* padding-bottom: 0.5rem; */
+  /* border-bottom: lightgray solid 0.5px; */
+}

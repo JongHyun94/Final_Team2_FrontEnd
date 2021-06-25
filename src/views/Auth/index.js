@@ -1,5 +1,5 @@
 import { Modal } from "../Patient/AddressModal";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Auth.css"
 
 function Auth(props) {
@@ -28,15 +28,23 @@ function Auth(props) {
       ...user,
       [event.target.name]: event.target.value
     });
+    console.log(user);
   };
+
+  // useEffect(() => {
+  //   setUser({
+  //     ...user
+  //   })
+  // }, [user]);
+
 
   // 회원정보 수정
   const handleUpdate = (event) => {
     event.preventDefault();
     let newUser;
-    if(user.oldPassword === user.newPassword) {
+    if(user.oldPassword !== "" && user.oldPassword === user.newPassword) {
       alert("이전 비밀번호와 동일합니다.");
-    } else if(user.newPassword === user.rePassword) {
+    } else if(user.newPassword !== "" && user.newPassword === user.rePassword) {
       newUser = {...user};
       alert("비밀번호가 변경되었습니다.");
       setUser({
@@ -45,11 +53,11 @@ function Auth(props) {
         newPassword: "",
         rePassword: ""
       })
-    } else {
+      console.log(newUser);
+    } else if (user.oldPassword !== "") {
       alert("비밀번호가 동일하지 않습니다.");
     }
     console.log("비밀번호 수정");
-    console.log(newUser);
   };
 
   // 모달 상태(open일 떄 true로 바뀌어 열림)
@@ -91,27 +99,27 @@ function Auth(props) {
     <div className={`d-flex justify-content-center`}>
       <div className="Auth">
         <form>
-          <div className="row mb-3 d-flex align-items-center">
+          <div className="Auth_content">
             <label className="col-sm-4 m-0">회원 코드: </label>
             <div className="col-sm">{user.userId}</div>
           </div>
-          <div className="row mb-3 d-flex align-items-center">
+          <div className="Auth_content">
             <label className="col-sm-4 m-0">회원 이름: </label>
             <div className="col-sm">{user.userName}</div>
           </div>
-          <div className="row mb-3 d-flex align-items-center">
+          <div className="Auth_content">
             <label className="col-sm-4 m-0">직급: </label>
             <div className="col-sm">{user.userAuthority}</div>
           </div>
-          <div className="row mb-3 d-flex align-items-center">
+          <div className="Auth_content">
             <label className="col-sm-4 m-0">생년월일: </label>
             <div className="col-sm">{user.userSsn}</div>
           </div>
-          <div className="row mb-3 d-flex align-items-center">
+          <div className="Auth_content">
             <label className="col-sm-4 m-0">성별: </label>
             <div className="col-sm">{user.userSex}</div>
           </div>
-          <div className="row mb-3 d-flex align-items-center">
+          <div className="Auth_content">
             <label className="col-sm-4 m-0">전화 번호: </label>
             <div className="row col-sm mr-0">
               <select className="col-sm-3" name="userTel1" value={user.userTel1} onChange={handleChange}>
@@ -143,7 +151,7 @@ function Auth(props) {
               <input type="text" className="col-sm-3" name="userTel3" value={user.userTel3} onChange={handleChange}></input>
             </div>
           </div>
-          <div className="row mb-3 d-flex align-items-center no-gutters">
+          <div className="Auth_content">
             <label className="col-sm-4 m-0">주소: </label>
             <div className="col-sm">
               <div className="row mb-2"> 
@@ -153,22 +161,22 @@ function Auth(props) {
                   <Modal open={modalOpen} close={closeModal} send={sendModal}></Modal>
                 </React.Fragment>   
               </div>
-              <input type="text" className="col-sm mb-2 " name="userAddress" value={user.userAddress} placeholder="주소" readOnly></input>
+              <div className="row mb-2"><input type="text" className="col-sm" name="userAddress" value={user.userAddress} placeholder="주소" readOnly></input></div>
               <div className="row mb-2">
-                <input type="text" className="col-sm-4 mr-2" name="userDetailAddress1" value={user.userDetailAddress1} placeholder="상세주소" onChange={handleChange}></input>
-                <input type="text" className="col-sm-4" name="userDetailAddress2" value={user.userDetailAddress2} placeholder="참고항목" readOnly></input>
+                <input type="text" className="col-sm mr-2" name="userDetailAddress1" value={user.userDetailAddress1} placeholder="상세주소" onChange={handleChange}></input>
+                <input type="text" className="col-sm" name="userDetailAddress2" value={user.userDetailAddress2} placeholder="참고항목" readOnly></input>
               </div>
             </div>
           </div>
-          <div className="row mb-3 d-flex align-items-center">
+          <div className="Auth_content">
             <label className="col-sm-4 m-0">기존 비밀번호: </label>
             <input type="text" className="col-sm-8" name="oldPassword" onChange={handleChange}></input>
           </div>
-          <div className="row mb-3 d-flex align-items-center">
+          <div className="Auth_content">
             <label className="col-sm-4 m-0">새로운 비밀번호: </label>
             <input type="text" className="col-sm-8" name="newPassword" onChange={handleChange}></input>
           </div>
-          <div className="row d-flex align-items-center">
+          <div className="Auth_content">
             <label className="col-sm-4 m-0">비밀번호 재입력: </label>
             <input type="text" className="col-sm-8" name="rePassword" onChange={handleChange}></input>
           </div>

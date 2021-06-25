@@ -1,44 +1,42 @@
 import { Modal } from "./AddressModal";
-import React, { useContext, useState } from "react";
-import PatientContext from "./PatientContext";
+import React, { useEffect, useState } from "react";
 
 function PatientUpdateForm(props) {
-  // const patientContext = useContext(PatientContext);
-  // const id = patientContext.patientId;
-
-  // 환자 코드
-  const patientId = props.patientId;
-  console.log("patientId: ",patientId);
-
   // 환자 상태
-  const [patient, setPatient] = useState({
-    patientId: "",
-    patientName: "홍길동",
-    patientSsn: "910612",
-    patientSex: "M",
-    patientTel1: "010",
-    patientTel2: "1234",
-    patientTel3: "5678", 
-    paitentZipcode: "01234", 
-    paitentAddress: "서울시 송파구", 
-    paitentDetailAddress1: "12층 1강의실", 
-    paitentDetailAddress2: "아이티벤처타워",
-    patientRegDate: "2021-06-01"
-  });
+  const [patient, setPatient] = useState({});
 
   const handleChange = (event) => {
     setPatient({
       ...patient,
-      patientId: props.patientId,
+      patientId: props.patient.patientId,
       [event.target.name]: event.target.value
     });
   };
+
+  useEffect(() => {
+    setPatient({
+      ...patient,
+      patientId: props.patient.patientId,
+      patientName: props.patient.patientName,
+      patientSsn: props.patient.patientSsn,
+      patientSex: props.patient.patientSex,
+      patientTel1: props.patient.patientTel1,
+      patientTel2: props.patient.patientTel2,
+      patientTel3: props.patient.patientTel3, 
+      patientZipcode: props.patient.patientZipcode, 
+      patientAddress: props.patient.patientAddress, 
+      patientDetailAddress1: props.patient.patientDetailAddress1, 
+      patientDetailAddress2: props.patient.patientDetailAddress2,
+      patientRegDate: props.patient.patientRegDate
+    })
+  }, [props]);
 
   // 환자 정보 수정
   const handleUpdate = (event) => {
     event.preventDefault();
     const updatePatient = {...patient};
     console.log("환자 정보 수정: ", updatePatient);
+    // props.changePatient(updatePatient);
   }; 
 
   // 모달 상태(open일 떄 true로 바뀌어 열림)
@@ -56,21 +54,21 @@ function PatientUpdateForm(props) {
     console.log("send1 실행", data);
     setPatient({
       ...patient,
-      paitentZipcode: data.zonecode, 
-      paitentAddress: data.address
+      patientZipcode: data.zonecode, 
+      patientAddress: data.address
     })
     if (data.buildingName === "") {
       setPatient(prevPatient => {
         return {
           ...prevPatient,
-          paitentDetailAddress2: data.bname          
+          patientDetailAddress2: data.bname          
         };
       });
     } else {
       setPatient(prevPatient => {
         return {
           ...prevPatient,
-          paitentDetailAddress2: data.bname + ", " + data.buildingName   
+          patientDetailAddress2: data.bname + ", " + data.buildingName   
         };
       });
     }
@@ -79,28 +77,37 @@ function PatientUpdateForm(props) {
   return (
     <div>
       <div className={`Patient_title`}>환자 정보 수정</div>
-      <div className={`border p-3 PatientUpdateForm`}>
+      <div className={`border p-3`}>
         <form>
-          <div className="row align-items-center mb-2">
+          <div className="Patient_item">
             <label className="col-sm-3 pl-3 p-0 m-0">환자 코드: </label>
-            <div className="col-sm d-flex ">{props.patientId}</div>
+            <div className="col-sm d-flex ">{patient.patientId}</div>
           </div>
-          <div className="row align-items-center mb-2">
+          <div className="Patient_item">
             <label className="col-sm-3 pl-3 p-0 m-0">환자명: </label>
-            <div className="col-sm">{patientId && patient.patientName}</div>
+            <div className="col-sm">
+              <input type="text" name="patientName" value={patient.patientName} placeholder="환자명" onChange={handleChange}></input>
+            </div>
           </div>
-          <div className="row align-items-center mb-2">
-            <label className="col-sm-3 pl-3 p-0 m-0">생년 월일: </label>
-            <div className="col-sm">{patientId && patient.patientSsn}</div>
+          <div className="Patient_item">
+            <label className="col-sm-3 pl-3 p-0 m-0">생년월일: </label>
+            <div className="col-sm">{patient.patientSsn}</div>
           </div>
-          <div className="row align-items-center mb-2">
+          <div className="Patient_item">
             <label className="col-sm-3 pl-3 p-0 m-0">성별: </label>
-            <div className="col-sm">{patientId && patient.patientSex}</div>
+            <div className="col-sm d-flex align-items-center">
+              <input type="radio" name="patientSex" value="M" checked={patient.patientSex === "M"? true : false} onChange={handleChange}></input>
+              <label className="ml-3 mb-0">남</label>
+            </div>
+            <div className="col-sm d-flex align-items-center">
+              <input type="radio" name="patientSex" value="F" checked={patient.patientSex === "F"? true : false} onChange={handleChange}></input>
+              <label className="ml-3 mb-0">여</label>
+            </div>
           </div>
-          <div className="row align-items-center mb-2">
+          <div className="Patient_item">
             <label className="col-sm-3 m-0">전화 번호: </label>
             <div className="row col-sm">
-              <select className="col-sm-2 ml-3" name="patientTel1" value={patientId && patient.patientTel1} onChange={handleChange}>
+              <select className="col-sm-2 ml-3" name="patientTel1" value={patient.patientTel1} onChange={handleChange}>
                 <option value="010">010</option>
                 <option value="011">011</option>
                 <option value="016">016</option>
@@ -124,31 +131,31 @@ function PatientUpdateForm(props) {
                 <option value="064">064</option>
               </select>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm-2" name="patientTel2" value={patientId && patient.patientTel2} onChange={handleChange}></input>
+              <input type="text" className="col-sm-2" name="patientTel2" value={patient.patientTel2} onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm-2" name="patientTel3" value={patientId && patient.patientTel3} onChange={handleChange}></input>
+              <input type="text" className="col-sm-2" name="patientTel3" value={patient.patientTel3} onChange={handleChange}></input>
             </div>
           </div>
-          <div className="row">
+          <div className="Patient_item">
             <label className="col-sm-3 m-0">주소: </label>
             <div className="col-sm">
               <div className="row mb-2"> 
-                <input type="text" className="col-sm-2 ml-3" name="paitentZipcode" value={patientId && patient.paitentZipcode} placeholder="우편번호" readOnly></input>
+                <input type="text" className="col-sm-3 ml-3" name="patientZipcode" value={patient.patientZipcode} placeholder="우편번호" readOnly></input>
                 <React.Fragment>
                   <button className="button_team2_empty" onClick={openModal}>우편번호 찾기</button>
                   <Modal open={modalOpen} close={closeModal} send={sendModal}></Modal>
                 </React.Fragment>   
               </div>
-              <input type="text" className="col-sm-5 mb-2" name="paitentAddress" value={patientId && patient.paitentAddress} placeholder="주소" readOnly></input>
+              <input type="text" className="col-sm mb-2" name="patientAddress" value={patient.patientAddress} placeholder="주소" readOnly></input>
               <div className="row no-gutters mb-2">
-                <input type="text" className="col-sm mr-2" name="paitentDetailAddress1" value={patientId && patient.paitentDetailAddress1} placeholder="상세주소" onChange={handleChange}></input>
-                <input type="text" className="col-sm" name="paitentDetailAddress2" value={patientId && patient.paitentDetailAddress2} placeholder="참고항목" readOnly></input>
+                <input type="text" className="col-sm mr-2" name="patientDetailAddress1" value={patient.patientDetailAddress1} placeholder="상세주소" onChange={handleChange}></input>
+                <input type="text" className="col-sm" name="pattentDetailAddress2" value={patient.patientDetailAddress2} placeholder="참고항목" readOnly></input>
               </div>
             </div>
           </div>
-          <div className="form-group row">
+          <div className="Patient_item">
             <label className="col-sm-3 col-form-label pl-3 p-0">등록 날짜: </label>
-            <div className="col-sm d-flex align-items-center">{patientId && patient.patientRegDate}</div>
+            <div className="col-sm d-flex align-items-center">{patient.patientRegDate}</div>
           </div>
           <div className="d-flex justify-content-end"><button className="button_team2_fill" onClick={handleUpdate}>수정</button></div>
         </form>

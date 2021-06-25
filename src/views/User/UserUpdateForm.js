@@ -1,33 +1,36 @@
 import { Modal } from "../Patient/AddressModal";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function UserUpdateForm(props) {
-  const userId = props.userId;
-
   // 직원 상태
-  const [user, setUser] = useState({
-    userId: "",
-    userName: "직원",
-    userAuthority : "의사",
-    userSsn: "751026",
-    userSex: "M",
-    userTel1: "010",
-    userTel2: "1234",
-    userTel3: "5678",
-    userZipcode: "01234",
-    userAddress: "서울 송파구",
-    userDetailAddress1: "12층 강의실",
-    userDetailAddress2: "아이티벤처타워",
-    userRegDate: "2021-06-01"
-  });
+  const [user, setUser] = useState({});
 
   const handleChange = (event) => {
     setUser({
       ...user,
-      userId: props.userId,
+      userId: props.user.userId,
       [event.target.name]: event.target.value
     });
   };
+  
+  useEffect(() => {
+    setUser({
+      ...user,
+      userId: props.user.userId,
+      userName: props.user.userName,
+      userAuthority : props.user.userAuthority,
+      userSsn: props.user.userSsn,
+      userSex: props.user.userSex,
+      userTel1: props.user.userTel1,
+      userTel2: props.user.userTel2,
+      userTel3: props.user.userTel3,
+      userZipcode: props.user.userZipcode,
+      userAddress: props.user.userAddress,
+      userDetailAddress1: props.user.userDetailAddress1,
+      userDetailAddress2: props.user.userDetailAddress2,
+      userRegDate: props.user.userRegDate
+    })
+  }, [props]);
 
   // 직원 정보 수정
   const handleUpdate = (event) => {
@@ -76,30 +79,50 @@ function UserUpdateForm(props) {
       <div className="User_title">직원 정보 수정</div>
       <div className="border p-2">
       <form>
-          <div className="row align-items-center mb-2">
+          <div className="User_item">
             <label className="col-sm-3 pl-3 p-0 m-0">직원 코드: </label>
-            <div className="col-sm d-flex ">{props.userId}</div>
+            <div className="col-sm d-flex ">{user.userId}</div>
           </div>
-          <div className="row align-items-center mb-2">
+          <div className="User_item">
             <label className="col-sm-3 pl-3 p-0 m-0">직원명: </label>
-            <div className="col-sm">{userId && user.userName}</div>
+            <div className="col-sm">
+              <input type="text" name="userName" value={user.userName} placeholder="직원명" onChange={handleChange}></input>
+            </div>
           </div>
-          <div className="row align-items-center mb-2">
-            <label className="col-sm-3 pl-3 p-0 m-0">직급: </label>
-            <div className="col-sm">{userId && user.userAuthority}</div>
+          <div className="User_item">
+            <label className="col-sm-3 pl-3 p-0 m-0">직책: </label>
+            <div className="col-sm d-flex align-items-center">
+              <input type="radio" name="userAuthority" value="의사" checked={user.userAuthority === "의사"? true : false} onChange={handleChange}></input>
+              <label className="ml-3 mb-0">의사</label>
+            </div>
+            <div className="col-sm d-flex align-items-center">
+              <input type="radio" name="userAuthority" value="간호사" checked={user.userAuthority === "간호사"? true : false} onChange={handleChange}></input>
+              <label className="ml-3 mb-0">간호사</label>
+            </div>
+            <div className="col-sm-4 d-flex align-items-center">
+              <input type="radio" name="userAuthority" value="임상병리사" checked={user.userAuthority === "임상병리사"? true : false} onChange={handleChange}></input>
+              <label className="ml-3 mb-0">임상병리사</label>
+            </div>
           </div>
-          <div className="row align-items-center mb-2">
+          <div className="User_item">
             <label className="col-sm-3 pl-3 p-0 m-0">생년 월일: </label>
-            <div className="col-sm">{userId && user.userSsn}</div>
+            <div className="col-sm">{user.userSsn}</div>
           </div>
-          <div className="row align-items-center mb-2">
+          <div className="User_item">
             <label className="col-sm-3 pl-3 p-0 m-0">성별: </label>
-            <div className="col-sm">{userId && user.userSex}</div>
+            <div className="col-sm d-flex align-items-center">
+              <input type="radio" name="patientSex" value="M" checked={user.userSex === "M"? true : false} onChange={handleChange}></input>
+              <label className="ml-3 mb-0">남</label>
+            </div>
+            <div className="col-sm d-flex align-items-center">
+              <input type="radio" name="patientSex" value="F" checked={user.userSex === "F"? true : false} onChange={handleChange}></input>
+              <label className="ml-3 mb-0">여</label>
+            </div>
           </div>
-          <div className="row align-items-center mb-2">
+          <div className="User_item">
             <label className="col-sm-3 m-0">전화 번호: </label>
             <div className="row col-sm mr-0">
-              <select className="col-sm-2 ml-3" name="userTel1" value={userId && user.userTel1} onChange={handleChange}>
+              <select className="col-sm ml-3" name="userTel1" value={user.userTel1} onChange={handleChange}>
                 <option value="010">010</option>
                 <option value="011">011</option>
                 <option value="016">016</option>
@@ -123,31 +146,31 @@ function UserUpdateForm(props) {
                 <option value="064">064</option>
               </select>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm-2" name="userTel2" value={userId && user.userTel2} onChange={handleChange}></input>
+              <input type="text" className="col-sm" name="userTel2" value={user.userTel2} onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm-2" name="userTel3" value={userId && user.userTel3} onChange={handleChange}></input>
+              <input type="text" className="col-sm" name="userTel3" value={user.userTel3} onChange={handleChange}></input>
             </div>
           </div>
-          <div className="row">
+          <div className="User_item">
             <label className="col-sm-3 m-0">주소: </label>
             <div className="col-sm">
               <div className="row mb-2"> 
-                <input type="text" className="col-sm-2 ml-3" name="userZipcode" value={userId && user.userZipcode} placeholder="우편번호" readOnly></input>
+                <input type="text" className="col-sm-5 ml-3" name="userZipcode" value={user.userZipcode} placeholder="우편번호" readOnly></input>
                 <React.Fragment>
                   <button className="button_team2_empty" onClick={openModal}>우편번호 찾기</button>
                   <Modal open={modalOpen} close={closeModal} send={sendModal}></Modal>
                 </React.Fragment>   
               </div>
-              <input type="text" className="col-sm-5 mb-2" name="userAddress" value={userId && user.userAddress} placeholder="주소" readOnly></input>
+              <input type="text" className="col-sm mb-2" name="userAddress" value={user.userAddress} placeholder="주소" readOnly></input>
               <div className="row no-gutters mb-2">
-                <input type="text" className="col-sm mr-2" name="userDetailAddress1" value={userId && user.userDetailAddress1} placeholder="상세주소" onChange={handleChange}></input>
-                <input type="text" className="col-sm" name="userDetailAddress2" value={userId && user.userDetailAddress2} placeholder="참고항목" readOnly></input>
+                <input type="text" className="col-sm mr-2" name="userDetailAddress1" value={user.userDetailAddress1} placeholder="상세주소" onChange={handleChange}></input>
+                <input type="text" className="col-sm" name="userDetailAddress2" value={user.userDetailAddress2} placeholder="참고항목" readOnly></input>
               </div>
             </div>
           </div>
-          <div className="form-group row">
+          <div className="User_item">
             <label className="col-sm-3 col-form-label pl-3 p-0">등록 날짜: </label>
-            <div className="col-sm d-flex align-items-center">{userId && user.userRegDate}</div>
+            <div className="col-sm d-flex align-items-center">{user.userRegDate}</div>
           </div>
           <div className="d-flex justify-content-end"><button className="button_team2_fill" onClick={handleUpdate}>수정</button></div>
         </form>
