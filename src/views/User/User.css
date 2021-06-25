@@ -1,44 +1,38 @@
-.Patient {
+.User {
   padding: 1%;
   padding-bottom: 0;
 }
 
 /* 좌측 컴포넌트 */
-.Patient_left {
+.User_left {
   width: 60%;
   margin-right: 1%;
 }
 
 /* 우측 컴포넌트 */
-.Patient_right {
+.User_right {
   width: 39%;
   padding: 0;
 }
-.Patient_right1 {
-  /* height: 50%; */
-}
-.Patient_right2 {
-  /* height: 50%; */
-}
 
 /* title */
-.Patient_title {
+.User_title {
   font-size: larger;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
 
-/* PatientList */
-.PatientList {
+/* UserList */
+.UserList {
   height: 100%;
 }
 
-.PatientList_content {
+.UserList_content {
   padding: 10px;
   height: 96.8%;
 }
 
-.PatientList_Table {
+.UserList_Table {  
   background-color: lightgray;
   height: 2.5rem;
   font-weight: bold;
@@ -46,24 +40,21 @@
   align-items: center;
 }
 
-.PatientList_tr {
+.UserList_tr {
   display: flex;
   border-bottom: lightgray solid 0.5px;
   align-items: center;
 }
 
-.PatientList_tr:hover {
+.UserList_tr:hover {
   background-color: #00AAF0;
   color:white;
   cursor: pointer;
 }
 
-/* PatientUpdateForm */
-.PatientUpdateForm {
-  /* font-size: small; */
-}
-
-/* PatientCreateForm */
-.PatientCreateForm {
-  /* font-size: small; */
+.UserList_container {
+  display: flex;
+  /* flex: 1; */
+  /* flex-direction: row; */
+  background-color: aquamarine;
 }
