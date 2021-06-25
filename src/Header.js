@@ -25,7 +25,7 @@ function Header(props) {
         </div>
         
         <div className="col-2">
-          {globalUid !== ""?
+          {globalUid === ""?
             <div className="header1_2 d-flex justify-content-between">
               <div>서울 아산 병원</div>
               <div>김더존 님</div>
@@ -36,10 +36,9 @@ function Header(props) {
           }
         </div>
       </div>
-      {globalUid === ""? "":
+      {globalUid !== ""? "":
         <div className="header2 row no-gutters">
           <div className="col-6 row d-flex justify-content-between">
-            <div><Link to="/Patient" className="link_team2">환자관리</Link></div>
             <div><Link to="/Register" className="link_team2">접수</Link></div>
             <div><Link to="/Treatment" className="link_team2">진료</Link></div>
             <div><Link to="/Inspection" className="link_team2">검사 및 치료</Link></div>
