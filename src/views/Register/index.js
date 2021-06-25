@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Switch from "react-router-dom";
-import RegisterCreateForm from "./RegisterCreateForm";
+import RegisterCreateForm from "./components/modal/RegisterCreateForm";
 import RegisterList from "./RegisterList";
-import RegisterPatientList from "./RegisterPatientList";
+import RegisterPatientList from "./components/modal/RegisterPatientList";
 import RegisterRead from "./RegisterRead";
+import RegisterTimeSchedule from "./RegisterTimeSchedule";
 import RegisterTimeTable from "./RegisterTimeTable";
 import RegisterUpdateForm from "./RegisterUpdateForm";
 
@@ -100,20 +101,23 @@ function Register(props) {
       {/* 하단 */}
       <div className="Register_2">
         <div className="Register_2_header">
-          접수 등록
+          진료 예정표
         </div>
         <div className="Register_Components border">
           {/* 환자 검색 */}
-          <div className="RegisterPatientList">
+          {/* <div className="RegisterPatientList">
             <RegisterPatientList />
-          </div>
+          </div> */}
           {/* 접수 등록 */}
-          <div className="RegisterCreateForm">
+          {/* <div className="RegisterCreateForm">
             <RegisterCreateForm setToday={setToday}/>
-          </div>
+          </div> */}
           {/* 접수 타임테이블 */}
-          <div className="RegisterTimeTable" today={today}>
+          {/* <div className="RegisterTimeTable" today={today}>
             <RegisterTimeTable />
+          </div> */}
+          <div className="RegisterTimeSchedule">
+            <RegisterTimeSchedule/>
           </div>
         </div>
       </div>

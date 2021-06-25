@@ -14,7 +14,7 @@ function getRegisters() {
     if (i < 10) {
       registers.push({
         index: i,
-        registerDate : "2021-06-17",
+        registerDate: "2021-06-17",
         registerTime: "10:0" + i,
         registerId: "10000" + i,
         patientName: "환자" + i,
@@ -29,7 +29,7 @@ function getRegisters() {
     } else {
       registers.push({
         index: i,
-        registerDate : "2021-06-17",
+        registerDate: "2021-06-17",
         registerTime: "10:" + i,
         registerId: "10000" + i,
         patientName: "환자" + i,
@@ -49,7 +49,7 @@ function getRegisters() {
     if (i < 60) {
       registers.push({
         index: i,
-        registerDate : "2021-06-17",
+        registerDate: "2021-06-17",
         registerTime: "11:0" + (i - 50),
         registerId: "10000" + i,
         patientName: "환자" + i,
@@ -64,7 +64,7 @@ function getRegisters() {
     } else {
       registers.push({
         index: i,
-        registerDate : "2021-06-17",
+        registerDate: "2021-06-17",
         registerTime: "11:" + (i - 50),
         registerId: "10000" + i,
         patientName: "환자" + i,
@@ -84,7 +84,7 @@ function getRegisters() {
     if (i < 110) {
       registers.push({
         index: i,
-        registerDate : "2021-06-17",
+        registerDate: "2021-06-17",
         registerTime: "12:0" + (i - 100),
         registerId: "10000" + i,
         patientName: "환자" + i,
@@ -99,7 +99,7 @@ function getRegisters() {
     } else {
       registers.push({
         index: i,
-        registerDate : "2021-06-17",
+        registerDate: "2021-06-17",
         registerTime: "12:" + (i - 100),
         registerId: "10000" + i,
         patientName: "환자" + i,
@@ -159,10 +159,23 @@ function RegisterList(props) {
       } else {
         return register;
       }
-
     });
     setRegisterList(newRegisters);
   };
+  const changeRegisterStateToCancel = (registerId) => {
+    console.log(registerId);
+    const newRegisters = registerList.map(register => {
+      // 해당 아이디의 정보를 찾아서 수정
+      if (register.registerId === registerId) {
+        const newRegister = { ...register, registerState: "취소" };
+        return newRegister;
+      } else {
+        return register;
+      }
+    });
+    setRegisterList(newRegisters);
+  };
+
   // registerList가 바뀔때 상태값 바꾸기
   useEffect(() => {
     setRegisterState(getRegistersState(registerList));
@@ -222,6 +235,7 @@ function RegisterList(props) {
             </div>
           </div>
           <div className="RegisterList_content_1_3">
+            <button className="button_team2_empty" onClick={() => changeRegisterStateToCancel(selectedRegister)}>접수 취소</button>
             <button className="button_team2_fill" onClick={() => changeRegisterStateToFinish(selectedRegister)}>접수 완료</button>
           </div>
         </div>
@@ -258,7 +272,13 @@ function RegisterList(props) {
                     <td>{register.doctorName}</td>
                     <td>{register.registerMemo}</td>
                     <td>{register.registerCommunication}</td>
-                    <td>{register.registerState}</td>
+                    <td className={
+                      register.registerState === "완료" ? "RegisterList_content_2_tr_td_finish" : "" ||
+                        register.registerState === "취소" ? "RegisterList_content_2_tr_td_cancel" : "" ||
+                          register.registerState === "대기" ? "RegisterList_content_2_tr_td_ready" : ""
+                      }>
+                      {register.registerState}
+                    </td>
                   </tr>
                 );
               })}

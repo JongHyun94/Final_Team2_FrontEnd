@@ -45,16 +45,13 @@ function RegisterPatientList(props) {
   };
   return (
     <div className="RegisterPatientList">
-      <div className="RegisterPatientList_header">
-        환자 검색
-      </div>
       <div className="RegisterPatientList_content border">
         <div className="RegisterPatientList_search mt-1">
           <div className="RegisterPatientList_search_input">
             <input type="text" className="RegisterPatientList_search_input_1" placeholder="이름/생년월일을 입력해 주세요." value={searchContent} onChange={changeSearchContent} />
           </div>
           <div className="RegisterPatientList_search_button">
-            <button className="button_team2_fill" onClick={handleSearch}>검색</button>
+            <button className="button_team2_fill" onClick={handleSearch}>환자 검색</button>
           </div>
         </div>
         <div className="RegisterPatientList_content_table">
