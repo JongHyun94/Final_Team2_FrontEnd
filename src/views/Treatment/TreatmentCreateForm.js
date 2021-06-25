@@ -129,7 +129,7 @@ function TreatmentCreateForm(props) {
                                                     당일 검사 요청
                                                   </textarea>
                                                   <div className="TreatmentCreateForm_1_1_title">의사소통 메모</div>
-                                                  <textarea className="TreatmentCreateForm_1_1_content border" rows="5" cols="32" onChange={handleChangeCmemo} value={cmemo}>
+                                                  <textarea className="TreatmentCreateForm_1_1_content border" rows="6" cols="40" onChange={handleChangeCmemo} value={cmemo}>
                                                     당일 검사 요청
                                                   </textarea>
                                         </div>
@@ -169,8 +169,8 @@ function TreatmentCreateForm(props) {
                                                   <input type="text" className="TreatmentSearch_1_1"/><button className="button_team2_fill">검색</button>
                                                 </div>
                                                 <table className="table TreatmentSearch_2">
-                                                      <thead className="TreatmentSearch_2_2">
-                                                        <tr>
+                                                      <thead>
+                                                        <tr className="TreatmentSearch_2_2">
                                                           <th></th>
                                                           <th>약품/주사코드</th>
                                                           <th>약품/주사명</th>
@@ -193,7 +193,7 @@ function TreatmentCreateForm(props) {
                                                       </tbody>
                                               </table>
 
-                                          <div className="TreatmentSearchs_3">
+                                          <div className="TreatmentSearch_3">
                                               <button className="button_team2_fill" >확인</button>
                                           </div>
                                         </div>
