@@ -133,7 +133,7 @@ thead {
   width: 30%;
   height: 100% !important;
   /* background-color: brown; */
-  margin: 3px 0 1% 1%;
+  margin: 3px 0 0 1%;
 }
 .RegisterRead_header {
   font-size: larger;
@@ -143,6 +143,7 @@ thead {
   display: flex;
   flex-direction: row;
   font-size: small;
+  height: 300px;
 }
 .RegisterRead_content_form {
   width: 100%;
@@ -197,6 +198,7 @@ select {
   display: flex;
   flex-direction: row;
   font-size: small;
+  height: 300px;
 }
 .RegisterUpdateForm_content_form {
   width: 100%;
