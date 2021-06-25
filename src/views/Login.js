@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { createSetUidAction } from "redux/auth-reducer";
 import "./Login.css";
 
@@ -25,12 +25,13 @@ function Login(props) {
 
   // 로그인
   const login = (event) => {
+    event.preventDefault();
     dispatch(createSetUidAction(user.userId));
     setUser({
       userId: "",
       userPassword: ""
     });
-    alert("로그인 성공");
+    props.history.push("/Register");
   };
   
   console.log(user);
