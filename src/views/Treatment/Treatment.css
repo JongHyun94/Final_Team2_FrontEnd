@@ -12,10 +12,10 @@
 }
 
 .TreatmentRight{
-  margin-left: 10px;
+  margin-left: 5px;
   width: 1150px;
   /* background-color: burlywood; */
-  height: 730px;
+  /* height: 730px; */
 }
 
 /* TreatmentPatientList */
@@ -24,7 +24,7 @@
   flex-direction: row;
   /* width: 700px; */
   /* background-color: lawngreen; */
-  height: 370px;
+  height: 400px;
 }
 
 .TreatmentPatientList_title {
@@ -83,7 +83,7 @@
 
 /* TreatmentHistoryList */
 .TreatmentHistoryList {
-  margin-top: 35px;
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   width: 700px;
@@ -103,7 +103,7 @@
 
 .TreatmentHistoryList_Totaltable{
   overflow-y: auto;
-  height: 340px;
+  height: 353px;
   text-align: center;
 }
 
@@ -114,9 +114,22 @@
   /* width: 70%; */
 }
 .TreatmentCreateForm_title {
+  display: flex;
+  /* flex-direction: row; */
   font-weight: bold;
   font-size: larger;
+  justify-content: space-between;
+
 }
+
+.TreatmentCreateForm_title_1 {
+
+}
+.TreatmentCreateForm_title_2 {
+    /* margin-bottom: 5px; */
+}
+
+
 
 .TreatmentCreateForm_border {
   display: flex;
