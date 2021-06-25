@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import "./InspectionImgCreateModal.css";
+import "./InspectionImgModifyModal.css";
 
 function getInspectionImgResults() {
   const inspectionImgResults = {
@@ -17,16 +17,14 @@ function getInspectionImgResults() {
 function InspectionImgCreateForm(props) {
   const [inspectionImgResult, setInspecctionImgResult] = useState(getInspectionImgResults);
 
-  const { open, closeR, close } = props;
+  const { open, closeM, close } = props;
 
   const inputFile = useRef();
-  // const inputFile2 = useRef();
-  // const inputFile3 = useRef();
 
   const inspectionImgResultBtn = (event) => {
-    event.preventDefault();
+    console.log("수정 버튼 클릭");
 
-    // console.log(inputFile.current.files.length);
+    event.preventDefault();
 
     const formData = new FormData();
     formData.append("inspectionId", inspectionImgResult.inspectionId);
@@ -39,16 +37,16 @@ function InspectionImgCreateForm(props) {
     //   console.log(value);
     // }
 
-    closeR();
+    closeM();
   };
 
   return (
-    <div className="InspectionImgCreateModal">
+    <div className="InspectionImgModifyModal">
       <div className={open ? "openModal modal" : "modal"}>
         {open ? (
           <section>
             <div className="InspectionImgCreateForm">
-              <div className="InspectionImgCreateForm_title m-2">검사 결과 등록</div>
+              <div className="InspectionImgCreateForm_title m-2">검사 결과 수정</div>
               <div className="InspectionImgCreateForm_1 border">
                 <form>
                   <div className="InspectionImgCreateForm_1_1 row m-3">
@@ -74,12 +72,12 @@ function InspectionImgCreateForm(props) {
                       <div className="mb-1">{inspectionImgResult.inspectionInspectorName}</div>
                       <div className="mb-1">{inspectionImgResult.inspectionListLab}</div>
                       <div className="mb-1"><input name="iattach" type="file" multiple style={{ width: "100%" }} ref={inputFile} /></div>
-                      {/* <div className="mb-1"><input name="iattach2" type="file" style={{ width: "100%" }} ref={inputFile2} /></div> */}
-                      {/* <div className="mb-1"><input name="iattach3" type="file" style={{ width: "100%" }} ref={inputFile3} /></div> */}
+                      {/* <div className="mb-1"><input name="iattach2" type="file" style={{ width: "100%" }} ref={inputFile2} /></div>
+                      <div className="mb-1"><input name="iattach3" type="file" style={{ width: "100%" }} ref={inputFile3} /></div> */}
                     </div>
                   </div>
                   <div className="InspectionImgCreateForm_1_2 mb-3">
-                    <button type="submit" className="button_team2_fill m-0" onClick={inspectionImgResultBtn}>등록</button>
+                    <button type="submit" className="button_team2_fill m-0" onClick={inspectionImgResultBtn}>수정</button>
                     <button className="button_team2_empty" onClick={close}>닫기</button>
                   </div>
                 </form>

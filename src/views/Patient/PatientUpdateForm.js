@@ -77,23 +77,23 @@ function PatientUpdateForm(props) {
   return (
     <div>
       <div className={`Patient_title`}>환자 정보 수정</div>
-      <div className={`border p-3 PatientUpdateForm`}>
+      <div className={`border p-3`}>
         <form>
-          <div className="row align-items-center mb-2">
+          <div className="Patient_item">
             <label className="col-sm-3 pl-3 p-0 m-0">환자 코드: </label>
             <div className="col-sm d-flex ">{patient.patientId}</div>
           </div>
-          <div className="row align-items-center mb-2">
+          <div className="Patient_item">
             <label className="col-sm-3 pl-3 p-0 m-0">환자명: </label>
             <div className="col-sm">
               <input type="text" name="patientName" value={patient.patientName} placeholder="환자명" onChange={handleChange}></input>
             </div>
           </div>
-          <div className="row align-items-center mb-2">
+          <div className="Patient_item">
             <label className="col-sm-3 pl-3 p-0 m-0">생년월일: </label>
             <div className="col-sm">{patient.patientSsn}</div>
           </div>
-          <div className="row align-items-center mb-2">
+          <div className="Patient_item">
             <label className="col-sm-3 pl-3 p-0 m-0">성별: </label>
             <div className="col-sm d-flex align-items-center">
               <input type="radio" name="patientSex" value="M" checked={patient.patientSex === "M"? true : false} onChange={handleChange}></input>
@@ -104,7 +104,7 @@ function PatientUpdateForm(props) {
               <label className="ml-3 mb-0">여</label>
             </div>
           </div>
-          <div className="row align-items-center mb-2">
+          <div className="Patient_item">
             <label className="col-sm-3 m-0">전화 번호: </label>
             <div className="row col-sm">
               <select className="col-sm-2 ml-3" name="patientTel1" value={patient.patientTel1} onChange={handleChange}>
@@ -136,11 +136,11 @@ function PatientUpdateForm(props) {
               <input type="text" className="col-sm-2" name="patientTel3" value={patient.patientTel3} onChange={handleChange}></input>
             </div>
           </div>
-          <div className="row">
+          <div className="Patient_item">
             <label className="col-sm-3 m-0">주소: </label>
             <div className="col-sm">
               <div className="row mb-2"> 
-                <input type="text" className="col-sm-2 ml-3" name="patientZipcode" value={patient.patientZipcode} placeholder="우편번호" readOnly></input>
+                <input type="text" className="col-sm-3 ml-3" name="patientZipcode" value={patient.patientZipcode} placeholder="우편번호" readOnly></input>
                 <React.Fragment>
                   <button className="button_team2_empty" onClick={openModal}>우편번호 찾기</button>
                   <Modal open={modalOpen} close={closeModal} send={sendModal}></Modal>
@@ -153,7 +153,7 @@ function PatientUpdateForm(props) {
               </div>
             </div>
           </div>
-          <div className="form-group row">
+          <div className="Patient_item">
             <label className="col-sm-3 col-form-label pl-3 p-0">등록 날짜: </label>
             <div className="col-sm d-flex align-items-center">{patient.patientRegDate}</div>
           </div>

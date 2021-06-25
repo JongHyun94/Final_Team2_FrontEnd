@@ -92,7 +92,7 @@ function PatientList(props) {
           <div>
             <AutoSizer disableHeight>
               {({width, height}) => {
-                return <List width={width} height={635} list={patients} rowCount={patients.length} rowHeight={44} rowRenderer={rowRenderer} overscanRowCount={5}></List>
+                return <List width={width} height={675} list={patients} rowCount={patients.length} rowHeight={44} rowRenderer={rowRenderer} overscanRowCount={5}></List>
               }}
             </AutoSizer>
           </div>

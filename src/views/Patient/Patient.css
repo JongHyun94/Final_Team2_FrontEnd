@@ -14,12 +14,6 @@
   width: 39%;
   padding: 0;
 }
-.Patient_right1 {
-  /* height: 50%; */
-}
-.Patient_right2 {
-  /* height: 50%; */
-}
 
 /* title */
 .Patient_title {
@@ -58,12 +52,9 @@
   cursor: pointer;
 }
 
-/* PatientUpdateForm */
-.PatientUpdateForm {
-  /* font-size: small; */
-}
-
-/* PatientCreateForm */
-.PatientCreateForm {
-  /* font-size: small; */
+/* PatientUpdateForm & PatientCreateForm */
+.Patient_item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
 }

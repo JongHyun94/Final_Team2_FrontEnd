@@ -1,5 +1,7 @@
 .box {
   margin-top: 7rem;
+  display: flex;
+  justify-content: center;
 }
 
 .Login {

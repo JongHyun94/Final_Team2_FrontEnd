@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { createSetUidAction } from "redux/auth-reducer";
 import "./Login.css";
 
 function Login(props) {
@@ -8,6 +10,11 @@ function Login(props) {
     userId: "",
     userPassword: ""
   });
+
+  // 바인딩할 상태함수
+  const globalUid = useSelector((state) => state.authReducer.uid);
+
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     setUser({
@@ -18,14 +25,19 @@ function Login(props) {
 
   // 로그인
   const login = (event) => {
-    event.preventDefault();
+    dispatch(createSetUidAction(user.userId));
+    setUser({
+      userId: "",
+      userPassword: ""
+    });
     alert("로그인 성공");
-    console.log(user);
   };
   
+  console.log(user);
+  
   return (
-    <div className={`box row d-flex justify-content-center no-gutters`}>
-      <div className={`Login`}>
+    <div className="box">
+      <div className="Login">
         <h2 className="text-center mb-5">의료정보 시스템</h2>
         <form>
           <div className="form-group row">

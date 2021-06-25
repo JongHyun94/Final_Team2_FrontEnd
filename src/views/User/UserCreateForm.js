@@ -73,13 +73,13 @@ function UserCreateForm(props) {
       <div className="User_title">직원 등록</div>
       <div className="border p-2">
       <form>
-          <div className="row align-items-center mb-2">
+          <div className="User_item">
             <label className="col-sm-3 m-0">직원명: </label>
             <div className="col-sm">
               <input type="text" name="userName" placeholder="직원명" onChange={handleChange}></input>
             </div>
           </div>
-          <div className="row align-items-center mb-2">
+          <div className="User_item">
             <label className="col-sm-3 m-0">주민등록번호: </label>
             <div className="row ml-3 mr-0">
               <input type="text" className="col-sm" name="userSsn1" onChange={handleChange}></input>
@@ -87,7 +87,7 @@ function UserCreateForm(props) {
               <input type="text" className="col-sm" name="userSsn2" onChange={handleChange}></input>
             </div>
           </div>
-          <div className="row align-items-center mb-2">
+          <div className="User_item">
             <label className="col-sm-3 m-0">직책:</label>
             <div className="col-sm d-flex align-items-center">
               <input type="radio" name="userAuthority" value="의사" onChange={handleChange}></input>
@@ -97,12 +97,12 @@ function UserCreateForm(props) {
               <input type="radio" name="userAuthority" value="간호사" onChange={handleChange}></input>
               <label className="ml-3 mb-0">간호사</label>
             </div>
-            <div className="col-sm d-flex align-items-center">
+            <div className="col-sm-4 d-flex align-items-center">
               <input type="radio" name="userAuthority" value="임상병리사" onChange={handleChange}></input>
               <label className="ml-3 mb-0">임상병리사</label>
             </div>
           </div>
-          <div className="row align-items-center mb-2">
+          <div className="User_item">
             <label className="col-sm-3 m-0">성별: </label>
             <div className="col-sm d-flex align-items-center">
               <input type="radio" name="userSex" value="M" onChange={handleChange}></input>
@@ -113,10 +113,10 @@ function UserCreateForm(props) {
               <label className="ml-3 mb-0">여</label>
             </div>
           </div>
-          <div className="row align-items-center mb-2">
+          <div className="User_item">
             <label className="col-sm-3 m-0 pr-0">전화 번호: </label>
             <div className="row col-sm mr-0">
-              <select className="col-sm-2 ml-3" name="userTel1" onChange={handleChange}>
+              <select className="col-sm ml-3" name="userTel1" onChange={handleChange}>
                 <option value="010">010</option>
                 <option value="011">011</option>
                 <option value="016">016</option>
@@ -140,16 +140,16 @@ function UserCreateForm(props) {
                 <option value="064">064</option>
               </select>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm-2" name="userTel2" onChange={handleChange}></input>
+              <input type="text" className="col-sm" name="userTel2" onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm-2" name="userTel3" onChange={handleChange}></input>
+              <input type="text" className="col-sm" name="userTel3" onChange={handleChange}></input>
             </div>
           </div>
-          <div className="row">
+          <div className="User_item">
             <label className="col-sm-3 m-0">주소: </label>
             <div className="col-sm">
               <div className="row mb-2 pr-0"> 
-                <input type="text" className="col-sm-2 ml-3" name="userZipcode" value={user.userZipcode} placeholder="우편번호" onChange={handleChange} readOnly></input>
+                <input type="text" className="col-sm-5 ml-3" name="userZipcode" value={user.userZipcode} placeholder="우편번호" onChange={handleChange} readOnly></input>
                 <React.Fragment>
                   <button className="button_team2_empty" onClick={openModal}>우편번호 찾기</button>
                   <Modal open={modalOpen} close={closeModal} send={sendModal}></Modal>
