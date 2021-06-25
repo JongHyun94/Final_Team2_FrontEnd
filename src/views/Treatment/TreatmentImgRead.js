@@ -1,9 +1,32 @@
 import React, { useState } from "react";
 import "./TreatmentImgModal.css";
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
+
+
+
+
+
 
 export const TreatmentImgRead = (props) => {
   const { open, close, inspectionImg, inspectionlistName, inspectionlistCategory, inspectionTreatmentId, inspectionDate } = props;
   // const [imgSrc, setImgSrc] = useState("xray01.jpg");
+  const images = [
+    {
+      original: '/resources/img/xray01.jpg',
+      thumbnail: '/resources/img/xray01.jpg',
+    },
+    {
+      original: '/resources/img/xray01.jpg',
+      thumbnail: '/resources/img/xray01.jpg',
+    },
+    {
+      original: '/resources/img/xray01.jpg',
+      thumbnail: '/resources/img/xray01.jpg',
+    },
+  ];
+
+
   return (
     <div className="TreatmentImgmodal">
       <div className={open ? "openModal modal" : "modal"}>
@@ -20,7 +43,8 @@ export const TreatmentImgRead = (props) => {
                 </div>
 
                 <div className="TreatmentImgRead_1_2">
-                  <img src={`/resources/img/${inspectionImg}`} width="100%" height="100%" alt=""></img>
+                  {/* <img src={`/resources/img/${inspectionImg}`} width="100%" height="100%" alt=""></img> */}
+                  <ImageGallery items={images}/>
                 </div>
               </div>
               <div className="TreatmentImgRead_2">
