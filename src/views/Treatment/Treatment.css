@@ -15,7 +15,7 @@
   margin-left: 10px;
   width: 1150px;
   /* background-color: burlywood; */
-  height: 700px;
+  height: 730px;
 }
 
 /* TreatmentPatientList */
@@ -121,7 +121,7 @@
 .TreatmentCreateForm_border {
   display: flex;
   flex-direction: row;
-  height: 760px;
+  height: 780px;
 }
 
 .TreatmentCreateForm_1 {
@@ -201,8 +201,9 @@
   margin-left: 4%; */
 }
 
+
 .TreatmentCreateForm_2_2_border{
-  height: 400px;
+  height: 425px;
   padding: 30px 10px 0 10px;
   font-size: small;
  }
@@ -215,15 +216,35 @@
 
 }
 .TreatmentSearch_1{
-  /* margin-bottom: 10px; */
+  margin-bottom: 7px;
 }
 .TreatmentSearch_1_1{
   width: 230px;
 }
+.TreatmentSearch_2{
+  text-align: center;
+  /* padding: 600px; */
+}
+
+.TreatmentSearch_2_2{
+  /* height: 0.75rem !important; */
+ 
+  /* background-color: blueviolet; */
+  
+}
+
+
 .TreatmentSearch_2_2_tr:hover{
+ 
   background-color: #00AAF0;
   color:white;
   cursor: pointer;
+}
+
+.TreatmentSearch_3{
+  /* margin-bottom: 10px; */
+  text-align: right;
+  margin-right: 10px;
 }
 
 
@@ -291,7 +312,7 @@
   background-color: lightgray;
 }
 .TreatmentHistoryReadClose{
-  margin-top: 50px;
+  margin-top: 20px;
   float: right
 }
 
@@ -303,13 +324,13 @@
 .TreatmentImgRead_1{
   display: flex;
   flex-direction: row;
-  padding: 10px 10px 10px 0;
+  padding: 10px 10px  0 10px;
 
 }
 .TreatmentImgRead_1_1{
   margin-right: 50px;
-  margin-top: 135px;
-  font-size: 25px;
+  margin-top: 170px;
+  font-size: 18px;
   margin-left: 30px;
   text-align: left;
 }

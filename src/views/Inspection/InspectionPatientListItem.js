@@ -20,7 +20,7 @@ function InspectionPatientListItem(props) {
 
   return (
     <>
-      <tr key={props.patient.treatmentId} onClick={() => {props.handleChecked(props.patient.treatmentId)}}>
+      <tr className="InspectionPatientListItem" key={props.patient.treatmentId} onClick={() => {props.handleChecked(props.patient.treatmentId)}}>
         <td>
           <input type="checkbox" name="treatmentCheck" checked={props.id === props.patient.treatmentId ? true : false} readOnly/>
         </td>
@@ -34,7 +34,7 @@ function InspectionPatientListItem(props) {
           props.patient.treatmentIstate === "검사" ?
             <td style={{color:"#ff6600"}}>{props.patient.treatmentIstate}</td>
           :
-            <td style={{color:"#00AAF0"}}>{props.patient.treatmentIstate}</td>
+            <td style={{color:"#0100FF"}}>{props.patient.treatmentIstate}</td>
         }
         
         <td>{props.patient.treatmentCommunication}</td>
