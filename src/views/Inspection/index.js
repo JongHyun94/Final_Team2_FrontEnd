@@ -1,44 +1,58 @@
 import "./Inspection.css";
 import InspectionPatientList from "./InspectionPatientList";
 import InspectionList from "./InspectionList";
-import InspectionImgForm from "./InspectionImgForm";
-import InspectionImgCreateForm from "./InspectionImgCreateForm";
 import InspectionCreateForm from "./InspectionCreateForm";
 import { useState } from "react";
 
 function Inspection(props) {
-  //true이면 이미지 첨부파일 있는 검사결과등록
-  const [createForm, setCreateForm] = useState(true);
   //진료번호 상태
   const [treatmentId, setTreatmentId] = useState("");
 
-  //검사번호 상태
+  //총검사상태: 대기~>검사 를 위한 state
+  const [iState, setIState] = useState(false);
+  //총검사상태: 검사~>완료 를 위한 state
+  const [iStateFinish, setIStateFinish] = useState(false);
 
-  const changeCreateForm = () => {
-    if(createForm === true){
-      setCreateForm(false);
-    } else {
-      setCreateForm(true);
-    }
+  const checkedtId = (id) => {
+    setTreatmentId(id);
   };
 
-  const checkedId = (id) => {
-    setTreatmentId(id);
+  //바코드모달 확인 시, 총검사상태: 대기~>검사
+  const handleBarcodeChekck = () => {
+    setIState(true);
+  };
+
+  //총검사상태: 대기~>검사 바꾼 후 state 원래대로
+  const handleBarcodeBack = () => {
+    setIState(false);
+  };
+
+  //모든 검사상태가 완료 시, 총검사상태: 검사~>완료
+  const handleFinsish = () => {
+    setIStateFinish(true);
+  };
+
+  //총검사상태: 검사~>완료 바꾼 후 state 원래대로
+  const handleFinsishBack = () => {
+    setIStateFinish(false);
   };
 
   return (
       <div className="Inspection">
         <div className="Inspection_1">
           {/* 환자검색 */}
-          <InspectionPatientList treatmentId={treatmentId} checkedId={(id) => checkedId(id)}/>
+          <InspectionPatientList treatmentId={treatmentId} checkedtId={(id) => checkedtId(id)}
+                                  iState={iState} handleBarcodeBack={handleBarcodeBack} 
+                                  iStateFinish={iStateFinish} handleFinsishBack={handleFinsishBack}/>
         </div>
         <div className="Inspection_2">
           {/* 검사상세내역 */}
-          <InspectionList treatmentId={treatmentId} createForm={createForm} changeCreateForm={changeCreateForm}/>
+          <InspectionList treatmentId={treatmentId}
+                          handleBarcodeChekck={handleBarcodeChekck}
+                          handleFinsish={handleFinsish} />
         </div>
-        <div className="Inspection_3">
+        {/* <div className="Inspection_3">
           <div className="Inspection_3_1">
-            {/* 검사결과등록 */}
             {createForm === true ?
             <InspectionImgCreateForm/>
             :
@@ -46,10 +60,9 @@ function Inspection(props) {
             }
           </div>
           <div className="Inspection_3_2">
-            {/* 검사사진 */}
             <InspectionImgForm/>
           </div>
-        </div>
+        </div> */}
       </div>
   );
 }

@@ -16,11 +16,13 @@ export const InspectionBarcodePop = (props) => {
             </div>
             <div className="InspectionBarcodePop_1_2 border">
               <div className="mr-3 ml-3">
+                <div className="mb-3">검사번호 :</div>
                 <div className="mb-3">검사명 :</div>
                 <div className="mb-3">피검사자 :</div>
                 <div>검사자 :</div>
               </div>
               <div>
+                <div className="mb-3">{props.id}</div>
                 <div className="mb-3">{inspectionListName}</div>
                 <div className="mb-3">{patientName}</div>
                 <div>{inspectionInspectorName}</div>
