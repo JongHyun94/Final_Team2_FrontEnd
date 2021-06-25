@@ -33,6 +33,7 @@ function RegisterCreateForm(props) {
   const changeNewTime = (event) => {
     setNewTime(event.target.value);
   };
+
   // 메모 상태 
   const [newMemo, setNewMemo] = useState("");
 
@@ -52,7 +53,11 @@ function RegisterCreateForm(props) {
       <div className="RegisterCreateForm_cal">
         <DatePicker
           selected={startDate}
-          onChange={(date) => setStartDate(date)}
+          onChange={(date) => {
+            setStartDate(date);
+            props.setToday(date);
+            } 
+          }
           inline
         />
       </div>
