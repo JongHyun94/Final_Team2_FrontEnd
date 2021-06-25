@@ -1,30 +1,30 @@
 /* 화면레이아웃 */
 .Treatment {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin: 1%;
-}
-.Treatmentup {
-  display: flex;
-  flex-direction: row;
-  height: 30%;
-  width: 100%;
-}
-.Treatmentdown {
-  display: flex;
   
-  flex-direction: row;
-  height: 50%;
-  width: 100%;
+}
+.TreatmentLeft{
+  width: 720px;
+  /* background-color: brown; */
+  /* height: 1080px; */
+}
+
+.TreatmentRight{
+  margin-left: 10px;
+  width: 1150px;
+  /* background-color: burlywood; */
+  height: 700px;
 }
 
 /* TreatmentPatientList */
-
 .TreatmentPatientList {
   display: flex;
-  flex-direction: column;
-  width: 30%;
-
+  flex-direction: row;
+  /* width: 700px; */
+  /* background-color: lawngreen; */
+  height: 370px;
 }
 
 .TreatmentPatientList_title {
@@ -33,93 +33,104 @@
 }
 
 .TreatmentPatientList_border {
-  padding: 5% 10px 0 10px;
+  padding: 10px 10px 0 10px;
+  /* padding: 5% 5px 0 10px; */
   font-size: small;
 }
 
 .TreatmentPatientList_search {
-  margin-left: 2.5%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  /* margin-left: 2%; */
   margin-bottom: 1%;
 }
 
 .row_1 {
   color: #009900;
   margin-left: 20%;
+  font-size: small;
 }
 
 .row_2 {
   color: #00AAF0;
   margin-left: 3%;
+  font-size: small;
 }
 
 .TreatmentPatientList_Totaltable{
   overflow-y: auto;
-  height: 400px;
+  height: 300px;
+  width: 680px; 
 }
 
 .TreatmentPatientList_table {
-  
-  
   text-align: center;
   font-size: small;
- 
 }
 
 .TreatmentPatientList_table_thead {
+  position:sticky;
+  top:-1px;
   background-color: lightgray;
-  /* width: 100%; */
+}
+
+.TreatmentPatientList_table_tr:hover{
+  background-color: #00AAF0;
+  color:white;
+  cursor: pointer;
+}
+
+/* TreatmentHistoryList */
+.TreatmentHistoryList {
+  margin-top: 35px;
+  display: flex;
+  flex-direction: column;
+  width: 700px;
+  height: 400px;
+}
+
+.TreatmentHistoryList_title {
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: larger;
+}
+
+.TreatmentHistoryList_border {
+  padding: 10px 10px 0 10px;
+  font-size: small;
+}
+
+.TreatmentHistoryList_Totaltable{
+  overflow-y: auto;
+  height: 340px;
+  text-align: center;
 }
 
 /* TreatmentCreateForm*/
 .TreatmentCreateForm {
-  height: 50%;
-  margin-left: 20px;
-  width: 70%;
+  /* height: 50%; */
+  /* margin-left: 20px; */
+  /* width: 70%; */
 }
 .TreatmentCreateForm_title {
   font-weight: bold;
   font-size: larger;
 }
 
-.TreatmentCreateForm_pop{
- float: right; 
- margin-right: 20px;
- height: 0.7px;
- cursor: pointer;
- 
-}
-
 .TreatmentCreateForm_border {
   display: flex;
   flex-direction: row;
+  height: 760px;
 }
 
 .TreatmentCreateForm_1 {
-  width: 35%;
+  width: 45%;
   margin: 1%;
 }
-.TreatmentCreateForm_1_border{
-  
-}
-
-/* .TreatmentCreateForm_1_title {
-  font-size: small;
-  color: white;
-  text-align: center;
-  font-weight: bold;
-  background-color: lightgray;
-}
-.TreatmentCreateForm_1_content {
-  margin: 3%;
-  width: 100%;
-  font-weight: bold;
-  font-size: small;
-} */
-
 
 .TreatmentCreateForm_1_1_title{
   font-size: small;
-  /* color: white; */
   text-align: center;
   font-weight: bold;
   background-color: lightgray;
@@ -130,159 +141,117 @@
   height: 100%;
   resize: none;
   font-size: small;
-  /* margin-bottom: 5px; */
-}
-
-.TreatmentCreateForm_1_content_input{
-  width: 89.5%;
-  height: 18%;
-  margin-bottom: 10px;
-  /* border: 1px solid gray; */
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 .TreatmentCreateForm_2 {
-  display: flex;
-  flex-direction: column;
-  width: 35%;
+  width: 50%;
   margin: 1%;
- 
-  
 }
-.TreatmentCreateForm_2_border{
- height: 100%;
+
+.TreatmentCreateForm_2_1_border{
+ /* height: 100%; */
+ height: 290px;
  margin-bottom: 10px;
+ 
 }
-.TreatmentCreateForm_2_title{
+.TreatmentCreateForm_2_1_title{
   font-weight: bold;
   font-size: small;
-  /* color: white; */
   text-align: center;
   background-color: lightgray;
 
 }
-
-.TreatmentCreateForm_2_content {
+.TreatmentCreateForm_2_1_content {
   display: flex;
   flex-direction: row;
-  width: 100%;
+  padding: 10px 10px 0 10px;
+  /* width: 100%; */
+  /* width: 100%;
   height: 85%;
   margin-top: 3%;
   margin-left: 3%;
-  
+   */
 }
-.reatmentCreateForm_select {
+
+.TreatmentCreateForm_select {
   font-size: small; 
-  margin-right: 2%;
-  /* flex-grow: 1; */
+  /* margin-right: 2%; */
+  width: 180px;
+  flex-grow: 1;
 }
-.reatmentCreateForm_checkbox {
-  
-  display: flex;
-  flex-direction: column;
-  border: 1px solid gray;
-  /* font-size: small;  */
-  width: 70%;
+.TreatmentCreateForm_select_1{
+  border: 1.8px solid lightgray;
+}
+.TreatmentCreateForm_checkbox {
+  padding: 10px 10px 0 10px;
+  /* display: flex;
+  flex-direction: column; */
+  border: 1.8px solid lightgray;
+  font-size: small; 
+  width: 65%;
+  height: 250px;
+}
+.TreatmentCreateForm_checkbox_1{
+  /* display: flex;
+  flex-direction: row; */
+  margin-bottom: 5px;
+  /* margin-top: 2%;
+  margin-left: 4%; */
+}
 
-}
-.reatmentCreateForm_checkbox_1{
-  display: flex;
-  flex-direction: row;
-  margin-left: 4%;
+.TreatmentCreateForm_2_2_border{
+  height: 400px;
+  padding: 30px 10px 0 10px;
   font-size: small;
-  margin-top: 2%;
-  
-}
-
-
-.TreatmentCreateForm_3 {
-  display: flex;
-  flex-direction: row;
-  width: 30%;
-  /* margin: 1%; */
-  margin-top: 1%;
-  /* margin-left: 30%; */
-}
-.TreatmentCreateForm_3_border{
-  height: 80%;
-  width: 87%;
-  margin-left: 5%;
-}
-.TreatmentCreateForm_3_title{
+ }
+.TreatmentCreateForm_2_2_title{
+  margin-top: 15px;
   font-weight: bold;
   font-size: small;
-  /* color: white; */
   text-align: center;
   background-color: lightgray;
+
+}
+.TreatmentSearch_1{
+  /* margin-bottom: 10px; */
+}
+.TreatmentSearch_1_1{
+  width: 230px;
+}
+.TreatmentSearch_2_2_tr:hover{
+  background-color: #00AAF0;
+  color:white;
+  cursor: pointer;
 }
 
 
-.TreatmentCreateForm_3_content {
-  height: 95%;
-  width: 100%;
-  resize: none;
-  font-size: small;
+
+.TreatmentPatientList_table_tr:hover{
+  background-color: #00AAF0;
+  color:white;
+  cursor: pointer;
 }
 
-.TreatmentCreateForm_4{
- 
-  /* margin-top: 32%;
-  width: 7%; */
 
-  margin-left: 70%;
-}
-
-/* TreatmentHistoryList */
-.TreatmentHistoryList {
-  margin-top: 2%;
-  display: flex;
-  flex-direction: column;
-  width: 30%;
- 
-
-  /* margin-left: 20px; */
-  /* background-color: lightcoral; */
-}
-
-.TreatmentHistoryList_title {
-  font-weight: bold;
-  font-size: larger;
-}
-
-.TreatmentHistoryList_border {
- 
-  padding: 10px 10px 0 10px;
-  font-size: small;
-}
-
-.TreatmentHistoryList_Totaltable{
-  overflow-y: auto;
-  height: 550px;
-}
-
-.TreatmentHistoryList_table {
-
-  
-  text-align: center;
-  height: 100%;
-  width: 70px;
-}
-/* .TreatmentHistoryRead_2_table_tbody{
-  height: 2%;
-} */
 .TreatmentHistoryList_table_thead {
   background-color: lightgray;
+  position:sticky;
+  top:-1px;
 }
+ .TreatmentHistoryList_table_tr:hover{
+  background-color: #00AAF0;
+  color:white;
+  cursor: pointer;
+ }
 
 /* TreatmentHistoryRead */
 .TreatmentHistoryRead {
-  display: flex;
-  flex-direction: column;
-  width: 70%;
-  margin-left: 20px;
-  padding-top: 1%;
-  
- 
-  /* margin-left: 25px; */
+
+  width: 100%;
+  /* padding-top: 1%; */
+  padding: 10px 10px 0 10px;
 }
 
 .TreatmentHistoryRead_title {
@@ -293,6 +262,8 @@
   
 }
 .TreatmentHistoryRead_border {
+  /* display: flex;
+  flex-direction: row; */
   padding: 10px 10px 0 10px;
   font-size: small;
 }
@@ -319,6 +290,10 @@
 .TreatmentHistoryRead_2_table_thead {
   background-color: lightgray;
 }
+.TreatmentHistoryReadClose{
+  margin-top: 50px;
+  float: right
+}
 
 
 
@@ -342,11 +317,4 @@
   margin-bottom: 10px;
   text-align: right;
   margin-right: 10px;
-}
-
-.TreatmentSearchPop_1{
-  margin-bottom: 10px;
-}
-.TreatmentSearchPop_3{
-  text-align: right;
 }
