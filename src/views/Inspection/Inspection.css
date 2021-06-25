@@ -63,7 +63,7 @@
 }
 .InspectionPatientList_1_3_3{
   margin-right: 6px;
-  color: #00AAF0;
+  color: #0100FF;
 }
 .InspectionPatientList_2_1{
   text-align: center;
@@ -78,6 +78,11 @@
 .InspectionPatientList_list{
   overflow-y: auto;
   height: 730px;
+}
+.InspectionPatientListItem:hover {
+  background-color: #00AAF0;
+  /* color:white; */
+  cursor: pointer;
 }
 
 /* InspectionList */
@@ -121,6 +126,11 @@
 .InspectionListItem_1{
   display: flex;
   justify-content: center;
+}
+.InspectionListItem:hover {
+  background-color: #00AAF0;
+  /* color:white; */
+  cursor: pointer;
 }
 
 /* InspectionCreateForm */

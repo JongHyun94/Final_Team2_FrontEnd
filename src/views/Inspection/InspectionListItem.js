@@ -119,7 +119,7 @@ function InspectionListItem(props) {
 
   return (
     <>
-      <tr key={props.inspection.inspectionId} onClick={() => {props.handleChecked(props.inspection.inspectionId)}}>
+      <tr className="InspectionListItem" key={props.inspection.inspectionId} onClick={() => {props.handleChecked(props.inspection.inspectionId)}}>
         <td>
           <input type="checkbox" name="inspectionCheck" checked={props.id === props.inspection.inspectionId ? true : false} readOnly/>
         </td>
@@ -177,7 +177,7 @@ function InspectionListItem(props) {
           props.inspection.inspectionState === "검사중" ?
             <td style={{color:"#ff6600"}}>{props.inspection.inspectionState}</td>
             :
-            <td style={{color:"#00AAF0"}}>{props.inspection.inspectionState}</td>
+            <td style={{color:"#0100FF"}}>{props.inspection.inspectionState}</td>
         }
         
       </tr>
