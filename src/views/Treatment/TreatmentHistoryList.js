@@ -30,7 +30,7 @@ function TreatmentHistoryList(props) {
            </div>
            <div className="TreatmentHistoryList_border border">
                 <div className="TreatmentHistoryList_Totaltable">
-                    <table className="table table-bordered TreatmentHistoryList_table">
+                    <table className="table TreatmentHistoryList_table">
                         <thead className="TreatmentHistoryList_table_thead">
                             <tr>
                                 <th></th>
@@ -43,7 +43,7 @@ function TreatmentHistoryList(props) {
                         <tbody>
                             {treatmentHistoryList.map(treatmentHistory=>{
                                 return(
-                                    <tr key={treatmentHistory.index}>   
+                                    <tr className="TreatmentHistoryList_table_tr" key={treatmentHistory.index}>   
                                         <td><input type="checkbox"/></td>
                                         <th>{treatmentHistory.treatmentId}</th>
                                         <th>{treatmentHistory.treatmentDate}</th>

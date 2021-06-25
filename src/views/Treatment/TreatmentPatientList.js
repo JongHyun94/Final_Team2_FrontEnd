@@ -51,7 +51,7 @@ function TreatmentPatientList(props) {
                               <div className="row_2">완료:{done}명</div>
                         </div>
                         <div className="TreatmentPatientList_Totaltable">
-                              <table className="table table-bordered TreatmentPatientList_table">
+                              <table className="table TreatmentPatientList_table">
                                       <thead className="TreatmentPatientList_table_thead">
                                         <tr>
                                           <th width="5%"></th>
@@ -66,7 +66,7 @@ function TreatmentPatientList(props) {
                                       <tbody>
                                         {patientlists.map((patientlist) => {
                                           return (
-                                            <tr key={patientlist.registerId}>
+                                            <tr className="TreatmentPatientList_table_tr" key={patientlist.registerId}>
                                               <td>
                                                 <input type="checkbox" />
                                               </td>

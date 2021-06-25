@@ -75,6 +75,12 @@
   background-color: lightgray;
 }
 
+.TreatmentPatientList_table_tr:hover{
+  background-color: #00AAF0;
+  color:white;
+  cursor: pointer;
+}
+
 /* TreatmentHistoryList */
 .TreatmentHistoryList {
   margin-top: 35px;
@@ -196,22 +202,49 @@
 }
 
 .TreatmentCreateForm_2_2_border{
-  height: 425px;
+  height: 400px;
   padding: 30px 10px 0 10px;
   font-size: small;
  }
+.TreatmentCreateForm_2_2_title{
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: small;
+  text-align: center;
+  background-color: lightgray;
 
+}
 .TreatmentSearch_1{
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 .TreatmentSearch_1_1{
   width: 230px;
 }
+.TreatmentSearch_2_2_tr:hover{
+  background-color: #00AAF0;
+  color:white;
+  cursor: pointer;
+}
 
-/* .TreatmentHistoryList_table_thead {
+
+
+.TreatmentPatientList_table_tr:hover{
+  background-color: #00AAF0;
+  color:white;
+  cursor: pointer;
+}
+
+
+.TreatmentHistoryList_table_thead {
   background-color: lightgray;
-} */
-
+  position:sticky;
+  top:-1px;
+}
+ .TreatmentHistoryList_table_tr:hover{
+  background-color: #00AAF0;
+  color:white;
+  cursor: pointer;
+ }
 
 /* TreatmentHistoryRead */
 .TreatmentHistoryRead {

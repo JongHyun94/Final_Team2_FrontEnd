@@ -137,7 +137,7 @@ function TreatmentCreateForm(props) {
                             <div className="TreatmentCreateForm_2">
                                     <div className="TreatmentCreateForm_2_1_border border">
                                             <div className="TreatmentCreateForm_2_1_title">
-                                              진단 검사 / 약품 목록
+                                              진단 검사
                                             </div>
                                             <div className="TreatmentCreateForm_2_1_content">
                                                     <div className="TreatmentCreateForm_select">
@@ -160,13 +160,15 @@ function TreatmentCreateForm(props) {
                                                     </div>
                                               </div>
                                     </div>
-                                    <div className="TreatmentCreateForm_2_2_border border">
-                                      
-                                    
-                                                <div className="TreatmentSearch_1">
-                                                  <input type="text" className="TreatmentSearch_1_1"/><button className="button_team2_fill">약품검색</button>
+                                    <div className="TreatmentCreateForm_2_2_title">
+                                                  약품 목록
                                                 </div>
-                                                <table className="table table-bordered TreatmentSearch_2">
+                                    <div className="TreatmentCreateForm_2_2_border border">
+                                                
+                                                <div className="TreatmentSearch_1">
+                                                  <input type="text" className="TreatmentSearch_1_1"/><button className="button_team2_fill">검색</button>
+                                                </div>
+                                                <table className="table TreatmentSearch_2">
                                                       <thead className="TreatmentSearch_2_2">
                                                         <tr>
                                                           <th></th>
@@ -178,7 +180,7 @@ function TreatmentCreateForm(props) {
                                                       <tbody>
                                                         {druglists.map((druglist) => {
                                                           return (
-                                                            <tr key={druglist.drugInjectionId}>
+                                                            <tr className="TreatmentSearch_2_2_tr" key={druglist.drugInjectionId}>
                                                               <td>
                                                                 <input type="checkbox" />
                                                               </td>
