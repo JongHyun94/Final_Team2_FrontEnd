@@ -60,11 +60,11 @@ function Patient(props) {
 
       {/* 우측 */}
       <div className="Patient_right">
-        <div className="Patient_right1">
+        <div>
           {/* 환자 정보 수정 */}
           <PatientUpdateForm patient={patient} changePatient={changePatient}/>
         </div>
-        <div className="Patient_right2">
+        <div>
           {/* 환자 등록 */}
           <PatientCreateForm />
         </div>

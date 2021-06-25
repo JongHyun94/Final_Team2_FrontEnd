@@ -71,15 +71,15 @@ function PatientCreateForm(props) {
   return (
     <div className="mt-4">
       <div className={`Patient_title`}>환자 등록</div>
-      <div className={`border p-3 PatientCreateForm`}>
+      <div className={`border p-3`}>
         <form>
-          <div className="row align-items-center mb-2">
+          <div className="Patient_item">
             <label className="col-sm-3 m-0">환자명: </label>
             <div className="col-sm">
               <input type="text" name="patientName" placeholder="환자명" onChange={handleChange}></input>
             </div>
           </div>
-          <div className="row  align-items-center mb-2">
+          <div className="Patient_item">
             <label className="col-sm-3 m-0">주민등록번호: </label>
             <div className="row ml-3">
               <input type="text" className="col-sm" name="patientSsn1" onChange={handleChange}></input>
@@ -87,7 +87,7 @@ function PatientCreateForm(props) {
               <input type="text" className="col-sm" name="patientSsn2" onChange={handleChange}></input>
             </div>
           </div>
-          <div className="row align-items-center mb-2">
+          <div className="Patient_item">
             <label className="col-sm-3 m-0">성별: </label>
             <div className="col-sm d-flex align-items-center">
               <input type="radio" name="patientSex" value="M" onChange={handleChange}></input>
@@ -98,7 +98,7 @@ function PatientCreateForm(props) {
               <label className="ml-3 mb-0">여</label>
             </div>
           </div>
-          <div className="row align-items-center mb-2">
+          <div className="Patient_item">
             <label className="col-sm-3 m-0">전화 번호: </label>
             <div className="row col-sm">
               <select className="col-sm-2 ml-3" name="patientTel1" onChange={handleChange}>
@@ -130,11 +130,11 @@ function PatientCreateForm(props) {
               <input type="text" className="col-sm-2" name="patientTel3" onChange={handleChange}></input>
             </div>
           </div>
-          <div className="row">
+          <div className="Patient_item">
             <label className="col-sm-3 m-0">주소: </label>
             <div className="col-sm">
               <div className="row mb-2"> 
-                <input type="text" className="col-sm-2 ml-3" name="patientZipcode" value={patient.patientZipcode} placeholder="우편번호" onChange={handleChange} readOnly></input>
+                <input type="text" className="col-sm-3 ml-3" name="patientZipcode" value={patient.patientZipcode} placeholder="우편번호" onChange={handleChange} readOnly></input>
                 <React.Fragment>
                   <button className="button_team2_empty" onClick={openModal}>우편번호 찾기</button>
                   <Modal open={modalOpen} close={closeModal} send={sendModal}></Modal>

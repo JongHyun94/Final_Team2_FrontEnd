@@ -5,11 +5,27 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter } from "react-router-dom";
+import { createStore } from 'redux';
+import rootReducer from 'redux/root-reducer';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { createSetAuthTokenAction, createSetUidAction } from 'redux/auth-reducer';
+import { addAuthHeader } from 'apis/axiosConfig';
+import { Provider } from 'react-redux';
 
+const store = createStore(rootReducer, composeWithDevTools());
+
+store.dispatch(createSetUidAction(sessionStorage.getItem("uid") || ""));
+store.dispatch(createSetAuthTokenAction(sessionStorage.getItem("authToken") || ""));
+
+if (sessionStorage.getItem("authToken")) {
+  addAuthHeader(sessionStorage.getItem("authToken"));
+}
 
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </BrowserRouter>
   ,
   document.getElementById('root')
