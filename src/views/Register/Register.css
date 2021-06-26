@@ -400,11 +400,14 @@ th {
 .RegisterTimeSchedule_content_title_hours_hour_downside_content {
   border: solid 0.5px #dee2e6;
   width: 50px;
+  border-bottom: solid 2px #00aaf0;
 }
 .RegisterTimeSchedule_content_title_hours_hour_downside_content_today {
-  border: solid 2px #00aaf0;
+  border: solid 2px #dee2e6;
+  background-color: #00aaf0;
   width: 50px;
   font-weight: bold;
+  color: #dee2e6;
 }
 .RegisterTimeSchedule_content_timetable {
   display: flex;
@@ -436,6 +439,10 @@ th {
 }
 .RegisterTimeSchedule_content_timetable_doctors_registers_register {
   border: solid 0.5px #dee2e6;
+  width: 50px;
+}
+.RegisterTimeSchedule_content_timetable_doctors_registers_register:hover {
+  background-color: #a4d2ec;
   width: 50px;
 }
 .RegisterTimeSchedule_content_timetable_doctors_registers_register_ready {
@@ -476,13 +483,12 @@ th {
   padding: 5px 20px 5px 5px;
   display: block;
   z-index: 100;
-  background: #009900 no-repeat 100% 5%;
   left: 0px;
   margin: 10px;
   width: 250px;
   position: absolute;
   top: 10px;
-  text-decoration: none
+  font-size: medium;
 }
 .balloon_ready {
   position: relative;
@@ -493,7 +499,43 @@ th {
   border-radius: 10px;
 }
 .balloon_ready:after {
-  border-top:0px solid transparent;
+  border-top: 0px solid transparent;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #010801;
+  content:"";
+  position:absolute;
+  top:-10px;
+  left:10px;
+ }
+ .balloon_success {
+  position: relative;
+  margin: 50px;
+  width: 400px;
+  height: 100px;
+  background: #00aaf0;
+  border-radius: 10px;
+}
+.balloon_success:after {
+  border-top: 0px solid transparent;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #010801;
+  content:"";
+  position:absolute;
+  top:-10px;
+  left:10px;
+ }
+ .balloon_cancel {
+  position: relative;
+  margin: 50px;
+  width: 400px;
+  height: 100px;
+  background: #ff6600;
+  border-radius: 10px;
+}
+.balloon_cancel:after {
+  border-top: 0px solid transparent;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   border-bottom: 10px solid #010801;

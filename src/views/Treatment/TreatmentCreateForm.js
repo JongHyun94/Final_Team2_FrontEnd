@@ -107,7 +107,9 @@ function TreatmentCreateForm(props) {
     <div>
           <form onSubmit={handleSubmit}>
                 <div className="TreatmentCreateForm_title">
-                  진료 등록<button type="submit" className="button_team2_fill">진료완료</button>
+                {/* 진료 등록<button type="submit" className="button_team2_fill">진료완료</button> */}
+                  <div className="TreatmentCreateForm_title_1"> 진료 등록</div>
+                  <div className="TreatmentCreateForm_title_2"><button type="submit" className="button_team2_fill">진료완료</button></div>
                 </div>
                 <div className="TreatmentCreateForm_border border">
                                 <div className="TreatmentCreateForm_1">
@@ -169,8 +171,8 @@ function TreatmentCreateForm(props) {
                                                   <input type="text" className="TreatmentSearch_1_1"/><button className="button_team2_fill">검색</button>
                                                 </div>
                                                 <table className="table TreatmentSearch_2">
-                                                      <thead>
-                                                        <tr className="TreatmentSearch_2_2">
+                                                      <thead className="TreatmentSearch_2_2">
+                                                        <tr>
                                                           <th></th>
                                                           <th>약품/주사코드</th>
                                                           <th>약품/주사명</th>
