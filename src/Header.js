@@ -2,6 +2,7 @@ import { removeAuthHeader } from "apis/axiosConfig";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { createSetAuthTokenAction, createSetUidAction } from "redux/auth-reducer";
+import React, { useState } from "react";
 
 function Header(props) {
   const globalUid = useSelector((state) => state.authReducer.uid);
@@ -17,6 +18,17 @@ function Header(props) {
     sessionStorage.removeItem("authToken");
   };
 
+  // 모달 상태(open일 떄 true로 바뀌어 열림)
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = (event) => {
+    event.preventDefault();
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <div className="header">
       <div className="header1 row no-gutters">
@@ -28,7 +40,10 @@ function Header(props) {
           {globalUid !== ""?
             <div className="header1_2 d-flex justify-content-between">
               <div>서울 아산 병원</div>
-              <div>{globalUid} 님</div>
+              <React.Fragment>
+                <div>{globalUid} 님</div>
+                
+              </React.Fragment>
               <div><Link to="/"><button className="button_team2_empty" onClick={logout}>LOGOUT</button></Link></div>
             </div>
           :

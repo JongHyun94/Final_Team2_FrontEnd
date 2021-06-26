@@ -34,7 +34,7 @@ function Login(props) {
     props.history.push("/Register");
   };
   
-  console.log(user);
+  // console.log(user);
   
   return (
     <div className="box">

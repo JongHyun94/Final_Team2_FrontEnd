@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import "./Auth.css"
 
 function Auth(props) {
+  const {open, close} = props;
+  
   // 회원 상태
   const [user, setUser] = useState({
     userId: "D13801001001",
