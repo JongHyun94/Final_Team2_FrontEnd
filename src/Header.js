@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { createSetAuthTokenAction, createSetUidAction } from "redux/auth-reducer";
 import React, { useState } from "react";
+import Auth from "./views/Auth";
+import { RiCalendarCheckLine, RiStethoscopeFill, RiTestTubeFill } from "react-icons/ri";
+import { IoBarChart } from "react-icons/io5";
 
 function Header(props) {
   const globalUid = useSelector((state) => state.authReducer.uid);
@@ -41,8 +44,8 @@ function Header(props) {
             <div className="header1_2 d-flex justify-content-between">
               <div>서울 아산 병원</div>
               <React.Fragment>
-                <div>{globalUid} 님</div>
-                
+                <div className="header_auth" onClick={openModal}>{globalUid} 님</div>
+                <Auth open={modalOpen} close={closeModal}></Auth>
               </React.Fragment>
               <div><Link to="/"><button className="button_team2_empty" onClick={logout}>LOGOUT</button></Link></div>
             </div>
@@ -54,16 +57,16 @@ function Header(props) {
       {globalUid === ""? "":
         <div className="header2 row no-gutters">
           <div className="col-4 row d-flex justify-content-between">
-            <div><Link to="/Register" className="link_team2">접수</Link></div>
-            <div><Link to="/Treatment" className="link_team2">진료</Link></div>
-            <div><Link to="/Inspection" className="link_team2">검사 및 치료</Link></div>
-            <div><Link to="/DataAnalysis" className="link_team2">데이터분석</Link></div>
+            <div><Link to="/Register" className="link_team2"><RiCalendarCheckLine className="mr-1"/>접수</Link></div>
+            <div><Link to="/Treatment" className="link_team2"><RiStethoscopeFill className="mr-1"/>진료</Link></div>
+            <div><Link to="/Inspection" className="link_team2"><RiTestTubeFill className="mr-1"/>검사 및 치료</Link></div>
+            <div><Link to="/DataAnalysis" className="link_team2"><IoBarChart className="mr-1"/>데이터분석</Link></div>
           </div>
-          <div className="col-5"></div>
-          <div className="col-3 row d-flex justify-content-between">
-            <div><Link to="/User" className="link_team2">직원관리</Link></div>
-            <div><Link to="/Auth" className="link_team2">회원정보 수정</Link></div>
-            <div><Link to="/Help" className="link_team2">도움말</Link></div>
+          <div className="col-7"></div>
+          <div className="col-1 row d-flex justify-content-end">
+            <div><Link to="/User" className="link_team2"><i className="bi bi-people-fill mr-1"></i>직원관리</Link></div>
+            {/* <div><Link to="/Auth" className="link_team2">회원정보 수정</Link></div> */}
+            {/* <div><Link to="/Help" className="link_team2">도움말</Link></div> */}
           </div>
         </div>
       }
