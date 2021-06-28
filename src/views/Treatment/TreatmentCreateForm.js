@@ -147,9 +147,9 @@ function TreatmentCreateForm(props) {
                                                           <option defaultValue value="">진단 검사 선택</option>
                                                           <option value="blood"  >혈액검사</option>
                                                           <option value="xray"  >영상검사</option>
-                                                          <option value="glass"  >유리검사</option>
                                                         </select>
                                                     </div>
+                                                    {/* 검사별 상태 만들어서 전달, 조건문으로 맵 돌리기 */}
                                                     <div className="TreatmentCreateForm_checkbox">
                                                       <div className="TreatmentCreateForm_checkbox_1"><input type="checkbox" name="inspection" value="고밀도 콜레스테롤" onChange={handleChange} /> 고밀도 콜레스테롤(High density lipoprotein cholesterol)</div>
                                                       <div className="TreatmentCreateForm_checkbox_1"><input type="checkbox" name="inspection" value="당뇨 검사" onChange={handleChange} />  당뇨 검사(Diabetes mellitus Tset)</div>
@@ -157,8 +157,6 @@ function TreatmentCreateForm(props) {
                                                       <div className="TreatmentCreateForm_checkbox_1"><input type="checkbox" name="inspection" value="빈혈 검사1" onChange={handleChange} />  빈혈 검사1(Anemia Test)</div>
                                                       <div className="TreatmentCreateForm_checkbox_1"><input type="checkbox" name="inspection" value="빈혈 검사2" onChange={handleChange} />  빈혈 검사2(Anemia Test)</div>
                                                       <div className="TreatmentCreateForm_checkbox_1"><input type="checkbox" name="inspection" value="빈혈 검사3" onChange={handleChange} />  빈혈 검사3(Anemia Test)</div>
-                                             
-                                             
                                                     </div>
                                               </div>
                                     </div>
@@ -195,9 +193,9 @@ function TreatmentCreateForm(props) {
                                                       </tbody>
                                               </table>
 
-                                          <div className="TreatmentSearch_3">
+                                          {/* <div className="TreatmentSearch_3">
                                               <button className="button_team2_fill" >확인</button>
-                                          </div>
+                                          </div> */}
                                         </div>
                                   
                             </div>

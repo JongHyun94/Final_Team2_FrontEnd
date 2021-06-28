@@ -495,7 +495,7 @@ th {
   margin: 50px;
   width: 400px;
   height: 100px;
-  background: #009900;
+  background: lavender;
   border-radius: 10px;
 }
 .balloon_ready:after {
@@ -513,7 +513,7 @@ th {
   margin: 50px;
   width: 400px;
   height: 100px;
-  background: #00aaf0;
+  background: lightskyblue;
   border-radius: 10px;
 }
 .balloon_success:after {
@@ -531,7 +531,7 @@ th {
   margin: 50px;
   width: 400px;
   height: 100px;
-  background: #ff6600;
+  background: lightsalmon;
   border-radius: 10px;
 }
 .balloon_cancel:after {
