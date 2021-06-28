@@ -4,6 +4,7 @@
   justify-content: center;
 }
 
+/* 로그인 */
 .Login {
   width: 30rem;
   padding: 1rem;
@@ -11,65 +12,46 @@
   padding-top: 9rem;
 }
 
-.img {
-  width: 100%;
-  margin-left: 2rem;
-  padding-bottom: 0.8rem;
+/* 공지사항 */
+.Board_title {
+  font-size: larger;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 
-.Help_icon {
-  font-size: 6rem;
-  margin-right: 2rem;
+.Board_table {
+  background-color: lightgray;
+  height: 2.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
 }
-
-.Help_box {
-  background-color: #0070C0;
-  color: white;
-  width: 26em;
-  height: 10rem;
-  margin-left: 2rem;
+.Board_tr {
+  display: flex;
+  height: 2.5rem;
+  border-bottom: lightgray solid 0.5px;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.4s;
+}
+.Board_tr:hover {
+  background-color: teal;
+}
+.active {
+  background-color: slategray;
+}
+.Board_content {
+  max-height: 0;
+  overflow: hidden;
+  transition: 0.6s ease-in-out;
+  opacity: 0;
+}
+.show {
+  opacity: 1;  
   padding: 1rem;
-  font-size: 1.6rem;
+  /* height: 5rem; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: lightgray solid 0.5px;
 }
-
-/* .Register_box {
-  background-color: #00AAF0;
-  color: white;
-  width: 20rem;
-  height: 10rem;
-  margin: 1.5rem;
-  margin-left: 3rem;
-  margin-top: 0;
-  padding: 1rem;
-  font-size: 1.6rem;
-}
-
-.Treatment_box {
-  background-color: #3399FF;
-  color: white;
-  width: 20rem;
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  font-size: 1.6rem;
-}
-
-.Inspection_box {
-  background-color: #0283EE;
-  color: white;
-  width: 20rem;
-  height: 10rem;
-  margin: 1.5rem;
-  margin-left: 3rem;
-  margin-top: 0;
-  padding: 1rem;
-  font-size: 1.6rem;
-}
-
-.DataAnalysis_box {
-  background-color: #65BFF7;
-  color: white;
-  width: 20rem;
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  font-size: 1.6rem;
-} */

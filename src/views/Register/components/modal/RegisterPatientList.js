@@ -15,8 +15,20 @@ function getPatientList() {
 
   return patients;
 }
-
 function RegisterPatientList(props) {
+  const noneRegister = {
+    doctorName: "",
+    patientName: "",
+    registerId: "",
+    registerDate: new Date(),
+    registerState: "",
+  };
+  var register
+  if(props.register){
+    register = props.register;
+  } else {
+    register = noneRegister;
+  }
   const [patientList, setPatientList] = useState(getPatientList);
 
   // 환자 검색창 상태 
@@ -48,7 +60,7 @@ function RegisterPatientList(props) {
       <div className="RegisterPatientList_content border">
         <div className="RegisterPatientList_search mt-1">
           <div className="RegisterPatientList_search_input">
-            <input type="text" className="RegisterPatientList_search_input_1" placeholder="이름/생년월일을 입력해 주세요." value={searchContent} onChange={changeSearchContent} />
+            <input type="text" className="RegisterPatientList_search_input_1" placeholder="이름/생년월일을 입력해 주세요." value={register.patientName} onChange={changeSearchContent} />
           </div>
           <div className="RegisterPatientList_search_button">
             <button className="button_team2_fill" onClick={handleSearch}>환자 검색</button>

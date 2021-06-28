@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import InspectionImgForm from "./InspectionImgForm";
 import InspectionImgCreateForm from "./InspectionImgCreateForm";
 import InspectionImgModifyForm from "./InspectionImgModifyForm";
-import { produceWithPatches } from "immer";
 
 function InspectionListItem(props) {
   //혈액검사, 영상검사 구분하기 위함
@@ -86,20 +85,20 @@ function InspectionListItem(props) {
     setModalOpen3(false);
   };
 
-  //바코드 출력 확인버튼 : 검사상태(대기~>검사중) 변경
+  //바코드 출력 확인버튼 : 검사상태(대기~>검사) 변경
   const inspectionStateChange1 = () => {
     if(props.inspection.inspectionId === props.id){
       if(props.inspection.inspectionState === "대기"){
-        props.inspection.inspectionState = "검사중";
+        props.inspection.inspectionState = "검사";
       }
     }
     props.handleBarcode();
   };
 
-  //검사 취소 버튼 : 검사상태(검사중~>대기) 변경
+  //검사 취소 버튼 : 검사상태(검사~>대기) 변경
   const inspectionStateChange2 = () => {
     if(props.inspection.inspectionId === props.id){
-      if(props.inspection.inspectionState === "검사중"){
+      if(props.inspection.inspectionState === "검사"){
         props.inspection.inspectionState = "대기";
       }
     }
@@ -109,8 +108,10 @@ function InspectionListItem(props) {
   //검사 완료 버튼 : 검사상태(~>완료) 변경
   const inspectionStateChange3 = () => {
     if(props.inspection.inspectionId === props.id){
-      if(props.inspection.inspectionState === "검사중"){
+      if(props.inspection.inspectionState === "검사"){
         props.inspection.inspectionState = "완료";
+        //검사상태count ++
+        props.countIState();
       }
     }
     props.handleComplete();
@@ -129,6 +130,9 @@ function InspectionListItem(props) {
 
         {props.inspection.inspectionListCategory === "혈액검사" ?
           props.inspection.inspectionResult === "" ?
+            props.inspection.inspectionState === "대기" ?
+              <td></td>
+              :
             <td>
               <div>
                 <input type="text" name="iR1" onChange={handleResultChange} style={{width:"100px"}}/>
@@ -136,6 +140,9 @@ function InspectionListItem(props) {
               </div>
             </td>
             :
+            props.inspection.inspectionState === "완료" ?
+              <td>{props.inspection.inspectionResult}</td>
+              :
             <td>
               <div>
                 <input type="text" name="iR2" value={inspectionR} onChange={handleResultChange} style={{width:"100px"}}/>
@@ -144,6 +151,9 @@ function InspectionListItem(props) {
             </td>
           :
           props.inspection.inspectionResult === "" ?
+            props.inspection.inspectionState === "대기" ?
+              <td></td>
+              :
             <td className="InspectionListItem_1">
               <div>
               <React.Fragment>
@@ -152,7 +162,15 @@ function InspectionListItem(props) {
               </React.Fragment>
               </div>
             </td>
-            : 
+            :
+            props.inspection.inspectionState === "완료" ?
+              <td>
+                <React.Fragment>
+                  <button className="button_team2_fill" onClick={openModal1}>보기</button>
+                  <InspectionImgForm id={props.id} open={modalOpen1} close={modalClose1}/>
+                </React.Fragment>
+              </td>
+              : 
             <td>
               <div className="InspectionListItem_1">
                 <React.Fragment>
@@ -167,14 +185,18 @@ function InspectionListItem(props) {
 
         <td>{props.inspection.inspectionListReference}</td>
         <td>{props.inspection.inspectionDate}</td>
-        <td>{props.inspection.inspectionListContainer}</td>
+        {props.inspection.inspectionListContainer === "EDTA" ?
+          <td style={{color:"#8041D9"}}>●{props.inspection.inspectionListContainer}</td>
+          :
+          <td>{props.inspection.inspectionListContainer}</td>
+        }
         <td>{props.inspection.inspectionDoctorName}</td>
         <td>{props.inspection.inspectionInspectorName}</td>
         <td>{props.inspection.inspectionListLab}</td>
         {props.inspection.inspectionState === "대기" ?
           <td style={{color:"#009900"}}>{props.inspection.inspectionState}</td>
           :
-          props.inspection.inspectionState === "검사중" ?
+          props.inspection.inspectionState === "검사" ?
             <td style={{color:"#ff6600"}}>{props.inspection.inspectionState}</td>
             :
             <td style={{color:"#0100FF"}}>{props.inspection.inspectionState}</td>

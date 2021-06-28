@@ -19,7 +19,8 @@ function UserUpdateForm(props) {
       userId: props.user.userId,
       userName: props.user.userName,
       userAuthority : props.user.userAuthority,
-      userSsn: props.user.userSsn,
+      userSsn1: props.user.userSsn1,
+      userSsn2: props.user.userSsn2,
       userSex: props.user.userSex,
       userTel1: props.user.userTel1,
       userTel2: props.user.userTel2,
@@ -105,8 +106,12 @@ function UserUpdateForm(props) {
             </div>
           </div>
           <div className="User_item">
-            <label className="col-sm-3 pl-3 p-0 m-0">생년 월일: </label>
-            <div className="col-sm">{user.userSsn}</div>
+            <label className="col-sm-3 m-0">주민등록번호: </label>
+            <div className="row ml-3 mr-0">
+              <input type="text" className="col-sm" name="userSsn1" value={user.userSsn1} placeholder="999999" onChange={handleChange}></input>
+              <div className="mr-2 ml-2 d-flex align-items-center">-</div>
+              <input type="text" className="col-sm" name="userSsn2" value={user.userSsn2} placeholder="1234567" onChange={handleChange}></input>
+            </div>
           </div>
           <div className="User_item">
             <label className="col-sm-3 pl-3 p-0 m-0">성별: </label>

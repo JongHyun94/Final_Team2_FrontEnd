@@ -1,6 +1,17 @@
 import DatePicker from "react-datepicker";
 import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
+import { getYear, getMonth } from "date-fns";
+import setHours from "date-fns/setHours";
+import setMinutes from "date-fns/setMinutes";
+import { registerLocale } from "react-datepicker";
+import ko from 'date-fns/locale/ko';
+
+registerLocale("ko", ko);
+const _ = require('lodash');
+const years = _.range(1990, getYear(new Date()) + 1, 1);
+const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+
 
 function getDoctors() {
   const doctors = [];
@@ -12,19 +23,20 @@ function getDoctors() {
   return doctors;
 }
 
-function getPatient() {
-  const selectedPatient = {
-    patientName : "이종현",
-    patientBirth : "940606",
-    patientTel : "010-9947-7430",
-    doctorName : "김더존(D13801001001)_3",
-    registerDate : "2021-06-17",
-    registerTime : "10:00",
-    registerMemo : "복통심함",
-    registerCommunication : "15분 뒤에 들어감."
-  };
-  return selectedPatient;
-}
+// function getPatient() {
+//   const selectedPatient = {
+//     patientName : "이종현",
+//     patientBirth : "940606",
+//     patientTel : "010-9947-7430",
+//     doctorName : "김더존(D13801001001)_3",
+//     registerDate : "2021-06-17",
+//     registerTime : "10:00",
+//     registerMemo : "복통심함",
+//     registerCommunication : "15분 뒤에 들어감."
+//   };
+//   return selectedPatient;
+// }
+
 function RegisterUpdateForm(props) {
 
   const updateRegister = (event) => {
@@ -37,11 +49,24 @@ function RegisterUpdateForm(props) {
   // 환자 상태
 
   const [patient, setPatient] = useState();
-  const selectedPatient = props.selectedPatient;
+  const noneRegister = {
+    doctorName: "",
+    patientName: "",
+    registerId: "",
+    registerDate: new Date(),
+    registerState: "",
+  };
+  var selectedPatient
+  if(props.selectedPatient){
+    selectedPatient = props.selectedPatient;
+  } else {
+    selectedPatient = noneRegister;
+  }
+
 
   // 진료 날짜 상태
 
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(Date.parse(selectedPatient.registerDate));
 
   // 담당의 상태
 
@@ -105,12 +130,20 @@ function RegisterUpdateForm(props) {
                 <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={selectedPatient.patientBirth} readOnly />
               </div>
             </div>
+            <div className="RegisterRead_content_list">
+              <div className="RegisterRead_content_list_label">
+                성별:
+              </div>
+              <div className="RegisterRead_content_list_input">
+                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.patientSex} readOnly/>
+              </div>
+            </div>
             <div className="RegisterUpdateForm_content_list">
               <div className="RegisterUpdateForm_content_list_label">
                 전화번호:
               </div>
               <div className="RegisterUpdateForm_content_list_input">
-                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={selectedPatient.patientTel} readOnly/>
+                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={selectedPatient.patientTel} readOnly />
               </div>
             </div>
             <div className="RegisterUpdateForm_content_list">
@@ -134,10 +167,72 @@ function RegisterUpdateForm(props) {
                 진료 날짜:
               </div>
               <div className="RegisterUpdateForm_content_list_input">
-                <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+                <DatePicker
+                  renderCustomHeader={({
+                    date,
+                    changeYear,
+                    changeMonth,
+                    decreaseMonth,
+                    increaseMonth,
+                    prevMonthButtonDisabled,
+                    nextMonthButtonDisabled
+                  }) => (
+                    <div
+                      style={{
+                        margin: 10,
+                        display: "flex",
+                        justifyContent: "center"
+                      }}
+                    >
+                      <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+                        {"<"}
+                      </button>
+                      <select
+                        value={getYear(date)}
+                        onChange={({ target: { value } }) => changeYear(value)}
+                      >
+                        {years.map(option => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+
+                      <select
+                        value={months[getMonth(date)]}
+                        onChange={({ target: { value } }) =>
+                          changeMonth(months.indexOf(value))
+                        }
+                      >
+                        {months.map(option => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+
+                      <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+                        {">"}
+                      </button>
+                    </div>
+                  )}
+                  locale="ko"
+                  showTimeSelect
+                  selected={startDate}
+                  onChange={(date) => {
+                    setStartDate(date);
+                  }
+                  }
+                  timeIntervals={15}
+                  timeCaption="시간"
+                  minTime={setHours(setMinutes(new Date(), 0), 9)}
+                  maxTime={setHours(setMinutes(new Date(), 45), 17)}
+                  dateFormat="yyyy-MM-dd h:mm"
+                />
               </div>
             </div>
-            <div className="RegisterUpdateForm_content_list">
+            {/* <div className="RegisterUpdateForm_content_list">
               <div className="RegisterUpdateForm_content_list_label">
                 진료 시간:
               </div>
@@ -155,7 +250,7 @@ function RegisterUpdateForm(props) {
                   <option value="17:00">17:00</option>
                 </select>
               </div>
-            </div>
+            </div> */}
             <div className="RegisterUpdateForm_content_list">
               <div className="RegisterUpdateForm_content_list_label">
                 접수 메모:

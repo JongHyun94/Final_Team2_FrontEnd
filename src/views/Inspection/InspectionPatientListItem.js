@@ -1,21 +1,33 @@
 import { useCallback, useEffect, useState } from "react";
 
 function InspectionPatientListItem(props) {
-
   useEffect(() => {
     if(props.iState === true){
       iStateChange1();
     }
+    if(props.iStateFinish === true){
+      iStateFinishChange();
+    }
   });
 
   //총검사상태: 대기~>검사 변경
-  const iStateChange1 = (event) => {
+  const iStateChange1 = () => {
     if(props.patient.treatmentId === props.id){
       if(props.patient.treatmentIstate === "대기"){
         props.patient.treatmentIstate = "검사";
       }
     }
     props.handleBarcodeBack();
+  };
+
+  //총검사상태: 검사~>완료 변경
+  const iStateFinishChange = () => {
+    if(props.patient.treatmentId === props.id){
+      if(props.patient.treatmentIstate === "검사"){
+        props.patient.treatmentIstate = "완료";
+      }
+    }
+    props.handleFinishBack();
   };
 
   return (

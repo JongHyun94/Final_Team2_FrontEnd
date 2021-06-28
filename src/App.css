@@ -27,6 +27,9 @@
   flex-grow: 3;
   color: white;
 }
+.header_auth:hover {
+  color: #2D3040;
+}
 .logo{
   color:white;
   font-size: x-large;

@@ -5,7 +5,7 @@ import { AutoSizer, List } from "react-virtualized";
 function getPatientList() {
   const patients = [];
   for (var i = 50; i >= 1; i--) {
-    patients.push({patientId: i, patientName: "환자"+i, patientSsn: "910612", patientSex: "M", patientTel1: "010", patientTel2: "1234", patientTel3: "5678", patientZipcode: "01234", patientAddress: "서울시 송파구", patientDetailAddress1: "12층 강의실", patientDetailAddress2: "아이티벤처타워", patientRegDate: "2021-06-01"})
+    patients.push({patientId: i, patientName: "환자"+i, patientSsn1: "910612", patientSsn2: "1234567", patientSex: "M", patientTel1: "010", patientTel2: "1234", patientTel3: "5678", patientZipcode: "01234", patientAddress: "서울시 송파구", patientDetailAddress1: "12층 강의실", patientDetailAddress2: "아이티벤처타워", patientRegDate: "2021-06-01"})
   }
   return patients;
 }
@@ -46,7 +46,7 @@ function PatientList(props) {
         <div style={{width: "3%"}} key={patients.patientId}><input type="checkbox" name="patientCheck" checked={id === patients[index].patientId? true : false} width={50} readOnly></input></div>
         <div style={{width: "10%"}}>{patients[index].patientId}</div>
         <div style={{width: "10%"}}>{patients[index].patientName}</div>
-        <div style={{width: "10%"}}>{patients[index].patientSsn}</div>
+        <div style={{width: "10%"}}>{patients[index].patientSsn1}</div>
         <div style={{width: "5%"}}>{patients[index].patientSex}</div>
         <div style={{width: "15%"}}>{patients[index].patientTel1}-{patients[index].patientTel2}-{patients[index].patientTel3}</div>
         <div style={{width: "35%"}}>{patients[index].patientAddress} {patients[index].patientDetailAddress1} {patients[index].patientDetailAddress2}</div>

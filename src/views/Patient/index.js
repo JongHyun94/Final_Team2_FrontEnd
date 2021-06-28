@@ -28,7 +28,8 @@ function Patient(props) {
     setPatient({
       patientId: patient.patientId,
       patientName: patient.patientName,
-      patientSsn: patient.patientSsn,
+      patientSsn1: patient.patientSsn1,
+      patientSsn2: patient.patientSsn2,
       patientSex: patient.patientSex,
       patientTel1: patient.patientTel1,
       patientTel2: patient.patientTel2,
@@ -40,6 +41,8 @@ function Patient(props) {
       patientRegDate: patient.patientRegDate
     })
   };
+
+  console.log(patient);
 
   // useEffect(() => {
   //   setPatient(patient);

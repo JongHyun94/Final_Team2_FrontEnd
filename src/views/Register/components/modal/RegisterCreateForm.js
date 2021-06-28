@@ -28,8 +28,21 @@ function getDoctors(doctors1) {
 }
 
 function RegisterCreateForm(props) {
+  const noneRegister = {
+    doctorName: "",
+    patientName: "",
+    registerId: "",
+    registerDate: new Date(),
+    registerState: "",
+  };
+  var register
+  if(props.register){
+    register = props.register;
+  } else {
+    register = noneRegister;
+  }
 
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(Date.parse(register.registerDate));
 
   // 담당의 상태
   const { doctors1 } = props;
@@ -132,7 +145,7 @@ function RegisterCreateForm(props) {
           timeIntervals={15}
           timeCaption="시간"
           minTime={setHours(setMinutes(new Date(), 0), 9)}
-          maxTime={setHours(setMinutes(new Date(), 0), 17)}
+          maxTime={setHours(setMinutes(new Date(), 45), 17)}
           dateFormat="yyyy-MM-dd h:mm"
           inline
         />
@@ -143,7 +156,7 @@ function RegisterCreateForm(props) {
           <div>
             <div>의사 이름</div>
             <div>
-              <select className="RegisterCreateForm_input_select" value={newDoctor} onChange={changeNewDoctor}>
+              <select className="RegisterCreateForm_input_select" value={register.doctorName} onChange={changeNewDoctor}>
                 <option disabled>담당의를 선택해주세요</option>
                 {/* 임의의 데이터 넣어서 출력 해보기 */}
                 {doctors.map(doctor => {
