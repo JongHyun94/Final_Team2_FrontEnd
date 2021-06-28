@@ -34,25 +34,8 @@ function getState(patientlists) {
   return state;
 }
 
-function getTreatmentHistory() {
-  const treatmentHistory = [];
-  for(var i = 10; i >=1; i--){
-    treatmentHistory.push({patientId: 1, treatmentId:i,treatmentDate:"2021-06-01", treatmentDname:"나의사"+i, treatmentMemo:"메모"+i});
-  }
-  for(var i = 10; i >=1; i--){
-    treatmentHistory.push({patientId: 2, treatmentId:i,treatmentDate:"2021-06-01", treatmentDname:"나의사"+i, treatmentMemo:"메모"+i});
-  }
-  for(var i = 10; i >=1; i--){
-    treatmentHistory.push({patientId: 3, treatmentId:i,treatmentDate:"2021-06-01", treatmentDname:"나의사"+i, treatmentMemo:"메모"+i});
-  }
-  return treatmentHistory;
-}
-
-
-
-
 function TreatmentPatientList(props) {
-  const { patientlists, setPatientId, setHistoryList } = props;
+  const { patientlists, setPatientId } = props;
   // const [patientlists, setPatientlists] = useState(getPatientlists);
   const [inputdate, setInputdate] = useState(new Date());
   const [state, setState] = useState(() => getState(patientlists));
@@ -61,10 +44,6 @@ function TreatmentPatientList(props) {
 
   const [selectedTreatmentId , setSelectedTreatmentId] = useState("");
 
-
-  const [treatmentHistoryList, setTreatmentHistoryList] = useState(getTreatmentHistory);
-  const [treatmentHList, setTreatmentHList] = useState();
-
   const checkedtreatment = (registerId,patientlist) => {
     console.log(registerId);
     console.log(patientlist);
@@ -72,21 +51,6 @@ function TreatmentPatientList(props) {
     setSelectedTreatmentId(registerId);
     setPatientId(patientlist);
   }
-
-  const opentreatmentHistory = (patientId) => {
-    console.log("환자 아이디는 -> "+patientId);
-    const selectPatient = treatmentHistoryList.find(treatmentHistory => {
-      if(patientId == treatmentHistory.patientId){
-        console.log("@@@");
-        
-        return setHistoryList(selectPatient);
-      }
-    });
-
-   
-
-  }
-
 
   return (
     <div>
@@ -116,7 +80,7 @@ function TreatmentPatientList(props) {
                                       <tbody>
                                         {patientlists.map((patientlist) => {
                                           return (
-                                            <tr className="TreatmentPatientList_table_tr" key={patientlist.registerId} onClick={(event) => checkedtreatment(patientlist.registerId,patientlist),(event)=> opentreatmentHistory(patientlist.patientId)}>
+                                            <tr className="TreatmentPatientList_table_tr" key={patientlist.registerId} onClick={(event) => checkedtreatment(patientlist.registerId,patientlist)}>
                                               <td>
                                                 <input type="checkbox" checked={selectedTreatmentId === patientlist.registerId ? true : false} readOnly />
                                               </td>
