@@ -4,7 +4,7 @@
   margin-bottom: 0;
   display: flex;
   flex-direction: row;
-  /* background-color: #C8E6F0; */
+  /* background-color: #d2dae7; */
 }
 .Inspection_1{
   width: 30%;
@@ -46,7 +46,7 @@
   flex-direction: row;
 }
 .InspectionPatientList_1_2_1{
-  /* width: 40%; */
+  font-size: small;
 }
 .InspectionPatientList_1_2_2{
   width: 10%;
@@ -64,7 +64,7 @@
 }
 .InspectionPatientList_1_3_3{
   margin-right: 6px;
-  color: #0100FF;
+  color: #00AAF0;
 }
 .InspectionPatientList_2_1{
   text-align: center;
@@ -125,6 +125,10 @@
 }
 
 /* InspectionListItem */
+.InspectionListItem {
+  /* display: flex; */
+  align-items: center;
+}
 .InspectionListItem_1{
   display: flex;
   justify-content: center;
@@ -169,7 +173,7 @@
   height: 100%;
 }
 .InspectionImgCreateForm_title{
-  font-size: large;
+  font-size: x-large;
   font-weight: bold;
 }
 .InspectionImgCreateForm_1{
@@ -181,19 +185,23 @@
   height: 90%;
 }
 .InspectionImgCreateForm_1_1{
-  /* display: flex;
-  flex-direction: row; */
+  display: flex;
+  flex-direction: row;
   justify-content: center;
   margin-bottom: 5px;
-  font-size: small;
+  font-size: medium;
 }
 .InspectionImgCreateForm_1_1_1{
   display: flex;
-  flex-direction: row;
-  margin-bottom: 10px;
-  /* margin-right: 50px; */
-  margin-left: -15px;
-  font-size: small;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 30px;
+}
+.InspectionImgCreateForm_1_1_2{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 50%;
 }
 .InspectionImgCreateForm_1_2{
   display: flex;
@@ -206,7 +214,7 @@
   height: 100%;
 }
 .InspectionImgForm_title{
-  font-size: large;
+  font-size: x-large;
   font-weight: bold;
 }
 .InspectionImgForm_1{
@@ -217,13 +225,24 @@
   height: 100%;
 }
 .InspectionImgForm_1_1{
-  /* display: flex;
-  flex-direction: row; */
+  display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   margin-bottom: 5px;
-  font-size: small;
+  font-size: medium;
   width: 30%;
+}
+.InspectionImgForm_1_1_1{
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-start; */
+  align-items: flex-start;
+}
+.InspectionImgForm_1_1_2{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 .InspectionImgForm_1_2{
   width: 70%;
@@ -240,7 +259,7 @@
 .InspectionBarcodePop_title{
   display: flex;
   justify-content: center;
-  font-size: large;
+  font-size: x-large;
   font-weight: bold;
 }
 .InspectionBarcodePop_1{

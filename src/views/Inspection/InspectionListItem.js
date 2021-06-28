@@ -121,31 +121,31 @@ function InspectionListItem(props) {
   return (
     <>
       <tr className="InspectionListItem" key={props.inspection.inspectionId} onClick={() => {props.handleChecked(props.inspection.inspectionId)}}>
-        <td>
+        <td className="align-middle">
           <input type="checkbox" name="inspectionCheck" checked={props.id === props.inspection.inspectionId ? true : false} readOnly/>
         </td>
-        <td>{props.inspection.inspectionListCategory}</td>
-        <td>{props.inspection.inspectionListSpecimen}</td>
-        <td>{props.inspection.inspectionListName}</td>
+        <td className="align-middle">{props.inspection.inspectionListCategory}</td>
+        <td className="align-middle">{props.inspection.inspectionListSpecimen}</td>
+        <td className="align-middle">{props.inspection.inspectionListName}</td>
 
         {props.inspection.inspectionListCategory === "혈액검사" ?
           props.inspection.inspectionResult === "" ?
             props.inspection.inspectionState === "대기" ?
               <td></td>
               :
-            <td>
+            <td className="align-middle">
               <div>
-                <input type="text" name="iR1" onChange={handleResultChange} style={{width:"100px"}}/>
+                <input type="text" name="iR1" onChange={handleResultChange} style={{width:"70px"}}/>
                 <button className="button_team2_fill" onClick={inspectionRRegister}>등록</button>
               </div>
             </td>
             :
             props.inspection.inspectionState === "완료" ?
-              <td>{props.inspection.inspectionResult}</td>
+              <td className="align-middle">{props.inspection.inspectionResult}</td>
               :
-            <td>
+            <td className="align-middle">
               <div>
-                <input type="text" name="iR2" value={inspectionR} onChange={handleResultChange} style={{width:"100px"}}/>
+                <input type="text" name="iR2" value={inspectionR} onChange={handleResultChange} style={{width:"70px"}}/>
                 <button className="button_team2_fill" onClick={inspectionRModify}>수정</button>
               </div>
             </td>
@@ -154,7 +154,7 @@ function InspectionListItem(props) {
             props.inspection.inspectionState === "대기" ?
               <td></td>
               :
-            <td className="InspectionListItem_1">
+            <td className="InspectionListItem_1 align-middle">
               <div>
               <React.Fragment>
                 <button className="button_team2_empty" onClick={openModal3}>등록</button>
@@ -164,14 +164,14 @@ function InspectionListItem(props) {
             </td>
             :
             props.inspection.inspectionState === "완료" ?
-              <td>
+              <td className="align-middle">
                 <React.Fragment>
                   <button className="button_team2_fill" onClick={openModal1}>보기</button>
                   <InspectionImgForm id={props.id} open={modalOpen1} close={modalClose1}/>
                 </React.Fragment>
               </td>
               : 
-            <td>
+            <td className="align-middle">
               <div className="InspectionListItem_1">
                 <React.Fragment>
                   <button className="button_team2_fill" onClick={openModal1}>보기</button>
@@ -183,23 +183,23 @@ function InspectionListItem(props) {
             </td>
         }
 
-        <td>{props.inspection.inspectionListReference}</td>
-        <td>{props.inspection.inspectionDate}</td>
+        <td className="align-middle">{props.inspection.inspectionListReference}</td>
+        <td className="align-middle">{props.inspection.inspectionDate}</td>
         {props.inspection.inspectionListContainer === "EDTA" ?
-          <td style={{color:"#8041D9"}}>●{props.inspection.inspectionListContainer}</td>
+          <td className="align-middle" style={{color:"#8041D9"}}>●{props.inspection.inspectionListContainer}</td>
           :
-          <td>{props.inspection.inspectionListContainer}</td>
+          <td className="align-middle">{props.inspection.inspectionListContainer}</td>
         }
-        <td>{props.inspection.inspectionDoctorName}</td>
-        <td>{props.inspection.inspectionInspectorName}</td>
-        <td>{props.inspection.inspectionListLab}</td>
+        <td className="align-middle">{props.inspection.inspectionDoctorName}</td>
+        <td className="align-middle">{props.inspection.inspectionInspectorName}</td>
+        <td className="align-middle">{props.inspection.inspectionListLab}</td>
         {props.inspection.inspectionState === "대기" ?
-          <td style={{color:"#009900"}}>{props.inspection.inspectionState}</td>
+          <td className="align-middle" style={{color:"#009900"}}>{props.inspection.inspectionState}</td>
           :
           props.inspection.inspectionState === "검사" ?
-            <td style={{color:"#ff6600"}}>{props.inspection.inspectionState}</td>
+            <td className="align-middle" style={{color:"#ff6600"}}>{props.inspection.inspectionState}</td>
             :
-            <td style={{color:"#0100FF"}}>{props.inspection.inspectionState}</td>
+            <td className="align-middle" style={{color:"#00AAF0"}}>{props.inspection.inspectionState}</td>
         }
         
       </tr>
