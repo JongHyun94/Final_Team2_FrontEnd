@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import Auth from "./views/Auth";
 import { RiCalendarCheckLine, RiStethoscopeFill, RiTestTubeFill } from "react-icons/ri";
 import { IoBarChart } from "react-icons/io5";
+import WeatherAPI from "views/Register/components/api/WeatherAPI";
 
 function Header(props) {
   const globalUid = useSelector((state) => state.authReducer.uid);
@@ -35,10 +36,12 @@ function Header(props) {
   return (
     <div className="header">
       <div className="header1 row no-gutters">
-        <div className="header1_1 col-10">
+        <div className="header1_1 col-5">
           <span className="logo">TEAM2<img src="/resources/img/logo_white_bold.png" alt="" width={30}></img></span>
         </div>
-        
+        <div className="col-5">
+          <WeatherAPI/>
+        </div>
         <div className="col-2">
           {globalUid !== ""?
             <div className="header1_2 d-flex justify-content-between">

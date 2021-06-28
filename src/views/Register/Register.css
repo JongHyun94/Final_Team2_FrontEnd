@@ -100,28 +100,27 @@
   height: 250px;
 }
 .RegisterList_content_2_tr:hover {
-  background-color: #00aaf0;
-  color: white;
+  background-color: #cff1ff;
   cursor: pointer;
 }
 .RegisterList_content_2_tr_td_ready {
   color: #009900;
 }
-.RegisterList_content_2_tr_td_ready:hover {
+/* .RegisterList_content_2_tr_td_ready:hover {
   color: white;
-}
+} */
 .RegisterList_content_2_tr_td_finish {
   color: #00aaf0;
 }
-.RegisterList_content_2_tr_td_finish:hover {
+/* .RegisterList_content_2_tr_td_finish:hover {
   color: white;
-}
+} */
 .RegisterList_content_2_tr_td_cancel {
   color: #ff6600;
 }
-.RegisterList_content_2_tr_td_cancel:hover {
+/* .RegisterList_content_2_tr_td_cancel:hover {
   color: white;
-}
+} */
 thead {
   background-color: lightgray;
   position: sticky;
@@ -152,14 +151,15 @@ thead {
 .RegisterRead_content_list {
   display: flex;
   flex-direction: row;
-  margin-top: 6px;
-  margin-bottom: 6px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 .RegisterRead_content_list_label {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 38%;
+  margin-left: 30px;
 }
 .RegisterRead_content_list_input {
   display: flex;
@@ -179,7 +179,7 @@ select {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  padding: 18px;
+  padding: 22px 14px 14px 14px;
 }
 
 /* RegisterUpdateForm */
@@ -207,14 +207,15 @@ select {
 .RegisterUpdateForm_content_list {
   display: flex;
   flex-direction: row;
-  margin-top: 6px;
-  margin-bottom: 6px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 .RegisterUpdateForm_content_list_label {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 38%;
+  margin-left: 30px;
 }
 .RegisterUpdateForm_content_list_input {
   display: flex;
@@ -234,7 +235,13 @@ select {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  padding: 18px;
+  padding: 13px;
+}
+.react-datepicker-wrapper,
+.react-datepicker__input-container,
+.react-datepicker__input-container input {
+    display: block;
+    width: 97.5%;
 }
 
 /* RegisterPatientList */
@@ -278,8 +285,7 @@ select {
   height: 310px;
 }
 .RegisterPatientList_content_table_tr:hover {
-  background-color: #00aaf0;
-  color: white;
+  background-color: #cff1ff;
   cursor: pointer;
 }
 
@@ -516,7 +522,7 @@ th {
   border-radius: 5px;
 }
 .RegisterTimeSchedule_content_timetable_doctors_registers_register:hover {
-  background-color: #a4d2ec;
+  background-color: #cff1ff;
   width: 50px;
 }
 .RegisterTimeSchedule_content_timetable_doctors_registers_register_ready {
@@ -584,7 +590,7 @@ th {
   user-select: none;
 }
 .tip_normal:hover span {
-  border: lightgray 1px solid;
+  border: #cff1ff 1px solid;
   padding: 5px 20px 5px 5px;
   display: block;
   z-index: 100;
@@ -603,7 +609,7 @@ th {
 }
 .tip_upside:hover span {
   top: -50px!important;
-  border: lightgray 1px solid;
+  border: #cff1ff 1px solid;
   padding: 5px 20px 5px 5px;
   display: block;
   z-index: 100;
@@ -622,7 +628,7 @@ th {
 .tip_rightside:hover span {
   top: 20px!important;
   left: -120px!important;
-  border: lightgray 1px solid;
+  border: #cff1ff 1px solid;
   padding: 5px 20px 5px 5px;
   display: block;
   z-index: 100;
@@ -641,7 +647,7 @@ th {
 .tip_uprightside:hover span {
   top: -50px!important;
   left: -120px!important;
-  border: lightgray 1px solid;
+  border: #cff1ff 1px solid;
   padding: 5px 20px 5px 5px;
   display: block;
   z-index: 100;
@@ -670,7 +676,7 @@ th {
   border-top: 0px solid transparent;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-bottom: 8px solid lightgray;
+  border-bottom: 8px solid #cff1ff;
   content:"";
   position:absolute;
   top: -8px;
@@ -685,7 +691,7 @@ th {
   border-radius: 10px;
 }
 .tip_upside >.balloon_ready:after {
-  border-top: 8px solid lightgray;
+  border-top: 8px solid #cff1ff;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-bottom: 0px solid transparent;
@@ -706,7 +712,7 @@ th {
   border-top: 0px solid transparent;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-bottom: 8px solid lightgray;
+  border-bottom: 8px solid #cff1ff;
   content:"";
   position:absolute;
   top: -8px;
@@ -721,7 +727,7 @@ th {
   border-radius: 10px;
 }
 .tip_uprightside >.balloon_ready:after {
-  border-top: 8px solid lightgray;
+  border-top: 8px solid #cff1ff;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-bottom: 0px solid transparent;
@@ -749,7 +755,7 @@ th {
   border-top: 0px solid transparent;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-bottom: 8px solid lightgray;
+  border-bottom: 8px solid #cff1ff;
   content:"";
   position:absolute;
   top:-10px;
@@ -764,7 +770,7 @@ th {
   border-radius: 10px;
 }
 .tip_upside >.balloon_success:after {
-  border-top: 8px solid lightgray;
+  border-top: 8px solid #cff1ff;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-bottom: 0px solid transparent;
@@ -785,7 +791,7 @@ th {
   border-top: 0px solid transparent;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-bottom: 8px solid lightgray;
+  border-bottom: 8px solid #cff1ff;
   content:"";
   position:absolute;
   top: -8px;
@@ -800,7 +806,7 @@ th {
   border-radius: 10px;
 }
 .tip_uprightside >.balloon_success:after {
-  border-top: 8px solid lightgray;
+  border-top: 8px solid #cff1ff;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-bottom: 0px solid transparent;
@@ -828,7 +834,7 @@ th {
   border-top: 0px solid transparent;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-bottom: 8px solid lightgray;
+  border-bottom: 8px solid #cff1ff;
   content:"";
   position:absolute;
   top:-10px;
@@ -843,7 +849,7 @@ th {
   border-radius: 10px;
 }
 .tip_upside >.balloon_cancel:after {
-  border-top: 8px solid lightgray;
+  border-top: 8px solid #cff1ff;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-bottom: 0px solid transparent;
@@ -864,7 +870,7 @@ th {
   border-top: 0px solid transparent;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-bottom: 8px solid lightgray;
+  border-bottom: 8px solid #cff1ff;
   content:"";
   position:absolute;
   top: -8px;
@@ -879,7 +885,7 @@ th {
   border-radius: 10px;
 }
 .tip_uprightside >.balloon_cancel:after {
-  border-top: 8px solid lightgray;
+  border-top: 8px solid #cff1ff;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-bottom: 0px solid transparent;
@@ -888,24 +894,9 @@ th {
   top: 58px;
   left:120px;
  }
-
- /* WeatherAPI */
- .WeatherAPI{
-   display: flex;
-   flex-direction: row;
-   justify-content: flex-end;
-   align-items: center;
-   flex-grow: 10;
-   margin-right: 50px;
+ .hourStyle{
+   color:rgb(148, 3, 245);
  }
- .WeatherAPI_items {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
- }
- .WeatherAPI_item {
-   display: flex;
-   justify-items: flex-end;
-   margin-left: 20px;
- }
+ .hourStyle:nth-child(4n+1){
+  color:rgb(3, 39, 245);
+}

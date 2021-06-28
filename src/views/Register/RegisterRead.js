@@ -92,11 +92,11 @@ function RegisterRead(props) {
                 <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.doctorName} readOnly />
               </div>
             </div>
-            <div className="RegisterUpdateForm_content_list">
-              <div className="RegisterUpdateForm_content_list_label">
+            <div className="RegisterRead_content_list">
+              <div className="RegisterRead_content_list_label">
                 진료 날짜:
               </div>
-              <div className="RegisterUpdateForm_content_list_input">
+              <div className="RegisterRead_content_list_input">
                 <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.registerDate} readOnly />
               </div>
             </div>

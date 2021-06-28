@@ -16,7 +16,7 @@ function RegisterWeekTimeTableModal(props) {
             </div>
           </main>
           <footer>
-            <button className="button_team2_empty" onClick={close}>확인</button>
+            <button className="button_team2_fill" onClick={close}>확인</button>
           </footer>
         </section>
       ) : null}
