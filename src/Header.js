@@ -59,7 +59,7 @@ function Header(props) {
       </div>
       {globalUid === ""? "":
         <div className="header2 row no-gutters">
-          <div className="col-4 row d-flex justify-content-between">
+          <div className="col-4 row d-flex justify-content-between ml-1">
             <div><Link to="/Register" className="link_team2"><RiCalendarCheckLine className="mr-1"/>접수</Link></div>
             <div><Link to="/Treatment" className="link_team2"><RiStethoscopeFill className="mr-1"/>진료</Link></div>
             <div><Link to="/Inspection" className="link_team2"><RiTestTubeFill className="mr-1"/>검사 및 치료</Link></div>

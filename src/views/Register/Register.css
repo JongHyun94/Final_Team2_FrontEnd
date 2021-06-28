@@ -77,6 +77,9 @@
   flex-grow: 4;
   justify-content: space-between;
 }
+.RegisterList_content_1_2_total{
+  color: black;
+}
 .RegisterList_content_1_2_ready {
   color: #009900;
 }
@@ -249,7 +252,7 @@ select {
   justify-content: flex-end;
   padding: 13px;
 }
-.react-datepicker-wrapper,
+.RegisterUpdateForm_content_list_input >.react-datepicker-wrapper,
 .react-datepicker__input-container,
 .react-datepicker__input-container input {
     display: block;
@@ -907,8 +910,8 @@ th {
   left:120px;
  }
  .hourStyle{
-   color:rgb(148, 3, 245);
+   color:black;
  }
  .hourStyle:nth-child(4n+1){
-  color:rgb(3, 39, 245);
+  color:#00aaf0;
 }
