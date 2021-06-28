@@ -130,8 +130,8 @@ function RegisterUpdateForm(props) {
                 <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={selectedPatient.patientBirth} readOnly />
               </div>
             </div>
-            <div className="RegisterRead_content_list">
-              <div className="RegisterRead_content_list_label">
+            <div className="RegisterUpdateForm_content_list">
+              <div className="RegisterUpdateForm_content_list_label">
                 성별:
               </div>
               <div className="RegisterRead_content_list_input">
@@ -270,8 +270,8 @@ function RegisterUpdateForm(props) {
           </form>
           {/* 수정 취소 버튼 */}
           <div className="RegisterUpdateForm_content_button">
-            <button className="button_team2_fill" type="submit" onClick={updateRegister} >수정</button>
             <button className="button_team2_empty" onClick={cancelRegisterForm} >취소</button>
+            <button className="button_team2_fill" type="submit" onClick={updateRegister} >수정</button>
           </div>
         </div>
       </div>

@@ -59,28 +59,35 @@ function Login(props) {
   return (
     <div className="box">
       <div className="Login">
-        <h2 className="text-center mb-5">의료정보 시스템</h2>
-        <form>
-          <div className="form-group row">
-            <label className="col-sm-3 col-form-label">아이디</label>
-            <div className="col-sm">
-              <input type="text" className="form-control" name="userId" onChange={handleChange}></input>
+        <div className="back">
+          <div className="d-flex justify-content-center align-items-center mb-5">
+            <h2 className="text-center mr-4">의료정보 시스템</h2>
+            <div>
+              <img src="/resources/img/logo_blue.png" alt="" width={70}></img>
             </div>
           </div>
-          <div className="form-group row">
-            <label className="col-sm-3 col-form-label">비밀번호</label>
-            <div className="col-sm">
-              <input type="text" className="form-control" name="userPassword" onChange={handleChange}></input>
+          <form>
+            <div className="form-group row">
+              <label className="col-sm-3 col-form-label">아이디</label>
+              <div className="col-sm">
+                <input type="text" className="form-control" name="userId" onChange={handleChange}></input>
+              </div>
             </div>
-          </div>
-          <div className="d-flex justify-content-end"><button className="button_team2_fill" onClick={login}>LOGIN</button></div>
-        </form>
+            <div className="form-group row">
+              <label className="col-sm-3 col-form-label">비밀번호</label>
+              <div className="col-sm">
+                <input type="text" className="form-control" name="userPassword" onChange={handleChange}></input>
+              </div>
+            </div>
+            <div className="d-flex justify-content-end"><button className="button_team2_fill" onClick={login}>LOGIN</button></div>
+          </form>
+        </div>
       </div>
       <div>
         <div>
           <Help/>
         </div>
-        <div className="">
+        <div className="Board">
           <div className="Board_title">공지사항</div>
           <div className="text-center border">
             <div className="Board_table">

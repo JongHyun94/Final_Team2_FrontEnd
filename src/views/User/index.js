@@ -22,6 +22,8 @@ function User(props) {
       userTel1: user.userTel1,
       userTel2: user.userTel2,
       userTel3: user.userTel3,
+      userEmail1: user.userEmail1,
+      userEmail2: user.userEmail2,
       userZipcode: user.userZipcode,
       userAddress: user.userAddress,
       userDetailAddress1: user.userDetailAddress1,
@@ -29,6 +31,7 @@ function User(props) {
       userRegDate: user.userRegDate
     });
   };
+  console.log(user);
 
   function search(keyword) {
     setKeyword(keyword);
