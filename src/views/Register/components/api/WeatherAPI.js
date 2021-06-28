@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios'
+import axios from 'axios';
+import "./WeatherAPI.css";
 
 const API_KEY = '722e5a754ab41987e87ad60035c356f2';
 
@@ -26,8 +27,8 @@ class WeatherAPI extends Component {
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        console.log("position:");
-        console.log(position);
+        // console.log("position:");
+        // console.log(position);
         this.setState({
           ...this.state,
           lat: position.coords.latitude,
@@ -39,8 +40,8 @@ class WeatherAPI extends Component {
         console.log(error)
       }, options);
     }
-    console.log("###");
-    console.log(this.state);
+    // console.log("###");
+    // console.log(this.state);
     fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${this.state.lat}&lon=${this.state.long}&APPID=${API_KEY}`)
       .then(response => response.json())
       .then(json => {
@@ -51,8 +52,8 @@ class WeatherAPI extends Component {
           name: json.weather[0].main,
           icon: json.weather[0].icon,
         });
-        console.log("%%%");
-        console.log(this.state);
+        // console.log("%%%");
+        // console.log(this.state);
       });
 
   }
@@ -71,7 +72,7 @@ class WeatherAPI extends Component {
           <img alt="weather_icon" src={img_url} width="40px"/>
         </div>
         <div className="WeatherAPI_item">
-          <p>온도 : {temperature}°C</p>
+          온도 : {temperature}°C
         </div>
         {/* <div className="WeatherAPI_item">
           <p>날씨 : {name}</p>

@@ -210,9 +210,9 @@ function RegisterTimeSchedule(props) {
             />
           </React.Fragment>
         </div>
-        <div className="WeatherAPI">
+        {/* <div className="WeatherAPI">
           <WeatherAPI />
-        </div>
+        </div> */}
       </div>
       {/* 스케쥴 타임테이블 */}
       <div className="RegisterTimeSchedule_content">
