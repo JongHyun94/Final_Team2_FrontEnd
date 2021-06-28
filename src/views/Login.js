@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { createSetUidAction } from "redux/auth-reducer";
+import Help from "./Help";
 import "./Login.css";
 
 function Login(props) {
@@ -31,10 +32,18 @@ function Login(props) {
       userId: "",
       userPassword: ""
     });
-    props.history.push("/Register");
+    if(user.userId.slice(0,1) === "N") {
+      props.history.push("/Register");}
+    else if (user.userId.slice(0,1) === "D") {
+      props.history.push("/Treatment");
+    } else if (user.userId.slice(0,1) === "I") {      
+      props.history.push("/Inspection");
+    } else {
+      props.history.push("/User");
+    }
   };
   
-  console.log(user);
+  // console.log(user);
   
   return (
     <div className="box">
@@ -57,32 +66,31 @@ function Login(props) {
         </form>
       </div>
       <div>
-        {/* <div className="row">
-          <div className={`${style.Register_box} d-flex justify-content-between`}>
-            <div>접수</div>
-            <div className={style.icon}><i className="bi bi-card-list"></i></div>
-          </div>
-          <div className={`${style.Treatment_box} d-flex justify-content-between`}>
-            <div>진료</div>
-            <div className={style.icon}><i className="bi bi-clipboard-plus"></i></div>
-          </div>
+        <div>
+          <Help/>
         </div>
-        <div className="row">
-          <div className={`${style.Inspection_box} d-flex justify-content-between`}>
-            <div>검사 및 치료</div>
-            <div className={style.icon}><i className="bi bi-file-earmark-medical"></i></div>
-          </div>
-          <div className={`${style.DataAnalysis_box} d-flex justify-content-between`}>
-            <div>데이터 분석</div>
-            <div className={style.icon}><i className="bi bi-file-earmark-bar-graph"></i></div>
-          </div>
-        </div> */}
-        <div className="img"><img src="/resources/img/login_img.png" alt="" width="664rem"></img></div>
-        <div className={`Help_box d-flex justify-content-between`}>
-          <div>도움말</div>
-          <Link to="/Help" className="link_team2">
-            <div className="Help_icon"><i className="bi bi-question-circle"></i></div>
-          </Link>
+        <div className="border">
+          <div className="Board_title">공지사항</div>
+          <table className="table">
+            <thead>
+              <th>제목</th>
+              <th>작성일</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>점검 관련 문의</td>
+                <td>2021-06-01</td>
+              </tr>
+              <tr>
+                <td>점검 관련 문의</td>
+                <td>2021-06-01</td>
+              </tr>
+              <tr>
+                <td>점검 관련 문의</td>
+                <td>2021-06-01</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

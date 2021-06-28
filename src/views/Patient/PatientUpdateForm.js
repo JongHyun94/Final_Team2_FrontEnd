@@ -18,7 +18,8 @@ function PatientUpdateForm(props) {
       ...patient,
       patientId: props.patient.patientId,
       patientName: props.patient.patientName,
-      patientSsn: props.patient.patientSsn,
+      patientSsn1: props.patient.patientSsn1,
+      patientSsn2: props.patient.patientSsn2,
       patientSex: props.patient.patientSex,
       patientTel1: props.patient.patientTel1,
       patientTel2: props.patient.patientTel2,
@@ -90,8 +91,12 @@ function PatientUpdateForm(props) {
             </div>
           </div>
           <div className="Patient_item">
-            <label className="col-sm-3 pl-3 p-0 m-0">생년월일: </label>
-            <div className="col-sm">{patient.patientSsn}</div>
+            <label className="col-sm-3 m-0">주민등록번호: </label>
+            <div className="row ml-3">
+              <input type="text" className="col-sm" name="patientSsn1" value={patient.patientSsn1} placeholder="990101" onChange={handleChange}></input>
+              <div className="mr-2 ml-2 d-flex align-items-center">-</div>
+              <input type="text" className="col-sm" name="patientSsn2" value={patient.patientSsn2} placeholder="1234567" onChange={handleChange}></input>
+            </div>
           </div>
           <div className="Patient_item">
             <label className="col-sm-3 pl-3 p-0 m-0">성별: </label>

@@ -1,44 +1,46 @@
 .Help {
-  padding: 15rem;
-  padding-top: 7rem;
-  padding-bottom: 0;
+  margin-bottom: 1rem;
   color: white;
+  display: flex;
+  justify-content: center;
 }
 
 /* user_guide */
 .user_guide {
-  width: 25rem;
-  height: 32rem;
-  padding: 2rem;
+  width: 14rem;
+  height: 13rem;
+  padding: 1rem;
+  margin-right: 1rem;
   background-color: #0070C0;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 /* online_center */
 .online_center {
-  width: 25rem;
-  height: 32rem;
-  padding: 2rem;
+  width: 14rem;
+  height: 13rem;
+  padding: 1rem;
+  margin-right: 1rem;
   background-color: #0283EE;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: white;
 }
 
 /* as */
 .as {
-  width: 25rem;
-  height: 32rem;
-  padding: 2rem;
+  width: 14rem;
+  height: 13rem;
+  padding: 1rem;
   background-color: #65BFF7;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 /* icon */
 .icon {
   color: white;
-  font-size: 9rem;
+  font-size: 4rem;
   text-align: center;
-  padding-top: 5rem;
+  /* padding-top: 5rem; */
 }
 .icon1:hover {
   color: #65BFF7;
