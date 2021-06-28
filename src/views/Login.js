@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { createSetUidAction } from "redux/auth-reducer";
+import Help from "./Help";
 import "./Login.css";
 
 function Login(props) {
@@ -31,10 +32,29 @@ function Login(props) {
       userId: "",
       userPassword: ""
     });
-    props.history.push("/Register");
+    if(user.userId.slice(0,1) === "N") {
+      props.history.push("/Register");}
+    else if (user.userId.slice(0,1) === "D") {
+      props.history.push("/Treatment");
+    } else if (user.userId.slice(0,1) === "I") {      
+      props.history.push("/Inspection");
+    } else {
+      props.history.push("/User");
+    }
   };
   
-  console.log(user);
+  // 공지사항
+  const [bid, setBid] = useState("0");
+
+  const boardClick = (id) => {
+    if (bid !== id) {
+      setBid(id);
+    } else {
+      setBid("0");
+    }
+  };
+
+  // console.log(user);
   
   return (
     <div className="box">
@@ -57,32 +77,45 @@ function Login(props) {
         </form>
       </div>
       <div>
-        {/* <div className="row">
-          <div className={`${style.Register_box} d-flex justify-content-between`}>
-            <div>접수</div>
-            <div className={style.icon}><i className="bi bi-card-list"></i></div>
-          </div>
-          <div className={`${style.Treatment_box} d-flex justify-content-between`}>
-            <div>진료</div>
-            <div className={style.icon}><i className="bi bi-clipboard-plus"></i></div>
-          </div>
+        <div>
+          <Help/>
         </div>
-        <div className="row">
-          <div className={`${style.Inspection_box} d-flex justify-content-between`}>
-            <div>검사 및 치료</div>
-            <div className={style.icon}><i className="bi bi-file-earmark-medical"></i></div>
+        <div className="">
+          <div className="Board_title">공지사항</div>
+          <div className="text-center border">
+            <div className="Board_table">
+              <div style={{width: "10%"}}>분류</div>
+              <div style={{width: "75%"}}>제목</div>
+              <div style={{width: "15%"}}>작성일</div>
+            </div>
+            <div className={bid === "1"? "Board_tr active" : "Board_tr"} onClick={() => boardClick("1")}>
+              <div style={{width: "10%"}}>[공지]</div>
+              <div style={{width: "75%"}}>서버 점검 관련 사항 공지</div>
+              <div style={{width: "15%"}}>2021-06-01</div>
+            </div>
+            <div className={bid === "1"? 'show' : 'Board_content'}>
+              <div>서버 점검으로 인해 2021-06-12 23시 00분부터 2021-06-13 04시 30분까지 프로그램 이용이 <br></br> 어려울 수 있습니다.</div>
+            </div>
+            <div className={bid === "2"? "Board_tr active" : "Board_tr"} onClick={() => boardClick("2")}>
+              <div style={{width: "10%"}}>[공지]</div>
+              <div style={{width: "75%"}}>사용자 가이드 외 이용사항 문의 공지</div>
+              <div style={{width: "15%"}}>2021-06-01</div>
+            </div>
+            <div className={bid === "2"? 'show' : 'Board_content'}>
+              <div>사용자 가이드 외의 문의사항은 온라인 고객센터 혹은 원격 A/S 1688-600을 통해 문의해주세요.</div>
+            </div>
+            <div className={bid === "3"? "Board_tr active" : "Board_tr"} onClick={() => boardClick("3")}>
+              <div style={{width: "10%"}}>[공지]</div>
+              <div style={{width: "75%"}}>처음 사용하는 사용자를 위한 프로그램 이용 관련 문의</div>
+              <div style={{width: "15%"}}>2021-06-01</div>
+            </div>
+            <div className={bid === "3"? 'show' : 'Board_content'}>
+              <div>
+                상단에 존재하는 사용자 가이드를 클릭하시면 사용설명서를 다운 받으실 수 있습니다. <br/>
+                그 외의 문의 사항은 온라인 고객센터를 통해 문의 바랍니다.
+              </div>
+            </div>
           </div>
-          <div className={`${style.DataAnalysis_box} d-flex justify-content-between`}>
-            <div>데이터 분석</div>
-            <div className={style.icon}><i className="bi bi-file-earmark-bar-graph"></i></div>
-          </div>
-        </div> */}
-        <div className="img"><img src="/resources/img/login_img.png" alt="" width="664rem"></img></div>
-        <div className={`Help_box d-flex justify-content-between`}>
-          <div>도움말</div>
-          <Link to="/Help" className="link_team2">
-            <div className="Help_icon"><i className="bi bi-question-circle"></i></div>
-          </Link>
         </div>
       </div>
     </div>

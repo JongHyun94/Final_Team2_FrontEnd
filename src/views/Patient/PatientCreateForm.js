@@ -82,9 +82,9 @@ function PatientCreateForm(props) {
           <div className="Patient_item">
             <label className="col-sm-3 m-0">주민등록번호: </label>
             <div className="row ml-3">
-              <input type="text" className="col-sm" name="patientSsn1" onChange={handleChange}></input>
+              <input type="text" className="col-sm" name="patientSsn1" placeholder="999999" onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm" name="patientSsn2" onChange={handleChange}></input>
+              <input type="text" className="col-sm" name="patientSsn2" placeholder="1234567" onChange={handleChange}></input>
             </div>
           </div>
           <div className="Patient_item">
