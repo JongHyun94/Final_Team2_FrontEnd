@@ -46,7 +46,7 @@ function InspectionPatientListItem(props) {
           props.patient.treatmentIstate === "검사" ?
             <td style={{color:"#ff6600"}}>{props.patient.treatmentIstate}</td>
           :
-            <td style={{color:"#0100FF"}}>{props.patient.treatmentIstate}</td>
+            <td style={{color:"#00AAF0"}}>{props.patient.treatmentIstate}</td>
         }
         
         <td>{props.patient.treatmentCommunication}</td>

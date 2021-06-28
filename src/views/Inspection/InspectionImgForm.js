@@ -44,8 +44,8 @@ function InspectionImgForm(props) {
           <section>
             <div className="InspectionImgForm_title m-2">검사 사진</div>
             <div className="InspectionImgForm_1 border">
-              <div className="InspectionImgForm_1_1 row m-3">
-                <div className="col-6">
+              <div className="InspectionImgForm_1_1 m-3">
+                <div className="InspectionImgForm_1_1_1 mr-3 ml-3">
                   <div className="mb-1">진단검사명 :</div>
                   <div className="mb-1">검체명 :</div>
                   <div className="mb-1">검사명 :</div>
@@ -54,7 +54,7 @@ function InspectionImgForm(props) {
                   <div className="mb-1">검사자 :</div>
                   <div className="mb-1">검사실 :</div>
                 </div>
-                <div className="col-6">
+                <div className="InspectionImgForm_1_1_2">
                   <div className="mb-1">{inspectionImgResult.inspectionListCategory}</div>
                   <div className="mb-1">{inspectionImgResult.inspectionListSpecimen}</div>
                   <div className="mb-1">{inspectionImgResult.inspectionListName}</div>
