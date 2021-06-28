@@ -45,7 +45,7 @@ function Header(props) {
               <div>서울 아산 병원</div>
               <React.Fragment>
                 <div className="header_auth" onClick={openModal}>{globalUid} 님</div>
-                <Auth open={modalOpen} close={closeModal}></Auth>
+                <Auth open={modalOpen} close={closeModal} globalUid={globalUid}></Auth>
               </React.Fragment>
               <div><Link to="/"><button className="button_team2_empty" onClick={logout}>LOGOUT</button></Link></div>
             </div>

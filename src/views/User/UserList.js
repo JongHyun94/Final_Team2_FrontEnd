@@ -20,6 +20,7 @@ function getUsersAuthority(userList) {
   var count1 = 0;
   var count2 = 0;
   var count3 = 0;
+  var countAll = 0;
   for (var i = 0; i < userList.length; i++) {
     if(userList[i].userAuthority === "의사") {
       count1++;
@@ -28,10 +29,12 @@ function getUsersAuthority(userList) {
     } else if(userList[i].userAuthority === "임상병리사") {
       count3++;
     }
+    countAll++;
   }
   userAuthority.push(count1);
   userAuthority.push(count2);
   userAuthority.push(count3);
+  userAuthority.push(countAll);
 
   return userAuthority;
 }
@@ -71,6 +74,27 @@ function UserList(props) {
   // 직책 선택
   const clickAuthority = (authority) => {
     console.log(authority, "선택");
+   /*  if(authority === "의사") {
+      setUsers(prevUsers => {
+        const newUsers = prevUsers.filter(users => users.userAuthority === "의사");
+        return newUsers;
+      });
+    } else if (authority === "간호사") {
+      setUsers(prevUsers => {
+        const newUsers = prevUsers.filter(users => users.userAuthority === "간호사");
+        return newUsers;
+      });
+    } else if (authority === "임상병리사") {
+      setUsers(prevUsers => {
+        const newUsers = prevUsers.filter(users => users.userAuthority === "임상병리사");
+        return newUsers;
+      });
+    }  else {
+      setUsers(prevUsers => {
+        const newUsers = prevUsers.filter(users => users.userAuthority !== "");
+        return newUsers;
+      });
+    } */
   };
 
   // users가 변동되면 직책 상태 다시 리렌더링
@@ -104,6 +128,7 @@ function UserList(props) {
             <button className="button_team2_fill" onClick={handleSearch}>검색</button>
           </div>
           <div className="UserList_content1_2">
+          <div className="pr-3" onClick={() => clickAuthority("전체")} value="전체">전체: {userState[3]}명</div>
             <div className="pr-3" onClick={() => clickAuthority("의사")} value="의사">의사: {userState[0]}명</div>
             <div className="pr-3" onClick={() => clickAuthority("간호사")} value="간호사">간호사: {userState[1]}명</div>
             <div onClick={() => clickAuthority("임상병리사")} value="임상병리사">임상병리사: {userState[2]}명</div>

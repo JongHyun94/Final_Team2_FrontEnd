@@ -4,6 +4,7 @@
   justify-content: center;
 }
 
+/* 로그인 */
 .Login {
   width: 30rem;
   padding: 1rem;
@@ -11,8 +12,46 @@
   padding-top: 9rem;
 }
 
+/* 공지사항 */
 .Board_title {
   font-size: larger;
   font-weight: bold;
   margin-bottom: 0.5rem;
+}
+
+.Board_table {
+  background-color: lightgray;
+  height: 2.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+.Board_tr {
+  display: flex;
+  height: 2.5rem;
+  border-bottom: lightgray solid 0.5px;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.4s;
+}
+.Board_tr:hover {
+  background-color: teal;
+}
+.active {
+  background-color: slategray;
+}
+.Board_content {
+  max-height: 0;
+  overflow: hidden;
+  transition: 0.6s ease-in-out;
+  opacity: 0;
+}
+.show {
+  opacity: 1;  
+  padding: 1rem;
+  /* height: 5rem; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: lightgray solid 0.5px;
 }

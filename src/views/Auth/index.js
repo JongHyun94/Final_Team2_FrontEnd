@@ -4,8 +4,8 @@ import "./Auth.css";
 import { useSelector } from "react-redux";
 
 function Auth(props) {
-  const { open, close } = props;
-  const globalUid = useSelector((state) => state.authReducer.uid);
+  const { open, close, globalUid } = props;
+  // const globalUid = useSelector((state) => state.authReducer.uid);
 
   // 회원 상태
   const [user, setUser] = useState({

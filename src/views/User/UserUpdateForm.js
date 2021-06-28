@@ -108,7 +108,7 @@ function UserUpdateForm(props) {
           <div className="User_item">
             <label className="col-sm-3 m-0">주민등록번호: </label>
             <div className="row ml-3 mr-0">
-              <input type="text" className="col-sm" name="userSsn1" value={user.userSsn1} placeholder="990101" onChange={handleChange}></input>
+              <input type="text" className="col-sm" name="userSsn1" value={user.userSsn1} placeholder="999999" onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
               <input type="text" className="col-sm" name="userSsn2" value={user.userSsn2} placeholder="1234567" onChange={handleChange}></input>
             </div>
