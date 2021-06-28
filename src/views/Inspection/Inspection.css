@@ -80,6 +80,18 @@
   overflow-y: scroll;
   height: 730px;
 }
+.InspectionPatientList_list::-webkit-scrollbar {
+  width: 10px;
+}
+.InspectionPatientList_list::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+.InspectionPatientList_list::-webkit-scrollbar-track {
+  background-color: lightgray;
+}
 .InspectionPatientListItem:hover {
   background-color: #cff1ff;
   /* color:white; */
@@ -123,7 +135,18 @@
   overflow-y: scroll;
   height: 730px;
 }
-
+.InspectionList_list::-webkit-scrollbar {
+  width: 10px;
+}
+.InspectionList_list::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+.InspectionList_list::-webkit-scrollbar-track {
+  background-color: lightgray;
+}
 /* InspectionListItem */
 .InspectionListItem_1{
   display: flex;

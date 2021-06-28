@@ -99,6 +99,18 @@
   overflow-y: scroll;
   height: 250px;
 }
+.RegisterList_content_2::-webkit-scrollbar {
+  width: 10px;
+}
+.RegisterList_content_2::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+.RegisterList_content_2::-webkit-scrollbar-track {
+  background-color: lightgray;
+}
 .RegisterList_content_2_tr:hover {
   background-color: #cff1ff;
   cursor: pointer;
