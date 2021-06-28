@@ -2,7 +2,7 @@ import "./Inspection.css";
 import InspectionPatientList from "./InspectionPatientList";
 import InspectionList from "./InspectionList";
 import InspectionCreateForm from "./InspectionCreateForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Inspection(props) {
   //진료번호 상태
@@ -28,12 +28,12 @@ function Inspection(props) {
   };
 
   //모든 검사상태가 완료 시, 총검사상태: 검사~>완료
-  const handleFinsish = () => {
+  const handleFinish = () => {
     setIStateFinish(true);
   };
 
   //총검사상태: 검사~>완료 바꾼 후 state 원래대로
-  const handleFinsishBack = () => {
+  const handleFinishBack = () => {
     setIStateFinish(false);
   };
 
@@ -43,13 +43,13 @@ function Inspection(props) {
           {/* 환자검색 */}
           <InspectionPatientList treatmentId={treatmentId} checkedtId={(id) => checkedtId(id)}
                                   iState={iState} handleBarcodeBack={handleBarcodeBack} 
-                                  iStateFinish={iStateFinish} handleFinsishBack={handleFinsishBack}/>
+                                  iStateFinish={iStateFinish} handleFinishBack={handleFinishBack}/>
         </div>
         <div className="Inspection_2">
           {/* 검사상세내역 */}
           <InspectionList treatmentId={treatmentId}
                           handleBarcodeChekck={handleBarcodeChekck}
-                          handleFinsish={handleFinsish} />
+                          handleFinish={handleFinish} />
         </div>
         {/* <div className="Inspection_3">
           <div className="Inspection_3_1">

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AutoSizer, List, Table } from "react-virtualized";
 import DatePicker from "react-datepicker";
 import InspectionPatientListItem from "./InspectionPatientListItem";
@@ -56,7 +56,8 @@ function InspectionPatientList(props) {
 
   useEffect(() => {
     setPatients(patients);
-  }, [patients]);
+    checkIState();
+  });
 
   const searchDateBtn = (event) => {
     console.log(treatmentDate);
@@ -65,10 +66,11 @@ function InspectionPatientList(props) {
 
   //진료 완료 환자 체크(선택)
   const handleChecked = (treatmentId) => {
-    // setPatients(patients);
     setId(treatmentId);
     props.checkedtId(treatmentId);
+  };
 
+  const checkIState = () => {
     setIstateWaiting(getIstateWaiting(patients));
     setIstateInspection(getIstateInspection(patients));
     setIstateCompletion(getIstateCompletion(patients));
@@ -113,7 +115,7 @@ function InspectionPatientList(props) {
         </div>
 
         <div className="InspectionPatientList_list">
-          <table className="table InspectionPatientList_2_1">
+          <table className="table InspectionPatientList_2_1" style={{height:"10px"}}>
             <thead className="InspectionPatientList_2_2">
               <tr>
                 <th></th>
@@ -134,7 +136,8 @@ function InspectionPatientList(props) {
               {patients.map((patient) => {
                 return (
                   <InspectionPatientListItem key={patient.treatmentId} patient={patient} id={id} handleChecked={(treatmentId) => handleChecked(treatmentId)} 
-                                              iState={props.iState} handleBarcodeBack={props.handleBarcodeBack}/>
+                                              iState={props.iState} handleBarcodeBack={props.handleBarcodeBack}
+                                              iStateFinish={props.iStateFinish} handleFinishBack={props.handleFinishBack}/>
                 );
               })}
             </tbody>
