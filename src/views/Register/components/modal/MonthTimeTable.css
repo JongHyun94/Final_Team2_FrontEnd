@@ -1,0 +1,17 @@
+.MonthTimeTable{
+  display: flex;
+  flex-direction: column;
+}
+.yearAndMonth{
+
+}
+.MonthTimeTable_btns{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.days{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
