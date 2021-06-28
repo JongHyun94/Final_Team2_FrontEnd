@@ -3,7 +3,7 @@ import React from 'react';
 import RegisterCreateForm from "./RegisterCreateForm";
 import RegisterPatientList from "./RegisterPatientList";
 function RegisterCreateModal(props) {
-  const { open, close, header, doctors } = props;
+  const { open, close, header, doctors, register } = props;
   return (
     <div className={open ? 'openModal modal' : 'modal'}>
       {open ? (
@@ -13,13 +13,21 @@ function RegisterCreateModal(props) {
           </header>
           <main>
             <div className="RegisterCreateModal_main">
-              <RegisterPatientList/>
-              <RegisterCreateForm doctors1={doctors}/>
+              <RegisterPatientList register={register} />
+              <RegisterCreateForm doctors1={doctors} register={register} />
             </div>
           </main>
           <footer>
-            <button className="button_team2_empty" onClick={close}>취소</button>
-            <button className="button_team2_fill" onClick={close}>등록</button>
+            {register.registerState === "완료" ?
+              <>
+                <button className="button_team2_empty" onClick={close}>확인</button>
+              </>
+              :
+              <>
+                <button className="button_team2_empty" onClick={close}>취소</button>
+                <button className="button_team2_fill" onClick={close}>등록</button>
+              </>
+            }
           </footer>
         </section>
       ) : null}

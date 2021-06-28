@@ -3,7 +3,10 @@ import DatePicker from "react-datepicker";
 import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
-
+import ko from 'date-fns/locale/ko';
+import moment from "moment";
+import { registerLocale } from "react-datepicker";
+registerLocale("ko", ko);
 
 // 임의의 접수 내역 목록 만들기
 function getRegisters() {
@@ -14,7 +17,7 @@ function getRegisters() {
     if (i < 10) {
       registers.push({
         index: i,
-        registerDate: "2021-06-17",
+        registerDate: "2021-06-17 10:0" + i,
         registerTime: "10:0" + i,
         registerId: "10000" + i,
         patientName: "환자" + i,
@@ -29,7 +32,7 @@ function getRegisters() {
     } else {
       registers.push({
         index: i,
-        registerDate: "2021-06-17",
+        registerDate: "2021-06-17 10:" + i,
         registerTime: "10:" + i,
         registerId: "10000" + i,
         patientName: "환자" + i,
@@ -49,7 +52,7 @@ function getRegisters() {
     if (i < 60) {
       registers.push({
         index: i,
-        registerDate: "2021-06-17",
+        registerDate: "2021-06-17 11:0" + (i - 50),
         registerTime: "11:0" + (i - 50),
         registerId: "10000" + i,
         patientName: "환자" + i,
@@ -64,7 +67,7 @@ function getRegisters() {
     } else {
       registers.push({
         index: i,
-        registerDate: "2021-06-17",
+        registerDate: "2021-06-17 11:" + (i - 50),
         registerTime: "11:" + (i - 50),
         registerId: "10000" + i,
         patientName: "환자" + i,
@@ -84,7 +87,7 @@ function getRegisters() {
     if (i < 110) {
       registers.push({
         index: i,
-        registerDate: "2021-06-17",
+        registerDate: "2021-06-17 12:0" + (i - 100),
         registerTime: "12:0" + (i - 100),
         registerId: "10000" + i,
         patientName: "환자" + i,
@@ -99,7 +102,7 @@ function getRegisters() {
     } else {
       registers.push({
         index: i,
-        registerDate: "2021-06-17",
+        registerDate: "2021-06-17 12:" + (i - 100),
         registerTime: "12:" + (i - 100),
         registerId: "10000" + i,
         patientName: "환자" + i,
@@ -217,7 +220,7 @@ function RegisterList(props) {
         <div className="RegisterList_content_1">
           <div className="RegisterList_content_1_1">
             <div>
-              <DatePicker selected={dateForRegister} onChange={(date) => setDateForRegister(date)} />
+              <DatePicker locale="ko" selected={dateForRegister} onChange={(date) => setDateForRegister(date)} />
             </div>
             <div>
               <button className="button_team2_fill">이동</button>

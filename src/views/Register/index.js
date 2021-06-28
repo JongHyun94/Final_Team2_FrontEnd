@@ -1,13 +1,8 @@
 import { useState } from "react";
-import Switch from "react-router-dom";
-import RegisterCreateForm from "./components/modal/RegisterCreateForm";
 import RegisterList from "./RegisterList";
-import RegisterPatientList from "./components/modal/RegisterPatientList";
 import RegisterRead from "./RegisterRead";
 import RegisterTimeSchedule from "./RegisterTimeSchedule";
-import RegisterTimeTable from "./RegisterTimeTable";
 import RegisterUpdateForm from "./RegisterUpdateForm";
-
 
 // 부모 상태 
 
@@ -32,7 +27,10 @@ import RegisterUpdateForm from "./RegisterUpdateForm";
 //   return registers;
 // }
 
+
 function Register(props) {
+  
+
   // 상태 
 
   // 접수 DB 컬럼 REGISTERS TABLE
@@ -47,15 +45,13 @@ function Register(props) {
 
 
   // 선택된 환자 내용
-  const [selectedPatient, setSelectedPatient] = useState({
-
-  });
+  const [selectedPatient, setSelectedPatient] = useState({});
 
   // 접수 상세 내역 & 접수 수정 체인지
   const [registerRead, setRegisterRead] = useState(true);
 
   const changeRegister = (event) => {
-    if(registerRead === true){
+    if (registerRead === true) {
       setRegisterRead(false);
     } else {
       setRegisterRead(true);
@@ -63,7 +59,7 @@ function Register(props) {
   };
 
   const cancelRegister = (event) => {
-    if(registerRead === true){
+    if (registerRead === true) {
       setRegisterRead(false);
     } else {
       setRegisterRead(true);
@@ -82,17 +78,17 @@ function Register(props) {
         </div>
         {/* 접수 상세 내역 or 접수 수정*/}
         <div className="RegisterRead">
-          {registerRead ? 
-            <RegisterRead 
-              registerRead={registerRead} 
-              changeRegister={changeRegister} 
+          {registerRead ?
+            <RegisterRead
+              registerRead={registerRead}
+              changeRegister={changeRegister}
               selectedPatient={selectedPatient}
-            /> 
-            : 
-            <RegisterUpdateForm 
-              registerRead={registerRead} 
-              changeRegister={changeRegister} 
-              cancelRegister={cancelRegister} 
+            />
+            :
+            <RegisterUpdateForm
+              registerRead={registerRead}
+              changeRegister={changeRegister}
+              cancelRegister={cancelRegister}
               selectedPatient={selectedPatient}
             />
           }
@@ -104,20 +100,8 @@ function Register(props) {
           진료 예정표
         </div>
         <div className="Register_Components border">
-          {/* 환자 검색 */}
-          {/* <div className="RegisterPatientList">
-            <RegisterPatientList />
-          </div> */}
-          {/* 접수 등록 */}
-          {/* <div className="RegisterCreateForm">
-            <RegisterCreateForm setToday={setToday}/>
-          </div> */}
-          {/* 접수 타임테이블 */}
-          {/* <div className="RegisterTimeTable" today={today}>
-            <RegisterTimeTable />
-          </div> */}
           <div className="RegisterTimeSchedule">
-            <RegisterTimeSchedule/>
+            <RegisterTimeSchedule />
           </div>
         </div>
       </div>

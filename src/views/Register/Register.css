@@ -15,12 +15,13 @@
   height: 50%;
 }
 .Register_2_header {
+  margin-top: 5px;
   font-size: larger;
   font-weight: bold;
 }
 .Register_Components {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   /* background-color: blueviolet; */
   height: 100%;
   margin-top: 10px;
@@ -336,7 +337,15 @@ th {
   font-size: small;
 }
 .RegisterTimeSchedule_header {
+  display: flex;
+  flex-direction: row;
   margin: 5px;
+}
+.RegisterTimeSchedule_header_btn{
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  flex-grow: 2;
 }
 .RegisterTimeSchedule_content {
   display: flex;
@@ -350,14 +359,34 @@ th {
 }
 .RegisterTimeSchedule_content_title_today {
   border: solid 0.5px #dee2e6;
-  font-size: small;
+  font-size: smaller;
   overflow: auto;
   text-align: center;
+  overflow: hidden;
+  border-radius: 5px;
+}
+.RegisterTimeSchedule_content_title_today::selection{
+  -ms-user-select: none; 
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.RegisterTimeSchedule_content_title_today input::selection{
+  -ms-user-select: none; 
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.RegisterTimeSchedule_content_title_today .react-datepicker-wrapper{
+  border-radius: 5px;
 }
 .RegisterTimeSchedule_content_title_today .react-datepicker__input-container {
   width: 50px !important;
   height: 100px !important;
   text-align: center;
+  border-radius: 5px;
 }
 .RegisterTimeSchedule_content_title_today input {
   width: 50px !important;
@@ -372,10 +401,12 @@ th {
   outline: solid 0.5px #dee2e6 !important;
   border: solid 0.5px #dee2e6 !important;
   cursor: pointer;
+  border-radius: 5px;
 }
 .RegisterTimeSchedule_content_title_today .react-datepicker-ignore-onclickoutside {
   width: 50px !important;
   height: 100px !important;
+  border-radius: 5px;
 }
 .RegisterTimeSchedule_content_title_hours {
   display: flex;
@@ -392,17 +423,34 @@ th {
   border: solid 0.5px #dee2e6;
   height: 50px;
   line-height: 50px;
+  border-radius: 5px;
+}
+.RegisterTimeSchedule_content_title_hours_hour_upside::selection {
+  -ms-user-select: none; 
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .RegisterTimeSchedule_content_title_hours_hour_downside {
   display: flex;
   flex-direction: row;
   height: 50px;
   line-height: 50px;
+  border-radius: 5px;
 }
 .RegisterTimeSchedule_content_title_hours_hour_downside_content {
   border: solid 0.5px #dee2e6;
   width: 50px;
   border-bottom: solid 2px #00aaf0;
+  border-radius: 5px;
+}
+.RegisterTimeSchedule_content_title_hours_hour_downside_content::selection {
+  -ms-user-select: none; 
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .RegisterTimeSchedule_content_title_hours_hour_downside_content_today {
   border: solid 2px #dee2e6;
@@ -410,6 +458,14 @@ th {
   width: 50px;
   font-weight: bold;
   color: #dee2e6;
+  border-radius: 5px;
+}
+.RegisterTimeSchedule_content_title_hours_hour_downside_content_today::selection {
+  -ms-user-select: none; 
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .RegisterTimeSchedule_content_timetable {
   display: flex;
@@ -433,15 +489,31 @@ th {
   line-height: 50px;
   width: 50px !important;
   border: solid 0.5px #dee2e6;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.RegisterTimeSchedule_content_timetable_doctors_doctor::selection {
+  -ms-user-select: none; 
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .RegisterTimeSchedule_content_timetable_doctors_registers {
   display: flex;
   flex-direction: row;
   border: solid 0.5px #dee2e6;
+  border-radius: 5px;
 }
 .RegisterTimeSchedule_content_timetable_doctors_registers_register {
   border: solid 0.5px #dee2e6;
   width: 50px;
+  border-radius: 5px;
+}
+.RegisterTimeSchedule_content_timetable_doctors_registers_register_nothing{
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
 }
 .RegisterTimeSchedule_content_timetable_doctors_registers_register:hover {
   background-color: #a4d2ec;
@@ -449,9 +521,17 @@ th {
 }
 .RegisterTimeSchedule_content_timetable_doctors_registers_register_ready {
   line-height: 20px;
-  background-color: #009900;
+  background-color: #18e273;
   height: 100%;
   color: white;
+  border-radius: 5px;
+}
+.RegisterTimeSchedule_content_timetable_doctors_registers_register_ready::selection {
+  -ms-user-select: none; 
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .RegisterTimeSchedule_content_timetable_doctors_registers_register_ready:hover {
   cursor: pointer;
@@ -461,6 +541,14 @@ th {
   background-color: #00aaf0;
   height: 100%;
   color: white;
+  border-radius: 5px;
+}
+.RegisterTimeSchedule_content_timetable_doctors_registers_register_success::selection {
+  -ms-user-select: none; 
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .RegisterTimeSchedule_content_timetable_doctors_registers_register_success:hover {
   cursor: pointer;
@@ -470,79 +558,354 @@ th {
   background-color: #ff6600;
   height: 100%;
   color: white;
+  border-radius: 5px;
+}
+.RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel::selection {
+  -ms-user-select: none; 
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel:hover {
   cursor: pointer;
 }
-.tip:hover {
+.tip_normal:hover {
   position: relative
 }
-.tip span {
+.tip_normal span {
   display: none
 }
-.tip:hover span {
-  border: #010801 1px solid;
+.tip_normal span::selection {
+  -ms-user-select: none; 
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.tip_normal:hover span {
+  border: lightgray 1px solid;
   padding: 5px 20px 5px 5px;
   display: block;
   z-index: 100;
   left: 0px;
   margin: 10px;
-  width: 250px;
+  width: 150px;
   position: absolute;
-  top: 10px;
+  top: 8px;
+  font-size: medium;
+}
+.tip_upside:hover {
+  position: relative
+}
+.tip_upside span {
+  display: none
+}
+.tip_upside:hover span {
+  top: -50px!important;
+  border: lightgray 1px solid;
+  padding: 5px 20px 5px 5px;
+  display: block;
+  z-index: 100;
+  left: 0px;
+  margin: 10px;
+  width: 150px;
+  position: absolute;
+  font-size: medium;
+}
+.tip_rightside:hover {
+  position: relative
+}
+.tip_rightside span {
+  display: none
+}
+.tip_rightside:hover span {
+  top: 20px!important;
+  left: -120px!important;
+  border: lightgray 1px solid;
+  padding: 5px 20px 5px 5px;
+  display: block;
+  z-index: 100;
+  left: 0px;
+  margin: 10px;
+  width: 150px;
+  position: absolute;
+  font-size: medium;
+}
+.tip_uprightside:hover {
+  position: relative
+}
+.tip_uprightside span {
+  display: none
+}
+.tip_uprightside:hover span {
+  top: -50px!important;
+  left: -120px!important;
+  border: lightgray 1px solid;
+  padding: 5px 20px 5px 5px;
+  display: block;
+  z-index: 100;
+  left: 0px;
+  margin: 10px;
+  width: 150px;
+  position: absolute;
   font-size: medium;
 }
 .balloon_ready {
   position: relative;
-  margin: 50px;
-  width: 400px;
-  height: 100px;
-  background: #009900;
+  margin: 10px;
+  width: 180px;
+  height: 60px;
+  background: #18e273;
   border-radius: 10px;
+}
+.balloon_ready::selection {
+  -ms-user-select: none; 
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .balloon_ready:after {
   border-top: 0px solid transparent;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #010801;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid lightgray;
   content:"";
   position:absolute;
-  top:-10px;
+  top: -8px;
   left:10px;
+ }
+.tip_upside > .balloon_ready {
+  position: relative;
+  margin: 10px;
+  width: 180px;
+  height: 60px;
+  background: #18e273;
+  border-radius: 10px;
+}
+.tip_upside >.balloon_ready:after {
+  border-top: 8px solid lightgray;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 0px solid transparent;
+  content:"";
+  position:absolute;
+  top: 58px;
+  left:10px;
+ }
+ .tip_rightside > .balloon_ready {
+  position: relative;
+  margin: 10px;
+  width: 180px;
+  height: 60px;
+  background: #18e273;
+  border-radius: 10px;
+}
+.tip_rightside >.balloon_ready:after {
+  border-top: 0px solid transparent;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid lightgray;
+  content:"";
+  position:absolute;
+  top: -8px;
+  left:120px;
+ }
+ .tip_uprightside > .balloon_ready {
+  position: relative;
+  margin: 10px;
+  width: 180px;
+  height: 60px;
+  background: #18e273;
+  border-radius: 10px;
+}
+.tip_uprightside >.balloon_ready:after {
+  border-top: 8px solid lightgray;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 0px solid transparent;
+  content:"";
+  position:absolute;
+  top: 58px;
+  left:120px;
  }
  .balloon_success {
   position: relative;
-  margin: 50px;
-  width: 400px;
-  height: 100px;
+  margin: 10px;
+  width: 180px;
+  height: 60px;
   background: #00aaf0;
   border-radius: 10px;
 }
+.balloon_success::selection {
+  -ms-user-select: none; 
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
 .balloon_success:after {
   border-top: 0px solid transparent;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #010801;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid lightgray;
   content:"";
   position:absolute;
   top:-10px;
   left:10px;
  }
+ .tip_upside > .balloon_success {
+  position: relative;
+  margin: 10px;
+  width: 180px;
+  height: 60px;
+  background: #00aaf0;
+  border-radius: 10px;
+}
+.tip_upside >.balloon_success:after {
+  border-top: 8px solid lightgray;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 0px solid transparent;
+  content:"";
+  position:absolute;
+  top: 58px;
+  left:10px;
+ }
+ .tip_rightside > .balloon_success {
+  position: relative;
+  margin: 10px;
+  width: 180px;
+  height: 60px;
+  background: #00aaf0;
+  border-radius: 10px;
+}
+.tip_rightside >.balloon_success:after {
+  border-top: 0px solid transparent;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid lightgray;
+  content:"";
+  position:absolute;
+  top: -8px;
+  left:120px;
+ }
+ .tip_uprightside > .balloon_success {
+  position: relative;
+  margin: 10px;
+  width: 180px;
+  height: 60px;
+  background: #00aaf0;
+  border-radius: 10px;
+}
+.tip_uprightside >.balloon_success:after {
+  border-top: 8px solid lightgray;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 0px solid transparent;
+  content:"";
+  position:absolute;
+  top: 58px;
+  left:120px;
+ }
  .balloon_cancel {
   position: relative;
-  margin: 50px;
-  width: 400px;
-  height: 100px;
+  margin: 10px;
+  width: 180px;
+  height: 60px;
   background: #ff6600;
   border-radius: 10px;
 }
+.balloon_cancel::selection {
+  -ms-user-select: none; 
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
 .balloon_cancel:after {
   border-top: 0px solid transparent;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #010801;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid lightgray;
   content:"";
   position:absolute;
   top:-10px;
   left:10px;
+ }
+ .tip_upside > .balloon_cancel {
+  position: relative;
+  margin: 10px;
+  width: 180px;
+  height: 60px;
+  background: #ff6600;
+  border-radius: 10px;
+}
+.tip_upside >.balloon_cancel:after {
+  border-top: 8px solid lightgray;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 0px solid transparent;
+  content:"";
+  position:absolute;
+  top: 58px;
+  left:10px;
+ }
+ .tip_rightside > .balloon_cancel {
+  position: relative;
+  margin: 10px;
+  width: 180px;
+  height: 60px;
+  background: #ff6600;
+  border-radius: 10px;
+}
+.tip_rightside >.balloon_cancel:after {
+  border-top: 0px solid transparent;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid lightgray;
+  content:"";
+  position:absolute;
+  top: -8px;
+  left:120px;
+ }
+ .tip_uprightside > .balloon_cancel {
+  position: relative;
+  margin: 10px;
+  width: 180px;
+  height: 60px;
+  background: #ff6600;
+  border-radius: 10px;
+}
+.tip_uprightside >.balloon_cancel:after {
+  border-top: 8px solid lightgray;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 0px solid transparent;
+  content:"";
+  position:absolute;
+  top: 58px;
+  left:120px;
+ }
+
+ /* WeatherAPI */
+ .WeatherAPI{
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-end;
+   align-items: center;
+   flex-grow: 10;
+   margin-right: 50px;
+ }
+ .WeatherAPI_items {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+ }
+ .WeatherAPI_item {
+   display: flex;
+   justify-items: flex-end;
+   margin-left: 20px;
  }
