@@ -47,8 +47,7 @@
 }
 
 .PatientList_tr:hover {
-  background-color: #00AAF0;
-  color:white;
+  background-color: #cff1ff;
   cursor: pointer;
 }
 

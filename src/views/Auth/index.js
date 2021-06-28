@@ -20,6 +20,8 @@ function Auth(props) {
     userTel1: "010",
     userTel2: "1234",
     userTel3: "5678",
+    userEmail1: "abcde1234",
+    userEmail2: "@naver.com",
     userZipcode: "01234",
     userAddress: "서울 송파구",
     userDetailAddress1: "12층 강의실",
@@ -165,6 +167,17 @@ function Auth(props) {
                       <input type="text" className="col-sm-3" name="userTel2" value={user.userTel2} onChange={handleChange}></input>
                       <div className="mr-2 ml-2 d-flex align-items-center">-</div>
                       <input type="text" className="col-sm-3" name="userTel3" value={user.userTel3} onChange={handleChange}></input>
+                    </div>
+                  </div>
+                  <div className="Auth_content">
+                    <label className="col-sm-4 m-0">이메일: </label>
+                    <div className="">
+                      <input type="text" className="col-sm-5 mr-2" name="userEmail1" value={user.userEmail1} placeholder="ABC1234" onChange={handleChange}></input>
+                      <select className="col-sm-5" name="userEmail2" value={user.userEmail2} onChange={handleChange} style={{height:"30px"}}>
+                        <option value="@naver.com">@naver.com</option>
+                        <option value="@gmail.com">@gmail.com</option>
+                        <option value="@daum.net">@daum.net</option>
+                      </select>
                     </div>
                   </div>
                   <div className="Auth_content">

@@ -5,33 +5,34 @@ function UserCreateForm(props) {
   // 직원 상태
   const [user, setUser] = useState({
     userName: "",
-    userAuthority : "",
+    userAuthority: "",
     userSsn1: "",
     userSsn2: "",
     userSex: "",
     userTel1: "010",
     userTel2: "",
     userTel3: "",
+    userEmail1: "",
+    userEmail2: "@naver.com",
     userZipcode: "",
     userAddress: "",
     userDetailAddress1: "",
-    userDetailAddress2: ""
+    userDetailAddress2: "",
   });
 
   const handleChange = (event) => {
     setUser({
       ...user,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
-
 
   // 직원 정보 수정
   const handleCreate = (event) => {
     event.preventDefault();
-    const createUser = {...user};
+    const createUser = { ...user };
     console.log("직원 등록: ", createUser);
-  }
+  };
 
   // 모달 상태(open일 떄 true로 바뀌어 열림)
   const [modalOpen, setModalOpen] = useState(false);
@@ -48,21 +49,21 @@ function UserCreateForm(props) {
     console.log("send1 실행", data);
     setUser({
       ...user,
-      userZipcode: data.zonecode, 
-      userAddress: data.address
-    })
+      userZipcode: data.zonecode,
+      userAddress: data.address,
+    });
     if (data.buildingName === "") {
-      setUser(prevUser => {
+      setUser((prevUser) => {
         return {
           ...prevUser,
-          userDetailAddress2: data.bname          
+          userDetailAddress2: data.bname,
         };
       });
     } else {
-      setUser(prevUser => {
+      setUser((prevUser) => {
         return {
           ...prevUser,
-          userDetailAddress2: data.bname + ", " + data.buildingName   
+          userDetailAddress2: data.bname + ", " + data.buildingName,
         };
       });
     }
@@ -72,7 +73,7 @@ function UserCreateForm(props) {
     <div className="mt-2">
       <div className="User_title">직원 등록</div>
       <div className="border p-2">
-      <form>
+        <form>
           <div className="User_item">
             <label className="col-sm-3 m-0">직원명: </label>
             <div className="col-sm">
@@ -82,9 +83,9 @@ function UserCreateForm(props) {
           <div className="User_item">
             <label className="col-sm-3 m-0">주민등록번호: </label>
             <div className="row ml-3 mr-0">
-              <input type="text" className="col-sm" name="userSsn1" placeholder="999999" onChange={handleChange}></input>
+              <input type="text" className="col-sm-4" name="userSsn1" placeholder="999999" onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm" name="userSsn2" placeholder="1234567" onChange={handleChange}></input>
+              <input type="text" className="col-sm-4" name="userSsn2" placeholder="1234567" onChange={handleChange}></input>
             </div>
           </div>
           <div className="User_item">
@@ -146,14 +147,27 @@ function UserCreateForm(props) {
             </div>
           </div>
           <div className="User_item">
+            <label className="col-sm-3 m-0">이메일: </label>
+            <div className="row ml-3 mr-0">
+              <input type="text" className="col-sm-5 mr-2" name="userEmail1" placeholder="ABC1234" onChange={handleChange}></input>
+              <select className="col-sm-5" name="userEmail2" onChange={handleChange}>
+                <option value="@gmail.com">@naver.com</option>
+                <option value="@gmail.com">@gmail.com</option>
+                <option value="@daum.net">@daum.net</option>
+              </select>
+            </div>
+          </div>
+          <div className="User_item">
             <label className="col-sm-3 m-0">주소: </label>
             <div className="col-sm">
-              <div className="row mb-2 pr-0"> 
+              <div className="row mb-2 pr-0">
                 <input type="text" className="col-sm-5 ml-3" name="userZipcode" value={user.userZipcode} placeholder="우편번호" onChange={handleChange} readOnly></input>
                 <React.Fragment>
-                  <button className="button_team2_empty" onClick={openModal}>우편번호 찾기</button>
+                  <button className="button_team2_empty" onClick={openModal}>
+                    우편번호 찾기
+                  </button>
                   <Modal open={modalOpen} close={closeModal} send={sendModal}></Modal>
-                </React.Fragment>   
+                </React.Fragment>
               </div>
               <input type="text" className="col-sm mb-2" name="userAddress" placeholder="주소" value={user.userAddress} onChange={handleChange} readOnly></input>
               <div className="row no-gutters mb-2">
@@ -162,7 +176,11 @@ function UserCreateForm(props) {
               </div>
             </div>
           </div>
-          <div className="d-flex justify-content-end"><button className="button_team2_fill" onClick={handleCreate}>등록</button></div>
+          <div className="d-flex justify-content-end">
+            <button className="button_team2_fill" onClick={handleCreate}>
+              등록
+            </button>
+          </div>
         </form>
       </div>
     </div>
