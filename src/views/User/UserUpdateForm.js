@@ -25,6 +25,8 @@ function UserUpdateForm(props) {
       userTel1: props.user.userTel1,
       userTel2: props.user.userTel2,
       userTel3: props.user.userTel3,
+      userEmail1: props.user.userEmail1,
+      userEmail2: props.user.userEmail2,
       userZipcode: props.user.userZipcode,
       userAddress: props.user.userAddress,
       userDetailAddress1: props.user.userDetailAddress1,
@@ -154,6 +156,17 @@ function UserUpdateForm(props) {
               <input type="text" className="col-sm" name="userTel2" value={user.userTel2} onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
               <input type="text" className="col-sm" name="userTel3" value={user.userTel3} onChange={handleChange}></input>
+            </div>
+          </div>
+          <div className="User_item">
+            <label className="col-sm-3 m-0">이메일: </label>
+            <div className="row ml-3 mr-0">
+              <input type="text" className="col-sm-5 mr-2" name="userEmail1" value={user.userEmail1} placeholder="ABC1234" onChange={handleChange}></input>
+              <select className="col-sm-5" name="userEmail2" value={user.userEmail2} onChange={handleChange}>
+                <option value="@naver.com">@naver.com</option>
+                <option value="@gmail.com">@gmail.com</option>
+                <option value="@daum.net">@daum.net</option>
+              </select>
             </div>
           </div>
           <div className="User_item">
