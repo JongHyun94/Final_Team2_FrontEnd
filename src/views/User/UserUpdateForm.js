@@ -5,6 +5,9 @@ function UserUpdateForm(props) {
   // 직원 상태
   const [user, setUser] = useState({});
 
+  // 이메일 비교 상태
+  const [email, setEmail] = useState(true);
+
   const handleChange = (event) => {
     setUser({
       ...user,
@@ -32,8 +35,16 @@ function UserUpdateForm(props) {
       userDetailAddress1: props.user.userDetailAddress1,
       userDetailAddress2: props.user.userDetailAddress2,
       userRegDate: props.user.userRegDate
-    })
+    });
   }, [props]);
+
+  useEffect(() => {
+    if (user.userEmail2 === "") {
+      setEmail(false);
+    } else if (user.userEmail2 === "naver.com" || user.userEmail2 === "gmail.com" || user.userEmail2 === "daum.net" || user.userEmail2 === "nate.com") {
+      setEmail(true);
+    }
+  }, [user.userEmail2])
 
   // 직원 정보 수정
   const handleUpdate = (event) => {
@@ -93,21 +104,6 @@ function UserUpdateForm(props) {
             </div>
           </div>
           <div className="User_item">
-            <label className="col-sm-3 pl-3 p-0 m-0">직책: </label>
-            <div className="col-sm d-flex align-items-center">
-              <input type="radio" name="userAuthority" value="의사" checked={user.userAuthority === "의사"? true : false} onChange={handleChange}></input>
-              <label className="ml-3 mb-0">의사</label>
-            </div>
-            <div className="col-sm d-flex align-items-center">
-              <input type="radio" name="userAuthority" value="간호사" checked={user.userAuthority === "간호사"? true : false} onChange={handleChange}></input>
-              <label className="ml-3 mb-0">간호사</label>
-            </div>
-            <div className="col-sm-4 d-flex align-items-center">
-              <input type="radio" name="userAuthority" value="임상병리사" checked={user.userAuthority === "임상병리사"? true : false} onChange={handleChange}></input>
-              <label className="ml-3 mb-0">임상병리사</label>
-            </div>
-          </div>
-          <div className="User_item">
             <label className="col-sm-3 m-0">주민등록번호: </label>
             <div className="row ml-3 mr-0">
               <input type="text" className="col-sm" name="userSsn1" value={user.userSsn1} placeholder="999999" onChange={handleChange}></input>
@@ -124,6 +120,21 @@ function UserUpdateForm(props) {
             <div className="col-sm d-flex align-items-center">
               <input type="radio" name="patientSex" value="F" checked={user.userSex === "F"? true : false} onChange={handleChange}></input>
               <label className="ml-3 mb-0">여</label>
+            </div>
+          </div>
+          <div className="User_item">
+            <label className="col-sm-3 pl-3 p-0 m-0">직책: </label>
+            <div className="col-sm d-flex align-items-center">
+              <input type="radio" name="userAuthority" value="의사" checked={user.userAuthority === "의사"? true : false} onChange={handleChange}></input>
+              <label className="ml-3 mb-0">의사</label>
+            </div>
+            <div className="col-sm d-flex align-items-center">
+              <input type="radio" name="userAuthority" value="간호사" checked={user.userAuthority === "간호사"? true : false} onChange={handleChange}></input>
+              <label className="ml-3 mb-0">간호사</label>
+            </div>
+            <div className="col-sm-4 d-flex align-items-center">
+              <input type="radio" name="userAuthority" value="임상병리사" checked={user.userAuthority === "임상병리사"? true : false} onChange={handleChange}></input>
+              <label className="ml-3 mb-0">임상병리사</label>
             </div>
           </div>
           <div className="User_item">
@@ -161,11 +172,15 @@ function UserUpdateForm(props) {
           <div className="User_item">
             <label className="col-sm-3 m-0">이메일: </label>
             <div className="row ml-3 mr-0">
-              <input type="text" className="col-sm-5 mr-2" name="userEmail1" value={user.userEmail1} placeholder="ABC1234" onChange={handleChange}></input>
-              <select className="col-sm-5" name="userEmail2" value={user.userEmail2} onChange={handleChange}>
-                <option value="@naver.com">@naver.com</option>
-                <option value="@gmail.com">@gmail.com</option>
-                <option value="@daum.net">@daum.net</option>
+              <input type="text" className="col-sm-3 mr-1" name="userEmail1" value={user.userEmail1} placeholder="ABC1234" onChange={handleChange}></input>
+              <div className="mr-1 d-flex align-items-center">@</div>
+              <input type="text" className="col-sm-4 mr-1" name="userEmail2" value={user.userEmail2} placeholder="naver.com" onChange={handleChange} disabled={email}></input>
+              <select className="col-sm-4" name="userEmail2" onChange={handleChange} value={user.userEmail2}>
+                <option value="naver.com">naver.com</option>
+                <option value="gmail.com">gmail.com</option>
+                <option value="daum.net">daum.net</option>
+                <option value="nate.com">nate.com</option>
+                <option value="">직접입력</option>
               </select>
             </div>
           </div>
