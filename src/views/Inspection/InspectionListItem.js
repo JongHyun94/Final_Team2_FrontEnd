@@ -133,6 +133,9 @@ function InspectionListItem(props) {
             props.inspection.inspectionState === "대기" ?
               <td></td>
               :
+              props.inspection.inspectionState === "완료" ?
+              <td></td>
+                :
             <td className="align-middle">
               <div>
                 <input type="text" name="iR1" onChange={handleResultChange} style={{width:"70px"}}/>
@@ -154,6 +157,9 @@ function InspectionListItem(props) {
             props.inspection.inspectionState === "대기" ?
               <td></td>
               :
+              props.inspection.inspectionState === "완료" ?
+              <td></td>
+                :
             <td className="InspectionListItem_1 align-middle">
               <div>
               <React.Fragment>

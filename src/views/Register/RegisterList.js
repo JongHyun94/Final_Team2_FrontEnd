@@ -227,6 +227,9 @@ function RegisterList(props) {
             </div>
           </div>
           <div className="RegisterList_content_1_2">
+          <div className="RegisterList_content_1_2_total">
+              전체: {registerState[0] + registerState[1] + registerState[2]}명
+            </div>
             <div className="RegisterList_content_1_2_ready">
               대기: {registerState[0]}명
             </div>

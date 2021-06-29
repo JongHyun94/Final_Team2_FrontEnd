@@ -50,9 +50,16 @@
 }
 .InspectionPatientList_1_2_2{
   width: 10%;
+  margin-right: 20px;
 }
-.InspectionPatientList_1_2_2{
-  width:50%;
+.InspectionPatientList_1_2_3{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-grow: 8;
+}
+.InspectionPatientList_1_3_0{
+  
 }
 .InspectionPatientList_1_3_1{
   margin-right: 6px;
@@ -78,7 +85,7 @@
 }
 .InspectionPatientList_list{
   overflow-y: scroll;
-  height: 730px;
+  height: 720px;
 }
 .InspectionPatientList_list::-webkit-scrollbar {
   width: 10px;
@@ -133,7 +140,7 @@
 }
 .InspectionList_list{
   overflow-y: scroll;
-  height: 730px;
+  height: 720px;
 }
 .InspectionList_list::-webkit-scrollbar {
   width: 10px;
