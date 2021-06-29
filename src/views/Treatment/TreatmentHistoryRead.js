@@ -23,7 +23,7 @@ function getInspectionList() {
     { inspectionId: "3", inspectionCategory: "혈액검사", inspectionDate: "2021-06-01", inspector: "김검사", inspectionName: "백혈구 백분율", inspectionRef: "12.0~16.0g/dL", inspectionResult: "14" },
     { inspectionId: "4", inspectionCategory: "혈액검사", inspectionDate: "2021-06-01", inspector: "김검사", inspectionName: "백혈구 백분율", inspectionRef: "", inspectionResult: "" },
     { inspectionId: "5", inspectionCategory: "유리검사", inspectionDate: "2021-06-01", inspector: "나꼼꼼", inspectionName: "백혈구 백분율", inspectionRef: "", inspectionResult: "" },
-    { inspectionId: "6", inspectionCategory: "영상촬영", inspectionDate: "2021-06-01", inspector: "박사능", inspectionName: "백혈구 백분율", inspectionRef: "", inspectionResult: "" },
+    { inspectionId: "6", inspectionCategory: "영상촬영", inspectionDate: "2021-06-01", inspector: "박사능", inspectionName: "흉부", inspectionRef: "", inspectionResult: "" },
   ];
   return inspectionlists;
 }
@@ -41,18 +41,14 @@ function getDrugList() {
 }
 
 function TreatmentHistoryRead(props) {
+  //historylist에서 클릭한 진료 번호 가져오기
+  const { open, close, selectedTreatmentId } = props;
 
-  const { open, close } = props;
   const [soap, setSoap] = useState(getSOAP);
   const [inspectionlists, setInspectionlists] = useState(getInspectionList);
   const [img, setImg] = useState("");
   const [druglists, setDrugLists] = useState(getDrugList);
 
-  const readResultImg = (event) => {
-    console.log("보기가 클릭되었습니다.");
-  };
-
-  // 모달 상태(open일 떄 true로 바뀌어 열림)
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -62,149 +58,173 @@ function TreatmentHistoryRead(props) {
     setModalOpen(false);
   };
 
+  var tempTreatmentId = "";
+  var readTreatmentId;
+  if (selectedTreatmentId) {
+    readTreatmentId = selectedTreatmentId;
+  } else {
+    readTreatmentId = tempTreatmentId;
+  }
+
   return (
     <div className="TreatmentHistorymodal">
       <div className={open ? "openModal modal" : "modal"}>
         {open ? (
           <section>
-              <div className="TreatmentHistoryRead">
-                      <div className="TreatmentHistoryRead_title">진료상세</div>
-                      <div className="TreatmentHistoryRead_border border">
-                                                <div className="TreatmentHistoryRead_1">
-                                                        <table className="table table-bordered TreatmentHistoryRead_1_table">
-                                                          <tbody>
-                                                            {soap.map((soap) => {
-                                                              return (
-                                                                <tr key={soap.treatmentId}>
-                                                                  <th className="text-center border" bgcolor="lightgrey">Subjective</th>
-                                                                  {/* <td width="80%">목 아픔</td> */}
-                                                                  <td className="text-left" width="80%">{soap.Subjective}</td>
-                                                                </tr>
-                                                              );
-                                                            })}
-                                                            {soap.map((soap) => {
-                                                              return (
-                                                                <tr key={soap.treatmentId}>
-                                                                  <th className="text-center border" bgcolor="lightgrey">Objective</th>
-                                                                  {/* <td width="80%">인후염</td> */}
-                                                                  <td className="text-left" width="80%">{soap.Objective}</td>
-                                                                </tr>
-                                                              );
-                                                            })}
-                                                            {soap.map((soap) => {
-                                                              return (
-                                                                <tr key={soap.treatmentId}>
-                                                                  <th className="text-center border" bgcolor="lightgrey">Assessment</th>
-                                                                  {/* <td width="80%">온열찜질기 실행</td> */}
-                                                                  <td className="text-left" width="80%">{soap.Assessment}</td>
-                                                                </tr>
-                                                              );
-                                                            })}
-                                                            {soap.map((soap) => {
-                                                              return (
-                                                                <tr key={soap.treatmentId}>
-                                                                  <th className="text-center border" bgcolor="lightgrey"> Plan</th>
-                                                                  {/* <td width="80%">다음 내원시 Lab test</td> */}
-                                                                  <td className="text-left" width="80%">{soap.Plan}</td>
-                                                                </tr>
-                                                              );
-                                                            })}
-                                                          </tbody>
-                                                        </table>
-                                                </div>
-                                      <div className="TreatmentHistoryRead_2">
-                                                <div className="TreatmentHistoryRead_2_title">검사목록</div>
+            <div className="TreatmentHistoryRead">
+              <div className="TreatmentHistoryRead_title"> 진료번호 : {readTreatmentId} 진료상세 </div>
+              <div className="TreatmentHistoryRead_border border">
+                <div className="TreatmentHistoryRead_1">
+                  <table className="table table-bordered TreatmentHistoryRead_1_table">
+                    <tbody>
+                      {soap.map((soap) => {
+                        return (
+                          <tr key={soap.treatmentId}>
+                            <th className="text-center border" bgcolor="lightgrey">
+                              Subjective
+                            </th>
+                            {/* <td width="80%">목 아픔</td> */}
+                            <td className="text-left" width="80%">
+                              {soap.Subjective}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                      {soap.map((soap) => {
+                        return (
+                          <tr key={soap.treatmentId}>
+                            <th className="text-center border" bgcolor="lightgrey">
+                              Objective
+                            </th>
+                            {/* <td width="80%">인후염</td> */}
+                            <td className="text-left" width="80%">
+                              {soap.Objective}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                      {soap.map((soap) => {
+                        return (
+                          <tr key={soap.treatmentId}>
+                            <th className="text-center border" bgcolor="lightgrey">
+                              Assessment
+                            </th>
+                            {/* <td width="80%">온열찜질기 실행</td> */}
+                            <td className="text-left" width="80%">
+                              {soap.Assessment}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                      {soap.map((soap) => {
+                        return (
+                          <tr key={soap.treatmentId}>
+                            <th className="text-center border" bgcolor="lightgrey">
+                              {" "}
+                              Plan
+                            </th>
+                            {/* <td width="80%">다음 내원시 Lab test</td> */}
+                            <td className="text-left" width="80%">
+                              {soap.Plan}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="TreatmentHistoryRead_2">
+                  <div className="TreatmentHistoryRead_2_title">검사목록</div>
 
-
-                                            <div className="TreatmentHistoryRead_2_Totaltable border">
-
-                                                <table className="table TreatmentHistoryRead_2_table">
-                                                  <thead className="TreatmentHistoryRead_2_table_thead">
-                                                    <tr className="TreatmentHistoryRead_2_table_tbody">
-                                                      <th>진단검사명</th>
-                                                      <th>검사 날짜</th>
-                                                      <th>검사자</th>
-                                                      <th>검사명</th>
-                                                      <th>참고치</th>
-                                                      <th>검사 결과</th>
-                                                    </tr>
-                                                  </thead>
-                                                  <tbody>
-                                                    {inspectionlists.map((inspectionlist) => {
-                                                      return (
-                                                        <tr key={inspectionlist.inspectionId}>
-                                                          <td>{inspectionlist.inspectionCategory}</td>
-                                                          <td>{inspectionlist.inspectionDate}</td>
-                                                          <td>{inspectionlist.inspector}</td>
-                                                          <td>{inspectionlist.inspectionName}</td>
-                                                          <td>{inspectionlist.inspectionRef}</td>
-                                                          {inspectionlist.inspectionCategory === "영상촬영" ? (
-                                                            <td>
-                                                              <React.Fragment>
-                                                                {" "}
-                                                                <button className="button_team2_empty" onClick={openModal}>
-                                                                  보기
-                                                                </button>
-                                                                <TreatmentImgRead
-                                                                  open={modalOpen}
-                                                                  close={closeModal}
-                                                                  inspectionImg="xray01.jpg"
-                                                                  inspectionlistName={inspectionlists[5].inspectionName}
-                                                                  inspectionlistCategory={inspectionlists[5].inspectionCategory}
-                                                                  inspectionTreatmentId="50546"
-                                                                  inspectionDate={inspectionlists[5].inspectionDate}
-                                                                >
-                                                                  모달 내용
-                                                                </TreatmentImgRead>
-                                                              </React.Fragment>
-                                                            </td>
-                                                          ) : (
-                                                            <td>{inspectionlist.inspectionResult}</td>
-                                                          )}
-                                                        </tr>
-                                                      );
-                                                    })}
-                                                  </tbody>
-                                                </table>
-                                                </div>
-                                          </div>
-                                      <div className="TreatmentHistoryRead_3">
-                                      <div className="TreatmentHistoryRead_3_title">처방목록</div>
-                                      <div className="TreatmentHistoryRead_3_Totaltable border">
-                                          <table className="table TreatmentHistoryRead_3_table">
-                                              <thead className="TreatmentHistoryRead_3_table_thead">
-                                                <tr>
-                                                  <th>처방 날짜</th>
-                                                  <th>담당의</th>
-                                                  <th>약품/주사코드</th>
-                                                  <th>약품/주사명</th>
-                                                  <th>구분</th>
-                                                </tr>
-                                              </thead>
-                                              <tbody>
-                                                {druglists.map((druglist) => {
-                                                  return (
-                                                    <tr key={druglist.drugInjectionId}>
-                                                      <th>{druglist.drugInjectionDate}</th>
-                                                      <th>{druglist.treatmentDname}</th>
-                                                      <th>{druglist.drugInjectionId}</th>
-                                                      <th>{druglist.drugInjectionName}</th>
-                                                      <th>{druglist.drugInjectionState}</th>
-                                                    </tr>
-                                                  );
-                                                })}
-                                              </tbody>
-                                            </table>
-
-                                          </div>
-                                        </div>
-
-                        </div>
-                        <div className="TreatmentHistoryReadClose">
-                            <button className="button_team2_fill" onClick={close}> 확인</button>
-                        </div>
+                  <div className="TreatmentHistoryRead_2_Totaltable border">
+                    <table className="table TreatmentHistoryRead_2_table">
+                      <thead className="TreatmentHistoryRead_2_table_thead">
+                        <tr className="TreatmentHistoryRead_2_table_tbody">
+                          <th>진단검사명</th>
+                          <th>검사 날짜</th>
+                          <th>검사자</th>
+                          <th>검사명</th>
+                          <th>참고치</th>
+                          <th>검사 결과</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {inspectionlists.map((inspectionlist) => {
+                          return (
+                            <tr key={inspectionlist.inspectionId}>
+                              <td>{inspectionlist.inspectionCategory}</td>
+                              <td>{inspectionlist.inspectionDate}</td>
+                              <td>{inspectionlist.inspector}</td>
+                              <td>{inspectionlist.inspectionName}</td>
+                              <td>{inspectionlist.inspectionRef}</td>
+                              {inspectionlist.inspectionCategory === "영상촬영" ? (
+                                <td>
+                                  <React.Fragment>
+                                    {" "}
+                                    <button className="button_team2_empty" onClick={openModal}>
+                                      보기
+                                    </button>
+                                    <TreatmentImgRead
+                                      open={modalOpen}
+                                      close={closeModal}
+                                      inspectionImg="xray01.jpg"
+                                      inspectionlistName={inspectionlists[5].inspectionName}
+                                      inspectionlistCategory={inspectionlists[5].inspectionCategory}
+                                      inspectionTreatmentId="50546"
+                                      inspectionDate={inspectionlists[5].inspectionDate}
+                                    >
+                                      모달 내용
+                                    </TreatmentImgRead>
+                                  </React.Fragment>
+                                </td>
+                              ) : (
+                                <td>{inspectionlist.inspectionResult}</td>
+                              )}
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div className="TreatmentHistoryRead_3">
+                  <div className="TreatmentHistoryRead_3_title">처방목록</div>
+                  <div className="TreatmentHistoryRead_3_Totaltable border">
+                    <table className="table TreatmentHistoryRead_3_table">
+                      <thead className="TreatmentHistoryRead_3_table_thead">
+                        <tr>
+                          <th>처방 날짜</th>
+                          <th>담당의</th>
+                          <th>약품/주사코드</th>
+                          <th>약품/주사명</th>
+                          <th>구분</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {druglists.map((druglist) => {
+                          return (
+                            <tr key={druglist.drugInjectionId}>
+                              <th>{druglist.drugInjectionDate}</th>
+                              <th>{druglist.treatmentDname}</th>
+                              <th>{druglist.drugInjectionId}</th>
+                              <th>{druglist.drugInjectionName}</th>
+                              <th>{druglist.drugInjectionState}</th>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-            </section>
+              <div className="TreatmentHistoryReadClose">
+                <button className="button_team2_fill" onClick={close}>
+                  {" "}
+                  확인
+                </button>
+              </div>
+            </div>
+          </section>
         ) : null}
       </div>
     </div>

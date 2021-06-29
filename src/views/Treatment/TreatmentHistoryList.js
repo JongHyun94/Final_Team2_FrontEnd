@@ -1,93 +1,120 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TreatmentHistoryRead from "./TreatmentHistoryRead";
 
+//진료 기록 생성 하기
 function getTreatmentHistory() {
-    const treatmentHistoryList = [];
-    for(var i = 10; i >=1; i--){
-        treatmentHistoryList.push({index: i, treatmentId:i,treatmentDate:"2021-06-01", treatmentDname:"나의사"+i, treatmentMemo:"메모"+i});
-    }
-    return treatmentHistoryList;
+  const createTreatmentHistoryList = [];
+  for (var i = 10; i >= 1; i--) {
+    createTreatmentHistoryList.push({ patientId: 1, treatmentId: "tt1" + i, treatmentDate: "2021-06-01", treatmentDname: "나의사" + i, treatmentMemo: "메모" + i });
+  }
+  for (var i = 10; i >= 1; i--) {
+    createTreatmentHistoryList.push({ patientId: 2, treatmentId: "tt2" + i, treatmentDate: "2021-06-01", treatmentDname: "나의사" + i, treatmentMemo: "메모" + i });
+  }
+  for (var i = 10; i >= 1; i--) {
+    createTreatmentHistoryList.push({ patientId: 3, treatmentId: "tt3" + i, treatmentDate: "2021-06-01", treatmentDname: "나의사" + i, treatmentMemo: "메모" + i });
+  }
+  return createTreatmentHistoryList;
 }
 
 function TreatmentHistoryList(props) {
-    const [treatmentHistoryList, setTreatmentHistoryList] = useState(getTreatmentHistory);
-    // 모달 상태(open일 떄 true로 바뀌어 열림)
-    const [modalOpen, setModalOpen] = useState(false);
-    // const { registerPatientName } = props;
-    var sPatientlist = { 
-         registerId: "" ,
-        patientId: "" , 
-        registerPatientName: "aa" , 
-        patientSsn: "", 
-        patientSex: "", 
-        registerMemo: "", 
-        registerState: "" 
-    };
-    var selectedPatient;
-    if(props.patientlist){
-        selectedPatient = props.patientlist;
-    } else {
-        selectedPatient = sPatientlist;
-    }
- 
-   
-    const [patient , setPatient] = useState();
-    const [selectedPatientId , setSelectedPatientId] = useState("");
-    const openModal = () => {
-    setModalOpen(true);
-    };
-    const closeModal = () => {
-    setModalOpen(false);
-    }
+  //진료 기록 생성 상태로
+  const [treatmentHistoryList, setTreatmentHistoryList] = useState(getTreatmentHistory);
+  const [modalOpen, setModalOpen] = useState(false);
 
-    const checkedtreatment = (treatmentId) => {
-        console.log(treatmentId);
-    
-        setSelectedPatientId(treatmentId);
-      
-      }
-    return(
-       <div>
-           <div className="TreatmentHistoryList_title">
-              {selectedPatient.registerPatientName} 님의 진료기록 
-                <React.Fragment>
-                    {/* <button type="submit" className="button_team2_fill" onClick={openModal}>상세기록</button> */}
-                <TreatmentHistoryRead open={modalOpen} close={closeModal}></TreatmentHistoryRead>
-                </React.Fragment>
-           </div>
-           <div className="TreatmentHistoryList_border border">
-                <div className="TreatmentHistoryList_Totaltable">
-                    <table className="table TreatmentHistoryList_table">
-                        <thead className="TreatmentHistoryList_table_thead">
-                            <tr>
-                                <th></th>
-                                <th>진료 번호</th>
-                                <th>진료 날짜</th>
-                                <th>담당의</th>
-                                <th>의사소통 메모</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {treatmentHistoryList.map(treatmentHistory=>{
-                                return(
-                                    <tr className="TreatmentHistoryList_table_tr" key={treatmentHistory.index} onClick={(event) =>  checkedtreatment(treatmentHistory.treatmentId) , openModal}>   
-                                        <td> <React.Fragment>
-                                            <input type="checkbox"  checked={selectedPatientId === treatmentHistory.treatmentId ? true : false} readOnly />
-                                            {/* <TreatmentHistoryRead open={modalOpen} close={closeModal}></TreatmentHistoryRead> */}
-                                            </React.Fragment>
-                                        </td>
-                                        <th>{treatmentHistory.treatmentId}</th>
-                                        <th>{treatmentHistory.treatmentDate}</th>
-                                        <th>{treatmentHistory.treatmentDname}</th>
-                                        <th>{treatmentHistory.treatmentMemo}</th>
-                                    </tr>
-                                );
-                            })}       
-                        </tbody>
-                    </table>
-                </div>
+  //임시 환자 리스트
+  var tempPatientlist = {
+    registerId: "",
+    patientId: "",
+    registerPatientName: "~~",
+    patientSsn: "",
+    patientSex: "",
+    registerMemo: "",
+    registerState: "",
+  };
+
+  //대기환자리스트에서 체크된 환자 리스트 가져오기 ->props.checkedpatient == checkedPatientlist
+  var checkedPatientlist;
+  if (props.checkedpatient) {
+    checkedPatientlist = props.checkedpatient;
+  } else {
+    checkedPatientlist = tempPatientlist;
+  }
+
+  //가져온 환자 리스트와, 환자 코드가 같은 진료 기록정보리스트 가져오기 (기존 진료 기록 보기) => historyPatient
+  const historyPatient = treatmentHistoryList.filter((treatmentHistoryList) => {
+    if (treatmentHistoryList.patientId === checkedPatientlist.patientId) {
+      return treatmentHistoryList;
+    }
+  });
+
+  //선택된 진료 번호
+  const [selectedTreatmentId, setSelectedTreatmentId] = useState("");
+
+  //선택한 진료 번호를 setSelectedTreatmentId 에 저장
+  // 해당 진료 번호 선택 => 해당 진료 상세 열기
+  const checkedtreatment = (treatmentId) => {
+    setSelectedTreatmentId(treatmentId);
+    setModalOpen(true);
+  };
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  // useEffect(()=>{
+  //     props.setPatientId("");
+  //     setSelectedTreatmentId("");
+  // },checkedPatientlist);
+  // console.log("진료번호aaaa",selectedTreatmentId);
+  // console.log("셀렉트 페이션트",historyPatient);
+
+  //   console.log(props.patientlist.patientId);
+
+  return (
+    <div>
+      <div className="TreatmentHistoryList_title">
+        {checkedPatientlist.registerPatientName} 님의 진료기록
+        <React.Fragment>
+          {/* <button type="submit" className="button_team2_fill" onClick={openModal}>상세기록</button> */}
+          {/* TreatmentHistoryRead에 선택한 진료 번호 보내기 selectedTreatmentId */}
+          <TreatmentHistoryRead open={modalOpen} close={closeModal} selectedTreatmentId={selectedTreatmentId}></TreatmentHistoryRead>
+        </React.Fragment>
+      </div>
+      <div className="TreatmentHistoryList_border border">
+        <div className="TreatmentHistoryList_Totaltable">
+          <table className="table TreatmentHistoryList_table">
+            <thead className="TreatmentHistoryList_table_thead">
+              <tr>
+                <th></th>
+                <th>진료 번호</th>
+                <th>진료 날짜</th>
+                <th>담당의</th>
+                <th>의사소통 메모</th>
+              </tr>
+            </thead>
+            <tbody>
+              {historyPatient.map((treatmentHistory) => {
+                return (
+                  <tr className="TreatmentHistoryList_table_tr" key={treatmentHistory.treatmentId} onClick={(event) => checkedtreatment(treatmentHistory.treatmentId)}>
+                    <td>
+                      <input type="checkbox" checked={selectedTreatmentId === treatmentHistory.treatmentId ? true : false} readOnly />
+                      {/* <TreatmentHistoryRead open={modalOpen} close={closeModal}></TreatmentHistoryRead> */}
+                    </td>
+                    <th>{treatmentHistory.treatmentId}</th>
+                    <th>{treatmentHistory.treatmentDate}</th>
+                    <th>{treatmentHistory.treatmentDname}</th>
+                    <th>{treatmentHistory.treatmentMemo}</th>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
-        </div> 
-    );
+      </div>
+    </div>
+  );
 }
 export default TreatmentHistoryList;

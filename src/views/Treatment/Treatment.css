@@ -50,17 +50,17 @@
 .row_1 {
   color: #009900;
   margin-left: 20%;
-  font-size: small;
+  /* font-size: small; */
 }
 
 .row_2 {
   color: #00AAF0;
   margin-left: 3%;
-  font-size: small;
+  /* font-size: small; */
 }
 
 .TreatmentPatientList_Totaltable{
-  overflow-y: auto;
+  overflow-y: scroll;
   height: 300px;
   width: 680px; 
 }
@@ -77,14 +77,14 @@
 }
 
 .TreatmentPatientList_table_tr:hover{
-  background-color: #00AAF0;
-  color:white;
+  background-color: #cff1ff;
+  /* color:white; */
   cursor: pointer;
 }
 
 /* TreatmentHistoryList */
 .TreatmentHistoryList {
-  margin-top: 15px;
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   width: 700px;
@@ -103,7 +103,7 @@
 }
 
 .TreatmentHistoryList_Totaltable{
-  overflow-y: auto;
+  overflow-y: scroll;
   height: 355px;
   text-align: center;
 }
@@ -168,7 +168,7 @@
 
 .TreatmentCreateForm_2_1_border{
  /* height: 100%; */
- height: 290px;
+ height: 320px;
  margin-bottom: 10px;
  
 }
@@ -210,6 +210,8 @@
   height: 250px;
 }
 .TreatmentCreateForm_checkbox_1{
+  height: 15px;
+  font-size: small;
   /* display: flex;
   flex-direction: row; */
   margin-bottom: 5px;
@@ -219,28 +221,51 @@
 
 
 .TreatmentCreateForm_2_2_border{
-  height: 425px;
-  padding: 30px 10px 0 10px;
+  height: 410px;
+  padding: 10px 10px 0 10px;
   font-size: small;
  }
 .TreatmentCreateForm_2_2_title{
-  margin-top: 15px;
+  /* margin-top: 15px; */
   font-weight: bold;
   font-size: small;
   text-align: center;
   background-color: lightgray;
 
 }
+.TreatmentCreateForm_2_2_content{
+  padding: 10px 10px 0 10px;
+
+}
+
 .TreatmentSearch_1{
-  margin-bottom: 7px;
+  margin-bottom: 5px;
+  /* margin-bottom: 7px; */
 }
 .TreatmentSearch_1_1{
   width: 230px;
 }
-.TreatmentSearch_2{
+
+
+.TreatmentSearch_2_Totaltable{
+  overflow-y: scroll;
+  height: 320px;
+  /* width: 230px; */
+  /* background-color: aquamarine; */
+
   text-align: center;
-  /* padding: 600px; */
 }
+
+.TreatmentSearch_2{
+  /* overflow-y: scroll;
+  height: 230px; */
+  /* text-align: center; */
+  /* padding: 10px 10px 0 10px; */
+  /* padding: 600px; */
+  
+}
+
+
 
 .TreatmentSearch_2_2{
   /* height: 0.75rem !important; */
@@ -252,8 +277,8 @@
 
 .TreatmentSearch_2_2_tr:hover{
  
-  background-color: #00AAF0;
-  color:white;
+  background-color: #cff1ff;
+  /* color:white; */
   cursor: pointer;
 }
 
@@ -266,8 +291,8 @@
 
 
 .TreatmentPatientList_table_tr:hover{
-  background-color: #00AAF0;
-  color:white;
+  background-color: #cff1ff;
+  /* color:white; */
   cursor: pointer;
 }
 
@@ -278,8 +303,8 @@
   top:-1px;
 }
  .TreatmentHistoryList_table_tr:hover{
-  background-color: #00AAF0;
-  color:white;
+  background-color: #cff1ff;
+  /* color:white; */
   cursor: pointer;
  }
 
@@ -320,7 +345,7 @@
 
 .TreatmentHistoryRead_2_Totaltable{
   font-size: small;
-  overflow-y: auto;
+  overflow-y: scroll;
   height: 205px;
 
 }
@@ -359,7 +384,7 @@
 .TreatmentHistoryRead_3_Totaltable{
   font-size: small;
   /* padding: 10px 10px 0 10px; */
-  overflow-y: auto;
+  overflow-y: scroll;
   height: 190px;
 
 }
@@ -386,6 +411,8 @@
 
 }
 .TreatmentImgRead_1_1{
+  /* display: flex;
+  flex-direction: row; */
   margin-right: 50px;
   margin-top: 170px;
   font-size: 18px;
