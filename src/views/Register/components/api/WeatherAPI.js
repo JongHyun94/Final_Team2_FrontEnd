@@ -34,8 +34,8 @@ class WeatherAPI extends Component {
           lat: position.coords.latitude,
           long: position.coords.longitude
         });
-        console.log("@@@");
-        console.log(this.state);
+        // console.log("@@@");
+        // console.log(this.state);
       }, (error) => {
         console.log(error)
       }, options);
@@ -52,8 +52,8 @@ class WeatherAPI extends Component {
           name: json.weather[0].main,
           icon: json.weather[0].icon,
         });
-        // console.log("%%%");
-        // console.log(this.state);
+        console.log("%%%");
+        console.log(this.state);
       });
 
   }

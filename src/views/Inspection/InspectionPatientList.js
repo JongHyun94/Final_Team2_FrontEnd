@@ -102,12 +102,13 @@ function InspectionPatientList(props) {
             {/* <input type="date" value={date} onChange={handleChange}/> */}
             <DatePicker locale="ko" dateFormat="yyyy.MM.dd" selected={treatmentDate} onChange={(date) => setTreatmentDate(date)}/>
           </div>
-          <div className="col-3 InspectionPatientList_1_2_2 p-0">
+          <div className="InspectionPatientList_1_2_2">
             <button className="button_team2_fill" onClick={searchDateBtn}>
               이동
             </button>
           </div>
-          <div className="InspectionPatientList_1_2_3 row p-0">
+          <div className="InspectionPatientList_1_2_3 p-0">
+            <div className="InspectionPatientList_1_3_0">전체:{istateWaiting+istateInspection+istateCompletion}명</div>
             <div className="InspectionPatientList_1_3_1">대기:{istateWaiting}명</div>
             <div className="InspectionPatientList_1_3_2">검사:{istateInspection}명</div>
             <div className="InspectionPatientList_1_3_3">완료:{istateCompletion}명</div>
