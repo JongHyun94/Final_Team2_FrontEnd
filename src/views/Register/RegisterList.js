@@ -24,7 +24,7 @@ function getRegisters() {
         patientBirth: "" + i,
         patientTel: "010-9947-7430",
         patientSex: "F",
-        doctorName: "김더존(D13801001001)_3",
+        doctorName: "의사" + i,
         registerMemo: "메모" + i,
         registerCommunication: "의사소통메모" + i,
         registerState: "대기"

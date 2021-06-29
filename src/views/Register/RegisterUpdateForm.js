@@ -17,7 +17,7 @@ function getDoctors() {
   const doctors = [];
   for (var i = 1; i <= 5; i++) {
     doctors.push({
-      Doctor_Name: "김더존(D13801001001)_" + i,
+      Doctor_Name: "의사" + i,
     });
   }
   return doctors;
