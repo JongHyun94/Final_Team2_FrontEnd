@@ -76,7 +76,7 @@ function getInspections() {
 function InspectionList(props) {
   console.log("검사 상세 내역");
   console.log(props.treatmentId);
-
+  
   const [inspections, setInspections] = useState(getInspections);
 
   //검사상태: 대기~>검사 을 위한 state
@@ -154,7 +154,7 @@ function InspectionList(props) {
       setModalOpen(true);
     } else {
       setBarcodeState(true);
-      props.handleBarcodeChekck();
+      props.handleBarcodeCheck();
     }
   };
   const closeCheckModal = () => {
@@ -162,7 +162,7 @@ function InspectionList(props) {
     //검사결과: 대기 ~> 검사
     setModalOpen(false);
     setBarcodeState(true);
-    props.handleBarcodeChekck();
+    props.handleBarcodeCheck();
   };
   const closeCancelModal = () => {
     setModalOpen(false);
@@ -203,10 +203,13 @@ function InspectionList(props) {
             </button>
             <InspectionBarcodePop
               id={id}
+              tid={props.treatmentId}
               open={modalOpen}
               closeCheck={closeCheckModal}
               closeCancel={closeCancelModal}
               barcodeImg="barcode01.png"
+              inspectionListSpecimen={inspections[0].inspectionListSpecimen}
+              inspectionListContainer={inspections[0].inspectionListContainer}
               inspectionListName={inspections[0].inspectionListName}
               patientName="김환자"
               inspectionInspectorName={inspections[0].inspectionInspectorName}
