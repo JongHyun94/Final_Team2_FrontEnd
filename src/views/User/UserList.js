@@ -4,13 +4,13 @@ import { AutoSizer, List, Table, Column } from "react-virtualized";
 function getUserList() {
   const users = [];
   for (var i =1; i <= 7; i++) {
-    users.push({userId: i, userName: "직원"+i, userAuthority: "의사", userSsn1: "751026", userSsn2: "1234567", userSex: "M", userTel1: "010", userTel2: "1234", userTel3: "5678", userEmail1: "abcde" + i, userEmail2: "@naver.com", userZipcode: "01234", userAddress: "서울 송파구", userDetailAddress1: "12층 1강의실", userDetailAddress2: "아이티벤처타워", userRegDate:"2021-06-01"})
+    users.push({userId: i, userName: "직원"+i, userAuthority: "의사", userSsn1: "751026", userSsn2: "1234567", userSex: "M", userTel1: "010", userTel2: "1234", userTel3: "5678", userEmail1: "abcde" + i, userEmail2: "naver.com", userZipcode: "01234", userAddress: "서울 송파구", userDetailAddress1: "12층 1강의실", userDetailAddress2: "아이티벤처타워", userRegDate:"2021-06-01"})
   }
   for (i = 8; i <= 12; i++) {
-    users.push({userId: i, userName: "직원"+i, userAuthority: "간호사",  userSsn1: "751026", userSsn2: "2234567", userSex: "F", userTel1: "010", userTel2: "1234", userTel3: "5678", userEmail1: "fghij" + i, userEmail2: "@gmail.com", userZipcode: "01234", userAddress: "서울 송파구", userDetailAddress1: "12층 1강의실", userDetailAddress2: "아이티벤처타워", userRegDate:"2021-06-01"})
+    users.push({userId: i, userName: "직원"+i, userAuthority: "간호사",  userSsn1: "751026", userSsn2: "2234567", userSex: "F", userTel1: "010", userTel2: "1234", userTel3: "5678", userEmail1: "fghij" + i, userEmail2: "gmail.com", userZipcode: "01234", userAddress: "서울 송파구", userDetailAddress1: "12층 1강의실", userDetailAddress2: "아이티벤처타워", userRegDate:"2021-06-01"})
   }
   for (i = 13; i <= 20; i++) {
-    users.push({userId: i, userName: "직원"+i, userAuthority: "임상병리사",  userSsn1: "751026", userSsn2: "1234567", userSex: "M",  userTel1: "010", userTel2: "1234", userTel3: "5678", userEmail1: "klmno" + i, userEmail2: "@daum.net", userZipcode: "01234", userAddress: "서울 송파구", userDetailAddress1: "12층 1강의실", userDetailAddress2: "아이티벤처타워", userRegDate:"2021-06-01"})
+    users.push({userId: i, userName: "직원"+i, userAuthority: "임상병리사",  userSsn1: "751026", userSsn2: "1234567", userSex: "M",  userTel1: "010", userTel2: "1234", userTel3: "5678", userEmail1: "klmno" + i, userEmail2: "daum.net", userZipcode: "01234", userAddress: "서울 송파구", userDetailAddress1: "12층 1강의실", userDetailAddress2: "아이티벤처타워", userRegDate:"2021-06-01"})
   }
   return users;
 };
@@ -112,7 +112,7 @@ function UserList(props) {
         <div style={{width: "9%"}}>{users[index].userSsn1}</div>
         <div style={{width: "4%"}}>{users[index].userSex}</div>
         <div style={{width: "16%"}}>{users[index].userTel1} - {users[index].userTel2} - {users[index].userTel3}</div>
-        <div>{users[index].userEmail1}{users[index].userEmail2}</div>
+        <div>{users[index].userEmail1}@{users[index].userEmail2}</div>
         <div style={{width: "35%"}}>{users[index].userAddress} {users[index].userDetailAddress1} ({users[index].userDetailAddress2})</div>
         <div style={{width: "11%"}}>{users[index].userRegDate}</div>
       </div>

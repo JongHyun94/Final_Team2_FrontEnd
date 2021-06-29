@@ -12,12 +12,21 @@
 .Login {
   width: 30rem;
   margin-right: 4rem;
-  padding-top: 4rem;
+  padding-top: 3rem;
 }
 
 .back {
   background-color: white;
   padding: 1rem;
+}
+
+.Login_error {
+  color: red;
+  font-size: small;
+}
+.Login_noterror {
+  visibility: hidden;
+  font-size: small;
 }
 
 /* 공지사항 */
