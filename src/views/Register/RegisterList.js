@@ -220,13 +220,16 @@ function RegisterList(props) {
         <div className="RegisterList_content_1">
           <div className="RegisterList_content_1_1">
             <div>
-              <DatePicker locale="ko" selected={dateForRegister} onChange={(date) => setDateForRegister(date)} />
+              <DatePicker locale="ko" selected={dateForRegister} onChange={(date) => setDateForRegister(date)} dateFormat="yyyy.MM.dd" />
             </div>
             <div>
               <button className="button_team2_fill">이동</button>
             </div>
           </div>
           <div className="RegisterList_content_1_2">
+          <div className="RegisterList_content_1_2_total">
+              전체: {registerState[0] + registerState[1] + registerState[2]}명
+            </div>
             <div className="RegisterList_content_1_2_ready">
               대기: {registerState[0]}명
             </div>
@@ -239,7 +242,7 @@ function RegisterList(props) {
           </div>
           <div className="RegisterList_content_1_3">
             <button className="button_team2_empty" onClick={() => changeRegisterStateToCancel(selectedRegister)}>접수 취소</button>
-            <button className="button_team2_fill" onClick={() => changeRegisterStateToFinish(selectedRegister)}>접수 완료</button>
+            <button className="button_team2_fill" onClick={() => changeRegisterStateToFinish(selectedRegister)}>진료 시작</button>
           </div>
         </div>
         {/* 접수 내역 테이블 */}

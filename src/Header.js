@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import Auth from "./views/Auth";
 import { RiCalendarCheckLine, RiStethoscopeFill, RiTestTubeFill } from "react-icons/ri";
 import { IoBarChart } from "react-icons/io5";
+import WeatherAPI from "views/Register/components/api/WeatherAPI";
 
 function Header(props) {
   const globalUid = useSelector((state) => state.authReducer.uid);
@@ -35,10 +36,12 @@ function Header(props) {
   return (
     <div className="header">
       <div className="header1 row no-gutters">
-        <div className="header1_1 col-10">
+        <div className="header1_1 col-5">
           <span className="logo">TEAM2<img src="/resources/img/logo_white_bold.png" alt="" width={30}></img></span>
         </div>
-        
+        <div className="col-5">
+          <WeatherAPI/>
+        </div>
         <div className="col-2">
           {globalUid !== ""?
             <div className="header1_2 d-flex justify-content-between">
@@ -56,7 +59,7 @@ function Header(props) {
       </div>
       {globalUid === ""? "":
         <div className="header2 row no-gutters">
-          <div className="col-4 row d-flex justify-content-between">
+          <div className="col-4 row d-flex justify-content-between ml-1">
             <div><Link to="/Register" className="link_team2"><RiCalendarCheckLine className="mr-1"/>접수</Link></div>
             <div><Link to="/Treatment" className="link_team2"><RiStethoscopeFill className="mr-1"/>진료</Link></div>
             <div><Link to="/Inspection" className="link_team2"><RiTestTubeFill className="mr-1"/>검사 및 치료</Link></div>

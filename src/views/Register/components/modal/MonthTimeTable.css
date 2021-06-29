@@ -6,7 +6,8 @@
   margin: 20px;
   text-align: center;
   font-size: x-large;
-
+  text-decoration: #00aaf0 underline;
+  text-underline-position:under;
 }
 .MonthTimeTable_btns{
   display: flex;
@@ -40,9 +41,6 @@
 }
 .dayN{
   color: black!important;
-}
-.dayN:hover{
-  color: white!important;
 }
 .divisionLine{
   height: 20px;

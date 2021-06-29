@@ -82,6 +82,9 @@ function RegisterCreateForm(props) {
     console.log("등록");
   };
 
+  let handleColor = (time) => {
+    return (time.getHours() > 8 && time.getHours() < 18 ? "hourStyle" : "");
+  };
   return (
     <div className="RegisterCreateForm_content border">
       {/* 달력 */}
@@ -147,6 +150,7 @@ function RegisterCreateForm(props) {
           minTime={setHours(setMinutes(new Date(), 0), 9)}
           maxTime={setHours(setMinutes(new Date(), 45), 17)}
           dateFormat="yyyy-MM-dd h:mm"
+          timeClassName={handleColor}
           inline
         />
       </div>

@@ -89,16 +89,13 @@ function MonthTimeTable(props) {
         {thisYaerAndMonth}
       </div>
       <div className="days">
-        <div className="day button_team2_empty">일</div>
-        <div className="day button_team2_empty dayN">월</div>
-        <div className="day button_team2_empty dayN">화</div>
-        <div className="day button_team2_empty dayN">수</div>
-        <div className="day button_team2_empty dayN">목</div>
-        <div className="day button_team2_empty dayN">금</div>
-        <div className="day button_team2_empty">토</div>
-      </div>
-      <div className="divisionLine">
-
+        <div className="day">일</div>
+        <div className="day dayN">월</div>
+        <div className="day dayN">화</div>
+        <div className="day dayN">수</div>
+        <div className="day dayN">목</div>
+        <div className="day dayN">금</div>
+        <div className="day">토</div>
       </div>
       <div className="dates">
         {dates.map((date, index) => {
@@ -118,7 +115,7 @@ function MonthTimeTable(props) {
           } else {
             if (index < 7 && date > 7) {
               return (
-                <div className="date">
+                <div className="date" onDoubleClick={prevMonth}>
                   <div className="otherDate1">
                     {date}
                   </div>
@@ -130,7 +127,7 @@ function MonthTimeTable(props) {
             }
             else if (index > 28 && date < 7) {
               return (
-                <div className="date">
+                <div className="date" onDoubleClick={nextMonth}>
                   <div className="otherDate2">
                     {date}
                   </div>

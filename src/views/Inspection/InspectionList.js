@@ -236,15 +236,15 @@ function InspectionList(props) {
           </button>
         </div>
 
-        <div className="InspectionList_list">
+        <div className="InspectionList_list ">
           <table className="table InspectionList_2_1" style={{height:"10px"}}>
             <thead className="InspectionList_2_2">
               <tr>
                 <th style={{ width: "1%" }}></th>
                 <th style={{ width: "9%" }}>진단검사명</th>
-                <th style={{ width: "5%" }}>검체명</th>
+                <th style={{ width: "10%" }}>검체명</th>
                 <th style={{ width: "20%" }}>검사명</th>
-                <th style={{ width: "20%" }}>결과</th>
+                <th style={{ width: "15%" }}>결과</th>
                 <th>참고치</th>
                 <th style={{ width: "9%" }}>검사 시간</th>
                 <th style={{ width: "7%" }}>용기</th>

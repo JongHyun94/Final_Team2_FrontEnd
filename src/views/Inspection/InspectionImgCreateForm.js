@@ -51,8 +51,8 @@ function InspectionImgCreateForm(props) {
               <div className="InspectionImgCreateForm_title m-2">검사 결과 등록</div>
               <div className="InspectionImgCreateForm_1 border">
                 <form>
-                  <div className="InspectionImgCreateForm_1_1 row m-3">
-                    <div className="col-6">
+                  <div className="InspectionImgCreateForm_1_1 mt-3 mb-3">
+                    <div className="InspectionImgCreateForm_1_1_1 mr-3">
                       <div className="mb-1">진단검사명 :</div>
                       <div className="mb-1">검체명 :</div>
                       <div className="mb-1">검사명 :</div>
@@ -64,7 +64,7 @@ function InspectionImgCreateForm(props) {
                       <div></div>
                       <div></div>
                     </div>
-                    <div className="col-6">
+                    <div className="InspectionImgCreateForm_1_1_2">
                       <div className="mb-1">{inspectionImgResult.inspectionListCategory}</div>
                       <div className="mb-1">{inspectionImgResult.inspectionListSpecimen}</div>
                       <div className="mb-1">{inspectionImgResult.inspectionListName}</div>
