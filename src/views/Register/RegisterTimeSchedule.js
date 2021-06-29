@@ -19,35 +19,35 @@ function RegisterTimeSchedule(props) {
       doctorName: "의사1",
       patientName: "환자1",
       registerId: "1",
-      registerDate: "2021-06-27 10:30",
+      registerDate: "2021-06-29 10:30",
       registerState: "대기",
     },
     {
       doctorName: "의사2",
       patientName: "환자2",
       registerId: "2",
-      registerDate: "2021-06-27 16:00",
+      registerDate: "2021-06-29 16:00",
       registerState: "대기",
     },
     {
       doctorName: "의사3",
       patientName: "환자3",
       registerId: "3",
-      registerDate: "2021-06-27 12:30",
+      registerDate: "2021-06-29 12:30",
       registerState: "대기",
     },
     {
       doctorName: "의사4",
       patientName: "환자4",
       registerId: "4",
-      registerDate: "2021-06-27 17:30",
+      registerDate: "2021-06-29 17:30",
       registerState: "완료",
     },
     {
       doctorName: "의사1",
       patientName: "환자5",
       registerId: "5",
-      registerDate: "2021-06-27 15:30",
+      registerDate: "2021-06-29 15:30",
       registerState: "취소",
     },
   ];
@@ -56,77 +56,77 @@ function RegisterTimeSchedule(props) {
       doctorName: "의사1",
       patientName: "환자1",
       registerId: "1",
-      registerDate: "2021-06-28 10:00",
+      registerDate: "2021-06-30 10:00",
       registerState: "대기",
     },
     {
       doctorName: "의사2",
       patientName: "환자2",
       registerId: "2",
-      registerDate: "2021-06-28 11:00",
+      registerDate: "2021-06-30 11:00",
       registerState: "대기",
     },
     {
       doctorName: "의사2",
       patientName: "환자7",
       registerId: "7",
-      registerDate: "2021-06-28 11:45",
+      registerDate: "2021-06-30 11:45",
       registerState: "완료",
     },
     {
       doctorName: "의사3",
       patientName: "환자3",
       registerId: "3",
-      registerDate: "2021-06-28 12:30",
+      registerDate: "2021-06-30 12:30",
       registerState: "대기",
     },
     {
       doctorName: "의사4",
       patientName: "환자4",
       registerId: "4",
-      registerDate: "2021-06-28 12:30",
+      registerDate: "2021-06-30 12:30",
       registerState: "완료",
     },
     {
       doctorName: "의사1",
       patientName: "환자5",
       registerId: "5",
-      registerDate: "2021-06-28 12:30",
+      registerDate: "2021-06-30 12:30",
       registerState: "취소",
     },
     {
       doctorName: "의사1",
       patientName: "환자6",
       registerId: "6",
-      registerDate: "2021-06-28 16:30",
+      registerDate: "2021-06-30 16:30",
       registerState: "대기",
     },
     {
       doctorName: "의사5",
       patientName: "환자10",
       registerId: "8",
-      registerDate: "2021-06-28 9:00",
+      registerDate: "2021-06-30 9:00",
       registerState: "대기",
     },
     {
       doctorName: "의사6",
       patientName: "환자9",
       registerId: "9",
-      registerDate: "2021-06-28 9:00",
+      registerDate: "2021-06-30 9:00",
       registerState: "완료",
     },
     {
       doctorName: "의사6",
       patientName: "환자10",
       registerId: "10",
-      registerDate: "2021-06-28 17:45",
+      registerDate: "2021-06-30 17:45",
       registerState: "완료",
     },
     {
       doctorName: "의사1",
       patientName: "환자11",
       registerId: "11",
-      registerDate: "2021-06-28 17:45",
+      registerDate: "2021-06-30 17:45",
       registerState: "완료",
     },
   ];
@@ -187,8 +187,10 @@ function RegisterTimeSchedule(props) {
       {/* 상단 버튼 */}
       <div className="RegisterTimeSchedule_header">
         <div className="RegisterTimeSchedule_header_btn">
-          <React.Fragment>
-            <button className="button_team2_fill" onClick={openModal}>신규 접수 등록</button>
+          <button className="button_team2_fill" onClick={openModal}>신규 접수 등록</button>
+        </div>
+        <React.Fragment>
+          <div className="RegisterCreateModal">
             <RegisterCreateModal
               open={modalOpen}
               close={closeModal}
@@ -203,13 +205,15 @@ function RegisterTimeSchedule(props) {
               doctors={doctors}
               register={selectedRegister}
             />
+          </div>
+          <div className="RegisterWeekTimeTableModal">
             <RegisterWeekTimeTableModal
               open={registerWeekTimeTableOpen}
               close={closeRegisterWeekTimeTableOpen}
               header={"Dr. " + selctedDoctor}
             />
-          </React.Fragment>
-        </div>
+          </div>
+        </React.Fragment>
         {/* <div className="WeatherAPI">
           <WeatherAPI />
         </div> */}

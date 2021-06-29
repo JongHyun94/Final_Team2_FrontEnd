@@ -41,10 +41,10 @@ function RegisterUpdateForm(props) {
 
   const updateRegister = (event) => {
     props.changeRegister();
-  }
+  };
   const cancelRegisterForm = (event) => {
     props.cancelRegister();
-  }
+  };
 
   // 환자 상태
 
@@ -56,7 +56,7 @@ function RegisterUpdateForm(props) {
     registerDate: new Date(),
     registerState: "",
   };
-  var selectedPatient
+  var selectedPatient;
   if(props.selectedPatient){
     selectedPatient = props.selectedPatient;
   } else {
