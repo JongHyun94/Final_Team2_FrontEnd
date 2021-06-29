@@ -52,8 +52,8 @@ class WeatherAPI extends Component {
           name: json.weather[0].main,
           icon: json.weather[0].icon,
         });
-        // console.log("%%%");
-        // console.log(this.state);
+        console.log("%%%");
+        console.log(this.state);
       });
 
   }
