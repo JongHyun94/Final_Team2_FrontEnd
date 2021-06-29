@@ -25,7 +25,7 @@ function TreatmentHistoryList(props) {
   var tempPatientlist = {
     registerId: "",
     patientId: "",
-    registerPatientName: "~~",
+    registerPatientName: "  ",
     patientSsn: "",
     patientSex: "",
     registerMemo: "",
