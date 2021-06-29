@@ -78,7 +78,7 @@
 }
 .InspectionPatientList_list{
   overflow-y: scroll;
-  height: 730px;
+  height: 720px;
 }
 .InspectionPatientList_list::-webkit-scrollbar {
   width: 10px;
@@ -133,7 +133,7 @@
 }
 .InspectionList_list{
   overflow-y: scroll;
-  height: 730px;
+  height: 720px;
 }
 .InspectionList_list::-webkit-scrollbar {
   width: 10px;
