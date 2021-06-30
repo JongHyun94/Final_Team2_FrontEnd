@@ -42,7 +42,7 @@ function Treatment(props) {
   return (
     <div className="Treatment">
       <div className="TreatmentLeft">
-        {/* 접수 완료 환자 */}
+        {/* 진료 대기 환자 */}
         <div className="TreatmentPatientList">
           <TreatmentPatientList patientlists={patientlists} setCheckedpatient={setCheckedpatient} />
         </div>

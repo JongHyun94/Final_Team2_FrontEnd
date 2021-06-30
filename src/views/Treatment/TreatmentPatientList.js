@@ -35,7 +35,7 @@ function TreatmentPatientList(props) {
   const checkedtreatmentPatient = (registerId, patientlist) => {
     setSelectedRegisterId(registerId);
 
-    //선택된 환자 정보 리스트 넘겨
+    //선택된 환자 정보 리스트
     setCheckedpatient(patientlist);
   };
 
