@@ -6,29 +6,35 @@ function RegisterWeekTimeTableModal(props) {
   const { open, close, header } = props;
   const [selectDate, setSelectDate] = useState();
   return (
-    <div className={open ? 'openModal modal' : 'modal'}>
-      {open ? (
-        <section>
-          <header>
-            {header}
-          </header>
-          <main>
-            <div className="Main_content">
-              <div className="RegisterWeekTimeTableModal_main">
-                <MonthTimeTable
-                 selectDate={selectDate}
-                 setSelectDate={setSelectDate}/>
+    <div className="RegisterWeekTimeTableModal">
+      <div className={open ? 'openModal modal' : 'modal'}>
+        {open ? (
+          <section>
+            <header>
+              <div className="RegisterWeekTimeTableModal_header">
+                {header}
               </div>
-              <div className="ToDoList_main">
-                <ToDoList selectDate={selectDate}/>
+            </header>
+            <main>
+              <div className="Main_content">
+                <div className="RegisterWeekTimeTableModal_main">
+                  <MonthTimeTable
+                    selectDate={selectDate}
+                    setSelectDate={setSelectDate} />
+                </div>
+                <div className="ToDoList_main">
+                  <ToDoList selectDate={selectDate} />
+                </div>
               </div>
-            </div>
-          </main>
-          <footer>
-            <button className="button_team2_fill" onClick={close}>확인</button>
-          </footer>
-        </section>
-      ) : null}
+            </main>
+            <footer>
+              <div className="RegisterWeekTimeTableModal_footer">
+                <button className="button_team2_fill" onClick={close}>확인</button>
+              </div>
+            </footer>
+          </section>
+        ) : null}
+      </div>
     </div>
   );
 }

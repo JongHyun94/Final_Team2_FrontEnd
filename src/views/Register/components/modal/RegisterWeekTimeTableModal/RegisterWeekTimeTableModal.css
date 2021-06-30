@@ -17,23 +17,23 @@
   animation: modal-show .3s;
   overflow: hidden;
 }
-.RegisterWeekTimeTableModal > .modal > section > header {
+.RegisterWeekTimeTableModal > .modal > section > header > .RegisterWeekTimeTableModal_header {
   position: relative;
   padding: 16px 64px 16px 16px;
   background-color: #f1f1f1;
   font-weight: 700;
   font-size: large;
 }
-.RegisterWeekTimeTableModal > .modal > section > main {
+.RegisterWeekTimeTableModal > .modal > section > main > .Main_content {
   padding: 16px;
   border-bottom: 1px solid #dee2e6;
   border-top: 1px solid #dee2e6;
 }
-.RegisterWeekTimeTableModal > .modal > section > footer {
+.RegisterWeekTimeTableModal > .modal > section > footer > .RegisterWeekTimeTableModal_footer {
   padding: 12px 16px;
   text-align: right;
 }
-.RegisterWeekTimeTableModal > .modal > main {
+.RegisterWeekTimeTableModal > .modal > main >.Main_content {
   display: flex;
   flex-direction: row;
 }
