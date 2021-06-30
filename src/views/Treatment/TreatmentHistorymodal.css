@@ -1,4 +1,4 @@
-.TreatmentHistorymodal > .TreatmentHistorymodal, .modal {
+.TreatmentHistorymodal > .modal {
   display: none;
   position: fixed;
   top: 0;
@@ -10,8 +10,8 @@
 
 }
 
-.TreatmentHistorymodal > .TreatmentHistorymodal, .modal > .TreatmentHistorymodal, section {
-  width: 1200px;
+.TreatmentHistorymodal > .modal > section {
+  width: 900px;
   /* max-width: 1500px; */
   height: 820px;
   
@@ -23,7 +23,7 @@
   overflow: hidden;
 }
 
-.TreatmentHistorymodal > .TreatmentHistorymodal, .modal.openModal {
+.TreatmentHistorymodal > .modal.openModal {
   display: flex;
   align-items: center;
   /* 팝업이 열릴때 스르륵 열리는 효과 */

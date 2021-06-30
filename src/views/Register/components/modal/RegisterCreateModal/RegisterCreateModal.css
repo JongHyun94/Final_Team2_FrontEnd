@@ -17,23 +17,23 @@
   animation: modal-show .3s;
   overflow: hidden;
 }
-.RegisterCreateModal > .modal > section > header {
+.RegisterCreateModal > .modal > section > header > .RegisterCreateModal1 {
   position: relative;
   padding: 16px 64px 16px 16px;
   background-color: #f1f1f1;
   font-weight: 700;
   font-size: large;
 }
-.RegisterCreateModal > .modal > section > main {
+.RegisterCreateModal > .modal > section > main > .RegisterCreateModal_main {
   padding: 16px;
   border-bottom: 1px solid #dee2e6;
   border-top: 1px solid #dee2e6;
 }
-.RegisterCreateModal > .modal > section > footer {
+.RegisterCreateModal > .modal > section > footer > .RegisterCreateModal_footer{
   padding: 12px 16px;
   text-align: right;
 }
-.RegisterCreateModal > .modal > main {
+.RegisterCreateModal > .modal > main > .RegisterCreateModal_main {
   display: flex;
   flex-direction: row;
 }

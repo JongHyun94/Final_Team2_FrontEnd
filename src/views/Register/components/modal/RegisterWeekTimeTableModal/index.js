@@ -11,7 +11,9 @@ function RegisterWeekTimeTableModal(props) {
         {open ? (
           <section>
             <header>
-              {header}
+              <div className="RegisterWeekTimeTableModal_header">
+                {header}
+              </div>
             </header>
             <main>
               <div className="Main_content">
@@ -26,7 +28,9 @@ function RegisterWeekTimeTableModal(props) {
               </div>
             </main>
             <footer>
-              <button className="button_team2_fill" onClick={close}>확인</button>
+              <div className="RegisterWeekTimeTableModal_footer">
+                <button className="button_team2_fill" onClick={close}>확인</button>
+              </div>
             </footer>
           </section>
         ) : null}

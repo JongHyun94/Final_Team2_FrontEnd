@@ -10,7 +10,9 @@ function RegisterCreateModal(props) {
         {open ? (
           <section>
             <header>
-              {header}
+              <div className="RegisterCreateModal1">
+                {header}
+              </div>
             </header>
             <main>
               <div className="RegisterCreateModal_main">
@@ -19,7 +21,8 @@ function RegisterCreateModal(props) {
               </div>
             </main>
             <footer>
-              {register.registerState === "완료" ?
+              <div className="RegisterCreateModal_footer">
+                {register.registerState === "완료" ?
                 <>
                   <button className="button_team2_empty" onClick={close}>확인</button>
                 </>
@@ -33,6 +36,7 @@ function RegisterCreateModal(props) {
                   }
                 </>
               }
+              </div>
             </footer>
           </section>
         ) : null}
