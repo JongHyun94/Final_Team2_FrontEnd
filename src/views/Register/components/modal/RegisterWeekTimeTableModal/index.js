@@ -1,8 +1,10 @@
-import "./RegisterCreateModal.css"
-import React from 'react';
+import "./RegisterWeekTimeTableModal.css"
+import React, { useState } from 'react';
 import MonthTimeTable from "./MonthTimeTable";
+import ToDoList from "./ToDoList";
 function RegisterWeekTimeTableModal(props) {
   const { open, close, header } = props;
+  const [selectDate, setSelectDate] = useState();
   return (
     <div className={open ? 'openModal modal' : 'modal'}>
       {open ? (
@@ -11,8 +13,15 @@ function RegisterWeekTimeTableModal(props) {
             {header}
           </header>
           <main>
-            <div className="RegisterWeekTimeTableModal_main">
-              <MonthTimeTable/>
+            <div className="Main_content">
+              <div className="RegisterWeekTimeTableModal_main">
+                <MonthTimeTable
+                 selectDate={selectDate}
+                 setSelectDate={setSelectDate}/>
+              </div>
+              <div className="ToDoList_main">
+                <ToDoList selectDate={selectDate}/>
+              </div>
             </div>
           </main>
           <footer>

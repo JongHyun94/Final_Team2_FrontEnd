@@ -3,6 +3,13 @@ import moment from "moment";
 import "./MonthTimeTable.css";
 
 function MonthTimeTable(props) {
+  const selectDate = props.selectDate;
+
+  const updateSelectDate = (date) => {
+    today.setDate(date);
+    console.log(today);
+    props.setSelectDate(today);
+  };
   const [today, setToday] = useState(new Date());
   let todayYear = today.getFullYear();
   let todayMonth = (today.getMonth() + 1);
@@ -101,9 +108,10 @@ function MonthTimeTable(props) {
         {dates.map((date, index) => {
           if (todayYear === selectTodayYear
             && todayMonth === selectTodayMonth
-            && date === selectTodayDate) {
+            && date === selectTodayDate
+            && date < index) {
             return (
-              <div className="date">
+              <div className="date" onClick={()=>{updateSelectDate(date)}}>
                 <div className="thisDate">
                   {date}
                 </div>
@@ -138,7 +146,7 @@ function MonthTimeTable(props) {
               )
             } else {
               return (
-                <div className="date">
+                <div className="date" onClick={()=>{updateSelectDate(date)}}>
                   <div className="otherDate">
                     {date}
                   </div>

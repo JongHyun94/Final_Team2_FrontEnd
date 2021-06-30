@@ -9,7 +9,7 @@ function getPatient() {
     patients.push({ treatmentId: i, patientName: "환자" + i, patientBirth: "910111", patientSex: "F", treatmentIstate: "대기", treatmentCommunication: "의사소통메모" });
   }
   for (var i = 1011; i <= 1020; i++) {
-    patients.push({ treatmentId: i, patientName: "환자" + i, patientBirth: "910111", patientSex: "F", treatmentIstate: "완료", treatmentCommunication: "의사소통메모" });
+    patients.push({ treatmentId: i, patientName: "환자" + i, patientBirth: "000323", patientSex: "M", treatmentIstate: "완료", treatmentCommunication: "의사소통메모" });
   }
   return patients;
 }

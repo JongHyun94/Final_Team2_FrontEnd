@@ -18,7 +18,7 @@ function Inspection(props) {
   };
 
   //바코드모달 확인 시, 총검사상태: 대기~>검사
-  const handleBarcodeChekck = () => {
+  const handleBarcodeCheck = () => {
     setIState(true);
   };
 
@@ -40,7 +40,7 @@ function Inspection(props) {
   return (
       <div className="Inspection">
         <div className="Inspection_1">
-          {/* 환자검색 */}
+          {/* 검사대기환자 */}
           <InspectionPatientList treatmentId={treatmentId} checkedtId={(id) => checkedtId(id)}
                                   iState={iState} handleBarcodeBack={handleBarcodeBack} 
                                   iStateFinish={iStateFinish} handleFinishBack={handleFinishBack}/>
@@ -48,7 +48,7 @@ function Inspection(props) {
         <div className="Inspection_2">
           {/* 검사상세내역 */}
           <InspectionList treatmentId={treatmentId}
-                          handleBarcodeChekck={handleBarcodeChekck}
+                          handleBarcodeCheck={handleBarcodeCheck}
                           handleFinish={handleFinish} />
         </div>
         {/* <div className="Inspection_3">

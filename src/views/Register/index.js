@@ -29,7 +29,6 @@ import RegisterUpdateForm from "./RegisterUpdateForm";
 
 
 function Register(props) {
-  
 
   // 상태 
 

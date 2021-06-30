@@ -25,7 +25,11 @@ function RegisterCreateModal(props) {
               :
               <>
                 <button className="button_team2_empty" onClick={close}>취소</button>
-                <button className="button_team2_fill" onClick={close}>등록</button>
+                {register.registerState === "대기" ?
+                  <button className="button_team2_fill" onClick={close}>수정</button>
+                  :
+                  <button className="button_team2_fill" onClick={close}>등록</button>
+                }
               </>
             }
           </footer>

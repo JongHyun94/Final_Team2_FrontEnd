@@ -184,7 +184,7 @@ function RegisterRead(props) {
           </form>
           {/* 수정 취소 버튼 */}
           <div className="RegisterRead_content_button">
-            <button className="button_team2_fill" onClick={showUpdateForm}>수정</button>
+            {selectedPatient.registerState === "대기"? <button className="button_team2_fill" onClick={showUpdateForm}>수정</button> : false }
           </div>
         </div>
       </div>
