@@ -108,7 +108,8 @@ function MonthTimeTable(props) {
         {dates.map((date, index) => {
           if (todayYear === selectTodayYear
             && todayMonth === selectTodayMonth
-            && date === selectTodayDate) {
+            && date === selectTodayDate
+            && date < index) {
             return (
               <div className="date" onClick={()=>{updateSelectDate(date)}}>
                 <div className="thisDate">
