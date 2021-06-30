@@ -155,6 +155,24 @@ function TreatmentCreateForm(props) {
     setModalOpen(false);
   };
 
+const [treatment, setTreatment] = useState({
+  smemo: "", 
+  omemo: "", 
+  amemo: "",
+  pmemo: "", 
+  cmemo: "",
+  inspectionId: "", 
+  druglists: ""
+})
+
+
+const handleCreate = (event) => {
+  event.preventDefault();
+  const newTreatment = {...treatment};
+  console.log("진료 등록: ", newTreatment);
+}
+
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -162,7 +180,7 @@ function TreatmentCreateForm(props) {
           {/* 진료 등록<button type="submit" className="button_team2_fill">진료완료</button> */}
           <div className="TreatmentCreateForm_title_1"> {checkedPatientlist.registerPatientName} 님 진료 등록 </div>
           <div className="TreatmentCreateForm_title_2">
-            <button type="submit" className="button_team2_fill">
+            <button type="submit" className="button_team2_fill" onClick={handleCreate}>
               진료완료
             </button>
           </div>
