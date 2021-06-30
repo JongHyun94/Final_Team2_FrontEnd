@@ -1,4 +1,4 @@
-.TreatmentImgmodal > .modal {
+.TreatmentImgmodal > .TreatmentImgmodal, .modal {
   display: none;
   position: fixed;
   top: 0;
@@ -10,10 +10,10 @@
 
 }
 
-.TreatmentImgmodal > .modal > section {
+.TreatmentImgmodal > .TreatmentImgmodal, .modal > .TreatmentImgmodal, section {
   /* width: 100%; */
-  width: 1200px;
-  /* max-width: 1000px; */
+  width: 500px;
+  max-width: 800px; 
   margin:0 auto;
   border-radius: .3rem;
   background-color: #fff;
@@ -22,7 +22,7 @@
   overflow: hidden;
 }
 
-.TreatmentImgmodal > .modal.openModal {
+.TreatmentImgmodal > .TreatmentImgmodal, .modal.openModal {
   display: flex;
   align-items: center;
   /* 팝업이 열릴때 스르륵 열리는 효과 */

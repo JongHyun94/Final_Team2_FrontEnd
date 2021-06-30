@@ -190,7 +190,6 @@ function RegisterTimeSchedule(props) {
           <button className="button_team2_fill" onClick={openModal}>신규 접수 등록</button>
         </div>
         <React.Fragment>
-          <div className="RegisterCreateModal">
             <RegisterCreateModal
               open={modalOpen}
               close={closeModal}
@@ -205,14 +204,11 @@ function RegisterTimeSchedule(props) {
               doctors={doctors}
               register={selectedRegister}
             />
-          </div>
-          <div className="RegisterWeekTimeTableModal">
             <RegisterWeekTimeTableModal
               open={registerWeekTimeTableOpen}
               close={closeRegisterWeekTimeTableOpen}
               header={"Dr. " + selctedDoctor}
             />
-          </div>
         </React.Fragment>
         {/* <div className="WeatherAPI">
           <WeatherAPI />

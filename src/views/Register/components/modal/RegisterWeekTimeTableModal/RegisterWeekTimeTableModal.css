@@ -1,4 +1,4 @@
-.RegisterWeekTimeTableModal > .modal {
+.RegisterWeekTimeTableModal > .RegisterWeekTimeTableModal, .modal {
   display: none;
   position: fixed;
   top: 0;
@@ -8,7 +8,7 @@
   z-index: 99;
   background-color: rgba(0, 0, 0, 0.6);
 }
-.RegisterWeekTimeTableModal > .modal > section {
+.RegisterWeekTimeTableModal > .RegisterWeekTimeTableModal, .modal > .RegisterWeekTimeTableModal, section {
   width: 90%;
   max-width: 1300px;
   margin:0 auto;
@@ -17,27 +17,27 @@
   animation: modal-show .3s;
   overflow: hidden;
 }
-.RegisterWeekTimeTableModal > .modal > section > header {
+.RegisterWeekTimeTableModal > .RegisterWeekTimeTableModal, .modal > .RegisterWeekTimeTableModal, section > .RegisterWeekTimeTableModal, header {
   position: relative;
   padding: 16px 64px 16px 16px;
   background-color: #f1f1f1;
   font-weight: 700;
   font-size: large;
 }
-.RegisterWeekTimeTableModal > .modal > section > main {
+.RegisterWeekTimeTableModal > .RegisterWeekTimeTableModal, .modal > .RegisterWeekTimeTableModal, section > .RegisterWeekTimeTableModal, main {
   padding: 16px;
   border-bottom: 1px solid #dee2e6;
   border-top: 1px solid #dee2e6;
 }
-.RegisterWeekTimeTableModal > .modal > section > footer {
+.RegisterWeekTimeTableModal > .RegisterWeekTimeTableModal, .modal > .RegisterWeekTimeTableModal, section > .RegisterWeekTimeTableModal, footer {
   padding: 12px 16px;
   text-align: right;
 }
-.RegisterWeekTimeTableModal > .modal > main {
+.RegisterWeekTimeTableModal > .RegisterWeekTimeTableModal, .modal > .RegisterWeekTimeTableModal, main {
   display: flex;
   flex-direction: row;
 }
-.RegisterWeekTimeTableModal > .modal.openModal {
+.RegisterWeekTimeTableModal > .RegisterWeekTimeTableModal, .modal.openModal {
   display: flex;
   align-items: center;
   animation: modal-bg-show .3s;

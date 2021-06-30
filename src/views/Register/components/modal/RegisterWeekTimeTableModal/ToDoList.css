@@ -24,15 +24,15 @@
   width: 300px;
   flex-grow: 1;
 }
-.ToDoList_header_inputLabel_input input,
-select {
+.ToDoList_header_inputLabel_input > input,
+.ToDoList_header_inputLabel_input > select {
   width: 98%;
   height: 100%;
   border: #00aaf0 1px solid;
   border-radius: 5px;
 }
 .ToDoList_header_inputLabel_input input:focus,
-select {
+.ToDoList_header_inputLabel_input select {
   width: 98%;
   height: 100%;
   outline: none;
