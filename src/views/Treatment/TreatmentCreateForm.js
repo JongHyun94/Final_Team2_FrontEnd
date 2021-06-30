@@ -268,3 +268,4 @@ function TreatmentCreateForm(props) {
   );
 }
 export default TreatmentCreateForm;
+ 
