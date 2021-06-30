@@ -121,13 +121,13 @@ function Auth(props) {
       <div className={open ? "openModal modal" : "modal"}>
         {open ? (
           <section>
-            <header className="d-flex justify-content-between pr-3">
-              <div className="Auth_title">회원정보 수정</div>
+            <div className="Auth_header">
+              <div>회원정보 수정</div>
               <button className="close" onClick={close}>
                 {" "}
                 &times;{" "}
               </button>
-            </header>
+            </div>
             <main>
               <div className={`d-flex justify-content-center`}>
                 <div className="Auth_box">

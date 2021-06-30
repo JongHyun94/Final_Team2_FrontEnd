@@ -28,21 +28,23 @@ export const Modal = (props) => {
   }
 
   return(
-    <div className="patientModal">
+    <div className="AddressModal">
       <div className={open ? 'openModal modal':'modal'}>
         {open? (
           <section>
+            <div className="AddressModal_header">
+              <div>우편번호 찾기</div>
+              <button className="close" onClick={close}>
+                {" "}
+                &times;{" "}
+              </button>
+            </div>
             <main>
               <DaumPostcode
                 onComplete={handleComplete} 
                 { ...props }
               />
             </main>
-            <footer>
-              <div className="d-flex justify-content-end m-2">
-                <button className="button_team2_empty" onClick={close}>닫기</button>
-              </div>
-            </footer>
           </section>
         ):null}
       </div>
