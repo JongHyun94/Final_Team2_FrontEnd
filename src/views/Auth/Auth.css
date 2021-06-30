@@ -2,14 +2,10 @@
   color: black;
 }
 
-.Auth_title {
-  font-size: larger;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
 .Auth_box{
   width: 90%;
 }
+
 .Auth_content {
   display: flex;
   align-items: center;
@@ -17,6 +13,7 @@
   padding-bottom: 0.5rem;
   border-bottom: lightgray solid 0.5px;
 }
+
 .Auth_content2 {
   display: flex;
   align-items: center;
@@ -30,6 +27,16 @@
 .Auth_noterror {
   visibility: hidden;
   font-size: small;
+}
+
+/* 모달 css*/
+.Auth_header {
+  display: flex;
+  font-size: larger;
+  justify-content: space-between;
+  padding: 1rem;
+  font-weight: bold;
+  background-color: #f1f1f1;
 }
 
 .Auth > .modal {

@@ -120,14 +120,14 @@ function RegisterTimeSchedule(props) {
       patientName: "환자10",
       registerId: "10",
       registerDate: "2021-06-30 17:45",
-      registerState: "완료",
+      registerState: "대기",
     },
     {
       doctorName: "의사1",
       patientName: "환자11",
       registerId: "11",
       registerDate: "2021-06-30 17:45",
-      registerState: "완료",
+      registerState: "대기",
     },
   ];
   const [registers, setRegisters] = useState(_6_25_register);
