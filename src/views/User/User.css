@@ -46,6 +46,7 @@
 
 .UserList_content1_2 {
   display: flex;
+  cursor: pointer;
 }
 
 .UserList_content1_2 > div:hover {

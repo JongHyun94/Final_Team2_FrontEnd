@@ -13,12 +13,23 @@ function UserCreateForm(props) {
     userTel2: "",
     userTel3: "",
     userEmail1: "",
-    userEmail2: "@naver.com",
+    userEmail2: "naver.com",
     userZipcode: "",
     userAddress: "",
     userDetailAddress1: "",
     userDetailAddress2: "",
   });
+
+  // 이메일 비교 상태
+  const [email, setEmail] = useState(true);
+
+  useEffect(() => {
+    if (user.userEmail2 === "") {
+      setEmail(false);
+    } else if (user.userEmail2 === "naver.com" || user.userEmail2 === "gmail.com" || user.userEmail2 === "daum.net" || user.userEmail2 === "nate.com") {
+      setEmail(true);
+    }
+  }, [user.userEmail2])
 
   const handleChange = (event) => {
     setUser({
@@ -89,6 +100,17 @@ function UserCreateForm(props) {
             </div>
           </div>
           <div className="User_item">
+            <label className="col-sm-3 m-0">성별: </label>
+            <div className="col-sm d-flex align-items-center">
+              <input type="radio" name="userSex" value="M" onChange={handleChange}></input>
+              <label className="ml-3 mb-0">남</label>
+            </div>
+            <div className="col-sm d-flex align-items-center">
+              <input type="radio" name="userSex" value="F" onChange={handleChange}></input>
+              <label className="ml-3 mb-0">여</label>
+            </div>
+          </div>
+          <div className="User_item">
             <label className="col-sm-3 m-0">직책:</label>
             <div className="col-sm d-flex align-items-center">
               <input type="radio" name="userAuthority" value="의사" onChange={handleChange}></input>
@@ -101,17 +123,6 @@ function UserCreateForm(props) {
             <div className="col-sm-4 d-flex align-items-center">
               <input type="radio" name="userAuthority" value="임상병리사" onChange={handleChange}></input>
               <label className="ml-3 mb-0">임상병리사</label>
-            </div>
-          </div>
-          <div className="User_item">
-            <label className="col-sm-3 m-0">성별: </label>
-            <div className="col-sm d-flex align-items-center">
-              <input type="radio" name="userSex" value="M" onChange={handleChange}></input>
-              <label className="ml-3 mb-0">남</label>
-            </div>
-            <div className="col-sm d-flex align-items-center">
-              <input type="radio" name="userSex" value="F" onChange={handleChange}></input>
-              <label className="ml-3 mb-0">여</label>
             </div>
           </div>
           <div className="User_item">
@@ -149,11 +160,15 @@ function UserCreateForm(props) {
           <div className="User_item">
             <label className="col-sm-3 m-0">이메일: </label>
             <div className="row ml-3 mr-0">
-              <input type="text" className="col-sm-5 mr-2" name="userEmail1" placeholder="ABC1234" onChange={handleChange}></input>
-              <select className="col-sm-5" name="userEmail2" onChange={handleChange}>
-                <option value="@gmail.com">@naver.com</option>
-                <option value="@gmail.com">@gmail.com</option>
-                <option value="@daum.net">@daum.net</option>
+              <input type="text" className="col-sm-3 mr-1" name="userEmail1" value={user.userEmail1} placeholder="ABC1234" onChange={handleChange}></input>
+              <div className="mr-1 d-flex align-items-center">@</div>
+              <input type="text" className="col-sm-4 mr-1" name="userEmail2" value={user.userEmail2} placeholder="naver.com" onChange={handleChange} disabled={email}></input>
+              <select className="col-sm-4" name="userEmail2" onChange={handleChange} value={user.userEmail2}>
+                <option value="naver.com">naver.com</option>
+                <option value="gmail.com">gmail.com</option>
+                <option value="daum.net">daum.net</option>
+                <option value="nate.com">nate.com</option>
+                <option value="">직접입력</option>
               </select>
             </div>
           </div>

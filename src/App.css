@@ -29,6 +29,7 @@
 }
 .header_auth:hover {
   color: #2D3040;
+  cursor: pointer;
 }
 .logo{
   color:white;

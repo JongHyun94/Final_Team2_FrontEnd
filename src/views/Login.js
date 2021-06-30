@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { createSetUidAction } from "redux/auth-reducer";
+import { useForm } from "react-hook-form";
 import Help from "./Help";
 import "./Login.css";
 
@@ -14,8 +15,10 @@ function Login(props) {
 
   // 바인딩할 상태함수
   const globalUid = useSelector((state) => state.authReducer.uid);
-
   const dispatch = useDispatch();
+
+  // 유효성 검사를 위한 함수 사용
+  const { handleSubmit, register, errors } = useForm({ mode: "onChange" });
 
   const handleChange = (event) => {
     setUser({
@@ -26,7 +29,7 @@ function Login(props) {
 
   // 로그인
   const login = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     dispatch(createSetUidAction(user.userId));
     setUser({
       userId: "",
@@ -66,20 +69,22 @@ function Login(props) {
               <img src="/resources/img/logo_blue.png" alt="" width={70}></img>
             </div>
           </div>
-          <form>
+          <form onSubmit={handleSubmit(login)}>
             <div className="form-group row">
               <label className="col-sm-3 col-form-label">아이디</label>
               <div className="col-sm">
-                <input type="text" className="form-control" name="userId" onChange={handleChange}></input>
+                <input type="text" className="form-control" name="userId" ref={register({required: true})} onChange={handleChange}></input>
+                <div className={errors.userId? "Login_error" : "Login_noterror"}>아이디를 입력해주세요.</div>
               </div>
             </div>
             <div className="form-group row">
               <label className="col-sm-3 col-form-label">비밀번호</label>
               <div className="col-sm">
-                <input type="text" className="form-control" name="userPassword" onChange={handleChange}></input>
+                <input type="text" className="form-control" name="userPassword" ref={register({required:true})} onChange={handleChange}></input>
+                <div className={errors.userPassword? "Login_error" : "Login_noterror"}>비밀번호를 입력해주세요.</div>
               </div>
             </div>
-            <div className="d-flex justify-content-end"><button className="button_team2_fill" onClick={login}>LOGIN</button></div>
+            <div className="d-flex justify-content-end"><button className="button_team2_fill" type="submit">LOGIN</button></div>
           </form>
         </div>
       </div>
@@ -109,7 +114,7 @@ function Login(props) {
               <div style={{width: "15%"}}>2021-06-01</div>
             </div>
             <div className={bid === "2"? 'show' : 'Board_content'}>
-              <div>사용자 가이드 외의 문의사항은 온라인 고객센터 혹은 원격 A/S 1688-600을 통해 문의해주세요.</div>
+              <div>사용자 가이드 외의 문의사항은 온라인 고객센터 혹은 원격 A/S 1688-6000을 통해 문의해주세요.</div>
             </div>
             <div className={bid === "3"? "Board_tr active" : "Board_tr"} onClick={() => boardClick("3")}>
               <div style={{width: "10%"}}>[공지]</div>
