@@ -168,7 +168,7 @@ function UserCreateForm(props) {
                 <option value="gmail.com">gmail.com</option>
                 <option value="daum.net">daum.net</option>
                 <option value="nate.com">nate.com</option>
-                <option value="">직접입력</option>
+                <option value={email === false? user.userEmail2: ""}>직접입력</option>
               </select>
             </div>
           </div>

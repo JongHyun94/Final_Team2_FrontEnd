@@ -49,7 +49,6 @@ function Auth(props) {
       ...user,
       [event.target.name]: event.target.value,
     });
-    console.log(user);
   };
 
   // useEffect(() => {
@@ -205,7 +204,7 @@ function Auth(props) {
                             <option value="gmail.com">gmail.com</option>
                             <option value="daum.net">daum.net</option>
                             <option value="nate.com">nate.com</option>
-                            <option value="">직접입력</option>
+                            <option value={email === false? user.userEmail2: ""}>직접입력</option>
                           </select>    
                         </div>                 
                         <div className={(errors.userEmail1 || errors.userEmail2)? "Auth_error" : "Auth_noterror"}>이메일를 입력해주세요.</div>             
@@ -231,21 +230,21 @@ function Auth(props) {
                     <div className="Auth_content">
                       <label className="col-sm-4 m-0 pb-3">기존 비밀번호: </label>
                       <div className="col-sm-8 p-0">
-                        <input type="text" className="col-sm" name="oldPassword" ref={register({required: true})} onChange={handleChange}></input>
+                        <input type="password" className="col-sm Auth_password" name="oldPassword" ref={register({required: true})} onChange={handleChange}></input>
                         <div className={errors.oldPassword? "Auth_error" : "Auth_noterror"}>비밀번호롤 입력하세요.</div>
                       </div>
                     </div>
                     <div className="Auth_content">
                       <label className="col-sm-4 m-0 pb-3">새로운 비밀번호: </label>
                       <div className="col-sm-8 p-0">
-                        <input type="text" className="col-sm" name="newPassword" ref={register({required: true})} onChange={handleChange}></input>
+                        <input type="password" className="col-sm Auth_password" name="newPassword" ref={register({required: true})} onChange={handleChange}></input>
                         <div className={errors.newPassword? "Auth_error" : "Auth_noterror"}>비밀번호롤 입력하세요.</div>
                       </div>
                     </div>
                     <div className="Auth_content">
                       <label className="col-sm-4 m-0 pb-3">비밀번호 재입력: </label>
                       <div className="col-sm-8 p-0">
-                        <input type="text" className="col-sm" name="rePassword" ref={register({required: true})} onChange={handleChange}></input>
+                        <input type="password" className="col-sm Auth_password" name="rePassword" ref={register({required: true})} onChange={handleChange}></input>
                         <div className={errors.rePassword? "Auth_error" : "Auth_noterror"}>비밀번호롤 입력하세요.</div>
                       </div>
                     </div>
