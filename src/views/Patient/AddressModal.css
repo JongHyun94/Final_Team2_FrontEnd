@@ -1,4 +1,13 @@
-.patientModal > .modal {
+.AddressModal_header {
+  display: flex;
+  font-size: larger;
+  justify-content: space-between;
+  padding: 1rem;
+  font-weight: bold;
+  background-color: #f1f1f1;
+}
+
+.AddressModal > .modal {
   display: none;
   position: fixed;
   top: 0;
@@ -8,7 +17,7 @@
   z-index: 99;
   background-color: rgba(0, 0, 0, 0.6);
 }
-.patientModal > .modal > section {
+.AddressModal > .modal > section {
   width: 100%;
   max-width: 600px; 
   height: 100%;
@@ -21,12 +30,12 @@
   overflow: hidden;
 }
 
-.patientModal > .modal > section > main {
+.AddressModal > .modal > section > main {
   padding: 16px;
   border-bottom: 1px solid #dee2e6;
   border-top: 1px solid #dee2e6;
 }
-.patientModal > .modal.openModal {
+.AddressModal > .modal.openModal {
   display: flex;
   align-items: center;
   /* 팝업이 열릴때 스르륵 열리는 효과 */
