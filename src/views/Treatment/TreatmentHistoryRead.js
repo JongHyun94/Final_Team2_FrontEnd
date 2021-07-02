@@ -72,7 +72,7 @@ function TreatmentHistoryRead(props) {
         {open ? (
           <section>
             <div className="TreatmentHistoryRead">
-              <div className="TreatmentHistoryRead_title"> 진료번호 : {readTreatmentId} 진료상세 </div>
+              <div className="TreatmentHistoryRead_title"> 진료번호 : {readTreatmentId} . 진료상세 </div>
               <div className="TreatmentHistoryRead_border border">
                 <div className="TreatmentHistoryRead_1">
                   <table className="table table-bordered TreatmentHistoryRead_1_table">
