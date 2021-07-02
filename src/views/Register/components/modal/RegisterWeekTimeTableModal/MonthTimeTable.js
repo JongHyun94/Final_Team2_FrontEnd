@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import "./MonthTimeTable.css";
+import { setDate } from "date-fns";
 
 function MonthTimeTable(props) {
-  const selectDate = props.selectDate;
 
-  const updateSelectDate = (date) => {
-    today.setDate(date);
-    console.log(today);
-    props.setSelectDate(today);
-  };
   const [today, setToday] = useState(new Date());
+  let Stoday = today;
   let todayYear = today.getFullYear();
   let todayMonth = (today.getMonth() + 1);
 
@@ -63,10 +59,27 @@ function MonthTimeTable(props) {
     setToday(new Date());
   };
 
+  const updateSelectDate = (date) => {
+    Stoday.setDate(date);
+    props.setSelectDate(Stoday);
+    setToday(Stoday);
+    // console.log("1",today);
+    // console.log("2",Stoday);
+    // setDate(calCalender(Stoday));
+  };
 
   useEffect(() => {
     setDates(calCalender(today));
+    return () => {
+      console.log("bye");
+    };
   }, [today]);
+  useEffect(() => {
+    console.log("hihi");
+  }, [dates]);
+  useEffect(() => {
+    console.log("props1");
+  }, [props]);
 
   let selectToday = new Date();
   let selectTodayYear = selectToday.getFullYear();
@@ -111,7 +124,7 @@ function MonthTimeTable(props) {
             && date === selectTodayDate
             && date < index) {
             return (
-              <div className="date" onClick={()=>{updateSelectDate(date)}}>
+              <div className="date" onClick={() => { updateSelectDate(date) }} key={index}>
                 <div className="thisDate">
                   {date}
                 </div>
@@ -123,7 +136,7 @@ function MonthTimeTable(props) {
           } else {
             if (index < 7 && date > 7) {
               return (
-                <div className="date" onDoubleClick={prevMonth}>
+                <div className="date" onDoubleClick={prevMonth} key={index}>
                   <div className="otherDate1">
                     {date}
                   </div>
@@ -135,7 +148,7 @@ function MonthTimeTable(props) {
             }
             else if (index > 28 && date < 7) {
               return (
-                <div className="date" onDoubleClick={nextMonth}>
+                <div className="date" onDoubleClick={nextMonth} key={index}>
                   <div className="otherDate2">
                     {date}
                   </div>
@@ -146,7 +159,7 @@ function MonthTimeTable(props) {
               )
             } else {
               return (
-                <div className="date" onClick={()=>{updateSelectDate(date)}}>
+                <div className="date" onClick={() => { updateSelectDate(date) }} key={index}>
                   <div className="otherDate">
                     {date}
                   </div>

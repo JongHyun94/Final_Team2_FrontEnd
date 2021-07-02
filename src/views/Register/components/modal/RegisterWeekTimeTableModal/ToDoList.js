@@ -1,5 +1,6 @@
 import "./ToDoList.css";
 import React, { useEffect, useState } from "react";
+import moment from "moment";
 
 function getToDoList() {
   const someToDoList = [];
@@ -24,16 +25,15 @@ function getToDoList() {
   return someToDoList;
 }
 function ToDoList(props) {
-  //const selectDate = Date(props.selectDate).toLocaleString();
-  //console.log(Date(selectDate));
-  // useEffect(() => {
-  //   console.log(hiday);
-  // }, hiday);
+  const {selectDate} = props;
+  console.log(selectDate);
+
+  const [someDay, setSomeDay] = useState(moment(selectDate).format("M/DD"));
+
   const [idNo, setIdNo] = useState(21);
 
   const [inputText, setInputText] = useState("");
   const [toDoList, setToDoList] = useState(getToDoList);
-  //console.log(toDoList);
 
   const inputTextHandler = (event) => {
     setInputText(
@@ -88,11 +88,17 @@ function ToDoList(props) {
     });
     setToDoList(newToDoList);
   };
+
+
+
   return (
     <div className="ToDoList">
       <div className="ToDoList_header">
         <div className="ToDoList_header_name">
-          <h2> To Do List</h2>
+          <h2>To Do List</h2>
+        </div>
+        <div>
+          {someDay}
         </div>
         <div className="ToDoList_header_inputLabel">
           <div className="ToDoList_header_inputLabel_input">

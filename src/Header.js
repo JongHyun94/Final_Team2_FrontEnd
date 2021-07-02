@@ -6,10 +6,16 @@ import React, { useState } from "react";
 import Auth from "./views/Auth";
 import { RiCalendarCheckLine, RiStethoscopeFill, RiTestTubeFill } from "react-icons/ri";
 import { IoBarChart } from "react-icons/io5";
-import WeatherAPI from "views/Register/components/api/WeatherAPI";
+import WeatherAPI from "views/Register/components/api";
+import { test } from "apis/test";
 
 function Header(props) {
-  const globalUid = useSelector((state) => state.authReducer.uid);
+  let globalUid = null;
+  const getUser = async () => {
+    globalUid = await test();
+  };
+  getUser();
+  //const globalUid = useSelector((state) => state.authReducer.uid);
   const dispatch = useDispatch();
 
   const logout = (event) => {

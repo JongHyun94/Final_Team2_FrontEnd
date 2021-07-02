@@ -28,8 +28,8 @@ function RegisterRead(props) {
     selectedPatient = noneRegister;
   }
 
-  console.log("hi");
-  console.log(selectedPatient.registerDate);
+  // console.log("hi");
+  // console.log(selectedPatient.registerDate);
 
   const showUpdateForm = (event) => {
     props.changeRegister();

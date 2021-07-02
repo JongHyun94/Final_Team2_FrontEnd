@@ -526,6 +526,12 @@ th {
   border: solid 0.5px #dee2e6;
   border-radius: 5px;
 }
+.RegisterTimeSchedule_content_timetable_doctors_registers_group{
+  display: flex;
+  flex-direction: row;
+  width: 200px;
+  height: 50px;
+}
 .RegisterTimeSchedule_content_timetable_doctors_registers_register {
   border: solid 0.5px #dee2e6;
   width: 50px;

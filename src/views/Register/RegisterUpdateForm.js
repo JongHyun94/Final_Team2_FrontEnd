@@ -23,20 +23,6 @@ function getDoctors() {
   return doctors;
 }
 
-// function getPatient() {
-//   const selectedPatient = {
-//     patientName : "이종현",
-//     patientBirth : "940606",
-//     patientTel : "010-9947-7430",
-//     doctorName : "김더존(D13801001001)_3",
-//     registerDate : "2021-06-17",
-//     registerTime : "10:00",
-//     registerMemo : "복통심함",
-//     registerCommunication : "15분 뒤에 들어감."
-//   };
-//   return selectedPatient;
-// }
-
 function RegisterUpdateForm(props) {
 
   const updateRegister = (event) => {

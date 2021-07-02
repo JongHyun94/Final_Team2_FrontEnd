@@ -5,7 +5,7 @@ import moment from "moment";
 import RegisterCreateModal from "./components/modal/RegisterCreateModal";
 import { registerLocale } from "react-datepicker";
 import ko from 'date-fns/locale/ko';
-import WeatherAPI from "./components/api/WeatherAPI";
+import WeatherAPI from "./components/api";
 import RegisterWeekTimeTableModal from "./components/modal/RegisterWeekTimeTableModal";
 
 registerLocale("ko", ko);
@@ -173,7 +173,6 @@ function RegisterTimeSchedule(props) {
   const [selctedDoctor, setSelectedDoctor] = useState();
   const [registerWeekTimeTableOpen, setRegisterWeekTimeTableOpen] = useState(false);
   const openRegisterWeekTimeTableOpen = (doctor) => {
-    console.log(doctor);
     setSelectedDoctor(doctor);
     setRegisterWeekTimeTableOpen(true);
   };
@@ -241,24 +240,24 @@ function RegisterTimeSchedule(props) {
           <div className="RegisterTimeSchedule_content_title_hours">
             {hours.map(hour => {
               return (
-                <div className="RegisterTimeSchedule_content_title_hours_hour">
+                <div className="RegisterTimeSchedule_content_title_hours_hour" key={hour}>
                   <div className="RegisterTimeSchedule_content_title_hours_hour_upside">
                     {hour}시
                   </div>
                   <div className="RegisterTimeSchedule_content_title_hours_hour_downside">
-                    {mins.map(min => {
+                    {mins.map((min, index) => {
                       let currentTime = moment().format("YYYY-MM-DD H:m");
                       let minCurrentTime = moment(startDate).format("YYYY-MM-DD") + " " + hour + ":" + min;
                       let maxCurrentTime = moment(minCurrentTime).add(15, "m");
                       if (moment(currentTime).isBetween(minCurrentTime, maxCurrentTime, undefined, '[)')) {
                         return (
-                          <div className="RegisterTimeSchedule_content_title_hours_hour_downside_content_today">
+                          <div className="RegisterTimeSchedule_content_title_hours_hour_downside_content_today" key={index}>
                             {min}
                           </div>
                         )
                       } else {
                         return (
-                          <div className="RegisterTimeSchedule_content_title_hours_hour_downside_content">
+                          <div className="RegisterTimeSchedule_content_title_hours_hour_downside_content" key={index}>
                             {min}
                           </div>
                         )
@@ -273,18 +272,18 @@ function RegisterTimeSchedule(props) {
         <div className="RegisterTimeSchedule_content_timetable">
           {doctors.map((doctor, index) => {
             return (
-              <div className="RegisterTimeSchedule_content_timetable_doctors">
+              <div className="RegisterTimeSchedule_content_timetable_doctors" key={index}>
                 <div className="RegisterTimeSchedule_content_timetable_doctors_doctor" onDoubleClick={() => openRegisterWeekTimeTableOpen(doctor)}>
                   {doctor}님
                 </div>
                 <div className="RegisterTimeSchedule_content_timetable_doctors_registers">
                   {hours.map((hour, index1) => {
                     return (
-                      <>
-                        {mins.map(min => {
+                      <div className="RegisterTimeSchedule_content_timetable_doctors_registers_group" key={index1}>
+                        {mins.map((min, index) => {
                           return (
-                            <div className="RegisterTimeSchedule_content_timetable_doctors_registers_register" onDoubleClick={openModal}>
-                              {registers.map(register => {
+                            <div className="RegisterTimeSchedule_content_timetable_doctors_registers_register" onDoubleClick={openModal} key={index}>
+                              {registers.map((register, index) => {
                                 if ((register.doctorName === doctor)
                                   && (moment(register.registerDate).format("YYYY-MM-DD H:m") === (moment(startDate).format("YYYY-MM-DD") + " " + hour + ":" + min))) {
                                   if (register.registerState === "대기") {
@@ -293,7 +292,7 @@ function RegisterTimeSchedule(props) {
                                         <>
                                           <div
                                             className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_normal"
-                                            onClick={() => { openRegisterModal(register) }}
+                                            onClick={() => { openRegisterModal(register) }} key={index}
                                           >
                                             {register.patientName}<br></br>{register.registerState}
                                             <span className="balloon_ready">
@@ -313,7 +312,7 @@ function RegisterTimeSchedule(props) {
                                           <>
                                             <div
                                               className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_upside"
-                                              onClick={() => { openRegisterModal(register) }}
+                                              onClick={() => { openRegisterModal(register) }} key={index}
                                             >
                                               {register.patientName}<br></br>{register.registerState}
                                               <span className="balloon_ready">
@@ -332,7 +331,7 @@ function RegisterTimeSchedule(props) {
                                           <>
                                             <div
                                               className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_rightside"
-                                              onClick={() => { openRegisterModal(register) }}
+                                              onClick={() => { openRegisterModal(register) }} key={index}
                                             >
                                               {register.patientName}<br></br>{register.registerState}
                                               <span className="balloon_ready">
@@ -351,7 +350,7 @@ function RegisterTimeSchedule(props) {
                                           <>
                                             <div
                                               className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_uprightside"
-                                              onClick={() => { openRegisterModal(register) }}
+                                              onClick={() => { openRegisterModal(register) }} key={index}
                                             >
                                               {register.patientName}<br></br>{register.registerState}
                                               <span className="balloon_ready">
@@ -373,7 +372,7 @@ function RegisterTimeSchedule(props) {
                                         <>
                                           <div
                                             className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_normal"
-                                            onClick={() => { openRegisterModal(register) }}
+                                            onClick={() => { openRegisterModal(register) }} key={index}
                                           >
                                             {register.patientName}<br></br>{register.registerState}
                                             <span className="balloon_success">
@@ -393,7 +392,7 @@ function RegisterTimeSchedule(props) {
                                           <>
                                             <div
                                               className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_upside"
-                                              onClick={() => { openRegisterModal(register) }}
+                                              onClick={() => { openRegisterModal(register) }} key={index}
                                             >
                                               {register.patientName}<br></br>{register.registerState}
                                               <span className="balloon_success">
@@ -412,7 +411,7 @@ function RegisterTimeSchedule(props) {
                                           <>
                                             <div
                                               className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_rightside"
-                                              onClick={() => { openRegisterModal(register) }}
+                                              onClick={() => { openRegisterModal(register) }} key={index}
                                             >
                                               {register.patientName}<br></br>{register.registerState}
                                               <span className="balloon_success">
@@ -431,7 +430,7 @@ function RegisterTimeSchedule(props) {
                                           <>
                                             <div
                                               className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_uprightside"
-                                              onClick={() => { openRegisterModal(register) }}
+                                              onClick={() => { openRegisterModal(register) }} key={index}
                                             >
                                               {register.patientName}<br></br>{register.registerState}
                                               <span className="balloon_success">
@@ -453,7 +452,7 @@ function RegisterTimeSchedule(props) {
                                         <>
                                           <div
                                             className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_normal"
-                                            onClick={() => { openRegisterModal(register) }}
+                                            onClick={() => { openRegisterModal(register) }} key={index}
                                           >
                                             {register.patientName}<br></br>{register.registerState}
                                             <span className="balloon_cancel">
@@ -473,7 +472,7 @@ function RegisterTimeSchedule(props) {
                                           <>
                                             <div
                                               className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_upside"
-                                              onClick={() => { openRegisterModal(register) }}
+                                              onClick={() => { openRegisterModal(register) }} key={index}
                                             >
                                               {register.patientName}<br></br>{register.registerState}
                                               <span className="balloon_cancel">
@@ -492,7 +491,7 @@ function RegisterTimeSchedule(props) {
                                           <>
                                             <div
                                               className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_rightside"
-                                              onClick={() => { openRegisterModal(register) }}
+                                              onClick={() => { openRegisterModal(register) }} key={index}
                                             >
                                               {register.patientName}<br></br>{register.registerState}
                                               <span className="balloon_cancel">
@@ -511,7 +510,7 @@ function RegisterTimeSchedule(props) {
                                           <>
                                             <div
                                               className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_uprightside"
-                                              onClick={() => { openRegisterModal(register) }}
+                                              onClick={() => { openRegisterModal(register) }} key={index}
                                             >
                                               {register.patientName}<br></br>{register.registerState}
                                               <span className="balloon_cancel">
@@ -533,7 +532,7 @@ function RegisterTimeSchedule(props) {
                             </div>
                           )
                         })}
-                      </>
+                      </div>
                     )
                   })}
                 </div>
