@@ -24,7 +24,7 @@ function Login(props) {
     setUser({
       ...user,
       [event.target.name]: event.target.value
-    })
+    });
   }
 
   // 로그인
@@ -80,7 +80,7 @@ function Login(props) {
             <div className="form-group row">
               <label className="col-sm-3 col-form-label">비밀번호</label>
               <div className="col-sm">
-                <input type="text" className="form-control" name="userPassword" ref={register({required:true})} onChange={handleChange}></input>
+                <input type="password" className="form-control Login_password" name="userPassword" ref={register({required:true})} onChange={handleChange}></input>
                 <div className={errors.userPassword? "Login_error" : "Login_noterror"}>비밀번호를 입력해주세요.</div>
               </div>
             </div>

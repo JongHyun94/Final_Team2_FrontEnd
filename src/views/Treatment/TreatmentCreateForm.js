@@ -66,18 +66,6 @@ function TreatmentCreateForm(props) {
 
   const [inspectionOption, setInspectionOption] = useState("진단 검사 선택");
 
-  // const [inspectionOption, setInspectionOption] = useState({
-
-  //   inspectionvalue: [
-  //      {value:"영상검사"},
-  //      {value:"혈액검사"}
-  //    ]
-  //  });
-  // const [inspectionlist, setInspectionlist] = useState({
-  //   inspectioncategory: "",
-  //   inspection: []
-  // });
-
   const handleChangeSmemo = (event) => {
     console.log("Subjective:", event.target.value);
     setSmemo(event.target.value);
@@ -104,39 +92,6 @@ function TreatmentCreateForm(props) {
     console.log("접수완료 : ", inspectionlist);
   };
 
-  // const handleChange = (event) => {
-  //   console.log("name : ", event.target.name);
-  //   console.log("value : ", event.target.value);
-  //   console.log("target : ", event.target);
-
-  //   if (event.target.name !== "inspection") {
-  //     setInspectionlist({
-  //       ...inspectionlist,
-  //       [event.target.name]: event.target.value
-  //     });
-  //   } else {
-  //     if (event.target.checked) {
-
-  //       setInspectionlist(prevInspectionlist => {
-  //         return {
-  //           ...prevInspectionlist,
-  //           inspection: prevInspectionlist.inspection.concat(event.target.value)
-  //         };
-  //       })
-
-  //     } else {
-
-  //       setInspectionlist(prevInspectionlist => {
-  //         return {
-  //           ...prevInspectionlist,
-  //           inspection: prevInspectionlist.inspection.filter(item => item !== event.target.value)
-  //         };
-  //       })
-
-  //     }
-  //   }
-
-  // };
 
   const handleChange = (event) => {
     setInspectionOption(event.target.value);
@@ -180,7 +135,7 @@ const handleCreate = (event) => {
           {/* 진료 등록<button type="submit" className="button_team2_fill">진료완료</button> */}
           <div className="TreatmentCreateForm_title_1"> {checkedPatientlist.registerPatientName} 님 진료 등록 </div>
           <div className="TreatmentCreateForm_title_2">
-            <button type="submit" className="button_team2_fill" onClick={handleCreate}>
+            <button type="submit" className="button_team2_fill" onClick={openModal}>
               진료완료
             </button>
           </div>

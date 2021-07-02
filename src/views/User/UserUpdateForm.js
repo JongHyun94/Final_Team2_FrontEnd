@@ -1,12 +1,19 @@
 import { Modal } from "../Patient/AddressModal";
 import React, { useEffect, useState } from "react";
+import "./User.css";
 
 function UserUpdateForm(props) {
   // 직원 상태
   const [user, setUser] = useState({});
+  const [userId, setUserId] = useState("");
+
+  console.log(userId);
 
   // 이메일 비교 상태
   const [email, setEmail] = useState(true);
+  
+  // 마스킹 상탱
+  const [masking, setMasking] = useState(undefined);
 
   const handleChange = (event) => {
     setUser({
@@ -14,6 +21,9 @@ function UserUpdateForm(props) {
       userId: props.user.userId,
       [event.target.name]: event.target.value
     });
+    // if (event.target.name === "user.userSsn2") {
+    //   setMasking(event.target.value);
+    // }
   };
   
   useEffect(() => {
@@ -36,6 +46,7 @@ function UserUpdateForm(props) {
       userDetailAddress2: props.user.userDetailAddress2,
       userRegDate: props.user.userRegDate
     });
+    setUserId(props.user.userId);
   }, [props]);
 
   useEffect(() => {
@@ -43,7 +54,7 @@ function UserUpdateForm(props) {
       setEmail(false);
     } else if (user.userEmail2 === "naver.com" || user.userEmail2 === "gmail.com" || user.userEmail2 === "daum.net" || user.userEmail2 === "nate.com") {
       setEmail(true);
-    }
+    } 
   }, [user.userEmail2])
 
   // 직원 정보 수정
@@ -109,6 +120,8 @@ function UserUpdateForm(props) {
               <input type="text" className="col-sm" name="userSsn1" value={user.userSsn1} placeholder="999999" onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
               <input type="text" className="col-sm" name="userSsn2" value={user.userSsn2} placeholder="1234567" onChange={handleChange}></input>
+              {/* <input type="text" className="col-sm" name="userSsn2" value={user.userSsn2} placeholder="1234567" 
+              onChange={handleChange} onBlur={() => {setMasking(masking?.replace(/(?<=.{1})./gi, '*'));}}></input> */}
             </div>
           </div>
           <div className="User_item">
@@ -180,7 +193,7 @@ function UserUpdateForm(props) {
                 <option value="gmail.com">gmail.com</option>
                 <option value="daum.net">daum.net</option>
                 <option value="nate.com">nate.com</option>
-                <option value="">직접입력</option>
+                <option value={email === false? user.userEmail2: ""}>직접입력</option>
               </select>
             </div>
           </div>
@@ -205,7 +218,10 @@ function UserUpdateForm(props) {
             <label className="col-sm-3 col-form-label pl-3 p-0">등록 날짜: </label>
             <div className="col-sm d-flex align-items-center">{user.userRegDate}</div>
           </div>
-          <div className="d-flex justify-content-end"><button className="button_team2_fill" onClick={handleUpdate}>수정</button></div>
+          {userId !== undefined?
+          <div className= "d-flex justify-content-end"><button className="button_team2_fill" onClick={handleUpdate}>수정</button></div> 
+          :<div className= "d-flex justify-content-end" style={{"visibility":"hidden"}}><button className="button_team2_fill" onClick={handleUpdate}>수정</button></div> 
+          }
         </form>
       </div>
     </div>

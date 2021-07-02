@@ -64,21 +64,12 @@ function TreatmentHistoryList(props) {
     setModalOpen(false);
   };
 
-  // useEffect(()=>{
-  //     props.setPatientId("");
-  //     setSelectedTreatmentId("");
-  // },checkedPatientlist);
-  // console.log("진료번호aaaa",selectedTreatmentId);
-  // console.log("셀렉트 페이션트",historyPatient);
-
-  //   console.log(props.patientlist.patientId);
 
   return (
     <div>
       <div className="TreatmentHistoryList_title">
         {checkedPatientlist.registerPatientName} 님의 진료기록
         <React.Fragment>
-          {/* <button type="submit" className="button_team2_fill" onClick={openModal}>상세기록</button> */}
           {/* TreatmentHistoryRead에 선택한 진료 번호 보내기 selectedTreatmentId */}
           <TreatmentHistoryRead open={modalOpen} close={closeModal} selectedTreatmentId={selectedTreatmentId}></TreatmentHistoryRead>
         </React.Fragment>
@@ -101,7 +92,6 @@ function TreatmentHistoryList(props) {
                   <tr className="TreatmentHistoryList_table_tr" key={treatmentHistory.treatmentId} onClick={(event) => checkedtreatment(treatmentHistory.treatmentId)}>
                     <td>
                       <input type="checkbox" checked={selectedTreatmentId === treatmentHistory.treatmentId ? true : false} readOnly />
-                      {/* <TreatmentHistoryRead open={modalOpen} close={closeModal}></TreatmentHistoryRead> */}
                     </td>
                     <th>{treatmentHistory.treatmentId}</th>
                     <th>{treatmentHistory.treatmentDate}</th>
