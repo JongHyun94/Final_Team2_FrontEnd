@@ -15,6 +15,10 @@
   padding-top: 3rem;
 }
 
+.Login_password {
+  font-family: 'Malgun gothic', sans-serif;
+}
+
 .back {
   background-color: white;
   padding: 1rem;

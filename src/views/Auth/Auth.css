@@ -19,6 +19,10 @@
   align-items: center;
 }
 
+.Auth_password {
+  font-family: 'Malgun gothic', sans-serif;
+}
+
 /* 유효성 검사 */
 .Auth_error {  
   color: red;

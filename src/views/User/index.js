@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./User.css";
 import UserCreateForm from "./UserCreateForm";
 import UserList from "./UserList";
 import UserUpdateForm from "./UserUpdateForm";

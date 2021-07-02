@@ -93,3 +93,14 @@
   margin-bottom: 0.5rem;
   font-size: small;
 };
+
+.User_hidden {
+  visibility: hidden;
+  /* background-color: crimson; */
+  /* opacity: 0; */
+}
+.User_show {
+  opacity: 1;
+  display: flex;
+  justify-content: end;
+}
