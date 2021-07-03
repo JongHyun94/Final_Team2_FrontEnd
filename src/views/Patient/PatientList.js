@@ -1,4 +1,4 @@
-import { Modal } from "./AddressModal";
+import { Modal } from "../../components/common/Address";
 import React, { useState } from "react";
 import { AutoSizer, List } from "react-virtualized";
 

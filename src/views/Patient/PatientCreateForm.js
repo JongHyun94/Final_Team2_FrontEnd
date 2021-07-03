@@ -1,4 +1,4 @@
-import { Modal } from "./AddressModal";
+import { Modal } from "../../components/common/Address";
 import React, { useState } from "react";
 
 function PatientCreateForm(props) {
@@ -17,6 +17,10 @@ function PatientCreateForm(props) {
     patientDetailAddress1: "", 
     patientDetailAddress2: ""
   })
+  
+  // 마스킹 상태
+  const [masking, setMasking] = useState("");
+
 
   const handleChange = (event) => {
     setPatient({
@@ -24,6 +28,14 @@ function PatientCreateForm(props) {
       [event.target.name]: event.target.value,
       patientTel: patient.patientTel1 + "-" + patient.patientTel2 + "-" + patient.patientTel3
     });
+  };
+
+  const handleChangeSSn = (event) => {
+    setPatient({
+      ...patient,
+      patientSsn2 : event.target.value
+    });
+    setMasking(event.target.value);
   };
 
   // 환자 등록
@@ -84,7 +96,9 @@ function PatientCreateForm(props) {
             <div className="row ml-3">
               <input type="text" className="col-sm" name="patientSsn1" placeholder="999999" onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm" name="patientSsn2" placeholder="1234567" onChange={handleChange}></input>
+              {/* <input type="text" className="col-sm" name="patientSsn2" placeholder="1234567" onChange={handleChange}></input> */}
+              <input type="text" className="col-sm" name="userSsn2" value={masking} placeholder="1234567" 
+              onChange={handleChangeSSn} onBlur={() => {setMasking(masking?.replace(/(?<=.{1})./gi, '*'));}}></input>
             </div>
           </div>
           <div className="Patient_item">

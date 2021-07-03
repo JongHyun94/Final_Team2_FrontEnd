@@ -1,4 +1,4 @@
-import { Modal } from "../Patient/AddressModal";
+import { Modal } from "../../components/common/Address";
 import React, { useEffect, useState } from "react";
 import "./Auth.css";
 import { useSelector } from "react-redux";

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DaumPostcode from 'react-daum-postcode';
-import "./AddressModal.css";
+import style from "./style.module.css";
 
 export const Modal = (props) => {
   const {open, close, send} = props;
@@ -28,11 +28,11 @@ export const Modal = (props) => {
   }
 
   return(
-    <div className="AddressModal">
-      <div className={open ? 'openModal modal':'modal'}>
+    <div className={`${style.AddressModal}`}>
+      <div className={open ? `${style.openModal} ${style.modal}`: `${style.modal}`}>
         {open? (
           <section>
-            <div className="AddressModal_header">
+            <div className={`${style.AddressModal_header}`}>
               <div>우편번호 찾기</div>
               <button className="close" onClick={close}>
                 {" "}
