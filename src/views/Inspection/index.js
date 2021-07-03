@@ -1,7 +1,6 @@
 import "./Inspection.css";
 import InspectionPatientList from "./InspectionPatientList";
 import InspectionList from "./InspectionList";
-import InspectionCreateForm from "./InspectionCreateForm";
 import { useEffect, useState } from "react";
 
 function Inspection(props) {
@@ -51,18 +50,6 @@ function Inspection(props) {
                           handleBarcodeCheck={handleBarcodeCheck}
                           handleFinish={handleFinish} />
         </div>
-        {/* <div className="Inspection_3">
-          <div className="Inspection_3_1">
-            {createForm === true ?
-            <InspectionImgCreateForm/>
-            :
-            <InspectionCreateForm/>
-            }
-          </div>
-          <div className="Inspection_3_2">
-            <InspectionImgForm/>
-          </div>
-        </div> */}
       </div>
   );
 }

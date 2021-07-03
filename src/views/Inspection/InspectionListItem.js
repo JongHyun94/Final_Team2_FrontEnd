@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
-import InspectionImgForm from "./InspectionImgForm";
-import InspectionImgCreateForm from "./InspectionImgCreateForm";
-import InspectionImgModifyForm from "./InspectionImgModifyForm";
+import InspectionImgFormModal from "./components/modal/InspectionImgFormModal";
+import InspectionImgCreateFormModal from "./components/modal/InspectionImgCreateFormModal";
+import InspectionImgModifyFormModal from "./components/modal/InspectionImgModifyFormModal";
 
 function InspectionListItem(props) {
   //검사 결과(사진 있는 결과의 경우, 사진이 있으면 결과에 img(아무거나) 넣어주기)
@@ -158,7 +158,7 @@ function InspectionListItem(props) {
               <div>
               <React.Fragment>
                 <button className="button_team2_empty" onClick={openModal3}>등록</button>
-                <InspectionImgCreateForm id={props.id} open={modalOpen3} closeR={modalRClose3} close={modalClose3}/>
+                <InspectionImgCreateFormModal id={props.id} open={modalOpen3} closeR={modalRClose3} close={modalClose3}/>
               </React.Fragment>
               </div>
             </td>
@@ -167,7 +167,7 @@ function InspectionListItem(props) {
               <td className="align-middle">
                 <React.Fragment>
                   <button className="button_team2_fill" onClick={openModal1}>보기</button>
-                  <InspectionImgForm id={props.id} open={modalOpen1} close={modalClose1}/>
+                  <InspectionImgFormModal id={props.id} open={modalOpen1} close={modalClose1}/>
                 </React.Fragment>
               </td>
               : 
@@ -175,9 +175,9 @@ function InspectionListItem(props) {
               <div className="InspectionListItem_1">
                 <React.Fragment>
                   <button className="button_team2_fill" onClick={openModal1}>보기</button>
-                  <InspectionImgForm id={props.id} open={modalOpen1} close={modalClose1}/>
+                  <InspectionImgFormModal id={props.id} open={modalOpen1} close={modalClose1}/>
                   <button className="button_team2_empty" onClick={openModal2}>수정</button>
-                  <InspectionImgModifyForm id={props.id} open={modalOpen2} closeM={modalMClose2} close={modalClose2}/>
+                  <InspectionImgModifyFormModal id={props.id} open={modalOpen2} closeM={modalMClose2} close={modalClose2}/>
                 </React.Fragment>
               </div>
             </td>
