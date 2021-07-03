@@ -44,3 +44,42 @@
       opacity: 1;
   }
 }
+
+/* InspectionBarcodePop */
+.InspectionBarcodePop{
+  height: 100%;
+}
+.InspectionBarcodePop_title{
+  display: flex;
+  justify-content: center;
+  font-size: x-large;
+  font-weight: bold;
+  margin: 0.5rem;
+}
+.InspectionBarcodePop_1{
+  /* border: 1px solid black; */
+  padding: 10px;
+  height: 90%;
+}
+.InspectionBarcodePop_1_1{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid black; */
+  height: 40%;
+  margin-bottom: 10px;
+}
+.InspectionBarcodePop_1_2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid black; */
+  margin-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.InspectionBarcodePop_1_3{
+  display: flex;
+  justify-content: center;
+}
