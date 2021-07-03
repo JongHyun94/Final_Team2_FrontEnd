@@ -10,12 +10,15 @@ import WeatherAPI from "components/common/WeatherAPI";
 import { test } from "apis/test";
 
 function Header(props) {
-  let globalUid = null;
-  const getUser = async () => {
-    globalUid = await test();
-  };
-  getUser();
-  //const globalUid = useSelector((state) => state.authReducer.uid);
+  // let globalUid = null;
+  // const getUser = async () => {
+  //   var data = await test();
+  //   console.log(data.data.userList[0].user_name);
+  //   globalUid = data.data.userList[0].user_name;
+  // };
+  // getUser();
+  
+  const globalUid = useSelector((state) => state.authReducer.uid);
   const dispatch = useDispatch();
 
   const logout = (event) => {
