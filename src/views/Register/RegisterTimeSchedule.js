@@ -5,7 +5,6 @@ import moment from "moment";
 import RegisterCreateModal from "./components/modal/RegisterCreateModal";
 import { registerLocale } from "react-datepicker";
 import ko from 'date-fns/locale/ko';
-import WeatherAPI from "./components/api";
 import RegisterWeekTimeTableModal from "./components/modal/RegisterWeekTimeTableModal";
 
 registerLocale("ko", ko);

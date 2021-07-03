@@ -1,4 +1,4 @@
-import { InspectionBarcodePop } from "./InspectionBarcodePop";
+import InspectionBarcodeModal from "./components/modal/InspectionBarcodeModal";
 import React, { useEffect, useState } from "react";
 import ReactExport from "react-export-excel";
 import InspectionListItem from "./InspectionListItem";
@@ -201,7 +201,7 @@ function InspectionList(props) {
             <button className="button_team2_fill InspectionList_1_2" onClick={openModal}>
               검사 시작
             </button>
-            <InspectionBarcodePop
+            <InspectionBarcodeModal
               id={id}
               tid={props.treatmentId}
               open={modalOpen}
