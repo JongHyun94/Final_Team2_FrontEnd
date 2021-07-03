@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import TreatmentHistoryRead from "./TreatmentHistoryRead";
+import TreatmentHistoryRead from "./components/modal/TreatmentHistoryReadModal";
 
 //진료 기록 생성 하기
 function getTreatmentHistory() {

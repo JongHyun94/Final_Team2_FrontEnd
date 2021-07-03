@@ -1,4 +1,4 @@
-.TreatmentHistorymodal > .modal {
+.TreatmentImgmodal > .modal {
   display: none;
   position: fixed;
   top: 0;
@@ -10,11 +10,10 @@
 
 }
 
-.TreatmentHistorymodal > .modal > section {
+.TreatmentImgmodal > .modal > section {
+  /* width: 100%; */
   width: 900px;
-  /* max-width: 1500px; */
-  height: 820px;
-  
+  /* max-width: 1000px; */
   margin:0 auto;
   border-radius: .3rem;
   background-color: #fff;
@@ -23,12 +22,39 @@
   overflow: hidden;
 }
 
-.TreatmentHistorymodal > .modal.openModal {
+.TreatmentImgmodal > .modal.openModal {
   display: flex;
   align-items: center;
   /* 팝업이 열릴때 스르륵 열리는 효과 */
   animation: modal-bg-show .3s;
 }
+
+
+.TreatmentImgRead{
+  /* margin: 20px; */
+}
+.TreatmentImgRead_1{
+  display: flex;
+  flex-direction: row;
+  padding: 10px 10px  0 10px;
+
+}
+.TreatmentImgRead_1_1{
+  /* display: flex;
+  flex-direction: row; */
+  margin-right: 50px;
+  margin-top: 170px;
+  font-size: 18px;
+  margin-left: 30px;
+  text-align: left;
+}
+.TreatmentImgRead_2{
+  margin-bottom: 10px;
+  text-align: right;
+  margin-right: 10px;
+}
+
+
 
 @keyframes modal-show {
   from {
