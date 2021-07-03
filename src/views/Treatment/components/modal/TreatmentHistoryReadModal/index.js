@@ -1,6 +1,7 @@
-import { TreatmentImgRead } from "./TreatmentImgRead";
+import { TreatmentImgRead } from "../TreatmentImgReadModal";
 import React, { useState } from "react";
-import "./TreatmentHistorymodal.css";
+// import "./TreatmentHistoryReadModal.css";
+import style from "./style.module.css";
 
 function getSOAP() {
   const soap = [{ treatmentId: "1", Subjective: "목 아픔", Objective: "인후염", Assessment: "온열찜질기 실행", Plan: "다음 내원시 Lab test" }];
@@ -67,24 +68,24 @@ function TreatmentHistoryRead(props) {
   }
 
   return (
-    <div className="TreatmentHistorymodal">
-      <div className={open ? "openModal modal" : "modal"}>
+    <div className={style.TreatmentHistorymodal}>
+      <div className={open ? `${style.openModal} ${style.modal}`:`${style.modal}`} >
         {open ? (
           <section>
-            <div className="TreatmentHistoryRead">
-              <div className="TreatmentHistoryRead_title"> 진료번호 : {readTreatmentId} . 진료상세 </div>
-              <div className="TreatmentHistoryRead_border border">
-                <div className="TreatmentHistoryRead_1">
-                  <table className="table table-bordered TreatmentHistoryRead_1_table">
+            <div className={style.TreatmentHistoryRead}>
+              <div className={style.TreatmentHistoryRead_title}> 진료번호 : {readTreatmentId} . 진료상세 </div>
+              <div className={`${style.TreatmentHistoryRead_border} border`}>
+                <div className={style.TreatmentHistoryRead_1}>
+                <table className={`${style.TreatmentHistoryRead_1_table} table table-bordered`}>
                     <tbody>
                       {soap.map((soap) => {
                         return (
                           <tr key={soap.treatmentId}>
-                            <th className="text-center border" bgcolor="lightgrey">
+                            <th className={`text-center border`} bgcolor="lightgrey">
                               Subjective
                             </th>
                             {/* <td width="80%">목 아픔</td> */}
-                            <td className="text-left" width="80%">
+                            <td className={`text-left`} width="80%">
                               {soap.Subjective}
                             </td>
                           </tr>
@@ -93,11 +94,11 @@ function TreatmentHistoryRead(props) {
                       {soap.map((soap) => {
                         return (
                           <tr key={soap.treatmentId}>
-                            <th className="text-center border" bgcolor="lightgrey">
+                            <th className={`text-center border`} bgcolor="lightgrey">
                               Objective
                             </th>
                             {/* <td width="80%">인후염</td> */}
-                            <td className="text-left" width="80%">
+                            <td className={`text-left`} width="80%">
                               {soap.Objective}
                             </td>
                           </tr>
@@ -106,11 +107,11 @@ function TreatmentHistoryRead(props) {
                       {soap.map((soap) => {
                         return (
                           <tr key={soap.treatmentId}>
-                            <th className="text-center border" bgcolor="lightgrey">
+                            <th className={`text-center border`} bgcolor="lightgrey">
                               Assessment
                             </th>
                             {/* <td width="80%">온열찜질기 실행</td> */}
-                            <td className="text-left" width="80%">
+                            <td className={`text-left`} width="80%">
                               {soap.Assessment}
                             </td>
                           </tr>
@@ -119,12 +120,12 @@ function TreatmentHistoryRead(props) {
                       {soap.map((soap) => {
                         return (
                           <tr key={soap.treatmentId}>
-                            <th className="text-center border" bgcolor="lightgrey">
+                            <th className={`text-center border`} bgcolor="lightgrey">
                               {" "}
                               Plan
                             </th>
                             {/* <td width="80%">다음 내원시 Lab test</td> */}
-                            <td className="text-left" width="80%">
+                            <td className={`text-left`} width="80%">
                               {soap.Plan}
                             </td>
                           </tr>
@@ -133,13 +134,13 @@ function TreatmentHistoryRead(props) {
                     </tbody>
                   </table>
                 </div>
-                <div className="TreatmentHistoryRead_2">
-                  <div className="TreatmentHistoryRead_2_title">검사목록</div>
-
-                  <div className="TreatmentHistoryRead_2_Totaltable border">
-                    <table className="table TreatmentHistoryRead_2_table">
-                      <thead className="TreatmentHistoryRead_2_table_thead">
-                        <tr className="TreatmentHistoryRead_2_table_tbody">
+                <div className={style.TreatmentHistoryRead_2}>
+                  <div className={style.TreatmentHistoryRead_2_title}>검사목록</div>
+                  <div className={`${style.TreatmentHistoryRead_2_Totaltable} border`}>
+                  <table className={`${style.TreatmentHistoryRead_2_table} table table-bordered`}>
+                    
+                      <thead className={style.TreatmentHistoryRead_2_table_thead}>
+                        <tr className={style.TreatmentHistoryRead_2_table_tbody}>
                           <th>진단검사명</th>
                           <th>검사 날짜</th>
                           <th>검사자</th>
@@ -187,11 +188,11 @@ function TreatmentHistoryRead(props) {
                     </table>
                   </div>
                 </div>
-                <div className="TreatmentHistoryRead_3">
-                  <div className="TreatmentHistoryRead_3_title">처방목록</div>
-                  <div className="TreatmentHistoryRead_3_Totaltable border">
-                    <table className="table TreatmentHistoryRead_3_table">
-                      <thead className="TreatmentHistoryRead_3_table_thead">
+                <div className={style.TreatmentHistoryRead_3}>
+                  <div className={style.TreatmentHistoryRead_3_title}>처방목록</div>
+                  <div className={`${style.TreatmentHistoryRead_3_Totaltable} border`}>
+                  <table className={`${style.TreatmentHistoryRead_3_table} table`}>
+                      <thead className={style.TreatmentHistoryRead_3_table_thead}>
                         <tr>
                           <th>처방 날짜</th>
                           <th>담당의</th>
@@ -217,7 +218,7 @@ function TreatmentHistoryRead(props) {
                   </div>
                 </div>
               </div>
-              <div className="TreatmentHistoryReadClose">
+              <div className={style.TreatmentHistoryReadClose}>
                 <button className="button_team2_fill" onClick={close}>
                   {" "}
                   확인

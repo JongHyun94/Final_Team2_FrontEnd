@@ -1,9 +1,13 @@
-import { Modal } from "./AddressModal";
+import { Modal } from "../../components/common/Address";
 import React, { useEffect, useState } from "react";
 
 function PatientUpdateForm(props) {
   // 환자 상태
   const [patient, setPatient] = useState({});
+  const [patientId, setPatientId] = useState("");
+
+  // 마스킹 상태
+  const [masking, setMasking] = useState("");
 
   const handleChange = (event) => {
     setPatient({
@@ -11,6 +15,14 @@ function PatientUpdateForm(props) {
       patientId: props.patient.patientId,
       [event.target.name]: event.target.value
     });
+  };
+
+  const handleChangeSSn = (event) => {
+    setPatient({
+      ...patient,
+      patientSsn2 : event.target.value
+    });
+    setMasking(event.target.value);
   };
 
   useEffect(() => {
@@ -29,7 +41,8 @@ function PatientUpdateForm(props) {
       patientDetailAddress1: props.patient.patientDetailAddress1, 
       patientDetailAddress2: props.patient.patientDetailAddress2,
       patientRegDate: props.patient.patientRegDate
-    })
+    });
+    setPatientId(props.patient.patientId);
   }, [props]);
 
   // 환자 정보 수정
@@ -95,7 +108,9 @@ function PatientUpdateForm(props) {
             <div className="row ml-3">
               <input type="text" className="col-sm" name="patientSsn1" value={patient.patientSsn1} placeholder="999999" onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm" name="patientSsn2" value={patient.patientSsn2} placeholder="1234567" onChange={handleChange}></input>
+              {/* <input type="text" className="col-sm" name="patientSsn2" value={patient.patientSsn2} placeholder="1234567" onChange={handleChange}></input> */}
+              <input type="text" className="col-sm" name="userSsn2" value={masking} placeholder="1234567" 
+              onChange={handleChangeSSn} onBlur={() => {setMasking(masking?.replace(/(?<=.{1})./gi, '*'));}}></input>
             </div>
           </div>
           <div className="Patient_item">
@@ -162,7 +177,10 @@ function PatientUpdateForm(props) {
             <label className="col-sm-3 col-form-label pl-3 p-0">등록 날짜: </label>
             <div className="col-sm d-flex align-items-center">{patient.patientRegDate}</div>
           </div>
+          {patientId !== undefined?
           <div className="d-flex justify-content-end"><button className="button_team2_fill" onClick={handleUpdate}>수정</button></div>
+          :<div className="d-flex justify-content-end" style={{"visibility":"hidden"}}><button className="button_team2_fill" onClick={handleUpdate}>수정</button></div>
+          }
         </form>
       </div>
     </div>

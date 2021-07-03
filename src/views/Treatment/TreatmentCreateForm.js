@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { TreatmentSearchPop } from "./TreatmentSearchPop";
 
 function getDrugList() {
   const druglists = [

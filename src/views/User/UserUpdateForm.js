@@ -1,4 +1,4 @@
-import { Modal } from "../Patient/AddressModal";
+import { Modal } from "../../components/common/Address";
 import React, { useEffect, useState } from "react";
 import "./User.css";
 
@@ -7,13 +7,11 @@ function UserUpdateForm(props) {
   const [user, setUser] = useState({});
   const [userId, setUserId] = useState("");
 
-  console.log(userId);
-
   // 이메일 비교 상태
   const [email, setEmail] = useState(true);
   
-  // 마스킹 상탱
-  const [masking, setMasking] = useState(undefined);
+  // 마스킹 상태
+  const [masking, setMasking] = useState("");
 
   const handleChange = (event) => {
     setUser({
@@ -21,9 +19,17 @@ function UserUpdateForm(props) {
       userId: props.user.userId,
       [event.target.name]: event.target.value
     });
-    // if (event.target.name === "user.userSsn2") {
-    //   setMasking(event.target.value);
-    // }
+    if (event.target.name === "user.userSsn2") {
+      setMasking(event.target.value);
+    }
+  };
+
+  const handleChangeSSn = (event) => {
+    setUser({
+      ...user,
+      userSsn2 : event.target.value
+    });
+    setMasking(event.target.value);
   };
   
   useEffect(() => {
@@ -119,9 +125,9 @@ function UserUpdateForm(props) {
             <div className="row ml-3 mr-0">
               <input type="text" className="col-sm" name="userSsn1" value={user.userSsn1} placeholder="999999" onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm" name="userSsn2" value={user.userSsn2} placeholder="1234567" onChange={handleChange}></input>
-              {/* <input type="text" className="col-sm" name="userSsn2" value={user.userSsn2} placeholder="1234567" 
-              onChange={handleChange} onBlur={() => {setMasking(masking?.replace(/(?<=.{1})./gi, '*'));}}></input> */}
+              {/* <input type="text" className="col-sm" name="userSsn2" value={user.userSsn2} placeholder="1234567" onChange={handleChange}></input> */}
+              <input type="text" className="col-sm" name="userSsn2" value={masking} placeholder="1234567" 
+              onChange={handleChangeSSn} onBlur={() => {setMasking(masking?.replace(/(?<=.{1})./gi, '*'));}}></input>
             </div>
           </div>
           <div className="User_item">

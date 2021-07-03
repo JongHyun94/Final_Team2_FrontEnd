@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import "./Treatment.css";
 import TreatmentCreateForm from "./TreatmentCreateForm";
 import TreatmentHistoryList from "./TreatmentHistoryList";
-import TreatmentHistoryRead from "./TreatmentHistoryRead";
 import TreatmentPatientList from "./TreatmentPatientList";
 
 function getPatientlists() {
