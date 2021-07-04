@@ -1,27 +1,27 @@
-import "./RegisterCreateModal.css"
+import style from "./RegisterCreateModal.module.css";
 import React from 'react';
 import RegisterCreateForm from "./RegisterCreateForm";
 import RegisterPatientList from "./RegisterPatientList";
 function RegisterCreateModal(props) {
   const { open, close, header, doctors, register } = props;
   return (
-    <div className="RegisterCreateModal">
-      <div className={open ? 'openModal modal' : 'modal'}>
+    <div className={style.RegisterCreateModal}>
+      <div className={open ? `${style.openModal} ${style.modal}`:`${style.modal}`}>
         {open ? (
           <section>
             <header>
-              <div className="RegisterCreateModal1">
+              <div className={style.RegisterCreateModal1}>
                 {header}
               </div>
             </header>
             <main>
-              <div className="RegisterCreateModal_main">
+              <div className={style.RegisterCreateModal_main}>
                 <RegisterPatientList register={register} />
                 <RegisterCreateForm doctors1={doctors} register={register} />
               </div>
             </main>
             <footer>
-              <div className="RegisterCreateModal_footer">
+              <div className={style.RegisterCreateModal_footer}>
                 {register.registerState === "완료" ?
                 <>
                   <button className="button_team2_empty" onClick={close}>확인</button>

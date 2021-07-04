@@ -1,4 +1,5 @@
 import { useState } from "react";
+import style from "./RegisterPatientList.module.css";
 
 // 임의의 환자 목록 만들기
 function getPatientList() {
@@ -56,17 +57,17 @@ function RegisterPatientList(props) {
     console.log("입력된 내용:" + searchContent);
   };
   return (
-    <div className="RegisterPatientList">
-      <div className="RegisterPatientList_content border">
-        <div className="RegisterPatientList_search mt-1">
-          <div className="RegisterPatientList_search_input">
-            <input type="text" className="RegisterPatientList_search_input_1" placeholder="이름/생년월일을 입력해 주세요." value={register.patientName} onChange={changeSearchContent} />
+    <div className={style.RegisterPatientList}>
+      <div className={`${style.RegisterPatientList_content} border`}>
+        <div className={`${style.RegisterPatientList_search} mt-1`}>
+          <div className={style.RegisterPatientList_search_input}>
+            <input type="text" className={style.RegisterPatientList_search_input_1} placeholder="이름/생년월일을 입력해 주세요." value={register.patientName} onChange={changeSearchContent} />
           </div>
-          <div className="RegisterPatientList_search_button">
+          <div className={style.RegisterPatientList_search_button}>
             <button className="button_team2_fill" onClick={handleSearch}>환자 검색</button>
           </div>
         </div>
-        <div className="RegisterPatientList_content_table">
+        <div className={style.RegisterPatientList_content_table}>
           <table className="table">
             <thead>
               <tr>
@@ -82,7 +83,7 @@ function RegisterPatientList(props) {
               {/* 임의의 데이터 넣어서 출력 해보기 */}
               {patientList.map(patient => {
                 return (
-                  <tr key={patient.patientCode} className="RegisterPatientList_content_table_tr" onClick={()=>handlePatient(patient.patientCode)}>
+                  <tr key={patient.patientCode} className={style.RegisterPatientList_content_table_tr} onClick={()=>handlePatient(patient.patientCode)}>
                     <td><input type="checkbox" name="chk" checked={selectedPatient === patient.patientCode? true : false} readOnly/></td>
                     <td>{patient.patientCode}</td>
                     <td>{patient.patientName}</td>
