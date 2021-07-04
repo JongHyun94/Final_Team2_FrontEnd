@@ -25,7 +25,7 @@ function Header(props) {
     dispatch(createSetUidAction(""));
     dispatch(createSetAuthTokenAction(""));
     removeAuthHeader();
-
+    
     // SessionStorage에 인증 내용 제거
     sessionStorage.removeItem("uid");
     sessionStorage.removeItem("authToken");

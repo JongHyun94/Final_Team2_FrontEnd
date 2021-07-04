@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { createSetUidAction } from "redux/auth-reducer";
+import { createSetAuthTokenAction, createSetUidAction } from "redux/auth-reducer";
 import { useForm } from "react-hook-form";
 import Help from "./Help";
 import "./Login.css";
+import { addAuthHeader } from "apis/axiosConfig";
 
 function Login(props) {
   // 유저 상태
@@ -28,22 +29,38 @@ function Login(props) {
   }
 
   // 로그인
-  const login = (event) => {
-    // event.preventDefault();
-    dispatch(createSetUidAction(user.userId));
-    setUser({
-      userId: "",
-      userPassword: ""
-    });
-    if(user.userId.slice(0,1) === "N") {
-      props.history.push("/Register");}
-    else if (user.userId.slice(0,1) === "D") {
-      props.history.push("/Treatment");
-    } else if (user.userId.slice(0,1) === "I") {      
-      props.history.push("/Inspection");
-    } else {
-      props.history.push("/User");
-    }
+  const login = async (event) => {
+    try{
+      // event.preventDefault();
+      // 로그인 요청
+      const response = await login(user);
+      // 요청 헤더에 JWT 토큰 추가
+      addAuthHeader(response.data.authToken);
+      // Redux에 인증 내용 저장      
+      dispatch(createSetUidAction(response.data.userId));
+      dispatch(createSetAuthTokenAction(response.data.authToken));
+      // sessionStorage에 인증 내용 저장
+      sessionStorage.setItem("uid", response.data.userId);
+      sessionStorage.setItem("authToken", response.data.authToken);
+      
+      setUser({
+        userId: "",
+        userPassword: ""
+      });
+
+      // 로그인 아이디에 따른 경로 지정
+      if(user.userId.slice(0,1) === "N") {
+        props.history.push("/Register");}
+      else if (user.userId.slice(0,1) === "D") {
+        props.history.push("/Treatment");
+      } else if (user.userId.slice(0,1) === "I") {      
+        props.history.push("/Inspection");
+      } else {
+        props.history.push("/User");
+      }
+    } catch(error) {
+      console.log(error);
+    }    
   };
   
   // 공지사항
