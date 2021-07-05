@@ -6,6 +6,7 @@ import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import { registerLocale } from "react-datepicker";
 import ko from 'date-fns/locale/ko';
+import style from "./RegisterCreateForm.module.css";
 
 registerLocale("ko", ko);
 const _ = require('lodash');
@@ -86,9 +87,9 @@ function RegisterCreateForm(props) {
     return (time.getHours() > 8 && time.getHours() < 18 ? "hourStyle" : "");
   };
   return (
-    <div className="RegisterCreateForm_content border">
+    <div className={`${style.RegisterCreateForm_content} border`}>
       {/* 달력 */}
-      <div className="RegisterCreateForm_cal">
+      <div className={style.RegisterCreateForm_cal}>
         <DatePicker
           renderCustomHeader={({
             date,
@@ -155,12 +156,12 @@ function RegisterCreateForm(props) {
         />
       </div>
       {/* content */}
-      <div className="RegisterCreateForm_input">
+      <div className={style.RegisterCreateForm_input}>
         <form>
           <div>
             <div>의사 이름</div>
             <div>
-              <select className="RegisterCreateForm_input_select" value={register.doctorName} onChange={changeNewDoctor}>
+              <select className={style.RegisterCreateForm_input_select} value={register.doctorName} onChange={changeNewDoctor}>
                 <option disabled>담당의를 선택해주세요</option>
                 {/* 임의의 데이터 넣어서 출력 해보기 */}
                 {doctors.map(doctor => {
@@ -173,11 +174,11 @@ function RegisterCreateForm(props) {
           </div>
           <div>
             <div>접수 메모</div>
-            <textarea className="RegisterCreateForm_input_textarea" value={newMemo} onChange={changeMemo}></textarea>
+            <textarea className={style.RegisterCreateForm_input_textarea} value={newMemo} onChange={changeMemo}></textarea>
           </div>
           <div>
             <div>의사소통 메모</div>
-            <textarea className="RegisterCreateForm_input_textarea" value={newCMemo} onChange={changeCMemo}></textarea>
+            <textarea className={style.RegisterCreateForm_input_textarea} value={newCMemo} onChange={changeCMemo}></textarea>
           </div>
         </form>
       </div>

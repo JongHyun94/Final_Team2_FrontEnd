@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import "./WeatherAPI.css";
+import style from "./WeatherAPI.module.css";
 
 const API_KEY = '722e5a754ab41987e87ad60035c356f2';
 
@@ -67,11 +67,11 @@ class WeatherAPI extends Component {
     const img_url = `http://openweathermap.org/img/w/${icon}.png`;
 
     return (
-      <div className="WeatherAPI_items">
-        <div className="WeatherAPI_item">
+      <div className={style.WeatherAPI_items}>
+        <div className={style.WeatherAPI_item}>
           <img alt="weather_icon" src={img_url} width="40px"/>
         </div>
-        <div className="WeatherAPI_item">
+        <div className={style.WeatherAPI_item}>
           온도 : {temperature}°C
         </div>
         {/* <div className="WeatherAPI_item">

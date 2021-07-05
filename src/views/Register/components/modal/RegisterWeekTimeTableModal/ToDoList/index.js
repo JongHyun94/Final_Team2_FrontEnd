@@ -1,4 +1,4 @@
-import "./ToDoList.css";
+import style from "./ToDoList.module.css";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 
@@ -92,33 +92,33 @@ function ToDoList(props) {
 
 
   return (
-    <div className="ToDoList">
-      <div className="ToDoList_header">
-        <div className="ToDoList_header_name">
+    <div className={style.ToDoList}>
+      <div className={style.ToDoList_header}>
+        <div className={style.ToDoList_header_name}>
           <h2>To Do List</h2>
         </div>
         <div>
           {someDay}
         </div>
-        <div className="ToDoList_header_inputLabel">
-          <div className="ToDoList_header_inputLabel_input">
+        <div className={style.ToDoList_header_inputLabel}>
+          <div className={style.ToDoList_header_inputLabel_input}>
             <input type="text" value={inputText} onChange={inputTextHandler} placeholder="할 일을 입력해주세요."></input>
           </div>
-          <div className="ToDoList_header_inputLabel_button">
+          <div className={style.ToDoList_header_inputLabel_button}>
             <button className="button_team2_fill" onClick={addToDoList}>+</button>
           </div>
         </div>
       </div>
-      <div className="ToDoList_content">
-        <div className="ToDoList_content_header">
+      <div className={style.ToDoList_content}>
+        <div className={style.ToDoList_content_header}>
 
         </div>
-        <div className="ToDoList_content_items">
-          <div className="ToDoList_content_items_yet_header">
-            <div className="ToDoList_content_items_yet_header_1">
+        <div className={style.ToDoList_content_items}>
+          <div className={style.ToDoList_content_items_yet_header}>
+            <div className={style.ToDoList_content_items_yet_header_1}>
               Doing
             </div>
-            <div className="ToDoList_content_items_yet_header_2">
+            <div className={style.ToDoList_content_items_yet_header_2}>
               {toDoList.filter(toDo => {
                 if (toDo.state === "yet") {
                   return toDo;
@@ -126,20 +126,20 @@ function ToDoList(props) {
               }).length}
             </div>
           </div>
-          <div className="ToDoList_content_items_yet_itmes">
+          <div className={style.ToDoList_content_items_yet_itmes}>
             {toDoList.map(toDo => {
               if (toDo.state === "yet") {
                 return (
-                  <div className="ToDoList_content_items_yet_item" onDoubleClick={() => changeYet(toDo.id)} key={toDo.id}>
-                    <div className="ToDoList_content_items_yet_item_content">
+                  <div className={style.ToDoList_content_items_yet_item} onDoubleClick={() => changeYet(toDo.id)} key={toDo.id}>
+                    <div className={style.ToDoList_content_items_yet_item_content}>
                       {toDo.content}
                     </div>
-                    <div className="ToDoList_content_items_yet_item_btns">
+                    <div className={style.ToDoList_content_items_yet_item_btns}>
                       {/* <div className="ToDoList_content_items_yet_item_btns_btn">
                         <button className="ToDoList_btn_V">V</button>
                       </div> */}
-                      <div className="ToDoList_content_items_yet_item_btns_btn">
-                        <button className="ToDoList_btn_X" onClick={() => deleteToDo(toDo.id)}>X</button>
+                      <div className={style.ToDoList_content_items_yet_item_btns_btn}>
+                        <button className={style.ToDoList_btn_X} onClick={() => deleteToDo(toDo.id)}>X</button>
                       </div>
                     </div>
                   </div>
@@ -147,11 +147,11 @@ function ToDoList(props) {
               }
             })}
           </div>
-          <div className="ToDoList_content_items_done_header">
-            <div className="ToDoList_content_items_done_header_1">
+          <div className={style.ToDoList_content_items_done_header}>
+            <div className={style.ToDoList_content_items_done_header_1}>
               Done
             </div>
-            <div className="ToDoList_content_items_done_header_2">
+            <div className={style.ToDoList_content_items_done_header_2}>
               {toDoList.filter(toDo => {
                 if (toDo.state === "done") {
                   return toDo;
@@ -159,20 +159,20 @@ function ToDoList(props) {
               }).length}
             </div>
           </div>
-          <div className="ToDoList_content_items_done_itmes">
+          <div className={style.ToDoList_content_items_done_itmes}>
             {toDoList.map(toDo => {
               if (toDo.state === "done") {
                 return (
-                  <div className="ToDoList_content_items_done_item" onDoubleClick={() => changeDone(toDo.id)} key={toDo.id}>
-                    <div className="ToDoList_content_items_done_item_content">
+                  <div className={style.ToDoList_content_items_done_item} onDoubleClick={() => changeDone(toDo.id)} key={toDo.id}>
+                    <div className={style.ToDoList_content_items_done_item_content}>
                       {toDo.content}
                     </div>
-                    <div className="ToDoList_content_items_done_item_btns">
+                    <div className={style.ToDoList_content_items_done_item_btns}>
                       {/* <div className="ToDoList_content_items_done_item_btns_btn">
                         <button className="ToDoList_btn_V">V</button>
                       </div> */}
-                      <div className="ToDoList_content_items_done_item_btns_btn">
-                        <button className="ToDoList_btn_X2" onClick={() => deleteToDo(toDo.id)}>X</button>
+                      <div className={style.ToDoList_content_items_done_item_btns_btn}>
+                        <button className={style.ToDoList_btn_X2} onClick={() => deleteToDo(toDo.id)}>X</button>
                       </div>
                     </div>
                   </div>
