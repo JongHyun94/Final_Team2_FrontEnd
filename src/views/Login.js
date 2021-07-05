@@ -33,15 +33,17 @@ function Login(props) {
     try{
       // event.preventDefault();
       // 로그인 요청
-      const response = await login(user);
+      // const response = await login(user);
       // 요청 헤더에 JWT 토큰 추가
-      addAuthHeader(response.data.authToken);
-      // Redux에 인증 내용 저장      
-      dispatch(createSetUidAction(response.data.userId));
-      dispatch(createSetAuthTokenAction(response.data.authToken));
+      // addAuthHeader(response.data.authToken);
+      // // Redux에 인증 내용 저장      
+      // dispatch(createSetUidAction(response.data.userId));
+      // dispatch(createSetAuthTokenAction(response.data.authToken));
       // sessionStorage에 인증 내용 저장
-      sessionStorage.setItem("uid", response.data.userId);
-      sessionStorage.setItem("authToken", response.data.authToken);
+      // sessionStorage.setItem("uid", response.data.userId);
+      // sessionStorage.setItem("authToken", response.data.authToken);
+
+      dispatch(createSetUidAction(user.userId));
       
       setUser({
         userId: "",
