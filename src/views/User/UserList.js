@@ -92,7 +92,6 @@ function UserList(props) {
   const handleSearch = async (event) => {
     try {
       event.preventDefault();
-      // props.search(keyword);
       console.log(keyword);
       const response = await getUserList(keyword, "");
       console.log(response.data.userList)
@@ -140,6 +139,8 @@ function UserList(props) {
     // } 
   };
 
+  console.log("regdate type: ", users[0].user_regdate);
+
   const rowRenderer = ({index, key, style}) => {
     return (
       <div className="UserList_tr" key={key} style={style} onClick={() => handleClick(users[index])}>
@@ -153,7 +154,7 @@ function UserList(props) {
         <div style={{width: "14%"}}>{users[index].user_tel1} - {users[index].user_tel2} - {users[index].user_tel3}</div>
         <div>{users[index].user_email1}@{users[index].user_email2}</div>
         <div style={{width: "34%"}}>{users[index].user_address} {users[index].user_detailaddress1} {users[index].user_detailaddress1}</div>
-        <div style={{width: "11%"}}>{new Date(users[index].user_regdate).toLocaleDateString()}</div>
+        <div style={{width: "11%"}}>{users[index].user_regdate}</div>
       </div>
     );
   };

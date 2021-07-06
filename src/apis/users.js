@@ -7,13 +7,11 @@ export function getAllUserList(){
 }
 
 export function getUserList(keyword="", authority=""){
-  console.log(authority);
   const promise = axios.get("/user/select", {params: {keyword, authority}});
   return promise;
 }
 
 export function updateUser(user) {
-  console.log("@@" , user);
   const promise = axios.put("/user", user);
   return promise;
 }

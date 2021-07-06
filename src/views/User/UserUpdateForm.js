@@ -71,7 +71,7 @@ function UserUpdateForm(props) {
   const handleUpdate = async (event) => {
     try {
       event.preventDefault();
-      const updateUser = {...user};
+      // const updateUser = {...user};
       console.log("직원 정보 수정: ", user);
       await updateUser(user);
     } catch (error) {
