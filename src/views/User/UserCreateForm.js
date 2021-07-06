@@ -7,12 +7,15 @@ function UserCreateForm(props) {
   const [user, setUser] = useState({
     user_name: "",
     user_authority: "",
+    user_ssn: "",
     user_ssn1: "",
     user_ssn2: "",
     user_sex: "",
+    user_tel: "",
     user_tel1: "010",
     user_tel2: "",
     user_tel3: "",
+    user_email: "",
     user_email1: "",
     user_email2: "naver.com",
     user_zipcode: "",
@@ -39,6 +42,9 @@ function UserCreateForm(props) {
     setUser({
       ...user,
       [event.target.name]: event.target.value,
+      user_ssn: user.user_ssn1 + "-" + user.user_ssn2,
+      user_tel: user.user_tel1 + "-" + user.user_tel2 + "-" + user.user_tel3,
+      user_email: user.user_email1 + "@" + user.user
     });
   };
 
@@ -55,8 +61,8 @@ function UserCreateForm(props) {
     try {
       event.preventDefault();
       const newUser = { ...user };
-      console.log("직원 등록: ", newUser);
-      await createUser(newUser);
+      console.log("직원 등록: ", user);
+      await createUser(user);
     } catch(error) {
       console.log(error);
     }
@@ -179,15 +185,15 @@ function UserCreateForm(props) {
           <div className="User_item">
             <label className="col-sm-3 m-0">이메일: </label>
             <div className="row ml-3 mr-0">
-              <input type="text" className="col-sm-3 mr-1" name="user_email1" value={user.userEmail1} placeholder="ABC1234" onChange={handleChange}></input>
+              <input type="text" className="col-sm-3 mr-1" name="user_email1" value={user.user_email1} placeholder="ABC1234" onChange={handleChange}></input>
               <div className="mr-1 d-flex align-items-center">@</div>
-              <input type="text" className="col-sm-4 mr-1" name="user_email2" value={user.userEmail2} placeholder="naver.com" onChange={handleChange} disabled={email}></input>
-              <select className="col-sm-4" name="userEmail2" onChange={handleChange} value={user.userEmail2}>
+              <input type="text" className="col-sm-4 mr-1" name="user_email2" value={user.user_email2} placeholder="naver.com" onChange={handleChange} disabled={email}></input>
+              <select className="col-sm-4" name="user_email2" onChange={handleChange} value={user.user_email2}>
                 <option value="naver.com">naver.com</option>
                 <option value="gmail.com">gmail.com</option>
                 <option value="daum.net">daum.net</option>
                 <option value="nate.com">nate.com</option>
-                <option value={email === false? user.userEmail2: ""}>직접입력</option>
+                <option value={email === false? user.user_email2: ""}>직접입력</option>
               </select>
             </div>
           </div>
@@ -195,7 +201,7 @@ function UserCreateForm(props) {
             <label className="col-sm-3 m-0">주소: </label>
             <div className="col-sm">
               <div className="row mb-2 pr-0">
-                <input type="text" className="col-sm-5 ml-3" name="user_zipcode" value={user.userZipcode} placeholder="우편번호" onChange={handleChange} readOnly></input>
+                <input type="text" className="col-sm-5 ml-3" name="user_zipcode" value={user.user_zipcode} placeholder="우편번호" onChange={handleChange} readOnly></input>
                 <React.Fragment>
                   <button className="button_team2_empty" onClick={openModal}>
                     우편번호 찾기
@@ -203,10 +209,10 @@ function UserCreateForm(props) {
                   <Modal open={modalOpen} close={closeModal} send={sendModal}></Modal>
                 </React.Fragment>
               </div>
-              <input type="text" className="col-sm mb-2" name="user_address" placeholder="주소" value={user.userAddress} onChange={handleChange} readOnly></input>
+              <input type="text" className="col-sm mb-2" name="user_address" placeholder="주소" value={user.user_address} onChange={handleChange} readOnly></input>
               <div className="row no-gutters mb-2">
                 <input type="text" className="col-sm mr-2" name="user_detailaddress1" placeholder="상세주소" onChange={handleChange}></input>
-                <input type="text" className="col-sm" name="user_detailaddress2" value={user.userDetailAddress2} placeholder="참고항목" onChange={handleChange} readOnly></input>
+                <input type="text" className="col-sm" name="user_detailaddress2" value={user.user_detailaddress2} placeholder="참고항목" onChange={handleChange} readOnly></input>
               </div>
             </div>
           </div>

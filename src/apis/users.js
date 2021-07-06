@@ -1,4 +1,5 @@
 import axios from "axios";
+import qs from "qs";
 
 export function getAllUserList(){
   const promise = axios.get("/user");
@@ -12,12 +13,13 @@ export function getUserList(keyword="", authority=""){
 }
 
 export function updateUser(user) {
+  console.log("@@" , user);
   const promise = axios.put("/user", user);
   return promise;
 }
 
 export function createUser(user) {
-  console.log(user);
   const promise = axios.post("/user", user);
+  // const promise = axios.post("/user", qs.stringify(user));
   return promise;
 }

@@ -1,6 +1,7 @@
 import { Modal } from "../../components/common/Address";
 import React, { useEffect, useState } from "react";
 import "./User.css";
+import { updateUser } from "apis/users";
 
 function UserUpdateForm(props) {
   // 직원 상태
@@ -17,7 +18,10 @@ function UserUpdateForm(props) {
     setUser({
       ...user,
       user_id: props.user.user_id,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
+      user_ssn: user.user_ssn1 + "-" + user.user_ssn2,
+      user_tel: user.user_tel1 + "-" + user.user_tel2 + "-" + user.user_tel3,
+      user_email: user.user_email1 + "@" + user.user_email2
     });
     if (event.target.name === "user_ssn2") {
       setMasking(event.target.value);
@@ -27,7 +31,7 @@ function UserUpdateForm(props) {
   const handleChangeSSn = (event) => {
     setUser({
       ...user,
-      userSsn2 : event.target.value
+      user_ssn2 : event.target.value
     });
     setMasking(event.target.value);
   };
@@ -64,11 +68,16 @@ function UserUpdateForm(props) {
   }, [user.user_email2])
 
   // 직원 정보 수정
-  const handleUpdate = (event) => {
-    event.preventDefault();
-    const updateUser = {...user};
-    console.log("직원 정보 수정: ", updateUser);
-  }
+  const handleUpdate = async (event) => {
+    try {
+      event.preventDefault();
+      const updateUser = {...user};
+      console.log("직원 정보 수정: ", user);
+      await updateUser(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // 모달 상태(open일 떄 true로 바뀌어 열림)
   const [modalOpen, setModalOpen] = useState(false);
