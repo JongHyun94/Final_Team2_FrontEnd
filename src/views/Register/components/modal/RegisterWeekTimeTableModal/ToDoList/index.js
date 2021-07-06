@@ -1,39 +1,39 @@
 import style from "./ToDoList.module.css";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
+import { getToDoLists } from "apis/register";
 
-function getToDoList() {
-  const someToDoList = [];
-  for (var i = 1; i <= 10; i++) {
-    someToDoList.push({
-      id: i,
-      doctorId: "의사1",
-      content: "내용" + i,
-      date: "2021-06-29",
-      state: "yet"
-    });
-  }
-  for (i = 11; i <= 20; i++) {
-    someToDoList.push({
-      id: i,
-      doctorId: "의사1",
-      content: "내용" + i,
-      date: "2021-06-29",
-      state: "done"
-    });
-  }
-  return someToDoList;
-}
+// function getToDoList() {
+//   const someToDoList = [];
+//   for (var i = 1; i <= 10; i++) {
+//     someToDoList.push({
+//       id: i,
+//       doctorId: "의사1",
+//       content: "내용" + i,
+//       date: "2021-06-29",
+//       state: "yet"
+//     });
+//   }
+//   for (i = 11; i <= 20; i++) {
+//     someToDoList.push({
+//       id: i,
+//       doctorId: "의사1",
+//       content: "내용" + i,
+//       date: "2021-06-29",
+//       state: "done"
+//     });
+//   }
+//   return someToDoList;
+// }
 function ToDoList(props) {
-  const { selectDate } = props;
-  console.log(selectDate);
+  const {selectedDoctor} = props;
 
-  const [someDay, setSomeDay] = useState(moment(selectDate).format("M/DD"));
+  const [someDay, setSomeDay] = useState("");
 
   const [idNo, setIdNo] = useState(21);
 
   const [inputText, setInputText] = useState("");
-  const [toDoList, setToDoList] = useState(getToDoList);
+  const [toDoList, setToDoList] = useState([]);
 
   const inputTextHandler = (event) => {
     setInputText(
@@ -42,12 +42,14 @@ function ToDoList(props) {
   };
   const addToDoList = () => {
     console.log("click add ToDoList");
+
+    
     const newToDo = {
       id: idNo,
       doctorId: "의사1",
       content: inputText,
       date: "2021-06-29",
-      state: "yet"
+      state: "대기"
     }
     const newToDoList = toDoList.concat(newToDo);
     newToDoList.sort((a, b) => {
@@ -62,7 +64,7 @@ function ToDoList(props) {
     console.log(id);
     const newToDoList = toDoList.map(toDo => {
       if (toDo.id === id) {
-        const newToDo = { ...toDo, state: "done" };
+        const newToDo = { ...toDo, state: "완료" };
         return newToDo;
       } else {
         return toDo;
@@ -74,7 +76,7 @@ function ToDoList(props) {
     console.log(id);
     const newToDoList = toDoList.map(toDo => {
       if (toDo.id === id) {
-        const newToDo = { ...toDo, state: "yet" };
+        const newToDo = { ...toDo, state: "대기" };
         return newToDo;
       } else {
         return toDo;
@@ -89,6 +91,28 @@ function ToDoList(props) {
     setToDoList(newToDoList);
   };
 
+  const getToDoList = async (schedule_regdate,schedule_user_id) => {
+    try {
+      // let schedule = {
+      //   schedule_id: "",
+      //   schedule_user_id: "",
+      //   schedule_content: "",
+      //   schedule_state: "",
+      //   schedule_regdate: "",
+      // };
+      var list = await getToDoLists(schedule_regdate,schedule_user_id);
+      console.log(list.data.todolist);
+      setToDoList(list.data.todolist);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(()=>{
+    setSomeDay(props.selectDate? props.selectDate : "");
+  },[props]);
+  useEffect(() => {
+    getToDoList(someDay,selectedDoctor.user_id);
+  },[someDay]);
   return (
     <div className={style.ToDoList}>
       <div className={style.ToDoList_header}>
@@ -118,7 +142,7 @@ function ToDoList(props) {
             </div>
             <div className={style.ToDoList_content_items_yet_header_2}>
               {toDoList.filter(toDo => {
-                if (toDo.state === "yet") {
+                if (toDo.schedule_state === "대기") {
                   return toDo;
                 }
               }).length}
@@ -126,18 +150,18 @@ function ToDoList(props) {
           </div>
           <div className={style.ToDoList_content_items_yet_itmes}>
             {toDoList.map(toDo => {
-              if (toDo.state === "yet") {
+              if (toDo.schedule_state === "대기") {
                 return (
-                  <div className={style.ToDoList_content_items_yet_item} onDoubleClick={() => changeYet(toDo.id)} key={toDo.id}>
+                  <div className={style.ToDoList_content_items_yet_item} onDoubleClick={() => changeYet(toDo.schedule_id)} key={toDo.schedule_id}>
                     <div className={style.ToDoList_content_items_yet_item_content}>
-                      {toDo.content}
+                      {toDo.schedule_content}
                     </div>
                     <div className={style.ToDoList_content_items_yet_item_btns}>
                       {/* <div className="ToDoList_content_items_yet_item_btns_btn">
                         <button className="ToDoList_btn_V">V</button>
                       </div> */}
                       <div className={style.ToDoList_content_items_yet_item_btns_btn}>
-                        <button className={style.ToDoList_btn_X} onClick={() => deleteToDo(toDo.id)}>X</button>
+                        <button className={style.ToDoList_btn_X} onClick={() => deleteToDo(toDo.schedule_id)}>X</button>
                       </div>
                     </div>
                   </div>
@@ -151,7 +175,7 @@ function ToDoList(props) {
             </div>
             <div className={style.ToDoList_content_items_done_header_2}>
               {toDoList.filter(toDo => {
-                if (toDo.state === "done") {
+                if (toDo.schedule_state === "완료") {
                   return toDo;
                 }
               }).length}
@@ -159,18 +183,18 @@ function ToDoList(props) {
           </div>
           <div className={style.ToDoList_content_items_done_itmes}>
             {toDoList.map(toDo => {
-              if (toDo.state === "done") {
+              if (toDo.schedule_state === "완료") {
                 return (
-                  <div className={style.ToDoList_content_items_done_item} onDoubleClick={() => changeDone(toDo.id)} key={toDo.id}>
+                  <div className={style.ToDoList_content_items_done_item} onDoubleClick={() => changeDone(toDo.schedule_id)} key={toDo.schedule_id}>
                     <div className={style.ToDoList_content_items_done_item_content}>
-                      {toDo.content}
+                      {toDo.schedule_content}
                     </div>
                     <div className={style.ToDoList_content_items_done_item_btns}>
                       {/* <div className="ToDoList_content_items_done_item_btns_btn">
                         <button className="ToDoList_btn_V">V</button>
                       </div> */}
                       <div className={style.ToDoList_content_items_done_item_btns_btn}>
-                        <button className={style.ToDoList_btn_X2} onClick={() => deleteToDo(toDo.id)}>X</button>
+                        <button className={style.ToDoList_btn_X2} onClick={() => deleteToDo(toDo.schedule_id)}>X</button>
                       </div>
                     </div>
                   </div>

@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import Help from "./Help";
 import "./Login.css";
 import { addAuthHeader } from "apis/axiosConfig";
+import { login } from "apis/auth";
 
 function Login(props) {
   // 유저 상태
@@ -29,26 +30,26 @@ function Login(props) {
   }
 
   // 로그인
-  const login = async (event) => {
+  const loginUser = async (event) => {
     try{
-      // event.preventDefault();
       // 로그인 요청
-      // const response = await login(user);
+      const response = await login(user);
+      console.log(response);
       // 요청 헤더에 JWT 토큰 추가
-      // addAuthHeader(response.data.authToken);
+      addAuthHeader(response.data.authToken);
       // // Redux에 인증 내용 저장      
-      // dispatch(createSetUidAction(response.data.userId));
-      // dispatch(createSetAuthTokenAction(response.data.authToken));
+      dispatch(createSetUidAction(response.data.userId));
+      dispatch(createSetAuthTokenAction(response.data.authToken));
       // sessionStorage에 인증 내용 저장
-      // sessionStorage.setItem("uid", response.data.userId);
-      // sessionStorage.setItem("authToken", response.data.authToken);
+      sessionStorage.setItem("uid", response.data.userId);
+      sessionStorage.setItem("authToken", response.data.authToken);
 
-      dispatch(createSetUidAction(user.userId));
+      // dispatch(createSetUidAction(user.userId));
       
-      setUser({
-        userId: "",
-        userPassword: ""
-      });
+      // setUser({
+      //   userId: "",
+      //   userPassword: ""
+      // });
 
       // 로그인 아이디에 따른 경로 지정
       if(user.userId.slice(0,1) === "N") {
@@ -88,7 +89,7 @@ function Login(props) {
               <img src="/resources/img/logo_blue.png" alt="" width={70}></img>
             </div>
           </div>
-          <form onSubmit={handleSubmit(login)}>
+          <form onSubmit={handleSubmit(loginUser)}>
             <div className="form-group row">
               <label className="col-sm-3 col-form-label">아이디</label>
               <div className="col-sm">

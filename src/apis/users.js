@@ -21,3 +21,9 @@ export function createUser(user) {
   // const promise = axios.post("/user", qs.stringify(user));
   return promise;
 }
+
+export function getUser(user_id) {
+  console.log(user_id);
+  const promise = axios.get("/user/read", {params: {user_id}});
+  return promise;
+}

@@ -6,7 +6,6 @@ import { setDate } from "date-fns";
 function MonthTimeTable(props) {
 
   const [today, setToday] = useState(new Date());
-  let Stoday = today;
   let todayYear = today.getFullYear();
   let todayMonth = (today.getMonth() + 1);
 
@@ -60,25 +59,28 @@ function MonthTimeTable(props) {
   };
 
   const updateSelectDate = (date) => {
-    Stoday.setDate(date);
-    props.setSelectDate(Stoday);
-    setToday(Stoday);
-    // console.log("1",today);
-    // console.log("2",Stoday);
-    // setDate(calCalender(Stoday));
+    //console.log(date);
+    today.setDate(date);
+    props.setSelectDate(moment(today).format("yyyy-MM-DD"));
+    setToday(today);
+    
+    //setDate(calCalender(today));
   };
 
   useEffect(() => {
     setDates(calCalender(today));
+    
     return () => {
-      console.log("bye");
+
     };
   }, [today]);
+
   useEffect(() => {
-    console.log("hihi");
+
   }, [dates]);
+
   useEffect(() => {
-    console.log("props1");
+
   }, [props]);
 
   let selectToday = new Date();
@@ -124,7 +126,7 @@ function MonthTimeTable(props) {
             && date === selectTodayDate
             && date < index) {
             return (
-              <div className={style.date} onClick={() => { updateSelectDate(date) }} key={index}>
+              <div className={style.date} onClick={() => updateSelectDate(date)} key={index}>
                 <div className={style.thisDate}>
                   {date}
                 </div>
@@ -159,7 +161,7 @@ function MonthTimeTable(props) {
               )
             } else {
               return (
-                <div className={style.date} onClick={() => { updateSelectDate(date) }} key={index}>
+                <div className={style.date} onClick={() => updateSelectDate(date)} key={index}>
                   <div className={style.otherDate}>
                     {date}
                   </div>

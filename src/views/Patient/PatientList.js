@@ -1,18 +1,23 @@
-import { Modal } from "../../components/common/Address";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AutoSizer, List } from "react-virtualized";
-
-function getPatientList() {
-  const patients = [];
-  for (var i = 50; i >= 1; i--) {
-    patients.push({patientId: i, patientName: "환자"+i, patientSsn1: "910612", patientSsn2: "1234567", patientSex: "M", patientTel1: "010", patientTel2: "1234", patientTel3: "5678", patientZipcode: "01234", patientAddress: "서울시 송파구", patientDetailAddress1: "12층 강의실", patientDetailAddress2: "아이티벤처타워", patientRegDate: "2021-06-01"})
-  }
-  return patients;
-}
+import { getPatientList } from "apis/patient";
+import moment from "moment";
 
 function PatientList(props) {
   // 환자 목록 상태
-  const [patients, setPatients] = useState(getPatientList);
+  const [patients, setPatients] = useState([]);
+
+  useEffect(() => {
+    const work = async () => {
+      try {
+        const response = await getPatientList();
+        setPatients(response.data.patientList);
+      } catch(error) {
+        console.log(error);
+      }
+    };
+    work();
+  }, []);
 
   // 검색 상태
   const [keyword, setKeyword] = useState("");
@@ -20,18 +25,19 @@ function PatientList(props) {
   // 환자 코드 비교를 위한 상태
   const [id, setId] = useState("");
 
-  // const patientContext = useContext(PatientContext);
-
   const handleChange = (event) => {
     setKeyword(event.target.value);
-    console.log(keyword);
   };
 
   // 검색
-  const handleSearch = (event) => {
-    event.preventDefault();
-    const data = {...keyword};
-    props.search(data);
+  const handleSearch = async (event) => {
+    try {
+      event.preventDefault();
+      const response = await getPatientList(keyword);
+      setPatients(response.data.patientList);
+    } catch(error) {
+      console.log(error);
+    }
   };
 
   // 환자 선택
@@ -43,27 +49,17 @@ function PatientList(props) {
   const rowRenderer = ({index, key, style}) => {
     return (
       <div className="PatientList_tr" key={key} style={style} onClick={() => handleClick(patients[index])}>
-        <div style={{width: "3%"}} key={patients.patientId}><input type="checkbox" name="patientCheck" checked={id === patients[index].patientId? true : false} width={50} readOnly></input></div>
-        <div style={{width: "10%"}}>{patients[index].patientId}</div>
-        <div style={{width: "10%"}}>{patients[index].patientName}</div>
-        <div style={{width: "10%"}}>{patients[index].patientSsn1}</div>
-        <div style={{width: "5%"}}>{patients[index].patientSex}</div>
-        <div style={{width: "15%"}}>{patients[index].patientTel1}-{patients[index].patientTel2}-{patients[index].patientTel3}</div>
-        <div style={{width: "35%"}}>{patients[index].patientAddress} {patients[index].patientDetailAddress1} {patients[index].patientDetailAddress2}</div>
-        <div style={{width: "13%"}}>{patients[index].patientRegDate}</div>
+        <div style={{width: "3%"}} key={patients.patient_id}><input type="checkbox" name="patientCheck" checked={id === patients[index].patient_id? true : false} width={50} readOnly></input></div>
+        <div style={{width: "10%"}}>{patients[index].patient_id}</div>
+        <div style={{width: "10%"}}>{patients[index].patient_name}</div>
+        <div style={{width: "10%"}}>{patients[index].patient_ssn1}</div>
+        <div style={{width: "5%"}}>{patients[index].patient_sex === "M"? "남" : "여"}</div>
+        <div style={{width: "15%"}}>{patients[index].patient_tel1}-{patients[index].patient_tel2}-{patients[index].patient_tel3}</div>
+        <div style={{width: "35%"}}>{patients[index].patient_address} {patients[index].patient_detailaddress1} {patients[index].patient_detailaddress2}</div>
+        <div style={{width: "13%"}}>{moment(patients[index].patient_regdate).format("yyyy-MM-DD")}</div>
       </div>
     );
   };
-
-  // 모달 상태(open일 떄 true로 바뀌어 열림)
-  /* const [modalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => {
-    setModalOpen(true);
-  };
-  const closeModal = () => {
-    setModalOpen(false);
-  } */
 
   return (    
     <div className="PatientList">
@@ -72,10 +68,6 @@ function PatientList(props) {
         <div className="mb-2">
           <input type="text" className="col-3" name="search" placeholder="이름/생년월일을 입력하세요." onChange={handleChange}></input>
           <button className="button_team2_fill" onClick={handleSearch}>검색</button>
-          {/* <React.Fragment>
-            <button className="button_team2_empty" onClick={openModal}>모달</button>
-            <Modal open={modalOpen} close={closeModal} header="Modal Heading"></Modal>
-          </React.Fragment>    */}
         </div>
         <div className="text-center">
             <div className={`PatientList_Table`}>
