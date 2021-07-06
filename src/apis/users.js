@@ -7,13 +7,11 @@ export function getAllUserList(){
 }
 
 export function getUserList(keyword="", authority=""){
-  console.log(authority);
   const promise = axios.get("/user/select", {params: {keyword, authority}});
   return promise;
 }
 
 export function updateUser(user) {
-  console.log("@@" , user);
   const promise = axios.put("/user", user);
   return promise;
 }
@@ -21,5 +19,11 @@ export function updateUser(user) {
 export function createUser(user) {
   const promise = axios.post("/user", user);
   // const promise = axios.post("/user", qs.stringify(user));
+  return promise;
+}
+
+export function getUser(user_id) {
+  console.log(user_id);
+  const promise = axios.get("/user/read", {params: {user_id}});
   return promise;
 }

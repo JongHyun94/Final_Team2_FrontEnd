@@ -1,37 +1,7 @@
 import { useEffect, useState } from "react";
 import { AutoSizer, List } from "react-virtualized";
-import { getAllUserList, getUserList } from "apis/users"
-
-function getUserList1() {
-  const users = [];
-  // for (var i =1; i <= 7; i++) {
-  //   users.push({userId: i, userName: "직원"+i, userAuthority: "의사", userSsn1: "751026", userSsn2: "1234567", userSex: "M", userTel1: "010", userTel2: "1234", userTel3: "5678", userEmail1: "abcde" + i, userEmail2: "naver.com", userZipcode: "01234", userAddress: "서울 송파구", userDetailAddress1: "12층 1강의실", userDetailAddress2: "아이티벤처타워", userRegDate:"2021-06-01"})
-  // }
-  // for (i = 8; i <= 12; i++) {
-  //   users.push({userId: i, userName: "직원"+i, userAuthority: "간호사",  userSsn1: "751026", userSsn2: "2234567", userSex: "F", userTel1: "010", userTel2: "1234", userTel3: "5678", userEmail1: "fghij" + i, userEmail2: "gmail.com", userZipcode: "01234", userAddress: "서울 송파구", userDetailAddress1: "12층 1강의실", userDetailAddress2: "아이티벤처타워", userRegDate:"2021-06-01"})
-  // }
-  // for (i = 13; i <= 20; i++) {
-  //   users.push({userId: i, userName: "직원"+i, userAuthority: "임상병리사",  userSsn1: "751026", userSsn2: "1234567", userSex: "M",  userTel1: "010", userTel2: "1234", userTel3: "5678", userEmail1: "klmno" + i, userEmail2: "daum.net", userZipcode: "01234", userAddress: "서울 송파구", userDetailAddress1: "12층 1강의실", userDetailAddress2: "아이티벤처타워", userRegDate:"2021-06-01"})
-  // }
-
-  // const work = async() => {
-  //   try {
-  //     const response = await getUserList2();
-  //     console.log(response.data.userList)
-  //     for (var i = 0; i < response.data.userList.length; i++) {
-  //       users.push({user_id: response.data.userList[i].user_id});
-  //       console.log(response.data.userList[i].user_id);
-  //     }
-  //   } catch(error) {
-  //     console.log(error);
-  //   }
-  // };
-  // work();
-  
-  return users;
-};
-
-
+import { getAllUserList, getUserList } from "apis/users";
+import moment from "moment";
 
 function UserList(props) {
   // 직원 목록 상태
@@ -92,7 +62,6 @@ function UserList(props) {
   const handleSearch = async (event) => {
     try {
       event.preventDefault();
-      // props.search(keyword);
       console.log(keyword);
       const response = await getUserList(keyword, "");
       console.log(response.data.userList)
@@ -148,12 +117,12 @@ function UserList(props) {
         <div style={{width: "6%"}}>{users[index].user_name}</div>
         <div style={{width: "9%"}}>{users[index].user_authority === "ROLE_DOCTOR"? "의사" 
                                     : (users[index].user_authority === "ROLE_NURSE"? "간호사" : "임상병리사")}</div>
-        <div style={{width: "9%"}}>{users[index].user_ssn1}</div>
+        <div style={{width: "8%"}}>{users[index].user_ssn1}</div>
         <div style={{width: "4%"}}>{users[index].user_sex === "M"? "남" : "여"}</div>
-        <div style={{width: "14%"}}>{users[index].user_tel1} - {users[index].user_tel2} - {users[index].user_tel3}</div>
-        <div>{users[index].user_email1}@{users[index].user_email2}</div>
-        <div style={{width: "34%"}}>{users[index].user_address} {users[index].user_detailaddress1} {users[index].user_detailaddress1}</div>
-        <div style={{width: "11%"}}>{new Date(users[index].user_regdate).toLocaleDateString()}</div>
+        <div style={{width: "12%"}}>{users[index].user_tel1} - {users[index].user_tel2} - {users[index].user_tel3}</div>
+        <div style={{width: "12%"}}>{users[index].user_email1}@{users[index].user_email2}</div>
+        <div style={{width: "34%"}}>{users[index].user_address} {users[index].user_detailaddress1} {users[index].user_detailaddress2}</div>
+        <div style={{width: "11%"}}>{moment(users[index].user_regdate).format("yyyy-MM-DD")}</div>
       </div>
     );
   };

@@ -6,39 +6,23 @@ import { useEffect, useState } from "react";
 
 function Patient(props) {
   // 환자 상태
-  const [patient, setPatient] = useState({
-    // patientId: "",
-    // patientName: "",
-    // patientSsn: "",
-    // patientSex: "",
-    // patientTel1: "",
-    // patientTel2: "",
-    // patientTel3: "", 
-    // patientZipcode: "", 
-    // patientAddress: "", 
-    // patientDetailAddress1:  "", 
-    // patientDetailAddress2: "",
-    // patientRegDate: ""
-  });
-
-  // 검색 상태
-  const [keyword, setKeyword] = useState("");
+  const [patient, setPatient] = useState({});
 
   function changePatient(patient) {
     setPatient({
-      patientId: patient.patientId,
-      patientName: patient.patientName,
-      patientSsn1: patient.patientSsn1,
-      patientSsn2: patient.patientSsn2,
-      patientSex: patient.patientSex,
-      patientTel1: patient.patientTel1,
-      patientTel2: patient.patientTel2,
-      patientTel3: patient.patientTel3, 
-      patientZipcode: patient.patientZipcode, 
-      patientAddress: patient.patientAddress, 
-      patientDetailAddress1: patient.patientDetailAddress1, 
-      patientDetailAddress2: patient.patientDetailAddress2,
-      patientRegDate: patient.patientRegDate
+      patient_id: patient.patient_id,
+      patient_name: patient.patient_name,
+      patient_ssn1: patient.patient_ssn1,
+      patient_ssn2: patient.patient_ssn2,
+      patient_sex: patient.patient_sex,
+      patient_tel1: patient.patient_tel1,
+      patient_tel2: patient.patient_tel2,
+      patient_tel3: patient.patient_tel3, 
+      patient_zipcode: patient.patient_zipcode, 
+      patient_address: patient.patient_address, 
+      patient_detailaddress1: patient.patient_detailaddress1, 
+      patient_detailaddress2: patient.patient_detailaddress2,
+      patient_regdate: patient.patient_regdate
     })
   };
 
@@ -48,17 +32,12 @@ function Patient(props) {
   //   setPatient(patient);
   // }, [patient]);
 
-  function search(keyword) {
-    setKeyword(keyword);
-    console.log("keyword출력:", keyword);
-  };
-
   return (
     <div className={`row no-gutters Patient`}>
       {/* 좌측 */}
       <div className="Patient_left">
         {/* 환자 목록 */}
-        <PatientList patient={patient} changePatient={changePatient} search={search}/>
+        <PatientList patient={patient} changePatient={changePatient}/>
       </div>
 
       {/* 우측 */}
