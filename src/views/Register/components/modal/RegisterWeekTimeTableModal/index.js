@@ -4,10 +4,10 @@ import MonthTimeTable from "./MonthTimeTable";
 import ToDoList from "./ToDoList";
 function RegisterWeekTimeTableModal(props) {
   
-  const { open, close, header } = props;
-  const [selectDate, setSelectDate] = useState(new Date());
+  const { open, close, header, selectedDoctor } = props;
+  const [selectDate, setSelectDate] = useState("");
   useEffect(()=>{
-    console.log("selectDate",selectDate);
+    //console.log(selectDate);
   },[selectDate]);
 
   return (
@@ -28,7 +28,7 @@ function RegisterWeekTimeTableModal(props) {
                     setSelectDate={setSelectDate} />
                 </div>
                 <div className={style.ToDoList_main}>
-                  <ToDoList selectDate={selectDate} />
+                  <ToDoList selectDate={selectDate} selectedDoctor={selectedDoctor} />
                 </div>
               </div>
             </main>

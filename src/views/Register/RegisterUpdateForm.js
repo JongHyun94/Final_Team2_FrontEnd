@@ -7,6 +7,7 @@ import setMinutes from "date-fns/setMinutes";
 import { registerLocale } from "react-datepicker";
 import ko from 'date-fns/locale/ko';
 import { getDoctorList } from "apis/register";
+import moment from "moment";
 
 registerLocale("ko", ko);
 const _ = require('lodash');
@@ -31,7 +32,7 @@ function RegisterUpdateForm(props) {
     register_patient_id: "",
     register_user_id: "",
     register_regdate: "",
-    register_date: "",
+    register_date: new Date(),
     register_starttime: "",
     register_memo: "",
     register_communication: "",
@@ -242,25 +243,6 @@ function RegisterUpdateForm(props) {
                 />
               </div>
             </div>
-            {/* <div className="RegisterUpdateForm_content_list">
-              <div className="RegisterUpdateForm_content_list_label">
-                진료 시간:
-              </div>
-              <div className="RegisterUpdateForm_content_list_input">
-                <select className="RegisterUpdateForm_input_select" value={newTime} onChange={changeNewTime}>
-                  <option disabled>진료시간을 선택해주세요</option>
-                  <option value="09:00">09:00</option>
-                  <option value="10:00">10:00</option>
-                  <option value="11:00">11:00</option>
-                  <option value="12:00">12:00</option>
-                  <option value="13:00">13:00</option>
-                  <option value="14:00">14:00</option>
-                  <option value="15:00">15:00</option>
-                  <option value="16:00">16:00</option>
-                  <option value="17:00">17:00</option>
-                </select>
-              </div>
-            </div> */}
             <div className="RegisterUpdateForm_content_list">
               <div className="RegisterUpdateForm_content_list_label">
                 접수 메모:

@@ -14,7 +14,7 @@ function Auth(props) {
 
   // 회원 상태
   const [user, setUser] = useState({
-    user_id: globalUid
+    // user_id: globalUid
     // userName: "김더존",
     // oldPassword: "",
     // newPassword: "",

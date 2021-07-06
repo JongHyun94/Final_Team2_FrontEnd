@@ -37,7 +37,6 @@ function RegisterList(props) {
   // 접수 목록 상태
   const [registerList, setRegisterList] = useState([]);
 
-
   // 접수 날짜 검색
   const [dateForRegister, setDateForRegister] = useState(new Date());
 
@@ -106,9 +105,7 @@ function RegisterList(props) {
   //해당 날짜에 맞는 리스트 가져오기
   const getList = async (date) => {
     try {
-      var list = await getRegisterList(date);
-      console.log(list.data.registerList);
-
+      var list = await getRegisterList(moment(date).format("yyyy-MM-DD HH:mm"));
       setRegisterList(list.data.registerList);
     } catch (e) {
       console.log(e);
@@ -140,7 +137,7 @@ function RegisterList(props) {
   //-------------------------------------------------------------
 
   useEffect(() => {
-    getList(dateForRegister);
+    getList(moment(dateForRegister).format("yyyy-MM-DD HH:mm"));
   }, [dateForRegister]);
 
   useEffect(() => {
@@ -217,7 +214,7 @@ function RegisterList(props) {
                   <tr key={index} className="RegisterList_content_2_tr" onClick={(event) => checkboxHandler(register.register_id)}>
                     <td><input type="checkbox" name="chk" checked={selectedRegister === register.register_id ? true : false} readOnly /></td>
                     <td>{index+1}</td>
-                    <td>{register.register_date}</td>
+                    <td>{moment(register.register_date).format("yyyy-MM-DD HH:mm")}</td>
                     <td>{register.register_id}</td>
                     <td>{register.patient_name}</td>
                     <td>{register.patient_ssn}</td>
