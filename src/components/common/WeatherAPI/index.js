@@ -45,15 +45,15 @@ class WeatherAPI extends Component {
     fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${this.state.lat}&lon=${this.state.long}&APPID=${API_KEY}`)
       .then(response => response.json())
       .then(json => {
-        console.log(json);
+        //console.log(json);
         this.setState({
           ...this.state,
           temperature: Math.floor(json.main.temp - 273.15),
           name: json.weather[0].main,
           icon: json.weather[0].icon,
         });
-        console.log("%%%");
-        console.log(this.state);
+        //console.log("%%%");
+        //console.log(this.state);
       });
 
   }

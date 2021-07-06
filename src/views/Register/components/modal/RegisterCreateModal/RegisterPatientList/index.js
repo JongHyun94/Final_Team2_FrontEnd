@@ -1,28 +1,28 @@
-import { useState } from "react";
+import { getPatientList } from "apis/register";
+import { useEffect, useState } from "react";
 import style from "./RegisterPatientList.module.css";
 
-// 임의의 환자 목록 만들기
-function getPatientList() {
-  const patients = [];
-  for(var i = 1; i <= 50; i++) {
-    patients.push({
-      patientCode: "20000" + i,
-      patientName: "환자" + i,
-      patientBirth: "940606" ,
-      patientSex: "M",
-      patientTel: "010-9947-7430"
-    });
-  }
 
-  return patients;
-}
+
 function RegisterPatientList(props) {
   const noneRegister = {
-    doctorName: "",
-    patientName: "",
-    registerId: "",
-    registerDate: new Date(),
-    registerState: "",
+    register_id: "",
+    register_patient_id: "",
+    register_user_id: "",
+    register_regdate: "",
+    register_date: "",
+    register_starttime: "",
+    register_memo: "",
+    register_communication: "",
+    register_state: "",
+
+    // Add Data
+    patient_name: "",
+    patient_ssn: "",
+    patient_sex: "",
+    patient_tel: "",
+
+    user_name: "",
   };
   var register
   if(props.register){
@@ -30,7 +30,7 @@ function RegisterPatientList(props) {
   } else {
     register = noneRegister;
   }
-  const [patientList, setPatientList] = useState(getPatientList);
+  const [patientList, setPatientList] = useState([]);
 
   // 환자 검색창 상태 
   const [searchContent, setSearchContent] = useState("");
@@ -44,24 +44,37 @@ function RegisterPatientList(props) {
   // 선택된 환자 상태
   const [selectedPatient, setSelectedPatient] = useState();
 
-  const handlePatient = (patientCode) => {
-    if(patientCode === selectedPatient){
+  const handlePatient = (patient_id) => {
+    if(patient_id === selectedPatient){
       setSelectedPatient("");
     } else {
-      setSelectedPatient(patientCode);
-      console.log(patientCode);
+      setSelectedPatient(patient_id);
+      console.log(patient_id);
+      props.setNewRegister({...props.newRegister,register_patient_id:patient_id});
     }
   };
 
   const handleSearch = () => {
     console.log("입력된 내용:" + searchContent);
   };
+  const getPatientsLists = async () => {
+    try {
+      var list = await getPatientList();
+      console.log(list.data.patientList);
+      setPatientList(list.data.patientList);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(()=>{
+    getPatientsLists();
+  },[]);
   return (
     <div className={style.RegisterPatientList}>
       <div className={`${style.RegisterPatientList_content} border`}>
         <div className={`${style.RegisterPatientList_search} mt-1`}>
           <div className={style.RegisterPatientList_search_input}>
-            <input type="text" className={style.RegisterPatientList_search_input_1} placeholder="이름/생년월일을 입력해 주세요." value={register.patientName} onChange={changeSearchContent} />
+            <input type="text" className={style.RegisterPatientList_search_input_1} placeholder="이름/생년월일을 입력해 주세요." value={register.patient_name} onChange={changeSearchContent} />
           </div>
           <div className={style.RegisterPatientList_search_button}>
             <button className="button_team2_fill" onClick={handleSearch}>환자 검색</button>
@@ -83,13 +96,13 @@ function RegisterPatientList(props) {
               {/* 임의의 데이터 넣어서 출력 해보기 */}
               {patientList.map(patient => {
                 return (
-                  <tr key={patient.patientCode} className={style.RegisterPatientList_content_table_tr} onClick={()=>handlePatient(patient.patientCode)}>
-                    <td><input type="checkbox" name="chk" checked={selectedPatient === patient.patientCode? true : false} readOnly/></td>
-                    <td>{patient.patientCode}</td>
-                    <td>{patient.patientName}</td>
-                    <td>{patient.patientBirth}</td>
-                    <td>{patient.patientSex}</td>
-                    <td>{patient.patientTel}</td>
+                  <tr key={patient.patient_id} className={style.RegisterPatientList_content_table_tr} onClick={()=>handlePatient(patient.patient_id)}>
+                    <td><input type="checkbox" name="chk" checked={selectedPatient === patient.patient_id? true : false} readOnly/></td>
+                    <td>{patient.patient_id}</td>
+                    <td>{patient.patient_name}</td>
+                    <td>{patient.patient_ssn}</td>
+                    <td>{patient.patient_sex}</td>
+                    <td>{patient.patient_tel}</td>
                   </tr>
                 );
               })}

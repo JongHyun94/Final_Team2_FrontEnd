@@ -1,12 +1,41 @@
 import style from "./RegisterCreateModal.module.css";
-import React from 'react';
+import React, { useState } from 'react';
 import RegisterCreateForm from "./RegisterCreateForm";
 import RegisterPatientList from "./RegisterPatientList";
+import { createRegister } from "apis/register";
 function RegisterCreateModal(props) {
   const { open, close, header, doctors, register } = props;
+
+  const [newRegister, setNewRegister] = useState({
+    register_id: "",
+    register_patient_id: "",
+    register_user_id: "",
+    register_regdate: "",
+    register_date: new Date(),
+    register_starttime: "",
+    register_memo: "",
+    register_communication: "",
+    register_state: "대기",
+  });
+
+  const createNewRegister = async () => {
+    console.log("등록");
+    try {
+      console.log(newRegister);
+      await createRegister(newRegister);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      close();
+    }
+  };
+  const updateRegister = () => {
+    console.log("수정");
+    close();
+  };
   return (
     <div className={style.RegisterCreateModal}>
-      <div className={open ? `${style.openModal} ${style.modal}`:`${style.modal}`}>
+      <div className={open ? `${style.openModal} ${style.modal}` : `${style.modal}`}>
         {open ? (
           <section>
             <header>
@@ -16,26 +45,26 @@ function RegisterCreateModal(props) {
             </header>
             <main>
               <div className={style.RegisterCreateModal_main}>
-                <RegisterPatientList register={register} />
-                <RegisterCreateForm doctors1={doctors} register={register} />
+                <RegisterPatientList register={register} newRegister={newRegister} setNewRegister={setNewRegister}/>
+                <RegisterCreateForm doctors={doctors} register={register} newRegister={newRegister} setNewRegister={setNewRegister}/>
               </div>
             </main>
             <footer>
               <div className={style.RegisterCreateModal_footer}>
-                {register.registerState === "완료" ?
-                <>
-                  <button className="button_team2_empty" onClick={close}>확인</button>
-                </>
-                :
-                <>
-                  <button className="button_team2_empty" onClick={close}>취소</button>
-                  {register.registerState === "대기" ?
-                    <button className="button_team2_fill" onClick={close}>수정</button>
-                    :
-                    <button className="button_team2_fill" onClick={close}>등록</button>
-                  }
-                </>
-              }
+                {register.register_state === "완료" ?
+                  <>
+                    <button className="button_team2_empty" onClick={close}>확인</button>
+                  </>
+                  :
+                  <>
+                    <button className="button_team2_empty" onClick={close}>취소</button>
+                    {register.register_state === "대기" ?
+                      <button className="button_team2_fill" onClick={updateRegister}>수정</button>
+                      :
+                      <button className="button_team2_fill" onClick={createNewRegister}>등록</button>
+                    }
+                  </>
+                }
               </div>
             </footer>
           </section>

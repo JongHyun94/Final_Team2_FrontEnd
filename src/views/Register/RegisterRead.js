@@ -1,25 +1,23 @@
-import DatePicker from "react-datepicker";
-import { useState } from "react";
-import "react-datepicker/dist/react-datepicker.css";
-import { getYear, getMonth } from "date-fns";
-import setHours from "date-fns/setHours";
-import setMinutes from "date-fns/setMinutes";
-import { registerLocale } from "react-datepicker";
-import ko from 'date-fns/locale/ko';
-
-registerLocale("ko", ko);
-const _ = require('lodash');
-const years = _.range(1990, getYear(new Date()) + 1, 1);
-const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
-
 
 function RegisterRead(props) {
   const noneRegister = {
-    doctorName: "",
-    patientName: "",
-    registerId: "",
-    registerDate: new Date(),
-    registerState: "",
+    register_id: "",
+    register_patient_id: "",
+    register_user_id: "",
+    register_regdate: "",
+    register_date: "",
+    register_starttime: "",
+    register_memo: "",
+    register_communication: "",
+    register_state: "",
+
+    // Add Data
+    patient_name: "",
+    patient_ssn: "",
+    patient_sex: "",
+    patient_tel: "",
+
+    user_name: ""
   };
   var selectedPatient
   if (props.selectedPatient) {
@@ -28,18 +26,10 @@ function RegisterRead(props) {
     selectedPatient = noneRegister;
   }
 
-  // console.log("hi");
-  // console.log(selectedPatient.registerDate);
-
   const showUpdateForm = (event) => {
     props.changeRegister();
   }
 
-  // 진료 날짜 상태
-
-  const [startDate, setStartDate] = useState(selectedPatient.registerDate);
-
-  const [patient, setPatient] = useState();
 
   return (
     <>
@@ -57,7 +47,7 @@ function RegisterRead(props) {
                 환자명:
               </div>
               <div className="RegisterRead_content_list_input">
-                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.patientName} readOnly />
+                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.patient_name} readOnly />
               </div>
             </div>
             <div className="RegisterRead_content_list">
@@ -65,7 +55,7 @@ function RegisterRead(props) {
                 생년월일:
               </div>
               <div className="RegisterRead_content_list_input">
-                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.patientBirth} readOnly />
+                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.patient_ssn} readOnly />
               </div>
             </div>
             <div className="RegisterRead_content_list">
@@ -73,7 +63,7 @@ function RegisterRead(props) {
                 성별:
               </div>
               <div className="RegisterRead_content_list_input">
-                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.patientSex} readOnly />
+                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.patient_sex} readOnly />
               </div>
             </div>
             <div className="RegisterRead_content_list">
@@ -81,7 +71,7 @@ function RegisterRead(props) {
                 전화번호:
               </div>
               <div className="RegisterRead_content_list_input">
-                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.patientTel} readOnly />
+                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.patient_tel} readOnly />
               </div>
             </div>
             <div className="RegisterRead_content_list">
@@ -89,7 +79,7 @@ function RegisterRead(props) {
                 담당의:
               </div>
               <div className="RegisterRead_content_list_input">
-                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.doctorName} readOnly />
+                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.user_name} readOnly />
               </div>
             </div>
             <div className="RegisterRead_content_list">
@@ -97,80 +87,15 @@ function RegisterRead(props) {
                 진료 날짜:
               </div>
               <div className="RegisterRead_content_list_input">
-                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.registerDate} readOnly />
+                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.register_date} readOnly />
               </div>
             </div>
-            {/* <DatePicker
-                  renderCustomHeader={({
-                    date,
-                    changeYear,
-                    changeMonth,
-                    decreaseMonth,
-                    increaseMonth,
-                    prevMonthButtonDisabled,
-                    nextMonthButtonDisabled
-                  }) => (
-                    <div
-                      style={{
-                        margin: 10,
-                        display: "flex",
-                        justifyContent: "center"
-                      }}
-                    >
-                      <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
-                        {"<"}
-                      </button>
-                      <select
-                        value={getYear(date)}
-                        onChange={({ target: { value } }) => changeYear(value)}
-                      >
-                        {years.map(option => (
-                          <option key={option} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-
-                      <select
-                        value={months[getMonth(date)]}
-                        onChange={({ target: { value } }) =>
-                          changeMonth(months.indexOf(value))
-                        }
-                      >
-                        {months.map(option => (
-                          <option key={option} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-
-                      <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
-                        {">"}
-                      </button>
-                    </div>
-                  )}
-                  locale="ko"
-                  showTimeSelect
-                  selected={startDate}
-                  onChange={(date) => {
-                    setStartDate(date);
-                  }
-                  }
-                  placeholderText={startDate}
-                  readOnly
-                  timeIntervals={15}
-                  timeCaption="시간"
-                  minTime={setHours(setMinutes(new Date(), 0), 9)}
-                  maxTime={setHours(setMinutes(new Date(), 45), 17)}
-                  dateFormat="yyyy-MM-dd h:mm"
-                />
-              </div>*/}
             <div className="RegisterRead_content_list">
               <div className="RegisterRead_content_list_label">
                 접수 메모:
               </div>
               <div className="RegisterRead_content_list_input">
-                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.registerMemo} readOnly />
+                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.register_memo} readOnly />
               </div>
             </div>
             <div className="RegisterRead_content_list">
@@ -178,13 +103,13 @@ function RegisterRead(props) {
                 의사소통 메모:
               </div>
               <div className="RegisterRead_content_list_input">
-                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.registerCommunication} readOnly />
+                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.register_communication} readOnly />
               </div>
             </div>
           </form>
           {/* 수정 취소 버튼 */}
           <div className="RegisterRead_content_button">
-            {selectedPatient.registerState === "대기"? <button className="button_team2_fill" onClick={showUpdateForm}>수정</button> : false }
+            {selectedPatient.register_state === "대기" ? <button className="button_team2_fill" onClick={showUpdateForm}>수정</button> : false}
           </div>
         </div>
       </div>
