@@ -4,81 +4,11 @@ import ReactExport from "react-export-excel";
 import InspectionListItem from "./InspectionListItem";
 import { readInspection } from "apis/inspections";
 
-// const inspections = [];
-function getInspections() {
-  const inspections = [];
-  for (var i = 1; i <= 2; i++) {
-    inspections.push({
-      inspectionId: i,
-      inspectionListCategory: "혈액검사",
-      inspectionListSpecimen: "EDTA Blood",
-      inspectionListName: "백혈구 백분율",
-      inspectionResult: "4500",
-      inspectionListReference: "4000~10000ul",
-      inspectionDate: "16:00",
-      inspectionListContainer: "EDTA",
-      inspectionDoctorName: "김더존",
-      inspectionInspectorName: "",
-      inspectionListLab: "검사실1",
-      inspectionState: "검사",
-    });
-  }
-  for (var i = 3; i <= 4; i++) {
-    inspections.push({
-      inspectionId: i,
-      inspectionListCategory: "혈액검사",
-      inspectionListSpecimen: "EDTA Blood",
-      inspectionListName: "백혈구 백분율",
-      inspectionResult: "",
-      inspectionListReference: "4000~10000ul",
-      inspectionDate: "16:00",
-      inspectionListContainer: "EDTA",
-      inspectionDoctorName: "김더존",
-      inspectionInspectorName: "이검사",
-      inspectionListLab: "검사실1",
-      inspectionState: "대기",
-    });
-  }
-  for (var i = 5; i <= 6; i++) {
-    inspections.push({
-      inspectionId: i,
-      inspectionListCategory: "영상검사",
-      inspectionListSpecimen: "x-ray",
-      inspectionListName: "흉부촬영",
-      inspectionResult: "img",
-      inspectionListReference: "",
-      inspectionDate: "17:00",
-      inspectionListContainer: "",
-      inspectionDoctorName: "김더존",
-      inspectionInspectorName: "이검사",
-      inspectionListLab: "검사실2",
-      inspectionState: "완료",
-    });
-  }
-  for (var i = 7; i <= 8; i++) {
-    inspections.push({
-      inspectionId: i,
-      inspectionListCategory: "영상검사",
-      inspectionListSpecimen: "x-ray",
-      inspectionListName: "흉부촬영",
-      inspectionResult: "",
-      inspectionListReference: "",
-      inspectionDate: "17:00",
-      inspectionListContainer: "",
-      inspectionDoctorName: "김더존",
-      inspectionInspectorName: "이검사",
-      inspectionListLab: "검사실2",
-      inspectionState: "대기",
-    });
-  }
-  return inspections;
-}
-
 let inspectionsList = [];
 
 function InspectionList(props) {
-  console.log("검사 상세 내역");
-  console.log(props.treatmentId);
+  //console.log("검사 상세 내역");
+  //console.log(props.treatmentId);
   
   const [inspections, setInspections] = useState(inspectionsList);
 
@@ -90,7 +20,7 @@ function InspectionList(props) {
   const [completeState, setCompleteState] = useState(false);
 
   //검사상태count 를 위한 state (검사상태가 완료인 것 초기값)
-  const [iStateCount, setIStateCount] = useState(getCompleteCount);
+  const [iStateCount, setIStateCount] = useState(0);
 
   // 모달 상태(open일 떄 true로 바뀌어 열림)
   const [modalOpen, setModalOpen] = useState(false);
@@ -105,7 +35,8 @@ function InspectionList(props) {
         completeCount++;
       }
     }
-    return completeCount;
+
+    setIStateCount(completeCount);
   }
   
   const ExcelFile = ReactExport.ExcelFile;
@@ -131,20 +62,27 @@ function InspectionList(props) {
   }
 
   useEffect(() => {
-    getInspections2(props.treatmentId)
-    if (inspections.length === iStateCount) {
-      props.handleFinish();
-    }
+    getInspections2(props.treatmentId);
+  }, [props.treatmentId]);
+
+  useEffect(() => {
+    checkInspections(inspectionsList);
+    getCompleteCount();
   });
 
   const getInspections2 = async (treatmentId) => {
     try {
       const response = await readInspection(treatmentId);
-      inspectionsList = response.data.insepctionList;
+      inspectionsList = response.data.inspectionList;
       setInspections(inspectionsList);
     } catch(error) {
       console.log(error);
     }
+    checkInspections(inspectionsList);
+  };
+
+  const checkInspections = (inspectionsList) => {
+    setInspections(inspectionsList);
   };
 
   const cancelBtn = () => {
@@ -155,6 +93,17 @@ function InspectionList(props) {
   const completeBtn = () => {
     //검사결과: 대기 ~> 완료
     setCompleteState(true);
+
+    console.log("길이", inspections.length);
+    console.log("카운트", iStateCount);
+
+
+    /**** 
+    //count 확인 후, 총검사결과: 검사~>완료 바꿀 istate true로 바꿈
+    if(inspections.length === iStateCount) {
+      props.handleFinish();
+    }
+    */
   };
   //검사상태count++
   const countIState = () => {
@@ -163,12 +112,18 @@ function InspectionList(props) {
 
   //바코드출력 모달
   const openModal = () => {
-    if(inspections[id-1].inspectionListCategory === "혈액검사"){
-      setModalOpen(true);
-    } else {
-      setBarcodeState(true);
-      props.handleBarcodeCheck();
-    }
+    inspections.find((ins) => {
+      if(ins.inspection_id === id){
+        if(ins.inspection_list_category === "혈액검사"){
+          setModalOpen(true);
+          return ins;
+        } else {
+          setBarcodeState(true);
+          props.handleBarcodeCheck();
+          return false;
+        }
+      }
+    })
   };
   const closeCheckModal = () => {
     //모달 안에서 확인버튼
@@ -205,6 +160,21 @@ function InspectionList(props) {
     dataSet = [];
   };
 
+  var inspection_list_specimen = " ";
+  var inspeciton_list_container = " ";
+  var inspection_list_name = " ";
+  var patient_name = " ";
+  var inspection_inspector_name = " ";
+  inspections.find((ins) => {
+    if(ins.inspection_id === id){
+      inspection_list_specimen = ins.inspection_list_specimen;
+      inspeciton_list_container = ins.inspeciton_list_container;
+      inspection_list_name = ins.inspection_list_name;
+      patient_name = ins.patient_name;
+      inspection_inspector_name = ins.inspection_inspector_name;
+    }
+  })
+
   return (
     <div className="InspectionList">
       <div className="InspectionList_title">검사 상세 내역</div>
@@ -220,12 +190,11 @@ function InspectionList(props) {
               open={modalOpen}
               closeCheck={closeCheckModal}
               closeCancel={closeCancelModal}
-              barcodeImg="barcode01.png"
-              inspectionListSpecimen="EDTA Blood"
-              inspectionListContainer="EDTA"
-              inspectionListName="백혈구 백분율"
-              patientName="김환자"
-              inspectionInspectorName="이검사"
+              inspectionListSpecimen={inspection_list_specimen}
+              inspectionListContainer={inspeciton_list_container}
+              inspectionListName={inspection_list_name}
+              patientName={patient_name}
+              inspectionInspectorName={inspection_inspector_name}
             />
           </React.Fragment>
           <button className="button_team2_empty InspectionList_1_2" onClick={cancelBtn}>

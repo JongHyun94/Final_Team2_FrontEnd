@@ -3,10 +3,10 @@ import style from  "./InspectionBarcodeModal.module.css";
 import Barcode from "react-barcode";
 
 function InspectionBarcodeModal(props) {
-  const {open, closeCheck, closeCancel, barcodeImg, inspectionListName, patientName, inspectionInspectorName} = props;
+  const {open, closeCheck, closeCancel, inspectionListName, patientName, inspectionInspectorName} = props;
 
-  const barcodeTem = props.tid+props.inspectionListSpecimen+props.id+props.inspectionListContainer;
-  const barcode = barcodeTem.replace(" ", "");
+  const barcode = props.tid+props.inspectionListSpecimen+props.id+props.inspectionListContainer;
+  //const barcode = barcodeTem.replace(" ", "");
 
   return(
     <div className={style.InspectionModal}>

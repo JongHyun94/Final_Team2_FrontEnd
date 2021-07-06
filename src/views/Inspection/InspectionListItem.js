@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import InspectionImgFormModal from "./components/modal/InspectionImgFormModal";
 import InspectionImgCreateFormModal from "./components/modal/InspectionImgCreateFormModal";
 import InspectionImgModifyFormModal from "./components/modal/InspectionImgModifyFormModal";
+import moment from "moment";
 
 function InspectionListItem(props) {
   //검사 결과(사진 있는 결과의 경우, 사진이 있으면 결과에 img(아무거나) 넣어주기)
@@ -111,7 +112,6 @@ function InspectionListItem(props) {
     props.handleComplete();
   };
   
-
   return (
     <>
       <tr className="InspectionListItem" key={props.inspection.inspection_id} onClick={() => {props.handleChecked(props.inspection.inspection_id)}}>
@@ -184,15 +184,15 @@ function InspectionListItem(props) {
         }
 
         <td className="align-middle">{props.inspection.inspection_list_reference}</td>
-        <td className="align-middle">{props.inspection.inspection_date}</td>
-        {props.inspection.inspection_list_container === "EDTA" ?
-          <td className="align-middle" style={{color:"#8041D9"}}>●{props.inspection.inspection_list_container}</td>
+        <td className="align-middle">{moment(props.inspection.inspection_date).format("HH:mm")}</td>
+        {props.inspection.inspeciton_list_container === "EDTA" ?
+          <td className="align-middle" style={{color:"#8041D9"}}>●{props.inspection.inspeciton_list_container}</td>
           :
-          <td className="align-middle">{props.inspection.inspection_list_container}</td>
+          <td className="align-middle">{props.inspection.inspeciton_list_container}</td>
         }
-        <td className="align-middle">{props.inspection.inspection_doctor_ame}</td>
+        <td className="align-middle">{props.inspection.inspection_doctor_name}</td>
         <td className="align-middle">{props.inspection.inspection_inspector_name}</td>
-        <td className="align-middle">{props.inspection.inspection_list_lab}</td>
+        <td className="align-middle">{props.inspection.inspection_lab}</td>
         {props.inspection.inspection_state === "대기" ?
           <td className="align-middle" style={{color:"#009900"}}>{props.inspection.inspection_state}</td>
           :
