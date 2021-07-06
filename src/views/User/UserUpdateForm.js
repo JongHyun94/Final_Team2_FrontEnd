@@ -2,6 +2,7 @@ import { Modal } from "../../components/common/Address";
 import React, { useEffect, useState } from "react";
 import "./User.css";
 import { updateUser } from "apis/users";
+import moment from "moment";
 
 function UserUpdateForm(props) {
   // 직원 상태
@@ -42,12 +43,15 @@ function UserUpdateForm(props) {
       user_id: props.user.user_id,
       user_name: props.user.user_name,
       user_authority : props.user.user_authority,
+      // user_ssn: props.user.user_ssn1,
       user_ssn1: props.user.user_ssn1,
       user_ssn2: props.user.user_ssn2,
       user_sex: props.user.user_sex,
+      // user_tel: props.user.user_tel1 + "-" + props.user.user_tel2 + "-" + props.user.user_tel3,
       user_tel1: props.user.user_tel1,
       user_tel2: props.user.user_tel2,
       user_tel3: props.user.user_tel3,
+      // user_email: props.user.user_email1 + "@" + props.user.user_email2,
       user_email1: props.user.user_email1,
       user_email2: props.user.user_email2,
       user_zipcode: props.user.user_zipcode,
@@ -231,7 +235,7 @@ function UserUpdateForm(props) {
           </div>
           <div className="User_item">
             <label className="col-sm-3 col-form-label pl-3 p-0">등록 날짜: </label>
-            <div className="col-sm d-flex align-items-center">{user.user_regdate}</div>
+            <div className="col-sm d-flex align-items-center">{moment(user.user_regdate).format("yyyy-MM-DD")}</div>
           </div>
           {userId !== undefined?
           <div className= "d-flex justify-content-end"><button className="button_team2_fill" onClick={handleUpdate}>수정</button></div> 

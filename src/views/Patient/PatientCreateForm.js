@@ -1,21 +1,21 @@
 import { Modal } from "../../components/common/Address";
 import React, { useState } from "react";
+import { createPatient } from "apis/patient";
 
 function PatientCreateForm(props) {
   // 환자 상태
   const [patient, setPatient] = useState({
-    patientName: "", 
-    patientSsn1: "", 
-    patientSsn2: "",
-    patientSex: "", 
-    patientTel: "",
-    patientTel1: "010", 
-    patientTel2: "", 
-    patientTel3: "", 
-    patientZipcode: "", 
-    patientAddress: "", 
-    patientDetailAddress1: "", 
-    patientDetailAddress2: ""
+    patient_name: "", 
+    patient_ssn1: "", 
+    patient_ssn2: "",
+    patient_sex: "", 
+    patient_tel1: "010", 
+    patient_tel2: "", 
+    patient_tel3: "", 
+    patient_zipcode: "", 
+    patient_address: "", 
+    patient_detailaddress1: "", 
+    patient_detailaddress2: ""
   })
   
   // 마스킹 상태
@@ -26,23 +26,26 @@ function PatientCreateForm(props) {
     setPatient({
       ...patient,
       [event.target.name]: event.target.value,
-      patientTel: patient.patientTel1 + "-" + patient.patientTel2 + "-" + patient.patientTel3
     });
   };
 
   const handleChangeSSn = (event) => {
     setPatient({
       ...patient,
-      patientSsn2 : event.target.value
+      patient_ssn2 : event.target.value
     });
     setMasking(event.target.value);
   };
 
   // 환자 등록
-  const handleCreate = (event) => {
-    event.preventDefault();
-    const newPatient = {...patient};
-    console.log("환자 등록: ", newPatient);
+  const handleCreate = async (event) => {
+    try {
+      event.preventDefault();
+      console.log("환자 등록: ", patient);
+      await createPatient(patient);
+    } catch(error) {
+      console.log(error);
+    }    
   }; 
 
   // 모달 상태(open일 떄 true로 바뀌어 열림)
@@ -60,21 +63,21 @@ function PatientCreateForm(props) {
     console.log("send 실행", data);
     setPatient({
       ...patient,
-      patientZipcode: data.zonecode, 
-      patientAddress: data.address
+      patient_zipcode: data.zonecode, 
+      patient_address: data.address
     })
     if (data.buildingName === "") {
       setPatient(prevPatient => {
         return {
           ...prevPatient,
-          patientDetailAddress2: data.bname          
+          patient_detailaddress2: data.bname          
         };
       });
     } else {
       setPatient(prevPatient => {
         return {
           ...prevPatient,
-          patientDetailAddress2: data.bname + ", " + data.buildingName   
+          patient_detailaddress2: data.bname + ", " + data.buildingName   
         };
       });
     }
@@ -88,34 +91,34 @@ function PatientCreateForm(props) {
           <div className="Patient_item">
             <label className="col-sm-3 m-0">환자명: </label>
             <div className="col-sm">
-              <input type="text" name="patientName" placeholder="환자명" onChange={handleChange}></input>
+              <input type="text" name="patient_name" placeholder="환자명" onChange={handleChange}></input>
             </div>
           </div>
           <div className="Patient_item">
             <label className="col-sm-3 m-0">주민등록번호: </label>
             <div className="row ml-3">
-              <input type="text" className="col-sm" name="patientSsn1" placeholder="999999" onChange={handleChange}></input>
+              <input type="text" className="col-sm" name="patient_ssn1" placeholder="999999" onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
               {/* <input type="text" className="col-sm" name="patientSsn2" placeholder="1234567" onChange={handleChange}></input> */}
-              <input type="text" className="col-sm" name="userSsn2" value={masking} placeholder="1234567" 
+              <input type="text" className="col-sm" name="user_ssn2" value={masking} placeholder="1234567" 
               onChange={handleChangeSSn} onBlur={() => {setMasking(masking?.replace(/(?<=.{1})./gi, '*'));}}></input>
             </div>
           </div>
           <div className="Patient_item">
             <label className="col-sm-3 m-0">성별: </label>
             <div className="col-sm d-flex align-items-center">
-              <input type="radio" name="patientSex" value="M" onChange={handleChange}></input>
+              <input type="radio" name="patient_sex" value="M" onChange={handleChange}></input>
               <label className="ml-3 mb-0">남</label>
             </div>
             <div className="col-sm d-flex align-items-center">
-              <input type="radio" name="patientSex" value="F" onChange={handleChange}></input>
+              <input type="radio" name="patient_sex" value="F" onChange={handleChange}></input>
               <label className="ml-3 mb-0">여</label>
             </div>
           </div>
           <div className="Patient_item">
             <label className="col-sm-3 m-0">전화 번호: </label>
             <div className="row col-sm">
-              <select className="col-sm-2 ml-3" name="patientTel1" onChange={handleChange}>
+              <select className="col-sm-2 ml-3" name="patient_tel1" onChange={handleChange}>
                 <option value="010">010</option>
                 <option value="011">011</option>
                 <option value="016">016</option>
@@ -139,25 +142,25 @@ function PatientCreateForm(props) {
                 <option value="064">064</option>
               </select>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm-2" name="patientTel2" onChange={handleChange}></input>
+              <input type="text" className="col-sm-2" name="patient_tel2" onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm-2" name="patientTel3" onChange={handleChange}></input>
+              <input type="text" className="col-sm-2" name="patient_tel3" onChange={handleChange}></input>
             </div>
           </div>
           <div className="Patient_item">
             <label className="col-sm-3 m-0">주소: </label>
             <div className="col-sm">
               <div className="row mb-2"> 
-                <input type="text" className="col-sm-3 ml-3" name="patientZipcode" value={patient.patientZipcode} placeholder="우편번호" onChange={handleChange} readOnly></input>
+                <input type="text" className="col-sm-3 ml-3" name="patient_zipcode" value={patient.patient_zipcode} placeholder="우편번호" onChange={handleChange} readOnly></input>
                 <React.Fragment>
                   <button className="button_team2_empty" onClick={openModal}>우편번호 찾기</button>
                   <Modal open={modalOpen} close={closeModal} send={sendModal}></Modal>
                 </React.Fragment>   
               </div>
-              <input type="text" className="col-sm mb-2" name="patientAddress" placeholder="주소" value={patient.patientAddress} onChange={handleChange} readOnly></input>
+              <input type="text" className="col-sm mb-2" name="patient_address" placeholder="주소" value={patient.patient_address} onChange={handleChange} readOnly></input>
               <div className="row  no-gutters mb-2">
-                <input type="text" className="col-sm mr-2" name="patientDetailAddress1" placeholder="상세주소" onChange={handleChange}></input>
-                <input type="text" className="col-sm" name="patientDetailAddress2" value={patient.patientDetailAddress2} placeholder="참고항목" onChange={handleChange} readOnly></input>
+                <input type="text" className="col-sm mr-2" name="patient_detailaddress1" placeholder="상세주소" onChange={handleChange}></input>
+                <input type="text" className="col-sm" name="patient_detailaddress2" value={patient.patient_detailaddress2} placeholder="참고항목" onChange={handleChange} readOnly></input>
               </div>
             </div>
           </div>
