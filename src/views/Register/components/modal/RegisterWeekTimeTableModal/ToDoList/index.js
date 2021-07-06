@@ -25,7 +25,7 @@ function getToDoList() {
   return someToDoList;
 }
 function ToDoList(props) {
-  const {selectDate} = props;
+  const { selectDate } = props;
   console.log(selectDate);
 
   const [someDay, setSomeDay] = useState(moment(selectDate).format("M/DD"));
@@ -88,8 +88,6 @@ function ToDoList(props) {
     });
     setToDoList(newToDoList);
   };
-
-
 
   return (
     <div className={style.ToDoList}>
