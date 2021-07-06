@@ -2,6 +2,7 @@ import InspectionBarcodeModal from "./components/modal/InspectionBarcodeModal";
 import React, { useEffect, useState } from "react";
 import ReactExport from "react-export-excel";
 import InspectionListItem from "./InspectionListItem";
+import { readInspection } from "apis/inspections";
 
 // const inspections = [];
 function getInspections() {
@@ -17,7 +18,7 @@ function getInspections() {
       inspectionDate: "16:00",
       inspectionListContainer: "EDTA",
       inspectionDoctorName: "김더존",
-      inspectionInspectorName: "박더존",
+      inspectionInspectorName: "",
       inspectionListLab: "검사실1",
       inspectionState: "검사",
     });
@@ -33,7 +34,7 @@ function getInspections() {
       inspectionDate: "16:00",
       inspectionListContainer: "EDTA",
       inspectionDoctorName: "김더존",
-      inspectionInspectorName: "박더존",
+      inspectionInspectorName: "이검사",
       inspectionListLab: "검사실1",
       inspectionState: "대기",
     });
@@ -49,7 +50,7 @@ function getInspections() {
       inspectionDate: "17:00",
       inspectionListContainer: "",
       inspectionDoctorName: "김더존",
-      inspectionInspectorName: "이더존",
+      inspectionInspectorName: "이검사",
       inspectionListLab: "검사실2",
       inspectionState: "완료",
     });
@@ -65,7 +66,7 @@ function getInspections() {
       inspectionDate: "17:00",
       inspectionListContainer: "",
       inspectionDoctorName: "김더존",
-      inspectionInspectorName: "이더존",
+      inspectionInspectorName: "이검사",
       inspectionListLab: "검사실2",
       inspectionState: "대기",
     });
@@ -73,11 +74,13 @@ function getInspections() {
   return inspections;
 }
 
+let inspectionsList = [];
+
 function InspectionList(props) {
   console.log("검사 상세 내역");
   console.log(props.treatmentId);
   
-  const [inspections, setInspections] = useState(getInspections);
+  const [inspections, setInspections] = useState(inspectionsList);
 
   //검사상태: 대기~>검사 을 위한 state
   const [barcodeState, setBarcodeState] = useState(false);
@@ -98,7 +101,7 @@ function InspectionList(props) {
   function getCompleteCount() {
     let completeCount = 0;
     for (var i = 0; i <= inspections.length - 1; i++) {
-      if (inspections[i].inspectionState === "완료") {
+      if (inspections[i].inspection_state === "완료") {
         completeCount++;
       }
     }
@@ -112,27 +115,37 @@ function InspectionList(props) {
   function getDataSet() {
     for(var i=0; i<= inspections.length-1; i++){
       dataSet.push({
-        category: inspections[i].inspectionListCategory,
-        specimen: inspections[i].inspectionListSpecimen,
-        name: inspections[i].inspectionListName,
-        result: inspections[i].inspectionResult,
-        reference: inspections[i].inspectionListReference,
-        date: inspections[i].inspectionDate,
-        container: inspections[i].inspectionListContainer,
-        doctor: inspections[i].inspectionDoctorName,
-        inspector: inspections[i].inspectionInspectorName,
-        lab: inspections[i].inspectionListLab,
+        category: inspections[i].inspection_list_category,
+        specimen: inspections[i].inspection_list_specimen,
+        name: inspections[i].inspection_list_name,
+        result: inspections[i].inspection_result,
+        reference: inspections[i].inspection_list_reference,
+        date: inspections[i].inspection_date,
+        container: inspections[i].inspection_list_container,
+        doctor: inspections[i].inspection_doctor_name,
+        inspector: inspections[i].inspction_inspector_name,
+        lab: inspections[i].inspection_lab,
       });
     }
     return dataSet;
   }
 
   useEffect(() => {
-    setInspections(inspections);
+    getInspections2(props.treatmentId)
     if (inspections.length === iStateCount) {
       props.handleFinish();
     }
   });
+
+  const getInspections2 = async (treatmentId) => {
+    try {
+      const response = await readInspection(treatmentId);
+      inspectionsList = response.data.insepctionList;
+      setInspections(inspectionsList);
+    } catch(error) {
+      console.log(error);
+    }
+  };
 
   const cancelBtn = () => {
     //검사결과: 검사 ~> 대기
@@ -208,11 +221,11 @@ function InspectionList(props) {
               closeCheck={closeCheckModal}
               closeCancel={closeCancelModal}
               barcodeImg="barcode01.png"
-              inspectionListSpecimen={inspections[0].inspectionListSpecimen}
-              inspectionListContainer={inspections[0].inspectionListContainer}
-              inspectionListName={inspections[0].inspectionListName}
+              inspectionListSpecimen="EDTA Blood"
+              inspectionListContainer="EDTA"
+              inspectionListName="백혈구 백분율"
               patientName="김환자"
-              inspectionInspectorName={inspections[0].inspectionInspectorName}
+              inspectionInspectorName="이검사"
             />
           </React.Fragment>
           <button className="button_team2_empty InspectionList_1_2" onClick={cancelBtn}>
@@ -261,7 +274,7 @@ function InspectionList(props) {
               {inspections.map((inspection) => {
                 return (
                   <InspectionListItem
-                    key={inspection.inspectionId}
+                    key={inspection.inspection_id}
                     inspection={inspection}
                     id={id}
                     handleChecked={(inspectionId) => handleChecked(inspectionId)}
