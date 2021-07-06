@@ -38,22 +38,22 @@ function RegisterTimeSchedule(props) {
 
 
   const [startDate, setStartDate] = useState(new Date());
-  
+
   const [selectedRegister, setSelectedRegister] = useState(noneRegister);
-  
+
   //신규 접수 등록 모달
   const [modalOpen, setModalOpen] = useState(false);
   const [headerContent, setHeaderContent] = useState("신규");
-  
-  
+
+
   // 의사별 개인 타임 테이블 모달
-  const [selctedDoctor, setSelectedDoctor] = useState();
+  const [selectedDoctor, setSelectedDoctor] = useState({});
   const [registerWeekTimeTableOpen, setRegisterWeekTimeTableOpen] = useState(false);
-  
+
   //-------------------------------------------------------------
   //버튼 이벤트 처리
   //-------------------------------------------------------------
-  
+
   const changeDateToday = () => {
     setStartDate(new Date());
   }
@@ -76,9 +76,9 @@ function RegisterTimeSchedule(props) {
     setSelectedRegister(noneRegister);
     setRegisterModalOpen(false);
   };
-  
+
   const openRegisterWeekTimeTableOpen = (doctor) => {
-    setSelectedDoctor(doctor.user_name);
+    setSelectedDoctor(doctor);
     setRegisterWeekTimeTableOpen(true);
   };
   const closeRegisterWeekTimeTableOpen = () => {
@@ -113,7 +113,7 @@ function RegisterTimeSchedule(props) {
   //-------------------------------------------------------------
   useEffect(() => {
     getDoctorLists();
-  },[]);
+  }, []);
   useEffect(() => {
     getRegisterLists(moment(startDate).format("yyyy-MM-DD H:m"));
   }, [startDate]);
@@ -146,7 +146,8 @@ function RegisterTimeSchedule(props) {
           <RegisterWeekTimeTableModal
             open={registerWeekTimeTableOpen}
             close={closeRegisterWeekTimeTableOpen}
-            header={"Dr. " + selctedDoctor}
+            header={"Dr. " + selectedDoctor.user_name}
+            selectedDoctor={selectedDoctor}
           />
         </React.Fragment>
       </div>
@@ -206,21 +207,38 @@ function RegisterTimeSchedule(props) {
                   {hours.map((hour, index1) => {
                     return (
                       <div className="RegisterTimeSchedule_content_timetable_doctors_registers_group" key={index1}>
-                        {mins.map((min, index) => {
+                        {mins.map((min, index2) => {
                           return (
-                            <div className="RegisterTimeSchedule_content_timetable_doctors_registers_register" onDoubleClick={openModal} key={index}>
-                              {registers.map((register, index) => {
+                            <div className="RegisterTimeSchedule_content_timetable_doctors_registers_register" onDoubleClick={openModal} key={index2}>
+                              {registers.map((register, index3) => {
                                 //console.log(register.register_date);
                                 //console.log(moment().format("YYYY-MM-DD"));
                                 if ((register.register_user_id === doctor.user_id)
-                                  && (moment(register.register_date).format("YYYY-MM-DD") === (moment(startDate).format("YYYY-MM-DD") + " " + hour + ":" + min))) {
+                                  && (moment(register.register_date).format("YYYY-MM-DD H:m") === (moment(startDate).format("YYYY-MM-DD") + " " + hour + ":" + min))) {
                                   if (register.register_state === "대기") {
                                     if (index < 4 && index1 < 8) {
                                       return (
-                                        <>
+                                        <div
+                                          className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_normal"
+                                          onClick={() => { openRegisterModal(register) }} key={index3}
+                                        >
+                                          {register.patient_name}<br></br>{register.register_state}
+                                          <span className="balloon_ready">
+                                            <div>
+                                              환자명:{register.patient_name}
+                                            </div>
+                                            <div>
+                                              담당의:{register.user_name}
+                                            </div>
+                                          </span>
+                                        </div>
+                                      )
+                                    } else {
+                                      if (index >= 4 && index1 < 8) {
+                                        return (
                                           <div
-                                            className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_normal"
-                                            onClick={() => { openRegisterModal(register) }} key={index}
+                                            className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_upside"
+                                            onClick={() => { openRegisterModal(register) }} key={index3}
                                           >
                                             {register.patient_name}<br></br>{register.register_state}
                                             <span className="balloon_ready">
@@ -232,75 +250,67 @@ function RegisterTimeSchedule(props) {
                                               </div>
                                             </span>
                                           </div>
-                                        </>
-                                      )
-                                    } else {
-                                      if (index >= 4 && index1 < 8) {
-                                        return (
-                                          <>
-                                            <div
-                                              className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_upside"
-                                              onClick={() => { openRegisterModal(register) }} key={index}
-                                            >
-                                              {register.patient_name}<br></br>{register.register_state}
-                                              <span className="balloon_ready">
-                                                <div>
-                                                  환자명:{register.patient_name}
-                                                </div>
-                                                <div>
-                                                  담당의:{register.user_name}
-                                                </div>
-                                              </span>
-                                            </div>
-                                          </>
                                         )
                                       } else if (index < 4 && index1 >= 8) {
                                         return (
-                                          <>
-                                            <div
-                                              className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_rightside"
-                                              onClick={() => { openRegisterModal(register) }} key={index}
-                                            >
-                                              {register.patient_name}<br></br>{register.register_state}
-                                              <span className="balloon_ready">
-                                                <div>
-                                                  환자명:{register.patient_name}
-                                                </div>
-                                                <div>
-                                                  담당의:{register.user_name}
-                                                </div>
-                                              </span>
-                                            </div>
-                                          </>
+                                          <div
+                                            className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_rightside"
+                                            onClick={() => { openRegisterModal(register) }} key={index3}
+                                          >
+                                            {register.patient_name}<br></br>{register.register_state}
+                                            <span className="balloon_ready">
+                                              <div>
+                                                환자명:{register.patient_name}
+                                              </div>
+                                              <div>
+                                                담당의:{register.user_name}
+                                              </div>
+                                            </span>
+                                          </div>
                                         )
                                       } else {
                                         return (
-                                          <>
-                                            <div
-                                              className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_uprightside"
-                                              onClick={() => { openRegisterModal(register) }} key={index}
-                                            >
-                                              {register.patient_name}<br></br>{register.register_state}
-                                              <span className="balloon_ready">
-                                                <div>
-                                                  환자명:{register.patient_name}
-                                                </div>
-                                                <div>
-                                                  담당의:{register.user_name}
-                                                </div>
-                                              </span>
-                                            </div>
-                                          </>
+                                          <div
+                                            className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_uprightside"
+                                            onClick={() => { openRegisterModal(register) }} key={index3}
+                                          >
+                                            {register.patient_name}<br></br>{register.register_state}
+                                            <span className="balloon_ready">
+                                              <div>
+                                                환자명:{register.patient_name}
+                                              </div>
+                                              <div>
+                                                담당의:{register.user_name}
+                                              </div>
+                                            </span>
+                                          </div>
                                         )
                                       }
                                     }
                                   } else if (register.register_state === "완료") {
                                     if (index < 4 && index1 < 8) {
                                       return (
-                                        <>
+                                        <div
+                                          className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_normal"
+                                          onClick={() => { openRegisterModal(register) }} key={index3}
+                                        >
+                                          {register.patient_name}<br></br>{register.register_state}
+                                          <span className="balloon_success">
+                                            <div>
+                                              환자명:{register.patient_name}
+                                            </div>
+                                            <div>
+                                              담당의:{register.user_name}
+                                            </div>
+                                          </span>
+                                        </div>
+                                      )
+                                    } else {
+                                      if (index >= 4 && index1 < 8) {
+                                        return (
                                           <div
-                                            className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_normal"
-                                            onClick={() => { openRegisterModal(register) }} key={index}
+                                            className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_upside"
+                                            onClick={() => { openRegisterModal(register) }} key={index3}
                                           >
                                             {register.patient_name}<br></br>{register.register_state}
                                             <span className="balloon_success">
@@ -312,75 +322,67 @@ function RegisterTimeSchedule(props) {
                                               </div>
                                             </span>
                                           </div>
-                                        </>
-                                      )
-                                    } else {
-                                      if (index >= 4 && index1 < 8) {
-                                        return (
-                                          <>
-                                            <div
-                                              className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_upside"
-                                              onClick={() => { openRegisterModal(register) }} key={index}
-                                            >
-                                              {register.patient_name}<br></br>{register.register_state}
-                                              <span className="balloon_success">
-                                                <div>
-                                                  환자명:{register.patient_name}
-                                                </div>
-                                                <div>
-                                                  담당의:{register.user_name}
-                                                </div>
-                                              </span>
-                                            </div>
-                                          </>
                                         )
                                       } else if (index < 4 && index1 >= 8) {
                                         return (
-                                          <>
-                                            <div
-                                              className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_rightside"
-                                              onClick={() => { openRegisterModal(register) }} key={index}
-                                            >
-                                              {register.patient_name}<br></br>{register.register_state}
-                                              <span className="balloon_success">
-                                                <div>
-                                                  환자명:{register.patient_name}
-                                                </div>
-                                                <div>
-                                                  담당의:{register.user_name}
-                                                </div>
-                                              </span>
-                                            </div>
-                                          </>
+                                          <div
+                                            className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_rightside"
+                                            onClick={() => { openRegisterModal(register) }} key={index3}
+                                          >
+                                            {register.patient_name}<br></br>{register.register_state}
+                                            <span className="balloon_success">
+                                              <div>
+                                                환자명:{register.patient_name}
+                                              </div>
+                                              <div>
+                                                담당의:{register.user_name}
+                                              </div>
+                                            </span>
+                                          </div>
                                         )
                                       } else {
                                         return (
-                                          <>
-                                            <div
-                                              className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_uprightside"
-                                              onClick={() => { openRegisterModal(register) }} key={index}
-                                            >
-                                              {register.patient_name}<br></br>{register.register_state}
-                                              <span className="balloon_success">
-                                                <div>
-                                                  환자명:{register.patient_name}
-                                                </div>
-                                                <div>
-                                                  담당의:{register.user_name}
-                                                </div>
-                                              </span>
-                                            </div>
-                                          </>
+                                          <div
+                                            className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_uprightside"
+                                            onClick={() => { openRegisterModal(register) }} key={index3}
+                                          >
+                                            {register.patient_name}<br></br>{register.register_state}
+                                            <span className="balloon_success">
+                                              <div>
+                                                환자명:{register.patient_name}
+                                              </div>
+                                              <div>
+                                                담당의:{register.user_name}
+                                              </div>
+                                            </span>
+                                          </div>
                                         )
                                       }
                                     }
                                   } else if (register.register_state === "취소") {
                                     if (index < 4 && index1 < 8) {
                                       return (
-                                        <>
+                                        <div
+                                          className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_normal"
+                                          onClick={() => { openRegisterModal(register) }} key={index3}
+                                        >
+                                          {register.patient_name}<br></br>{register.register_state}
+                                          <span className="balloon_cancel">
+                                            <div>
+                                              환자명:{register.patient_name}
+                                            </div>
+                                            <div>
+                                              담당의:{register.user_name}
+                                            </div>
+                                          </span>
+                                        </div>
+                                      )
+                                    } else {
+                                      if (index >= 4 && index1 < 8) {
+                                        return (
                                           <div
-                                            className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_normal"
-                                            onClick={() => { openRegisterModal(register) }} key={index}
+                                            className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_upside"
+                                            onClick={() => { openRegisterModal(register) }} key={index3}
                                           >
                                             {register.patient_name}<br></br>{register.register_state}
                                             <span className="balloon_cancel">
@@ -392,65 +394,40 @@ function RegisterTimeSchedule(props) {
                                               </div>
                                             </span>
                                           </div>
-                                        </>
-                                      )
-                                    } else {
-                                      if (index >= 4 && index1 < 8) {
-                                        return (
-                                          <>
-                                            <div
-                                              className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_upside"
-                                              onClick={() => { openRegisterModal(register) }} key={index}
-                                            >
-                                              {register.patient_name}<br></br>{register.register_state}
-                                              <span className="balloon_cancel">
-                                                <div>
-                                                  환자명:{register.patient_name}
-                                                </div>
-                                                <div>
-                                                  담당의:{register.user_name}
-                                                </div>
-                                              </span>
-                                            </div>
-                                          </>
                                         )
                                       } else if (index < 4 && index1 >= 8) {
                                         return (
-                                          <>
-                                            <div
-                                              className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_rightside"
-                                              onClick={() => { openRegisterModal(register) }} key={index}
-                                            >
-                                              {register.patient_name}<br></br>{register.register_state}
-                                              <span className="balloon_cancel">
-                                                <div>
-                                                  환자명:{register.patient_name}
-                                                </div>
-                                                <div>
-                                                  담당의:{register.user_name}
-                                                </div>
-                                              </span>
-                                            </div>
-                                          </>
+                                          <div
+                                            className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_rightside"
+                                            onClick={() => { openRegisterModal(register) }} key={index3}
+                                          >
+                                            {register.patient_name}<br></br>{register.register_state}
+                                            <span className="balloon_cancel">
+                                              <div>
+                                                환자명:{register.patient_name}
+                                              </div>
+                                              <div>
+                                                담당의:{register.user_name}
+                                              </div>
+                                            </span>
+                                          </div>
                                         )
                                       } else {
                                         return (
-                                          <>
-                                            <div
-                                              className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_uprightside"
-                                              onClick={() => { openRegisterModal(register) }} key={index}
-                                            >
-                                              {register.patient_name}<br></br>{register.register_state}
-                                              <span className="balloon_cancel">
-                                                <div>
-                                                  환자명:{register.patient_name}
-                                                </div>
-                                                <div>
-                                                  담당의:{register.user_name}
-                                                </div>
-                                              </span>
-                                            </div>
-                                          </>
+                                          <div
+                                            className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_uprightside"
+                                            onClick={() => { openRegisterModal(register) }} key={index3}
+                                          >
+                                            {register.patient_name}<br></br>{register.register_state}
+                                            <span className="balloon_cancel">
+                                              <div>
+                                                환자명:{register.patient_name}
+                                              </div>
+                                              <div>
+                                                담당의:{register.user_name}
+                                              </div>
+                                            </span>
+                                          </div>
                                         )
                                       }
                                     }

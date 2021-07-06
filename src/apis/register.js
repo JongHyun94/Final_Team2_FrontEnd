@@ -20,6 +20,12 @@ export function getPatientList(date){
 
 // register 등록하기
 export function createRegister(register){
-  const promise = axios.put("/register", register);
+  const promise = axios.post("/register", register);
+  return promise;
+}
+
+// ToDoList 불러오기
+export function getToDoLists(date, user_id){
+  const promise = axios.get("/register/todolists", {params: {date, user_id}});
   return promise;
 }
