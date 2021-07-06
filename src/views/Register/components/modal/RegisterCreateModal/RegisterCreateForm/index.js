@@ -1,5 +1,5 @@
 import DatePicker from "react-datepicker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { getYear, getMonth } from "date-fns";
 import setHours from "date-fns/setHours";
@@ -7,6 +7,7 @@ import setMinutes from "date-fns/setMinutes";
 import { registerLocale } from "react-datepicker";
 import ko from 'date-fns/locale/ko';
 import style from "./RegisterCreateForm.module.css";
+import moment from "moment";
 
 registerLocale("ko", ko);
 const _ = require('lodash');
@@ -35,7 +36,7 @@ function RegisterCreateForm(props) {
     user_name: "",
   };
   var register;
-  if(props.register){
+  if (props.register) {
     register = props.register;
   } else {
     register = noneRegister;
@@ -45,7 +46,7 @@ function RegisterCreateForm(props) {
     user_hospital_id: "",
     user_password: "",
     user_name: "",
-    user_ssn:"",
+    user_ssn: "",
     user_tel: "",
     user_email: "",
     user_sex: "",
@@ -58,7 +59,7 @@ function RegisterCreateForm(props) {
     user_authority: "",
   };
   var doctors;
-  if(props.doctors){
+  if (props.doctors) {
     doctors = props.doctors;
   } else {
     doctors = noneDoctor;
@@ -74,7 +75,7 @@ function RegisterCreateForm(props) {
 
   const changeNewDoctor = (event) => {
     setNewDoctor(event.target.value);
-    props.setNewRegister({...props.newRegister,register_user_id:event.target.value});
+    props.setNewRegister({ ...props.newRegister, register_user_id: event.target.value });
   };
 
   // 메모 상태 
@@ -82,7 +83,7 @@ function RegisterCreateForm(props) {
 
   const changeMemo = (event) => {
     setNewMemo(event.target.value);
-    props.setNewRegister({...props.newRegister,register_memo:event.target.value});
+    props.setNewRegister({ ...props.newRegister, register_memo: event.target.value });
   };
 
   // 의사소통 메모 상태 
@@ -90,12 +91,15 @@ function RegisterCreateForm(props) {
 
   const changeCMemo = (event) => {
     setNewCMemo(event.target.value);
-    props.setNewRegister({...props.newRegister,register_communication:event.target.value});
+    props.setNewRegister({ ...props.newRegister, register_communication: event.target.value });
   };
 
   let handleColor = (time) => {
     return (time.getHours() > 8 && time.getHours() < 18 ? "hourStyle" : "");
   };
+  useEffect(() => {
+    setNewDoctor(register.register_user_id);
+  },[]);
   return (
     <div className={`${style.RegisterCreateForm_content} border`}>
       {/* 달력 */}
@@ -154,7 +158,7 @@ function RegisterCreateForm(props) {
           selected={startDate}
           onChange={(date) => {
             setStartDate(date);
-            props.setNewRegister({...props.newRegister,register_date:date});
+            props.setNewRegister({ ...props.newRegister, register_date: moment(date).format("yyyy-MM-DD H:mm") });
           }
           }
           timeIntervals={15}

@@ -1,3 +1,4 @@
+import moment from "moment";
 
 function RegisterRead(props) {
   const noneRegister = {
@@ -87,7 +88,7 @@ function RegisterRead(props) {
                 진료 날짜:
               </div>
               <div className="RegisterRead_content_list_input">
-                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.register_date} readOnly />
+                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.register_date? moment(selectedPatient.register_date).format("yyyy-MM-DD H:mm") : ""} readOnly />
               </div>
             </div>
             <div className="RegisterRead_content_list">
