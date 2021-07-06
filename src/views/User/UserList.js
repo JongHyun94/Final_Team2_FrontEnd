@@ -1,50 +1,82 @@
 import { useEffect, useState } from "react";
-import { AutoSizer, List, Table, Column } from "react-virtualized";
+import { AutoSizer, List } from "react-virtualized";
+import { getAllUserList, getUserList } from "apis/users"
 
-function getUserList() {
+function getUserList1() {
   const users = [];
-  for (var i =1; i <= 7; i++) {
-    users.push({userId: i, userName: "직원"+i, userAuthority: "의사", userSsn1: "751026", userSsn2: "1234567", userSex: "M", userTel1: "010", userTel2: "1234", userTel3: "5678", userEmail1: "abcde" + i, userEmail2: "naver.com", userZipcode: "01234", userAddress: "서울 송파구", userDetailAddress1: "12층 1강의실", userDetailAddress2: "아이티벤처타워", userRegDate:"2021-06-01"})
-  }
-  for (i = 8; i <= 12; i++) {
-    users.push({userId: i, userName: "직원"+i, userAuthority: "간호사",  userSsn1: "751026", userSsn2: "2234567", userSex: "F", userTel1: "010", userTel2: "1234", userTel3: "5678", userEmail1: "fghij" + i, userEmail2: "gmail.com", userZipcode: "01234", userAddress: "서울 송파구", userDetailAddress1: "12층 1강의실", userDetailAddress2: "아이티벤처타워", userRegDate:"2021-06-01"})
-  }
-  for (i = 13; i <= 20; i++) {
-    users.push({userId: i, userName: "직원"+i, userAuthority: "임상병리사",  userSsn1: "751026", userSsn2: "1234567", userSex: "M",  userTel1: "010", userTel2: "1234", userTel3: "5678", userEmail1: "klmno" + i, userEmail2: "daum.net", userZipcode: "01234", userAddress: "서울 송파구", userDetailAddress1: "12층 1강의실", userDetailAddress2: "아이티벤처타워", userRegDate:"2021-06-01"})
-  }
+  // for (var i =1; i <= 7; i++) {
+  //   users.push({userId: i, userName: "직원"+i, userAuthority: "의사", userSsn1: "751026", userSsn2: "1234567", userSex: "M", userTel1: "010", userTel2: "1234", userTel3: "5678", userEmail1: "abcde" + i, userEmail2: "naver.com", userZipcode: "01234", userAddress: "서울 송파구", userDetailAddress1: "12층 1강의실", userDetailAddress2: "아이티벤처타워", userRegDate:"2021-06-01"})
+  // }
+  // for (i = 8; i <= 12; i++) {
+  //   users.push({userId: i, userName: "직원"+i, userAuthority: "간호사",  userSsn1: "751026", userSsn2: "2234567", userSex: "F", userTel1: "010", userTel2: "1234", userTel3: "5678", userEmail1: "fghij" + i, userEmail2: "gmail.com", userZipcode: "01234", userAddress: "서울 송파구", userDetailAddress1: "12층 1강의실", userDetailAddress2: "아이티벤처타워", userRegDate:"2021-06-01"})
+  // }
+  // for (i = 13; i <= 20; i++) {
+  //   users.push({userId: i, userName: "직원"+i, userAuthority: "임상병리사",  userSsn1: "751026", userSsn2: "1234567", userSex: "M",  userTel1: "010", userTel2: "1234", userTel3: "5678", userEmail1: "klmno" + i, userEmail2: "daum.net", userZipcode: "01234", userAddress: "서울 송파구", userDetailAddress1: "12층 1강의실", userDetailAddress2: "아이티벤처타워", userRegDate:"2021-06-01"})
+  // }
+
+  // const work = async() => {
+  //   try {
+  //     const response = await getUserList2();
+  //     console.log(response.data.userList)
+  //     for (var i = 0; i < response.data.userList.length; i++) {
+  //       users.push({user_id: response.data.userList[i].user_id});
+  //       console.log(response.data.userList[i].user_id);
+  //     }
+  //   } catch(error) {
+  //     console.log(error);
+  //   }
+  // };
+  // work();
+  
   return users;
 };
 
-function getUsersAuthority(userList) {
-  const userAuthority = [];
-  var count1 = 0;
-  var count2 = 0;
-  var count3 = 0;
-  var countAll = 0;
-  for (var i = 0; i < userList.length; i++) {
-    if(userList[i].userAuthority === "의사") {
-      count1++;
-    } else if(userList[i].userAuthority === "간호사") {
-      count2++;
-    } else if(userList[i].userAuthority === "임상병리사") {
-      count3++;
-    }
-    countAll++;
-  }
-  userAuthority.push(count1);
-  userAuthority.push(count2);
-  userAuthority.push(count3);
-  userAuthority.push(countAll);
 
-  return userAuthority;
-}
 
 function UserList(props) {
   // 직원 목록 상태
-  const [users, setUsers] = useState(getUserList);
-
+  const [users, setUsers] = useState([]);
   // 직원 직책 상태
-  const [userState, setUserState] = useState(() => getUsersAuthority(users));
+  const [userState, setUserState] = useState([]);
+
+  useEffect(() => {
+    const work = async () => {
+      try {
+        const response = await getAllUserList();
+        // console.log(response.data.userList)
+        setUsers(response.data.userList);
+        setUserState(() => getUsersAuthority(response.data.userList));
+      } catch(error) {
+        console.log(error);
+      }
+    };
+    work();
+  }, []);
+
+  // 직원 직책 카운트
+  function getUsersAuthority(userList) {
+    const userAuthority = [];
+    var count1 = 0;
+    var count2 = 0;
+    var count3 = 0;
+    var countAll = 0;
+    for (var i = 0; i < userList.length; i++) {
+      if(userList[i].user_authority === "ROLE_DOCTOR") {
+        count1++;
+      } else if(userList[i].user_authority === "ROLE_NURSE") {
+        count2++;
+      } else if(userList[i].user_authority === "ROLE_INSPECTOR") {
+        count3++;
+      }
+      countAll++;
+    }
+    userAuthority.push(count1);
+    userAuthority.push(count2);
+    userAuthority.push(count3);
+    userAuthority.push(countAll);
+  
+    return userAuthority;
+  };
 
   // 검색 상태
   const [keyword, setKeyword] = useState("");
@@ -54,67 +86,74 @@ function UserList(props) {
 
   const handleChange = (event) => {
     setKeyword(event.target.value);
-    console.log(keyword);
   };
 
   // 검색
-  const handleSearch = (event) => {
-    event.preventDefault();
-    const data = {...keyword};
-    props.search(data);
-    console.log(...keyword);
+  const handleSearch = async (event) => {
+    try {
+      event.preventDefault();
+      // props.search(keyword);
+      console.log(keyword);
+      const response = await getUserList(keyword, "");
+      console.log(response.data.userList)
+      setUsers(response.data.userList);
+    } catch(error) {
+      console.log(error);
+    }
   };
 
   // 직원 선택
   const handleClick = (user) => {
-    setId(user.userId);
+    setId(user.user_id);
     props.changeUser(user)
   };
 
   // 직책 선택
-  const clickAuthority = (authority) => {
-    console.log(authority, "선택");
-   /*  if(authority === "의사") {
-      setUsers(prevUsers => {
-        const newUsers = prevUsers.filter(users => users.userAuthority === "의사");
-        return newUsers;
-      });
-    } else if (authority === "간호사") {
-      setUsers(prevUsers => {
-        const newUsers = prevUsers.filter(users => users.userAuthority === "간호사");
-        return newUsers;
-      });
-    } else if (authority === "임상병리사") {
-      setUsers(prevUsers => {
-        const newUsers = prevUsers.filter(users => users.userAuthority === "임상병리사");
-        return newUsers;
-      });
-    }  else {
-      setUsers(prevUsers => {
-        const newUsers = prevUsers.filter(users => users.userAuthority !== "");
-        return newUsers;
-      });
-    } */
+  const clickAuthority = async (authority) => {
+    try {
+      console.log(authority, "선택");
+      const response = await getUserList("", authority);
+      setUsers(response.data.userList);
+    } catch(error) {
+      console.log(error);
+    }
+    // if(authority === "ROLE_DOCTOR") {
+    //   setUsers(prevUsers => {
+    //     const newUsers = prevUsers.filter(users => users.user_authority === "ROLE_DOCTOR");
+    //     return newUsers;
+    //   });
+    // } else if (authority === "ROLE_NURSE") {
+    //   setUsers(prevUsers => {
+    //     const newUsers = prevUsers.filter(users => users.user_authority === "ROLE_NURSE");
+    //     return newUsers;
+    //   });
+    // } else if (authority === "ROLE_INSPECTOR") {
+    //   setUsers(prevUsers => {
+    //     const newUsers = prevUsers.filter(users => users.user_authority === "ROLE_INSPECTOR");
+    //     return newUsers;
+    //   });
+    // }  else {
+    //   setUsers(prevUsers => {
+    //     const newUsers = prevUsers.filter(users => users.user_authority !== "");
+    //     return newUsers;
+    //   });
+    // } 
   };
-
-  // users가 변동되면 직책 상태 다시 리렌더링
-  useEffect(() => {
-    setUserState((getUsersAuthority(users)));
-  }, [users]);
 
   const rowRenderer = ({index, key, style}) => {
     return (
       <div className="UserList_tr" key={key} style={style} onClick={() => handleClick(users[index])}>
-        <div style={{width: "3%"}} key={users.userId}><input type="checkbox" width={50} checked={id === users[index].userId? true : false} readOnly></input></div>
-        <div style={{width: "11%"}}>{users[index].userId}</div>
-        <div style={{width: "10%"}}>{users[index].userName}</div>
-        <div style={{width: "9%"}}>{users[index].userAuthority}</div>
-        <div style={{width: "9%"}}>{users[index].userSsn1}</div>
-        <div style={{width: "4%"}}>{users[index].userSex}</div>
-        <div style={{width: "16%"}}>{users[index].userTel1} - {users[index].userTel2} - {users[index].userTel3}</div>
-        <div>{users[index].userEmail1}@{users[index].userEmail2}</div>
-        <div style={{width: "35%"}}>{users[index].userAddress} {users[index].userDetailAddress1} ({users[index].userDetailAddress2})</div>
-        <div style={{width: "11%"}}>{users[index].userRegDate}</div>
+        <div style={{width: "3%"}} key={users.user_id}><input type="checkbox" width={50} checked={id === users[index].user_id? true : false} readOnly></input></div>
+        <div style={{width: "11%"}}>{users[index].user_id}</div>
+        <div style={{width: "6%"}}>{users[index].user_name}</div>
+        <div style={{width: "9%"}}>{users[index].user_authority === "ROLE_DOCTOR"? "의사" 
+                                    : (users[index].user_authority === "ROLE_NURSE"? "간호사" : "임상병리사")}</div>
+        <div style={{width: "9%"}}>{users[index].user_ssn1}</div>
+        <div style={{width: "4%"}}>{users[index].user_sex === "M"? "남" : "여"}</div>
+        <div style={{width: "14%"}}>{users[index].user_tel1} - {users[index].user_tel2} - {users[index].user_tel3}</div>
+        <div>{users[index].user_email1}@{users[index].user_email2}</div>
+        <div style={{width: "34%"}}>{users[index].user_address} {users[index].user_detailaddress1} {users[index].user_detailaddress1}</div>
+        <div style={{width: "11%"}}>{new Date(users[index].user_regdate).toLocaleDateString()}</div>
       </div>
     );
   };
@@ -129,17 +168,17 @@ function UserList(props) {
             <button className="button_team2_fill" onClick={handleSearch}>검색</button>
           </div>
           <div className="UserList_content1_2">
-          <div className="pr-3" onClick={() => clickAuthority("전체")} value="전체">전체: {userState[3]}명</div>
-            <div className="pr-3" onClick={() => clickAuthority("의사")} value="의사">의사: {userState[0]}명</div>
-            <div className="pr-3" onClick={() => clickAuthority("간호사")} value="간호사">간호사: {userState[1]}명</div>
-            <div onClick={() => clickAuthority("임상병리사")} value="임상병리사">임상병리사: {userState[2]}명</div>
+          <div className="pr-3" onClick={() => clickAuthority("")}>전체: {userState[3]}명</div>
+            <div className="pr-3" onClick={() => clickAuthority("ROLE_DOCTOR")}>의사: {userState[0]}명</div>
+            <div className="pr-3" onClick={() => clickAuthority("ROLE_NURSE")}>간호사: {userState[1]}명</div>
+            <div onClick={() => clickAuthority("ROLE_INSPECTOR")}>임상병리사: {userState[2]}명</div>
           </div>
         </div>
         <div className="text-center">
             <div className="UserList_Table">
               <div style={{width: "2%"}}></div>
               <div style={{width: "11%"}}>직원 코드</div>
-              <div style={{width: "8%"}}>직원명</div>
+              <div style={{width: "7%"}}>직원명</div>
               <div style={{width: "10%"}}>직책</div>
               <div style={{width: "7%"}}>생년월일</div>
               <div style={{width: "5%"}}>성별</div>

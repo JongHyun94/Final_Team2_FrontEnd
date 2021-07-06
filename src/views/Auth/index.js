@@ -1,6 +1,6 @@
 import { Modal } from "../../components/common/Address";
 import React, { useEffect, useState } from "react";
-import "./Auth.css";
+import style from "./style.module.css";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 
@@ -116,11 +116,11 @@ function Auth(props) {
   };
 
   return (
-    <div className="Auth">
-      <div className={open ? "openModal modal" : "modal"}>
+    <div className={`${style.Auth}`}>
+      <div className={open ? `${style.openModal} ${style.modal}` : `${style.modal}`}>
         {open ? (
           <section>
-            <div className="Auth_header">
+            <div className={`${style.Auth_header}`}>
               <div>회원정보 수정</div>
               <button className="close" onClick={close}>
                 {" "}
@@ -129,29 +129,29 @@ function Auth(props) {
             </div>
             <main>
               <div className={`d-flex justify-content-center`}>
-                <div className="Auth_box">
+                <div className={`${style.Auth_box}`}>
                   <form onSubmit={handleSubmit(handleUpdate)}>
-                    <div className="Auth_content">
+                    <div className={`${style.Auth_content}`}>
                       <label className="col-sm-4 m-0">회원 코드: </label>
                       <div className="col-sm">{user.userId}</div>
                     </div>
-                    <div className="Auth_content">
+                    <div className={`${style.Auth_content}`}>
                       <label className="col-sm-4 m-0">회원 이름: </label>
                       <div className="col-sm">{user.userName}</div>
                     </div>
-                    <div className="Auth_content">
+                    <div className={`${style.Auth_content}`}>
                       <label className="col-sm-4 m-0">직급: </label>
                       <div className="col-sm">{user.userAuthority}</div>
                     </div>
-                    <div className="Auth_content">
+                    <div className={`${style.Auth_content}`}>
                       <label className="col-sm-4 m-0">생년월일: </label>
                       <div className="col-sm">{user.userSsn}</div>
                     </div>
-                    <div className="Auth_content">
+                    <div className={`${style.Auth_content}`}>
                       <label className="col-sm-4 m-0">성별: </label>
                       <div className="col-sm">{user.userSex === "M" ? "남" : "여"}</div>
                     </div>
-                    <div className="Auth_content">
+                    <div className={`${style.Auth_content}`}>
                       <label className="col-sm-4 m-0 pb-3">전화 번호: </label>
                       <div>
                         <div className="row col-sm">
@@ -183,7 +183,7 @@ function Auth(props) {
                           <div className="mr-2 ml-2 d-flex align-items-center">-</div>
                           <input type="text" className="col-sm-3" name="userTel3" value={user.userTel3} ref={register({required: true, minLength:3, maxLength:4})} onChange={handleChange}></input>
                         </div>
-                        <div className={(errors.userTel2 || errors.userTel3)? "Auth_error" : "Auth_noterror"}>
+                        <div className={(errors.userTel2 || errors.userTel3)? `${style.Auth_error}` : `${style.Auth_noterror}`}>
                           {(errors.userTel2 || errors.userTel3)?.type === "required" ? "전화번호를 입력해주세요." 
                           :
                             (errors.userTel2 || errors.userTel3)?.type === "minLength" ? "3자리 이상 작성해주세요." :
@@ -192,7 +192,7 @@ function Auth(props) {
                         </div>
                       </div>
                     </div>
-                    <div className="Auth_content">
+                    <div className={`${style.Auth_content}`}>
                       <label className="col-sm-4 m-0 pb-3">이메일: </label>
                       <div>
                         <div className="row col-sm p-0 m-0">
@@ -207,10 +207,10 @@ function Auth(props) {
                             <option value={email === false? user.userEmail2: ""}>직접입력</option>
                           </select>    
                         </div>                 
-                        <div className={(errors.userEmail1 || errors.userEmail2)? "Auth_error" : "Auth_noterror"}>이메일를 입력해주세요.</div>             
+                        <div className={(errors.userEmail1 || errors.userEmail2)? `${style.Auth_error}` : `${style.Auth_noterror}`}>이메일를 입력해주세요.</div>             
                       </div>
                     </div>
-                    <div className="Auth_content">
+                    <div className={`${style.Auth_content}`}>
                       <label className="col-sm-4 m-0">주소: </label>
                       <div className="col-sm">
                         <div className="row mb-2">
@@ -227,25 +227,25 @@ function Auth(props) {
                         </div>
                       </div>
                     </div>
-                    <div className="Auth_content">
+                    <div className={`${style.Auth_content}`}>
                       <label className="col-sm-4 m-0 pb-3">기존 비밀번호: </label>
                       <div className="col-sm-8 p-0">
                         <input type="password" className="col-sm Auth_password" name="oldPassword" ref={register({required: true})} onChange={handleChange}></input>
-                        <div className={errors.oldPassword? "Auth_error" : "Auth_noterror"}>비밀번호롤 입력하세요.</div>
+                        <div className={errors.oldPassword? `${style.Auth_error}` : `${style.Auth_noterror}`}>비밀번호롤 입력하세요.</div>
                       </div>
                     </div>
-                    <div className="Auth_content">
+                    <div className={`${style.Auth_content}`}>
                       <label className="col-sm-4 m-0 pb-3">새로운 비밀번호: </label>
                       <div className="col-sm-8 p-0">
                         <input type="password" className="col-sm Auth_password" name="newPassword" ref={register({required: true})} onChange={handleChange}></input>
-                        <div className={errors.newPassword? "Auth_error" : "Auth_noterror"}>비밀번호롤 입력하세요.</div>
+                        <div className={errors.newPassword? `${style.Auth_error}` : `${style.Auth_noterror}`}>비밀번호롤 입력하세요.</div>
                       </div>
                     </div>
-                    <div className="Auth_content">
+                    <div className={`${style.Auth_content}`}>
                       <label className="col-sm-4 m-0 pb-3">비밀번호 재입력: </label>
                       <div className="col-sm-8 p-0">
                         <input type="password" className="col-sm Auth_password" name="rePassword" ref={register({required: true})} onChange={handleChange}></input>
-                        <div className={errors.rePassword? "Auth_error" : "Auth_noterror"}>비밀번호롤 입력하세요.</div>
+                        <div className={errors.rePassword? `${style.Auth_error}` : `${style.Auth_noterror}`}>비밀번호롤 입력하세요.</div>
                       </div>
                     </div>
                     <div className="d-flex justify-content-center">

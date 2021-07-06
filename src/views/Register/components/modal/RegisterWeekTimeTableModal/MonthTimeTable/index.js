@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
-import "./MonthTimeTable.css";
+import style from "./MonthTimeTable.module.css";
 import { setDate } from "date-fns";
 
 function MonthTimeTable(props) {
@@ -87,45 +87,45 @@ function MonthTimeTable(props) {
   let selectTodayDate = selectToday.getDate();
 
   return (
-    <div className="MonthTimeTable">
-      <div className="MonthTimeTable_btns">
-        <button className="button_team2_empty MonthTimeTable_btn"
+    <div className={style.MonthTimeTable}>
+      <div className={style.MonthTimeTable_btns}>
+        <button className={`button_team2_empty ${style.MonthTimeTable_btn}`}
           onClick={prevMonth}
         >
           &lt;
         </button>
-        <button className="button_team2_fill MonthTimeTable_btnToday"
+        <button className={`button_team2_fill ${style.MonthTimeTable_btnToday}`}
           onClick={goToday}
         >
           오 늘
         </button>
-        <button className="button_team2_empty MonthTimeTable_btn"
+        <button className={`button_team2_empty ${style.MonthTimeTable_btn}`}
           onClick={nextMonth}
         >
           &gt;
         </button>
       </div>
-      <div className="yearAndMonth">
+      <div className={style.yearAndMonth}>
         {thisYaerAndMonth}
       </div>
-      <div className="days">
-        <div className="day">일</div>
-        <div className="day dayN">월</div>
-        <div className="day dayN">화</div>
-        <div className="day dayN">수</div>
-        <div className="day dayN">목</div>
-        <div className="day dayN">금</div>
-        <div className="day">토</div>
+      <div className={style.days}>
+        <div className={style.day}>일</div>
+        <div className={`${style.day} ${style.dayN}`}>월</div>
+        <div className={`${style.day} ${style.dayN}`}>화</div>
+        <div className={`${style.day} ${style.dayN}`}>수</div>
+        <div className={`${style.day} ${style.dayN}`}>목</div>
+        <div className={`${style.day} ${style.dayN}`}>금</div>
+        <div className={style.day}>토</div>
       </div>
-      <div className="dates">
+      <div className={style.dates}>
         {dates.map((date, index) => {
           if (todayYear === selectTodayYear
             && todayMonth === selectTodayMonth
             && date === selectTodayDate
             && date < index) {
             return (
-              <div className="date" onClick={() => { updateSelectDate(date) }} key={index}>
-                <div className="thisDate">
+              <div className={style.date} onClick={() => { updateSelectDate(date) }} key={index}>
+                <div className={style.thisDate}>
                   {date}
                 </div>
                 <div>
@@ -136,8 +136,8 @@ function MonthTimeTable(props) {
           } else {
             if (index < 7 && date > 7) {
               return (
-                <div className="date" onDoubleClick={prevMonth} key={index}>
-                  <div className="otherDate1">
+                <div className={style.date} onDoubleClick={prevMonth} key={index}>
+                  <div className={style.otherDate1}>
                     {date}
                   </div>
                   <div>
@@ -148,8 +148,8 @@ function MonthTimeTable(props) {
             }
             else if (index > 28 && date < 7) {
               return (
-                <div className="date" onDoubleClick={nextMonth} key={index}>
-                  <div className="otherDate2">
+                <div className={style.date} onDoubleClick={nextMonth} key={index}>
+                  <div className={style.otherDate2}>
                     {date}
                   </div>
                   <div>
@@ -159,8 +159,8 @@ function MonthTimeTable(props) {
               )
             } else {
               return (
-                <div className="date" onClick={() => { updateSelectDate(date) }} key={index}>
-                  <div className="otherDate">
+                <div className={style.date} onClick={() => { updateSelectDate(date) }} key={index}>
+                  <div className={style.otherDate}>
                     {date}
                   </div>
                   <div>

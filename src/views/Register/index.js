@@ -1,36 +1,14 @@
-import { useState } from "react";
+import { getDoctorList, getRegisterList } from "apis/register";
+import { useEffect, useState } from "react";
 import RegisterList from "./RegisterList";
 import RegisterRead from "./RegisterRead";
 import RegisterTimeSchedule from "./RegisterTimeSchedule";
 import RegisterUpdateForm from "./RegisterUpdateForm";
 
-// 부모 상태 
-
-// 임의의 접수 내역 목록 만들기
-// function getRegisters() {
-//   const registers = [];
-//   for (var i = 1; i <= 50; i++) {
-//     // 컬럼 : 순번(index), 예약시간, 접수번호(pk), 환자명, 생년월일, 성별, 담당의, 접수메모, 의사소통메모, 접수상태
-//     registers.push({ 
-//       index: i, 
-//       REGISTER_TIME: "10:" + i, 
-//       REGISTER_ID: "10000" + i,
-//       Patient_Name: "환자" + i,
-//       Patient_Birth: "" + i,
-//       Sex: "F", 
-//       Doctor_Name: "의사" + i,
-//       REGISTER_MEMO: "메모" + i, 
-//       REGISTER_COMMUNICATION: "의사소통메모" + i, 
-//       REGISTER_STATE: "대기"
-//     });
-//   }
-//   return registers;
-// }
-
-
 function Register(props) {
-
-  // 상태 
+  //-------------------------------------------------------------  
+  //상태 선언
+  //-------------------------------------------------------------
 
   // 접수 DB 컬럼 REGISTERS TABLE
   // REGISTER_ID, REGISTER_PATIENT_ID, REGISTER_USER_ID, 
@@ -38,10 +16,7 @@ function Register(props) {
   // REGISTER_MEMO, REGISTER_COMMUNICATION, REGISTER_STATE
 
   // 접수 내역 배열 
-
-  // 접수 상태 (대기, 완료, 취소)
-  // const [registerState, setRegisterState] = useState();
-
+  const [registerList, setRegisterList] = useState();
 
   // 선택된 환자 내용
   const [selectedPatient, setSelectedPatient] = useState({});
@@ -49,6 +24,12 @@ function Register(props) {
   // 접수 상세 내역 & 접수 수정 체인지
   const [registerRead, setRegisterRead] = useState(true);
 
+  // 등록된 의사들 배열
+  const [doctors, setDoctors] = useState([]);
+
+  //-------------------------------------------------------------
+  //버튼 이벤트 처리
+  //-------------------------------------------------------------
   const changeRegister = (event) => {
     if (registerRead === true) {
       setRegisterRead(false);
@@ -64,16 +45,33 @@ function Register(props) {
       setRegisterRead(true);
     }
   };
-  const [today, setToday] = useState();
+  //-------------------------------------------------------------
+  //마운트 및 언마운트에 실행할 내용
+  //-------------------------------------------------------------
+  const getDoctorLists = async () => {
+    try {
+      var list = await getDoctorList();
+      setDoctors(list.data.doctorList);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
+  useEffect(()=>{
+    getDoctorLists();
+  },[]);
 
+  //-------------------------------------------------------------
+  //렌더링 내용
+  //-------------------------------------------------------------
   return (
     <div className="Register">
       {/* 상단 */}
       <div className="Register_1">
         {/* 접수 내역 */}
         <div className="RegisterList">
-          <RegisterList setSelectedPatient={setSelectedPatient} />
+          <RegisterList
+            setSelectedPatient={setSelectedPatient} />
         </div>
         {/* 접수 상세 내역 or 접수 수정*/}
         <div className="RegisterRead">
@@ -89,6 +87,7 @@ function Register(props) {
               changeRegister={changeRegister}
               cancelRegister={cancelRegister}
               selectedPatient={selectedPatient}
+              doctors={doctors}
             />
           }
         </div>

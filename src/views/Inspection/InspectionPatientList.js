@@ -1,52 +1,18 @@
 import { useCallback, useEffect, useState } from "react";
 import { AutoSizer, List, Table } from "react-virtualized";
 import DatePicker from "react-datepicker";
+import moment from "moment";
 import InspectionPatientListItem from "./InspectionPatientListItem";
+import { readPatient } from "apis/inspections";
 
-function getPatient() {
-  const patients = [];
-  for (var i = 1000; i <= 1010; i++) {
-    patients.push({ treatmentId: i, patientName: "환자" + i, patientBirth: "910111", patientSex: "F", treatmentIstate: "대기", treatmentCommunication: "의사소통메모" });
-  }
-  for (var i = 1011; i <= 1020; i++) {
-    patients.push({ treatmentId: i, patientName: "환자" + i, patientBirth: "000323", patientSex: "M", treatmentIstate: "완료", treatmentCommunication: "의사소통메모" });
-  }
-  return patients;
-}
-
-function getIstateWaiting(patients) {
-  let countWaiting = 0;
-  for (var i = 0; i < patients.length; i++) {
-    if (patients[i].treatmentIstate === "대기") {
-      countWaiting++;
-    }
-  }
-  return countWaiting;
-}
-
-function getIstateInspection(patients) {
-  let countInspection = 0;
-  for (var i = 0; i < patients.length; i++) {
-    if (patients[i].treatmentIstate === "검사") {
-      countInspection++;
-    }
-  }
-  return countInspection;
-}
-
-function getIstateCompletion(patients) {
-  let countCompletion = 0;
-  for (var i = 0; i < patients.length; i++) {
-    if (patients[i].treatmentIstate === "완료") {
-      countCompletion++;
-    }
-  }
-  return countCompletion;
-}
+let patientsList = [];
 
 function InspectionPatientList(props) {
+  //DatePicker 상태
   const [treatmentDate, setTreatmentDate] = useState(new Date());
-  const [patients, setPatients] = useState(getPatient);
+  //날짜 이동 상태
+  const [treatmentDate2, setTreatmentDate2] = useState(new Date());
+  const [patients, setPatients] = useState(patientsList);
   const [istateWaiting, setIstateWaiting] = useState(getIstateWaiting(patients));
   const [istateInspection, setIstateInspection] = useState(getIstateInspection(patients));
   const [istateCompletion, setIstateCompletion] = useState(getIstateCompletion(patients));
@@ -55,13 +21,57 @@ function InspectionPatientList(props) {
   const [id, setId] = useState("");
 
   useEffect(() => {
-    setPatients(patients);
-    checkIState();
-  });
+    getPatient2(treatmentDate2);
+  },[treatmentDate2]);
 
-  const searchDateBtn = (event) => {
-    console.log(treatmentDate);
-    console.log("이동 버튼 클릭");
+  useEffect(() => {
+    checkIState(patients);
+  })
+
+  const getPatient2 = async (treatmentDate2) => {
+    try {
+      const response = await readPatient(treatmentDate2);
+      patientsList = response.data.treatmentList;
+      setPatients(patientsList);
+    } catch(error) {
+      console.log(error);
+    }
+  };
+
+  function getIstateWaiting(patients) {
+    let countWaiting = 0;
+    for (var i = 0; i < patients.length; i++) {
+      if (patients[i].treatment_istate === "대기") {
+        countWaiting++;
+      }
+    }
+    return countWaiting;
+  }
+  
+  function getIstateInspection(patients) {
+    let countInspection = 0;
+    for (var i = 0; i < patients.length; i++) {
+      if (patients[i].treatment_istate === "검사") {
+        countInspection++;
+      }
+    }
+    return countInspection;
+  }
+  
+  function getIstateCompletion(patients) {
+    let countCompletion = 0;
+    for (var i = 0; i < patients.length; i++) {
+      if (patients[i].treatment_istate === "완료") {
+        countCompletion++;
+      }
+    }
+    return countCompletion;
+  }
+
+  //날짜 이동 버튼
+  const searchDateBtn = (treatmentDate) => {
+      setTreatmentDate2(moment(treatmentDate).format("yyyy-MM-DD HH:mm"));
+      // getPatient2(treatmentDate2);
   };
 
   //진료 완료 환자 체크(선택)
@@ -70,12 +80,11 @@ function InspectionPatientList(props) {
     props.checkedtId(treatmentId);
   };
 
-  const checkIState = () => {
+  const checkIState = (patients) => {
     setIstateWaiting(getIstateWaiting(patients));
     setIstateInspection(getIstateInspection(patients));
     setIstateCompletion(getIstateCompletion(patients));
   };
-
 
   // const rowRenderer = ({index, key, style}) => {
   //   return (
@@ -92,7 +101,6 @@ function InspectionPatientList(props) {
   //       </tr>
   //   );
   // };
-
   return (
     <div className="InspectionPatientList">
       <div className="InspectionPatientList_title">검사 대기 환자</div>
@@ -103,7 +111,7 @@ function InspectionPatientList(props) {
             <DatePicker locale="ko" dateFormat="yyyy.MM.dd" selected={treatmentDate} onChange={(date) => setTreatmentDate(date)}/>
           </div>
           <div className="InspectionPatientList_1_2_2">
-            <button className="button_team2_fill" onClick={searchDateBtn}>
+            <button className="button_team2_fill" onClick={() => searchDateBtn(treatmentDate)}>
               이동
             </button>
           </div>
@@ -136,7 +144,7 @@ function InspectionPatientList(props) {
             </AutoSizer> */}
               {patients.map((patient) => {
                 return (
-                  <InspectionPatientListItem key={patient.treatmentId} patient={patient} id={id} handleChecked={(treatmentId) => handleChecked(treatmentId)} 
+                  <InspectionPatientListItem key={patient.treatment_id} patient={patient} id={id} handleChecked={(treatmentId) => handleChecked(treatmentId)} 
                                               iState={props.iState} handleBarcodeBack={props.handleBarcodeBack}
                                               iStateFinish={props.iStateFinish} handleFinishBack={props.handleFinishBack}/>
                 );
