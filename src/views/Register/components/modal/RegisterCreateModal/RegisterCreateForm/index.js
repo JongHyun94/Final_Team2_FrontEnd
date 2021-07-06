@@ -6,89 +6,100 @@ import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import { registerLocale } from "react-datepicker";
 import ko from 'date-fns/locale/ko';
+import style from "./RegisterCreateForm.module.css";
 
 registerLocale("ko", ko);
 const _ = require('lodash');
 const years = _.range(1990, getYear(new Date()) + 1, 1);
 const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
 
-function getDoctors(doctors1) {
-  const doctors = [];
-  doctors1.map((doctor) => {
-    doctors.push({
-      doctorName: doctor
-    })
-  });
-  // for (var i = 1; i <= 5; i++) {
-  //   doctors.push({
-  //     doctorName: "김더존(D13801001001)_" + i,
-  //   });
-  // }
-  return doctors;
-}
 
 function RegisterCreateForm(props) {
   const noneRegister = {
-    doctorName: "",
-    patientName: "",
-    registerId: "",
-    registerDate: new Date(),
-    registerState: "",
+    register_id: "",
+    register_patient_id: "",
+    register_user_id: "",
+    register_regdate: "",
+    register_date: new Date(),
+    register_starttime: "",
+    register_memo: "",
+    register_communication: "",
+    register_state: "",
+
+    // Add Data
+    patient_name: "",
+    patient_ssn: "",
+    patient_sex: "",
+    patient_tel: "",
+
+    user_name: "",
   };
-  var register
+  var register;
   if(props.register){
     register = props.register;
   } else {
     register = noneRegister;
   }
+  const noneDoctor = {
+    user_id: "",
+    user_hospital_id: "",
+    user_password: "",
+    user_name: "",
+    user_ssn:"",
+    user_tel: "",
+    user_email: "",
+    user_sex: "",
+    user_zipcode: "",
+    user_address: "",
+    user_detailaddress1: "",
+    user_detailaddress2: "",
+    user_regdate: "",
+    user_enabled: "",
+    user_authority: "",
+  };
+  var doctors;
+  if(props.doctors){
+    doctors = props.doctors;
+  } else {
+    doctors = noneDoctor;
+  }
 
-  const [startDate, setStartDate] = useState(Date.parse(register.registerDate));
+  const [startDate, setStartDate] = useState(new Date());
 
   // 담당의 상태
-  const { doctors1 } = props;
-  const [doctors, setDoctors] = useState(() => getDoctors(doctors1));
+  //const { doctors } = props;
+  const [doctorsList, setDoctorsList] = useState(doctors);
 
   const [newDoctor, setNewDoctor] = useState("담당의를 선택해주세요");
 
   const changeNewDoctor = (event) => {
     setNewDoctor(event.target.value);
-  };
-
-  // 진료 시간 상태
-
-  const [newTime, setNewTime] = useState("진료시간을 선택해주세요");
-
-  const changeNewTime = (event) => {
-    setNewTime(event.target.value);
+    props.setNewRegister({...props.newRegister,register_user_id:event.target.value});
   };
 
   // 메모 상태 
-  const [newMemo, setNewMemo] = useState("");
+  const [newMemo, setNewMemo] = useState(register.register_memo);
 
   const changeMemo = (event) => {
     setNewMemo(event.target.value);
+    props.setNewRegister({...props.newRegister,register_memo:event.target.value});
   };
 
   // 의사소통 메모 상태 
-  const [newCMemo, setNewCMemo] = useState("");
+  const [newCMemo, setNewCMemo] = useState(register.register_communication);
 
   const changeCMemo = (event) => {
     setNewCMemo(event.target.value);
-  };
-
-  // 등록 버튼
-  const createRegister = (event) => {
-    event.preventDefault();
-    console.log("등록");
+    props.setNewRegister({...props.newRegister,register_communication:event.target.value});
   };
 
   let handleColor = (time) => {
     return (time.getHours() > 8 && time.getHours() < 18 ? "hourStyle" : "");
   };
   return (
-    <div className="RegisterCreateForm_content border">
+    <div className={`${style.RegisterCreateForm_content} border`}>
       {/* 달력 */}
-      <div className="RegisterCreateForm_cal">
+      <div className={style.RegisterCreateForm_cal}>
         <DatePicker
           renderCustomHeader={({
             date,
@@ -143,6 +154,7 @@ function RegisterCreateForm(props) {
           selected={startDate}
           onChange={(date) => {
             setStartDate(date);
+            props.setNewRegister({...props.newRegister,register_date:date});
           }
           }
           timeIntervals={15}
@@ -155,17 +167,17 @@ function RegisterCreateForm(props) {
         />
       </div>
       {/* content */}
-      <div className="RegisterCreateForm_input">
+      <div className={style.RegisterCreateForm_input}>
         <form>
           <div>
             <div>의사 이름</div>
             <div>
-              <select className="RegisterCreateForm_input_select" value={register.doctorName} onChange={changeNewDoctor}>
+              <select className={style.RegisterCreateForm_input_select} value={newDoctor} onChange={changeNewDoctor}>
                 <option disabled>담당의를 선택해주세요</option>
                 {/* 임의의 데이터 넣어서 출력 해보기 */}
-                {doctors.map(doctor => {
+                {doctorsList.map(doctor => {
                   return (
-                    <option key={doctor.doctorName} value={doctor.doctorName}>{doctor.doctorName}</option>
+                    <option key={doctor.user_id} value={doctor.user_id}>{doctor.user_name}</option>
                   );
                 })}
               </select>
@@ -173,18 +185,14 @@ function RegisterCreateForm(props) {
           </div>
           <div>
             <div>접수 메모</div>
-            <textarea className="RegisterCreateForm_input_textarea" value={newMemo} onChange={changeMemo}></textarea>
+            <textarea className={style.RegisterCreateForm_input_textarea} value={newMemo} onChange={changeMemo}></textarea>
           </div>
           <div>
             <div>의사소통 메모</div>
-            <textarea className="RegisterCreateForm_input_textarea" value={newCMemo} onChange={changeCMemo}></textarea>
+            <textarea className={style.RegisterCreateForm_input_textarea} value={newCMemo} onChange={changeCMemo}></textarea>
           </div>
         </form>
       </div>
-      {/* 등록 버튼 */}
-      {/* <div className="RegisterCreateForm_button">
-        <button className="button_team2_fill" onClick={createRegister}>등록</button>
-      </div> */}
     </div>
   );
 }

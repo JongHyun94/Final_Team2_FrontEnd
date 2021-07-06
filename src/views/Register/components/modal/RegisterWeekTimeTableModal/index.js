@@ -1,4 +1,4 @@
-import "./RegisterWeekTimeTableModal.css"
+import style from "./RegisterWeekTimeTableModal.module.css"
 import React, { useEffect, useState } from 'react';
 import MonthTimeTable from "./MonthTimeTable";
 import ToDoList from "./ToDoList";
@@ -11,29 +11,29 @@ function RegisterWeekTimeTableModal(props) {
   },[selectDate]);
 
   return (
-    <div className="RegisterWeekTimeTableModal">
-      <div className={open ? 'openModal modal' : 'modal'}>
+    <div className={style.RegisterWeekTimeTableModal}>
+      <div className={open ? `${style.openModal} ${style.modal}`:`${style.modal}`}>
         {open ? (
           <section>
             <header>
-              <div className="RegisterWeekTimeTableModal_header">
+              <div className={style.RegisterWeekTimeTableModal_header}>
                 {header}
               </div>
             </header>
             <main>
-              <div className="Main_content">
-                <div className="RegisterWeekTimeTableModal_main">
+              <div className={style.Main_content}>
+                <div className={style.RegisterWeekTimeTableModal_main}>
                   <MonthTimeTable
                     selectDate={selectDate}
                     setSelectDate={setSelectDate} />
                 </div>
-                <div className="ToDoList_main">
+                <div className={style.ToDoList_main}>
                   <ToDoList selectDate={selectDate} />
                 </div>
               </div>
             </main>
             <footer>
-              <div className="RegisterWeekTimeTableModal_footer">
+              <div className={style.RegisterWeekTimeTableModal_footer}>
                 <button className="button_team2_fill" onClick={close}>확인</button>
               </div>
             </footer>

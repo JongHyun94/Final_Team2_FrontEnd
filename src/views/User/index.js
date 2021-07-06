@@ -7,42 +7,34 @@ function User(props) {
   // 직원 상태
   const [user, setUser] = useState({});
 
-  // 검색 상태
-  const [keyword, setKeyword] = useState("");
-
   function changeUser(user) {
     setUser({
-      userId: user.userId,
-      userName: user.userName,
-      userAuthority: user.userAuthority,
-      userSsn1: user.userSsn1,
-      userSsn2: user.userSsn2,
-      userSex: user.userSex,
-      userTel1: user.userTel1,
-      userTel2: user.userTel2,
-      userTel3: user.userTel3,
-      userEmail1: user.userEmail1,
-      userEmail2: user.userEmail2,
-      userZipcode: user.userZipcode,
-      userAddress: user.userAddress,
-      userDetailAddress1: user.userDetailAddress1,
-      userDetailAddress2: user.userDetailAddress2,
-      userRegDate: user.userRegDate
+      user_id: user.user_id,
+      user_name: user.user_name,
+      user_authority: user.user_authority,
+      user_ssn1: user.user_ssn1,
+      user_ssn2: user.user_ssn2,
+      user_sex: user.user_sex,
+      user_tel1: user.user_tel1,
+      user_tel2: user.user_tel2,
+      user_tel3: user.user_tel3,
+      user_email1: user.user_email1,
+      user_email2: user.user_email2,
+      user_zipcode: user.user_zipcode,
+      user_address: user.user_address,
+      user_detailaddress1: user.user_detailaddress1,
+      user_detailaddress2: user.user_detailaddress2,
+      user_regdate: user.user_regdate
     });
   };
   console.log(user);
-
-  function search(keyword) {
-    setKeyword(keyword);
-    console.log("keyword출력:", keyword);
-  };
 
   return (
     <div className="row no-gutters User">
       {/* 좌측 */}
       <div className="User_left UserList">
         {/* 직원 목록 */}
-        <UserList user={user} changeUser={changeUser} search={search}/>
+        <UserList user={user} changeUser={changeUser}/>
       </div>
 
       {/* 우측 */}
