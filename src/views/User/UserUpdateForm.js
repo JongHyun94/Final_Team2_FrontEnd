@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./User.css";
 import { updateUser } from "apis/users";
 import moment from "moment";
+import { useForm } from "react-hook-form";
 
 function UserUpdateForm(props) {
   // 직원 상태
@@ -14,6 +15,9 @@ function UserUpdateForm(props) {
   
   // 마스킹 상태
   const [masking, setMasking] = useState("");
+  
+  // 유효성 검사를 위한 함수 사용
+  const { handleSubmit, register, errors } = useForm({ mode: "onChange" });
 
   const handleChange = (event) => {
     setUser({
@@ -74,14 +78,16 @@ function UserUpdateForm(props) {
   // 직원 정보 수정
   const handleUpdate = async (event) => {
     try {
-      event.preventDefault();
-      // const updateUser = {...user};
+      // event.preventDefault();
       console.log("직원 정보 수정: ", user);
-      await updateUser(user);
+      const response = await updateUser(user);
+      if(response.data) {
+        alert("직원 정보를 수정 했습니다.");
+      }
     } catch (error) {
       console.log(error);
     }
-  };
+  }; 
 
   // 모달 상태(open일 떄 true로 바뀌어 열림)
   const [modalOpen, setModalOpen] = useState(false);
@@ -122,7 +128,7 @@ function UserUpdateForm(props) {
     <div>
       <div className="User_title">직원 정보 수정</div>
       <div className="border p-2">
-      <form>
+      <form onSubmit={handleSubmit(handleUpdate)}>
           <div className="User_item">
             <label className="col-sm-3 pl-3 p-0 m-0">직원 코드: </label>
             <div className="col-sm d-flex ">{user.user_id}</div>
@@ -130,17 +136,17 @@ function UserUpdateForm(props) {
           <div className="User_item">
             <label className="col-sm-3 pl-3 p-0 m-0">직원명: </label>
             <div className="col-sm">
-              <input type="text" name="user_name" value={user.user_name} placeholder="직원명" onChange={handleChange}></input>
+              <input type="text" name="user_name" value={user.user_name} placeholder="직원명" onChange={handleChange} ref={register({required: true, minLength: 2})}></input>
             </div>
           </div>
           <div className="User_item">
             <label className="col-sm-3 m-0">주민등록번호: </label>
             <div className="row ml-3 mr-0">
-              <input type="text" className="col-sm" name="user_ssn1" value={user.user_ssn1} placeholder="999999" onChange={handleChange}></input>
+              <input type="text" className="col-sm" name="user_ssn1" value={user.user_ssn1} placeholder="999999" onChange={handleChange} ref={register({required: true, minLength: 6, maxLength: 6})}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
               {/* <input type="text" className="col-sm" name="user_ssn2" value={user.user_ssn2} placeholder="1234567" onChange={handleChange}></input> */}
               <input type="text" className="col-sm" name="user_ssn2" value={masking} placeholder="1234567" 
-              onChange={handleChangeSSn} onBlur={() => {setMasking(masking?.replace(/(?<=.{1})./gi, '*'));}}></input>
+                     onChange={handleChangeSSn} onBlur={() => {setMasking(masking?.replace(/(?<=.{1})./gi, '*'));}}></input>
             </div>
           </div>
           <div className="User_item">
@@ -196,17 +202,19 @@ function UserUpdateForm(props) {
                 <option value="064">064</option>
               </select>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm" name="user_tel2" value={user.user_tel2} onChange={handleChange}></input>
+              <input type="text" className="col-sm" name="user_tel2" value={user.user_tel2} onChange={handleChange} ref={register({required: true, minLength: 3, maxLength: 4})}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm" name="user_tel3" value={user.user_tel3} onChange={handleChange}></input>
+              <input type="text" className="col-sm" name="user_tel3" value={user.user_tel3} onChange={handleChange} ref={register({required: true, minLength: 3, maxLength: 4})}></input>
             </div>
           </div>
           <div className="User_item">
             <label className="col-sm-3 m-0">이메일: </label>
             <div className="row ml-3 mr-0">
-              <input type="text" className="col-sm-3 mr-1" name="user_email1" value={user.user_email1} placeholder="ABC1234" onChange={handleChange}></input>
+              <input type="text" className="col-sm-3 mr-1" name="user_email1" value={user.user_email1} placeholder="ABC1234" onChange={handleChange}
+                     ref={register({required: true, pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z]).{2,}$/})}></input>
               <div className="mr-1 d-flex align-items-center">@</div>
-              <input type="text" className="col-sm-4 mr-1" name="user_email2" value={user.user_email2} placeholder="naver.com" onChange={handleChange} disabled={email}></input>
+              <input type="text" className="col-sm-4 mr-1" name="user_email2" value={user.user_email2} placeholder="naver.com" onChange={handleChange}
+                      ref={register({required: true, pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z].{2,}$/})} disabled={email}></input>
               <select className="col-sm-4" name="user_email2" onChange={handleChange} value={user.user_email2}>
                 <option value="naver.com">naver.com</option>
                 <option value="gmail.com">gmail.com</option>
@@ -238,8 +246,8 @@ function UserUpdateForm(props) {
             <div className="col-sm d-flex align-items-center">{moment(user.user_regdate).format("yyyy-MM-DD")}</div>
           </div>
           {userId !== undefined?
-          <div className= "d-flex justify-content-end"><button className="button_team2_fill" onClick={handleUpdate}>수정</button></div> 
-          :<div className= "d-flex justify-content-end" style={{"visibility":"hidden"}}><button className="button_team2_fill" onClick={handleUpdate}>수정</button></div> 
+          <div className= "d-flex justify-content-end"><button className="button_team2_fill" type="submit">수정</button></div> 
+          :<div className= "d-flex justify-content-end" style={{"visibility":"hidden"}}><button className="button_team2_fill">수정</button></div> 
           }
         </form>
       </div>

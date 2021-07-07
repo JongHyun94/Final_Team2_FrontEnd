@@ -2,6 +2,7 @@ import { Modal } from "../../components/common/Address";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { updatePatient } from "apis/patient";
+import { useForm } from "react-hook-form";
 
 function PatientUpdateForm(props) {
   // 환자 상태
@@ -10,11 +11,14 @@ function PatientUpdateForm(props) {
 
   // 마스킹 상태
   const [masking, setMasking] = useState("");
+  
+  // 유효성 검사를 위한 함수 사용
+  const { handleSubmit, register, errors } = useForm({ mode: "onChange" });
 
   const handleChange = (event) => {
     setPatient({
       ...patient,
-      patientId: props.patient.patient_id,
+      patient_id: props.patient.patient_id,
       [event.target.name]: event.target.value
     });
   };
@@ -22,7 +26,7 @@ function PatientUpdateForm(props) {
   const handleChangeSSn = (event) => {
     setPatient({
       ...patient,
-      patientSsn2 : event.target.value
+      patient_ssn2 : event.target.value
     });
     setMasking(event.target.value);
   };
@@ -50,9 +54,12 @@ function PatientUpdateForm(props) {
   // 환자 정보 수정
   const handleUpdate = async (event) => {
     try{
-      event.preventDefault();
+      // event.preventDefault();
       console.log("환자 정보 수정: ", patient);
-      await updatePatient(patient);
+      const response = await updatePatient(patient);
+      if (response.data) {
+        alert("환자 정보를 수정했습니다.");
+      }
     } catch(error) {
       console.log(error);
     }    
@@ -97,7 +104,7 @@ function PatientUpdateForm(props) {
     <div>
       <div className={`Patient_title`}>환자 정보 수정</div>
       <div className={`border p-3`}>
-        <form>
+        <form onSubmit={handleSubmit(handleUpdate)}>
           <div className="Patient_item">
             <label className="col-sm-3 pl-3 p-0 m-0">환자 코드: </label>
             <div className="col-sm d-flex ">{patient.patient_id}</div>
@@ -105,17 +112,17 @@ function PatientUpdateForm(props) {
           <div className="Patient_item">
             <label className="col-sm-3 pl-3 p-0 m-0">환자명: </label>
             <div className="col-sm">
-              <input type="text" name="patient_name" value={patient.patient_name} placeholder="환자명" onChange={handleChange}></input>
+              <input type="text" name="patient_name" value={patient.patient_name} placeholder="환자명" onChange={handleChange} ref={register({required: true, minLength: 2})}></input>
             </div>
           </div>
           <div className="Patient_item">
             <label className="col-sm-3 m-0">주민등록번호: </label>
             <div className="row ml-3">
-              <input type="text" className="col-sm" name="patient_ssn1" value={patient.patient_ssn1} placeholder="999999" onChange={handleChange}></input>
+              <input type="text" className="col-sm" name="patient_ssn1" value={patient.patient_ssn1} placeholder="999999" onChange={handleChange} ref={register({required: true, minLength: 6, maxLength: 6})}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
               {/* <input type="text" className="col-sm" name="patientSsn2" value={patient.patientSsn2} placeholder="1234567" onChange={handleChange}></input> */}
               <input type="text" className="col-sm" name="patient_ssn2" value={masking} placeholder="1234567" 
-              onChange={handleChangeSSn} onBlur={() => {setMasking(masking?.replace(/(?<=.{1})./gi, '*'));}}></input>
+                     onChange={handleChangeSSn} onBlur={() => {setMasking(masking?.replace(/(?<=.{1})./gi, '*'));}}></input>
             </div>
           </div>
           <div className="Patient_item">
@@ -156,9 +163,9 @@ function PatientUpdateForm(props) {
                 <option value="064">064</option>
               </select>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm-2" name="patient_tel2" value={patient.patient_tel2} onChange={handleChange}></input>
+              <input type="text" className="col-sm-2" name="patient_tel2" value={patient.patient_tel2} onChange={handleChange} ref={register({required: true, minLength: 3, maxLength: 4})}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm-2" name="patient_tel3" value={patient.patient_tel3} onChange={handleChange}></input>
+              <input type="text" className="col-sm-2" name="patient_tel3" value={patient.patient_tel3} onChange={handleChange} ref={register({required: true, minLength: 3, maxLength: 4})}></input>
             </div>
           </div>
           <div className="Patient_item">
@@ -183,8 +190,8 @@ function PatientUpdateForm(props) {
             <div className="col-sm d-flex align-items-center">{moment(patient.patient_regdate).format("yyyy-MM-DD")}</div>
           </div>
           {patientId !== undefined?
-          <div className="d-flex justify-content-end"><button className="button_team2_fill" onClick={handleUpdate}>수정</button></div>
-          :<div className="d-flex justify-content-end" style={{"visibility":"hidden"}}><button className="button_team2_fill" onClick={handleUpdate}>수정</button></div>
+          <div className="d-flex justify-content-end"><button className="button_team2_fill" type="submit">수정</button></div>
+          :<div className="d-flex justify-content-end" style={{"visibility":"hidden"}}><button className="button_team2_fill">수정</button></div>
           }
         </form>
       </div>

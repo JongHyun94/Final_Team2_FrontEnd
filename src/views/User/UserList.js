@@ -6,7 +6,7 @@ import moment from "moment";
 function UserList(props) {
   // 직원 목록 상태
   const [users, setUsers] = useState([]);
-  // 직원 직책 상태
+  // 직원 직책 수 상태
   const [userState, setUserState] = useState([]);
 
   useEffect(() => {
@@ -51,6 +51,9 @@ function UserList(props) {
   // 검색 상태
   const [keyword, setKeyword] = useState("");
 
+  // 직책 상태
+  const [authority, setAuthority] = useState("");
+
   // 직원 코드 비교를 위한 상태
   const [id, setId] = useState("");
 
@@ -63,7 +66,7 @@ function UserList(props) {
     try {
       event.preventDefault();
       console.log(keyword);
-      const response = await getUserList(keyword, "");
+      const response = await getUserList(keyword, authority);
       console.log(response.data.userList)
       setUsers(response.data.userList);
     } catch(error) {
@@ -78,35 +81,23 @@ function UserList(props) {
   };
 
   // 직책 선택
-  const clickAuthority = async (authority) => {
+  const clickAuthority = async (selectAtuthority) => {
     try {
-      console.log(authority, "선택");
-      const response = await getUserList("", authority);
-      setUsers(response.data.userList);
+      if (authority !== selectAtuthority) {
+        console.log(selectAtuthority, "선택");
+        setAuthority(selectAtuthority);
+        const response = await getUserList(keyword, selectAtuthority);
+        setUsers(response.data.userList);
+      } else {
+        setAuthority("");
+        setKeyword("");
+        const response = await getAllUserList();
+        setUsers(response.data.userList);
+      }
+      
     } catch(error) {
       console.log(error);
     }
-    // if(authority === "ROLE_DOCTOR") {
-    //   setUsers(prevUsers => {
-    //     const newUsers = prevUsers.filter(users => users.user_authority === "ROLE_DOCTOR");
-    //     return newUsers;
-    //   });
-    // } else if (authority === "ROLE_NURSE") {
-    //   setUsers(prevUsers => {
-    //     const newUsers = prevUsers.filter(users => users.user_authority === "ROLE_NURSE");
-    //     return newUsers;
-    //   });
-    // } else if (authority === "ROLE_INSPECTOR") {
-    //   setUsers(prevUsers => {
-    //     const newUsers = prevUsers.filter(users => users.user_authority === "ROLE_INSPECTOR");
-    //     return newUsers;
-    //   });
-    // }  else {
-    //   setUsers(prevUsers => {
-    //     const newUsers = prevUsers.filter(users => users.user_authority !== "");
-    //     return newUsers;
-    //   });
-    // } 
   };
 
   const rowRenderer = ({index, key, style}) => {
@@ -133,7 +124,7 @@ function UserList(props) {
       <div className="UserList_content border">
         <div className="mb-2 UserList_content1">
           <div className="UserList_content1_1">
-            <input type="text" className="col" name="search" placeholder="이름/생년월일을 입력하세요." onChange={handleChange}></input>
+            <input type="text" className="col" name="search" value={keyword} placeholder="이름/생년월일을 입력하세요." onChange={handleChange}></input>
             <button className="button_team2_fill" onClick={handleSearch}>검색</button>
           </div>
           <div className="UserList_content1_2">
