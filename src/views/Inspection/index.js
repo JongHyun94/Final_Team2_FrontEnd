@@ -48,7 +48,7 @@ function Inspection(props) {
           {/* 검사상세내역 */}
           <InspectionList treatmentId={treatmentId}
                           handleBarcodeCheck={handleBarcodeCheck}
-                          handleFinish={handleFinish} />
+                          handleFinish={handleFinish} handleFinishBack={handleFinishBack} />
         </div>
       </div>
   );

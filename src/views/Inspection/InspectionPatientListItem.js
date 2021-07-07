@@ -16,7 +16,7 @@ function InspectionPatientListItem(props) {
     try {
       if(props.patient.treatment_id === props.id){
         if(props.patient.treatment_istate === "대기"){
-          //props.patient.treatment_istate = "검사";
+          props.patient.treatment_istate = "검사";
             await updateIstateI(props.id);
         }
       }
@@ -32,11 +32,11 @@ function InspectionPatientListItem(props) {
     try {
       if(props.patient.treatment_id === props.id){
         if(props.patient.treatment_istate === "검사"){
-          //props.patient.treatment_istate = "완료";
+          props.patient.treatment_istate = "완료";
             await updateIstateC(props.id);
+          props.handleFinishBack();
         }
       }
-      props.handleFinishBack();
     } catch(error) {
       console.log(error);
     }
