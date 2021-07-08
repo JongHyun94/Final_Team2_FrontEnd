@@ -1,11 +1,77 @@
 import { getDoctorList, getRegisterList } from "apis/register";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import RegisterList from "./RegisterList";
 import RegisterRead from "./RegisterRead";
 import RegisterTimeSchedule from "./RegisterTimeSchedule";
 import RegisterUpdateForm from "./RegisterUpdateForm";
+import Paho from "paho-mqtt";
+import { sendMqttMessage } from "apis/mqtt";
 
 function Register(props) {
+
+
+  ///////////////////////////////////////////////////////////////
+  // MQTT 설정 
+  ///////////////////////////////////////////////////////////////
+
+  //-------------------------------------------------------------  
+  //상태 선언
+  //-------------------------------------------------------------
+
+  const [subTopic, setSubTopic] = useState("/138010/nurse");  // 병원코드/간호사
+  const [prevSubTopic, setPrevSubTopic] = useState("/138010/nurse"); // 병원코드/간호사
+  const [pubMessage, setPubMessage] = useState({
+    topic: "/138010/doctor",
+    content: "addTreatments",  // 진료추가
+  });
+  const [message, setMessage] = useState("");
+
+  //-------------------------------------------------------------
+  //버튼 이벤트 처리
+  //-------------------------------------------------------------
+  let client = useRef(null);
+  const connectMqttBroker = () => {
+    // Paho.Mqtt.Client x
+    client.current = new Paho.Client("localhost", 61614, "client-" + new Date().getTime());
+
+    client.current.onConnectionLost = () => {
+      console.log("Mqtt 접속 끊김");
+    };
+
+    client.current.onMessageArrived = (msg) => {
+      console.log("메시지 수신");
+      var Jmessage = JSON.parse(msg.payloadString);
+      setMessage(() => {
+        return Jmessage;
+      });
+    };
+
+    client.current.connect({
+      onSuccess: () => {
+        client.current.subscribe(subTopic);
+        console.log("Mqtt 접속 성공");
+      }
+    });
+  };
+
+  const disconnectMqttBroker = () => {
+    client.current.disconnect(); // onConnectionLost 실행됨
+  };
+
+  const publishTopic = async () => {
+    await sendMqttMessage(pubMessage);
+  };
+
+  useEffect(() => {
+    connectMqttBroker();
+    console.log("MESSAGE",message);
+  });
+
+  //////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////
+
+
+
   //-------------------------------------------------------------  
   //상태 선언
   //-------------------------------------------------------------
@@ -14,6 +80,9 @@ function Register(props) {
   // REGISTER_ID, REGISTER_PATIENT_ID, REGISTER_USER_ID, 
   // REGISTER_REGDATE, REGISTER_DATE, REGISTER_TIME, 
   // REGISTER_MEMO, REGISTER_COMMUNICATION, REGISTER_STATE
+
+  // 위아래 공통 날짜
+  const [registerDate, setRegisterDate] = useState(new Date());
 
   // 접수 내역 배열 
   const [registerList, setRegisterList] = useState();
@@ -74,7 +143,9 @@ function Register(props) {
         {/* 접수 내역 */}
         <div className="RegisterList">
           <RegisterList
-            setSelectedPatient={setSelectedPatient} />
+            setSelectedPatient={setSelectedPatient} 
+            registerDate={registerDate}
+            setRegisterDate={setRegisterDate}/>
         </div>
         {/* 접수 상세 내역 or 접수 수정*/}
         <div className="RegisterRead">
@@ -102,7 +173,9 @@ function Register(props) {
         </div>
         <div className="Register_Components border">
           <div className="RegisterTimeSchedule">
-            <RegisterTimeSchedule />
+            <RegisterTimeSchedule 
+            registerDate={registerDate}
+            setRegisterDate={setRegisterDate}/>
           </div>
         </div>
       </div>

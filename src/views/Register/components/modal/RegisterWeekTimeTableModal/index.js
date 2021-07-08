@@ -38,7 +38,7 @@ function RegisterWeekTimeTableModal(props) {
                     setSelectDate={setSelectDate} />
                 </div>
                 <div className={style.ToDoList_main}>
-                  <ToDoList selectDate={selectDate} selectedDoctor={selectedDoctor} />
+                  <ToDoList selectDate={selectDate} setSelectDate={setSelectDate} selectedDoctor={selectedDoctor} />
                 </div>
               </div>
             </main>

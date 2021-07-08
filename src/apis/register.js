@@ -3,8 +3,8 @@ import axios from "axios";
 /* Register  ------------------------------------------------------------- */
 
 // register 불러오기 
-export function getRegisterList(date){
-  const promise = axios.get("/register", {params: {date}});
+export function getRegisterList(date, state=""){
+  const promise = axios.get("/register", {params: {date, state}});
   return promise;
 }
 

@@ -80,14 +80,26 @@
 .RegisterList_content_1_2_total{
   color: black;
 }
+.RegisterList_content_1_2_total:hover{
+  cursor: pointer;
+}
 .RegisterList_content_1_2_ready {
   color: #009900;
+}
+.RegisterList_content_1_2_ready:hover{
+  cursor: pointer;
 }
 .RegisterList_content_1_2_finish {
   color: #00aaf0;
 }
+.RegisterList_content_1_2_finish:hover{
+  cursor: pointer;
+}
 .RegisterList_content_1_2_cancel {
   color: #ff6600;
+}
+.RegisterList_content_1_2_cancel:hover{
+  cursor: pointer;
 }
 .RegisterList_content_1_3 {
   display: flex;
