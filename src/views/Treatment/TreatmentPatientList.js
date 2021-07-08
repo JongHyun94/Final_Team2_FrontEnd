@@ -65,7 +65,7 @@ const getState = (patientlists) => {
   }, [patientlists]);
 
   useEffect(() => {
-    console.log(message);
+    console.log("받습니다",message);
   },[props])
 
   return (
