@@ -101,7 +101,7 @@ function InspectionListItem(props) {
     try {
       if(props.inspection.inspection_id === props.id){
         if(props.inspection.inspection_state === "대기"){
-          props.inspection.inspection_state = "검사";
+          //props.inspection.inspection_state = "검사";
             await updateState(props.id, "검사");
         }
       }
@@ -116,7 +116,7 @@ function InspectionListItem(props) {
     try {
       if(props.inspection.inspection_id === props.id){
         if(props.inspection.inspection_state === "검사"){
-          props.inspection.inspection_state = "대기";
+          //props.inspection.inspection_state = "대기";
             await updateState(props.id, "대기");
         }
       }
@@ -131,7 +131,7 @@ function InspectionListItem(props) {
     try {
       if(props.inspection.inspection_id === props.id){
         if(props.inspection.inspection_state === "검사"){
-          props.inspection.inspection_state = "완료";
+          //props.inspection.inspection_state = "완료";
             await updateState(props.id, "완료");
           //검사상태count ++
           props.countIState();
@@ -174,7 +174,8 @@ function InspectionListItem(props) {
               :
             <td className="align-middle">
               <div>
-                <input type="text" value={inspectionR || props.inspection.inspection_result} onChange={handleResultChange} style={{width:"70px"}}/>
+                {/* <input type="text" value={inspectionR || props.inspection.inspection_result} onChange={handleResultChange} style={{width:"70px"}}/> */}
+                <input type="text" value={inspectionR} onChange={handleResultChange} style={{width:"70px"}}/>
                 <button className="button_team2_fill" onClick={inspectionRModify}>수정</button>
               </div>
             </td>
