@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect   } from "react";
+import { updateTreatment, getSearchDurg, getCategoryInspectionList  } from "apis/treatments";
 
 function getDrugList() {
   const druglists = [
-    { drugInjectionId: "NIZA15", drugInjectionName: "AXID Cap 150mg", drugInjectionState: "약품" },
-    { drugInjectionId: "IRES", drugInjectionName: "IRESSA Tab 250mg", drugInjectionState: "약품" },
-    { drugInjectionId: "ROPIN1", drugInjectionName: "ONIROL Tab 1mg", drugInjectionState: "약품" },
-    { drugInjectionId: "ROXN", drugInjectionName: "ROXAN Cap 75mg", drugInjectionState: "주사" },
-    { drugInjectionId: "NIZA16", drugInjectionName: "AXID Cap 150mg", drugInjectionState: "약품" },
-    { drugInjectionId: "NIZA17", drugInjectionName: "AXID Cap 150mg", drugInjectionState: "약품" },
-    { drugInjectionId: "NIZA18", drugInjectionName: "AXID Cap 150mg", drugInjectionState: "약품" },
-    { drugInjectionId: "NIZA19", drugInjectionName: "AXID Cap 150mg", drugInjectionState: "약품" },
-    { drugInjectionId: "NIZA20", drugInjectionName: "AXID Cap 150mg", drugInjectionState: "약품" },
-    { drugInjectionId: "NIZA21", drugInjectionName: "AXID Cap 150mg", drugInjectionState: "약품" },
-    { drugInjectionId: "NIZA22", drugInjectionName: "AXID Cap 150mg", drugInjectionState: "약품" },
+    { drug_injection_list_id: "NIZA15", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
+    { drug_injection_list_id: "IRES", drug_injection_list_name: "IRESSA Tab 250mg", drug_injection_list_category: "약품" },
+    { drug_injection_list_id: "ROPIN1", drug_injection_list_name: "ONIROL Tab 1mg", drug_injection_list_category: "약품" },
+    { drug_injection_list_id: "ROXN", drug_injection_list_name: "ROXAN Cap 75mg", drug_injection_list_category: "주사" },
+    { drug_injection_list_id: "NIZA16", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
+    { drug_injection_list_id: "NIZA17", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
+    { drug_injection_list_id: "NIZA18", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
+    { drug_injection_list_id: "NIZA19", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
+    { drug_injection_list_id: "NIZA20", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
+    { drug_injection_list_id: "NIZA21", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
+    { drug_injection_list_id: "NIZA22", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
   ];
   return druglists;
 }
@@ -61,9 +62,41 @@ function TreatmentCreateForm(props) {
   const [cmemo, setCmemo] = useState("");
 
   //검사 checkbox
-  const [inspectionlist, setInspectionlist] = useState(getInspectionList);
-
+  const [inspectionlist, setInspectionlist] = useState([]);
   const [inspectionOption, setInspectionOption] = useState("진단 검사 선택");
+  // const [inspectionOption, setInspectionOption] = useState(["진단 검사 선택"]);
+  const [druglists, setDrugLists] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState();
+
+  const getCategoryInspectionLists = async (categoryValue) => {
+    try{
+      console.log("buy",categoryValue);
+      var list = await getCategoryInspectionList(categoryValue);
+      console.log("hi",list);
+      setInspectionlist(list.data.inspectionList);
+    }catch (e){
+      console.log(e);
+    }
+  }
+  useEffect(() => {
+    getCategoryInspectionLists(inspectionOption);
+  }, [inspectionOption]);
+
+
+  const getSearchDurgs = async () => {
+    try{
+      var list = await getSearchDurg();
+      setDrugLists(list.data.druglist);
+    }catch (e){
+      console.log(e);
+    }
+  }
+  // 마운트될때 전체 출력이 된다
+  useEffect(() => {
+    getSearchDurgs();
+  }, []);
+
+
 
   const handleChangeSmemo = (event) => {
     console.log("Subjective:", event.target.value);
@@ -97,7 +130,18 @@ function TreatmentCreateForm(props) {
   };
   // console.log(inspectionOption);
 
-  const [druglists, setDrugLists] = useState(getDrugList);
+ const changeKeyword = (event) => {
+    setSearchKeyword(event.target.value);
+ };
+
+ const searchClick = async () =>{
+  try{
+    var list = await getSearchDurg(searchKeyword);
+    setDrugLists(list.data.druglist);
+  }catch (e){
+
+  }
+ };
 
   // 모달 상태(open일 떄 true로 바뀌어 열림)
   const [modalOpen, setModalOpen] = useState(false);
@@ -109,32 +153,32 @@ function TreatmentCreateForm(props) {
     setModalOpen(false);
   };
 
-const [treatment, setTreatment] = useState({
-  smemo: "", 
-  omemo: "", 
-  amemo: "",
-  pmemo: "", 
-  cmemo: "",
-  inspectionId: "", 
-  druglists: ""
-})
 
+// const handleCreate = (event) => {
+//   event.preventDefault();
+//   const newTreatment = {...treatment};
+//   console.log("진료 등록: ", newTreatment);
+// };
 
-const handleCreate = (event) => {
+const updateTreatmentBtn = (event) => {
   event.preventDefault();
-  const newTreatment = {...treatment};
-  console.log("진료 등록: ", newTreatment);
-}
-
+  let newTreatment = {
+    treatment_smemo: smemo, 
+    treatment_omemo: omemo, 
+    treatment_amemo: amemo,
+    treatment_pmemo: pmemo, 
+    treatment_communication: cmemo
+  };
+};
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <div className="TreatmentCreateForm_title">
           {/* 진료 등록<button type="submit" className="button_team2_fill">진료완료</button> */}
-          <div className="TreatmentCreateForm_title_1"> {checkedPatientlist.registerPatientName} 님 진료 등록 </div>
+          <div className="TreatmentCreateForm_title_1"> {checkedPatientlist.patient_name} 님 진료 등록 </div>
           <div className="TreatmentCreateForm_title_2">
-            <button type="submit" className="button_team2_fill" onClick={openModal}>
+            <button type="submit" className="button_team2_fill" onClick={updateTreatmentBtn}>
               진료완료
             </button>
           </div>
@@ -178,12 +222,12 @@ const handleCreate = (event) => {
                 {/* 검사별 상태 만들어서 전달, 조건문으로 맵 돌리기 */}
 
                 <div className="TreatmentCreateForm_checkbox">
-                  {inspectionlist.map((inspectionlist) => {
+                  {inspectionlist.map((inspection) => {
                     return (
-                      <div key={inspectionlist.inspection}>
-                        {inspectionlist.inspectioncategory === inspectionOption ? (
+                      <div key={inspection.inspection_list_name}>
+                        {inspection.inspection_list_category === inspectionOption ? (
                           <div className="TreatmentCreateForm_checkbox_1" >
-                            <input type="checkbox" /> {inspectionlist.inspection}
+                            <input type="checkbox" /> {inspection.inspection_list_name}
                           </div>
                         ) : (
                           false
@@ -199,8 +243,8 @@ const handleCreate = (event) => {
               <div className="TreatmentCreateForm_2_2_title">약품 목록</div>
               <div className="TreatmentCreateForm_2_2_content">
                 <div className="TreatmentSearch_1">
-                  <input type="text" className="TreatmentSearch_1_1" />
-                  <button className="button_team2_fill">검색</button>
+                  <input type="text" className="TreatmentSearch_1_1" onChange={changeKeyword} value={searchKeyword}/>
+                  <button className="button_team2_fill" onClick={searchClick}>검색</button>
                 </div>
                 <div className="TreatmentSearch_2_Totaltable">
                 <table className="table TreatmentSearch_2">
@@ -215,13 +259,13 @@ const handleCreate = (event) => {
                   <tbody>
                     {druglists.map((druglist) => {
                       return (
-                        <tr className="TreatmentSearch_2_2_tr" key={druglist.drugInjectionId}>
+                        <tr className="TreatmentSearch_2_2_tr" key={druglist.drug_injection_list_id}>
                           <td>
                             <input type="checkbox" />
                           </td>
-                          <th>{druglist.drugInjectionId}</th>
-                          <th>{druglist.drugInjectionName}</th>
-                          <th>{druglist.drugInjectionState}</th>
+                          <th>{druglist.drug_injection_list_id}</th>
+                          <th>{druglist.drug_injection_list_name}</th>
+                          <th>{druglist.drug_injection_list_category}</th>
                         </tr>
                       );
                     })}

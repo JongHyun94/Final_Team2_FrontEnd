@@ -3,7 +3,7 @@ import "./Treatment.css";
 import TreatmentCreateForm from "./TreatmentCreateForm";
 import TreatmentHistoryList from "./TreatmentHistoryList";
 import TreatmentPatientList from "./TreatmentPatientList";
-import { getTreatmentPatientList } from "apis/treatments";
+
 
 let treatmentList = [];
 
@@ -36,17 +36,20 @@ function getPatientlists() {
 
 function Treatment(props) {
   // 위에 생성한 환자 리스트
-  const [patientlists, setPatientlists] = useState([]);
+  // const [patientlists, setPatientlists] = useState([]);
 
+ 
+  
   //진료 대기리스트에서 체크된 환자 정보
   const [checkedpatient, setCheckedpatient] = useState("");
+
 
   return (
     <div className="Treatment">
       <div className="TreatmentLeft">
         {/* 진료 대기 환자 */}
         <div className="TreatmentPatientList">
-          <TreatmentPatientList patientlists={patientlists} setCheckedpatient={setCheckedpatient} />
+          <TreatmentPatientList setCheckedpatient={setCheckedpatient} />
         </div>
         {/* 진료 기록 */}
         <div className="TreatmentHistoryList">
