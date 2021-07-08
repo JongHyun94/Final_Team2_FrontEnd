@@ -1,7 +1,7 @@
 import { Modal } from "../../components/common/Address";
 import React, { useEffect, useState } from "react";
 import "./User.css";
-import { updateUser } from "apis/users";
+import { deleteUser, updateUser } from "apis/users";
 import moment from "moment";
 import { useForm } from "react-hook-form";
 
@@ -9,6 +9,9 @@ function UserUpdateForm(props) {
   // 직원 상태
   const [user, setUser] = useState({});
   const [userId, setUserId] = useState("");
+  const [userRegdate, setUserRegdate] = useState("");
+  const date = user.user_regdate;
+  // console.log("###", date.substring(0,11));
 
   // 이메일 비교 상태
   const [email, setEmail] = useState(true);
@@ -65,6 +68,7 @@ function UserUpdateForm(props) {
       user_regdate: props.user.user_regdate
     });
     setUserId(props.user.user_id);
+    setUserRegdate(date);
   }, [props]);
 
   useEffect(() => {
@@ -88,6 +92,16 @@ function UserUpdateForm(props) {
       console.log(error);
     }
   }; 
+
+  // 직원 삭제
+  const handleDelete = async (event) => {
+    try {
+      await deleteUser(userId);
+      alert("해당 직원을 삭제했습니다.");
+    } catch(error) {
+      console.log(error);
+    }
+  }
 
   // 모달 상태(open일 떄 true로 바뀌어 열림)
   const [modalOpen, setModalOpen] = useState(false);
@@ -243,10 +257,13 @@ function UserUpdateForm(props) {
           </div>
           <div className="User_item">
             <label className="col-sm-3 col-form-label pl-3 p-0">등록 날짜: </label>
-            <div className="col-sm d-flex align-items-center">{moment(user.user_regdate).format("yyyy-MM-DD")}</div>
+            <div className="col-sm d-flex align-items-center">{userRegdate}</div>
           </div>
           {userId !== undefined?
-          <div className= "d-flex justify-content-end"><button className="button_team2_fill" type="submit">수정</button></div> 
+          <div className= "d-flex justify-content-end">
+            <button className="button_team2_fill" type="submit">수정</button>
+            <div className="button_team2_empty" onClick={handleDelete}>삭제</div>
+          </div> 
           :<div className= "d-flex justify-content-end" style={{"visibility":"hidden"}}><button className="button_team2_fill">수정</button></div> 
           }
         </form>

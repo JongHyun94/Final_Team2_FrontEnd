@@ -31,3 +31,8 @@ export function updateUserInfo(user) {
   const promise = axios.put("/user/update", user);
   return promise;
 }
+
+export function deleteUser(user_id) {
+  console.log("탈퇴", user_id);
+  return axios.delete("/user", {params: {user_id}});
+}
