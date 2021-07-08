@@ -4,9 +4,7 @@ import moment from "moment";
 import { createToDoLists, deleteToDoLists, getToDoLists, updateToDoLists } from "apis/register";
 
 function ToDoList(props) {
-  const { selectedDoctor, selectDate, setSelectDate} = props;
-
-  const [someDay, setSomeDay] = useState("");
+  const { selectedDoctor, selectDate, setSelectDate, setPubMessage, publishTopic} = props;
 
   const [inputText, setInputText] = useState("");
   const [toDoList, setToDoList] = useState([]);
@@ -27,6 +25,8 @@ function ToDoList(props) {
 
     try {
       var list = await createToDoLists(newSchedule);
+      setPubMessage({ topic: "/138010/doctor", content: "refreshToDoList"});
+      publishTopic();
       //console.log(list.data.result);
     } catch (e) {
       console.log(e);
@@ -48,14 +48,16 @@ function ToDoList(props) {
   };
 
   const changeYet = async (id) => {
-    console.log(id);
+    //console.log(id);
     const updateSchedule = {
       schedule_id: id,
       schedule_state: "완료",
     };
     try {
       var list = await updateToDoLists(updateSchedule);
-      console.log(list.data.result);
+      //console.log(list.data.result);
+      setPubMessage({ topic: "/138010/doctor", content: "refreshToDoList"});
+      publishTopic();
     } catch (e) {
       console.log(e);
     }
@@ -70,14 +72,16 @@ function ToDoList(props) {
     // setToDoList(newToDoList);
   };
   const changeDone = async (id) => {
-    console.log(id);
+    //console.log(id);
     const updateSchedule = {
       schedule_id: id,
       schedule_state: "대기",
     };
     try {
       var list = await updateToDoLists(updateSchedule);
-      console.log(list.data.result);
+      //console.log(list.data.result);
+      setPubMessage({ topic: "/138010/doctor", content: "refreshToDoList"});
+      publishTopic();
     } catch (e) {
       console.log(e);
     }
@@ -95,7 +99,9 @@ function ToDoList(props) {
 
     try {
       var list = await deleteToDoLists(id);
-      console.log(list.data.result);
+      //console.log(list.data.result);
+      setPubMessage({ topic: "/138010/doctor", content: "refreshToDoList"});
+      publishTopic();
     } catch (e) {
       console.log(e);
     }
@@ -108,7 +114,7 @@ function ToDoList(props) {
   const getToDoList = async (schedule_regdate, schedule_user_id) => {
     try {
       var list = await getToDoLists(schedule_regdate, schedule_user_id);
-      console.log(list.data.todolist);
+      //console.log(list.data.todolist);
       setToDoList(list.data.todolist);
     } catch (e) {
       console.log(e);
@@ -120,16 +126,16 @@ function ToDoList(props) {
   //-------------------------------------------------------------
 
   useEffect(()=>{
+    getToDoList(selectDate, selectedDoctor.user_id);
     return() => {
       setSelectDate(moment().format("yyyy-MM-DD"));
     };
   },[]);
+
   useEffect(() => {
-    setSomeDay(selectDate ? selectDate : new Date());
+    setSelectDate(selectDate ? selectDate : new Date());
+    getToDoList(selectDate, selectedDoctor.user_id);
   }, [props]);
-  useEffect(() => {
-    getToDoList(someDay, selectedDoctor.user_id);
-  }, [someDay]);
 
   //-------------------------------------------------------------
   //렌더링 내용
@@ -141,7 +147,7 @@ function ToDoList(props) {
           <h2>To Do List</h2>
         </div>
         <div className={style.ToDoList_header_date}>
-          {someDay}
+          {selectDate}
         </div>
         <div className={style.ToDoList_header_inputLabel}>
           <div className={style.ToDoList_header_inputLabel_input}>

@@ -18,7 +18,7 @@ function RegisterTimeSchedule(props) {
     register_patient_id: "",
     register_user_id: "",
     register_regdate: "",
-    register_date: "",
+    register_date: new Date(),
     register_starttime: "",
     register_memo: "",
     register_communication: "",
@@ -36,7 +36,7 @@ function RegisterTimeSchedule(props) {
   //-------------------------------------------------------------  
   //상태 선언
   //-------------------------------------------------------------
-  const {registerDate, setRegisterDate} = props;
+  const {registerDate, setRegisterDate, publishTopic, setPubMessage, setSubTopic} = props;
   
   const [doctors, setDoctors] = useState([]);
   const [registers, setRegisters] = useState([]);
@@ -94,7 +94,7 @@ function RegisterTimeSchedule(props) {
   const getRegisterLists = async (date) => {
     try {
       var list = await getRegisterList(date);
-      console.log(list.data.registerList);
+      //console.log(list.data.registerList);
       setRegisters(list.data.registerList);
     } catch (e) {
       console.log(e);
@@ -103,7 +103,7 @@ function RegisterTimeSchedule(props) {
   const getDoctorLists = async () => {
     try {
       var list = await getDoctorList();
-      console.log(list.data.doctorList);
+      //console.log(list.data.doctorList);
       setDoctors(list.data.doctorList);
     } catch (e) {
       console.log(e);
@@ -117,6 +117,11 @@ function RegisterTimeSchedule(props) {
   useEffect(() => {
     getDoctorLists();
   }, []);
+
+  useEffect(()=>{
+    getRegisterLists(moment(registerDate).format("yyyy-MM-DD H:m"));
+  },[props]);
+  
   useEffect(() => {
     getRegisterLists(moment(registerDate).format("yyyy-MM-DD H:m"));
   }, [registerDate]);
@@ -138,6 +143,8 @@ function RegisterTimeSchedule(props) {
             header="신규 접수 등록"
             doctors={doctors}
             register={selectedRegister}
+            setPubMessage={setPubMessage}
+            publishTopic={publishTopic}
           />
           <RegisterCreateModal
             open={registerModalOpen}
@@ -145,12 +152,17 @@ function RegisterTimeSchedule(props) {
             header={headerContent + " 수정"}
             doctors={doctors}
             register={selectedRegister}
+            setPubMessage={setPubMessage}
+            publishTopic={publishTopic}
           />
           <RegisterWeekTimeTableModal
             open={registerWeekTimeTableOpen}
             close={closeRegisterWeekTimeTableOpen}
             header={"Dr. " + selectedDoctor.user_name}
             selectedDoctor={selectedDoctor}
+            setPubMessage={setPubMessage}
+            publishTopic={publishTopic}
+            setSubTopic={setSubTopic}
           />
         </React.Fragment>
       </div>
@@ -164,6 +176,7 @@ function RegisterTimeSchedule(props) {
               selected={registerDate}
               onChange={(date) => setRegisterDate(date)}
               dateFormat="M/dd"
+              readOnly
             />
           </div>
           {/* 9시~18시 */}
@@ -214,8 +227,6 @@ function RegisterTimeSchedule(props) {
                           return (
                             <div className="RegisterTimeSchedule_content_timetable_doctors_registers_register" onDoubleClick={openModal} key={index2}>
                               {registers.map((register, index3) => {
-                                //console.log(register.register_date);
-                                //console.log(moment().format("YYYY-MM-DD"));
                                 if ((register.register_user_id === doctor.user_id)
                                   && (moment(register.register_date).format("YYYY-MM-DD H:m") === (moment(registerDate).format("YYYY-MM-DD") + " " + hour + ":" + min))) {
                                   if (register.register_state === "대기") {

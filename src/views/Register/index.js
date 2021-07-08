@@ -22,6 +22,8 @@ function Register(props) {
   // { topic: "/138010/nurse", content: "refreshRegisters"}
   // 2. 진료 추가   - nurse -> doctor
   // { topic: "/138010/doctor", content: "addTreatments"}
+  // 3. To Do List 추가
+  // { topic: "/138010/doctor", content: "refreshToDoList"}
   
 
   //-------------------------------------------------------------  
@@ -58,7 +60,6 @@ function Register(props) {
 
     client.current.connect({
       onSuccess: () => {
-        client.current.subscribe(subTopic);
         console.log("Mqtt 접속 성공");
       }
     });
@@ -67,12 +68,18 @@ function Register(props) {
   const disconnectMqttBroker = () => {
     client.current.disconnect(); // onConnectionLost 실행됨
   };
+  const sendSubTopic = () => {
+    client.current.unsubscribe(prevSubTopic);
+    client.current.subscribe(subTopic);
+    setPrevSubTopic(subTopic);
+  };
 
   const publishTopic = async () => {
     await sendMqttMessage(pubMessage);
   };
 
   useEffect(() => {
+    //sendSubTopic();
     connectMqttBroker();
     console.log("MESSAGE",message);
   });
@@ -142,6 +149,9 @@ function Register(props) {
   useEffect(()=>{
     getDoctorLists();
   },[]);
+  useEffect(() => {
+    
+  },[selectedPatient]);
 
   //-------------------------------------------------------------
   //렌더링 내용
@@ -157,6 +167,7 @@ function Register(props) {
             registerDate={registerDate}
             setRegisterDate={setRegisterDate}
             setPubMessage={setPubMessage}
+            publishTopic={publishTopic}
             />
         </div>
         {/* 접수 상세 내역 or 접수 수정*/}
@@ -166,6 +177,7 @@ function Register(props) {
               registerRead={registerRead}
               changeRegister={changeRegister}
               selectedPatient={selectedPatient}
+              setSelectedPatient={setSelectedPatient}
             />
             :
             <RegisterUpdateForm
@@ -173,8 +185,10 @@ function Register(props) {
               changeRegister={changeRegister}
               cancelRegister={cancelRegister}
               selectedPatient={selectedPatient}
+              setSelectedPatient={setSelectedPatient}
               doctors={doctors}
               setPubMessage={setPubMessage}
+              publishTopic={publishTopic}
             />
           }
         </div>
@@ -190,6 +204,8 @@ function Register(props) {
             registerDate={registerDate}
             setRegisterDate={setRegisterDate}
             setPubMessage={setPubMessage}
+            publishTopic={publishTopic}
+            setSubTopic={setSubTopic}
             />
           </div>
         </div>

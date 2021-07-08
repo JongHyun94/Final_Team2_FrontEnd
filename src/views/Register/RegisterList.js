@@ -34,12 +34,12 @@ function RegisterList(props) {
   //-------------------------------------------------------------
 
   // 공통 날짜 상태 
-  const {registerDate, setRegisterDate} = props;
+  const {registerDate, setSelectedPatient, setRegisterDate, setPubMessage, publishTopic} = props;
   // 접수 목록 상태
   const [registerList, setRegisterList] = useState([]);
 
   // 접수 날짜 검색
-  const [dateForRegister, setDateForRegister] = useState(registerDate);
+  const [startDate, setStartDate] = useState(registerDate);
   //const [dateForRegister2, setDateForRegister2] = useState(registerDate);
 
   // 접수 상태 (대기, 완료, 취소)
@@ -71,7 +71,7 @@ function RegisterList(props) {
           return true;
         }
       });
-      props.setSelectedPatient(selectPatient);
+      setSelectedPatient(selectPatient);
     }
   };
 
@@ -89,6 +89,8 @@ function RegisterList(props) {
       if (selectRegister) {
         var list = await changeRegisterState(selectRegister);
         //setRegisterList(list.data.registerList);
+        setPubMessage({ topic: "/138010/nurse", content: "refreshRegisters"});
+        publishTopic();
       }
     } catch (e) {
       console.log(e);
@@ -119,6 +121,8 @@ function RegisterList(props) {
       if (selectRegister) {
         var list = await changeRegisterState(selectRegister);
         //setRegisterList(list.data.registerList);
+        setPubMessage({ topic: "/138010/nurse", content: "refreshRegisters"});
+        publishTopic();
       }
     } catch (e) {
       console.log(e);
@@ -231,7 +235,18 @@ function RegisterList(props) {
     getList(moment(registerDate).format("yyyy-MM-DD HH:mm"));
   }, [registerDate]);
 
-
+ useEffect(() => {
+    const work = async () => {
+      try {
+        var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"),"");
+        setRegisterList(list.data.registerList);
+        getRegistersState(list.data.registerList);
+      } catch(error) {
+        console.log(error);
+      }
+    };
+    work();
+  }, [props]);
   //-------------------------------------------------------------
   //렌더링 내용
   //-------------------------------------------------------------
@@ -252,10 +267,10 @@ function RegisterList(props) {
         <div className="RegisterList_content_1">
           <div className="RegisterList_content_1_1">
             <div>
-              <DatePicker locale="ko" selected={registerDate} onChange={(date) => setRegisterDate(date)} dateFormat="yyyy.MM.dd" />
+              <DatePicker locale="ko" selected={startDate} onChange={(date) => setStartDate(date)} dateFormat="yyyy.MM.dd" />
             </div>
             <div>
-              <button className="button_team2_fill" onClick={() => searchDateBtn(registerDate)}>이동</button>
+              <button className="button_team2_fill" onClick={() => searchDateBtn(startDate)}>이동</button>
             </div>
           </div>
           <div className="RegisterList_content_1_2">
