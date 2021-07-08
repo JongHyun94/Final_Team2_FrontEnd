@@ -4,7 +4,7 @@ import TreatmentCreateForm from "./TreatmentCreateForm";
 import TreatmentHistoryList from "./TreatmentHistoryList";
 import TreatmentPatientList from "./TreatmentPatientList";
 import Paho from "paho-mqtt";
-import { sendMqttMessage } from "apis/springframework";
+import { sendMqttMessage } from "apis/mqtt";
 
 function Treatment(props) {
 
