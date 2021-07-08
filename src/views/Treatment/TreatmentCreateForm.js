@@ -73,7 +73,7 @@ function TreatmentCreateForm(props) {
 
   const getCategoryInspectionLists = async (categoryValue) => {
     try{
-      console.log("buy",categoryValue);
+ 
       var list = await getCategoryInspectionList(categoryValue);
       console.log("hi",list);
       setInspectionlist(list.data.inspectionList);
