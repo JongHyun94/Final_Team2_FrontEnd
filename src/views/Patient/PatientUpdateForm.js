@@ -59,6 +59,7 @@ function PatientUpdateForm(props) {
       const response = await updatePatient(patient);
       if (response.data) {
         alert("환자 정보를 수정했습니다.");
+        props.publishTopic(0);
       }
     } catch(error) {
       console.log(error);
@@ -187,7 +188,7 @@ function PatientUpdateForm(props) {
           </div>
           <div className="Patient_item">
             <label className="col-sm-3 col-form-label pl-3 p-0">등록 날짜: </label>
-            <div className="col-sm d-flex align-items-center">{moment(patient.patient_regdate).format("yyyy-MM-DD")}</div>
+            <div className="col-sm d-flex align-items-center">{patientId !== undefined? moment(patient.patient_regdate).format("yyyy-MM-DD") : ""}</div>
           </div>
           {patientId !== undefined?
           <div className="d-flex justify-content-end"><button className="button_team2_fill" type="submit">수정</button></div>

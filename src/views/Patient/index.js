@@ -3,6 +3,9 @@ import PatientList from "./PatientList";
 import PatientUpdateForm from "./PatientUpdateForm";
 import "./Patient.css";
 import { useEffect, useState } from "react";
+import { useRef } from "react";
+import Paho from "paho-mqtt";
+import { sendMqttMessage } from "apis/mqtt";
 
 function Patient(props) {
   // 환자 상태
@@ -25,30 +28,77 @@ function Patient(props) {
       patient_regdate: patient.patient_regdate
     })
   };
+  
+  // MQTT
+  const [subTopic, setSubTopic] = useState("/138010/doctor");
+  // const [pubMessage, setPubMessage] = useState({
+  //   topic: "/138010/doctor",
+  //   content: ""
+  // });
+  const pubMessage = [{
+    topic: "/138010/doctor",
+    content: "updatePatient"}, {
+      topic: "/138010/doctor",
+      content: "addPatient"
+    }]
+  const [message, setMessage] = useState("");
 
-  console.log(patient);
+  let client = useRef(null);
 
-  // useEffect(() => {
-  //   setPatient(patient);
-  // }, [patient]);
+  const connectMqttBroker = () => {
+    // Paho.Mqtt.Client x
+    client.current = new Paho.Client("localhost", 61614, "client-" + new Date().getTime());
+
+    client.current.onConnectionLost = () => {
+      console.log("Mqtt 접속 끊김");
+    };
+
+    client.current.onMessageArrived = (msg) => {
+      console.log("메시지 수신");
+      var Jmessage = JSON.parse(msg.payloadString);
+      setMessage(() => {
+        return Jmessage;
+      });
+    };
+
+    client.current.connect({
+      onSuccess: () => {
+        client.current.subscribe(subTopic);
+        console.log("Mqtt 접속 성공");
+      }
+    });
+  };
+
+  const disconnectMqttBroker = () => {
+    client.current.disconnect(); // onConnectionLost 실행됨
+  };
+
+  const publishTopic = async (num) => {
+    await sendMqttMessage(pubMessage[num]);
+  };
+
+  useEffect(() => {
+    connectMqttBroker();
+    console.log("MESSAGE: ", message);
+  });
 
   return (
     <div className={`row no-gutters Patient`}>
       {/* 좌측 */}
       <div className="Patient_left">
         {/* 환자 목록 */}
-        <PatientList patient={patient} changePatient={changePatient}/>
+        <PatientList patient={patient} changePatient={changePatient} message={message}/>
       </div>
 
       {/* 우측 */}
       <div className="Patient_right">
         <div>
           {/* 환자 정보 수정 */}
-          <PatientUpdateForm patient={patient} changePatient={changePatient}/>
+          <PatientUpdateForm patient={patient} publishTopic={publishTopic}/>
         </div>
         <div>
           {/* 환자 등록 */}
-          <PatientCreateForm />
+          <PatientCreateForm publishTopic={publishTopic}/>
         </div>
       </div>
     </div>
