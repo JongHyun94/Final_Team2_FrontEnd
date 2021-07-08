@@ -2,17 +2,27 @@ import style from "./RegisterWeekTimeTableModal.module.css"
 import React, { useEffect, useState } from 'react';
 import MonthTimeTable from "./MonthTimeTable";
 import ToDoList from "./ToDoList";
+import moment from "moment";
 function RegisterWeekTimeTableModal(props) {
-  
-  const { open, close, header, selectedDoctor } = props;
-  const [selectDate, setSelectDate] = useState("");
-  useEffect(()=>{
-    //console.log(selectDate);
-  },[selectDate]);
 
+  const { open, close, header, selectedDoctor } = props;
+  const [selectDate, setSelectDate] = useState(moment().format("yyyy-MM-DD"));
+
+
+  //-------------------------------------------------------------
+  //마운트 및 언마운트에 실행할 내용
+  //-------------------------------------------------------------
+
+  useEffect(() => {
+    //console.log(selectDate);
+  }, [selectDate]);
+
+  //-------------------------------------------------------------
+  //렌더링 내용
+  //-------------------------------------------------------------
   return (
     <div className={style.RegisterWeekTimeTableModal}>
-      <div className={open ? `${style.openModal} ${style.modal}`:`${style.modal}`}>
+      <div className={open ? `${style.openModal} ${style.modal}` : `${style.modal}`}>
         {open ? (
           <section>
             <header>

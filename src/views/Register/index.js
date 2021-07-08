@@ -30,6 +30,7 @@ function Register(props) {
   //-------------------------------------------------------------
   //버튼 이벤트 처리
   //-------------------------------------------------------------
+  
   const changeRegister = (event) => {
     if (registerRead === true) {
       setRegisterRead(false);
@@ -45,9 +46,11 @@ function Register(props) {
       setRegisterRead(true);
     }
   };
+
   //-------------------------------------------------------------
   //마운트 및 언마운트에 실행할 내용
   //-------------------------------------------------------------
+
   const getDoctorLists = async () => {
     try {
       var list = await getDoctorList();
