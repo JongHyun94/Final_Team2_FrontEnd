@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getTreatmentPatientList } from "apis/treatments";
@@ -7,8 +7,9 @@ import moment from "moment";
 
 
 function TreatmentPatientList(props) {
+  
   //부모에서 생성한 환자 리스트, 체크된환자정보 담을 상태
-  const { setCheckedpatient } = props;
+  const { setCheckedpatient, message } = props;
   const [patientlists, setPatientlists] = useState([]);
   const [inputdate, setInputdate] = useState(new Date());
 
@@ -62,6 +63,10 @@ const getState = (patientlists) => {
   useEffect(() => {
     getState(patientlists);
   }, [patientlists]);
+
+  useEffect(() => {
+    console.log(message);
+  },[props])
 
   return (
     <div>

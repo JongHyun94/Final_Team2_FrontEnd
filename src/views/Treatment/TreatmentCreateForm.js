@@ -33,6 +33,9 @@ function getInspectionList() {
 }
 
 function TreatmentCreateForm(props) {
+
+  const {publishTopic} = props;
+
   //임시 환자 리스트
   var tempPatientlist = {
     registerId: "",
@@ -161,6 +164,7 @@ function TreatmentCreateForm(props) {
 // };
 
 const updateTreatmentBtn = (event) => {
+  publishTopic();
   event.preventDefault();
   let newTreatment = {
     treatment_smemo: smemo, 
