@@ -8,6 +8,10 @@ import { sendMqttMessage } from "apis/mqtt";
 
 function Treatment(props) {
 
+  ///////////////////////////////////////////////////////////////
+  // MQTT 설정 
+  ///////////////////////////////////////////////////////////////
+
   //-------------------------------------------------------------  
   //상태 선언
   //-------------------------------------------------------------
@@ -34,11 +38,15 @@ function Treatment(props) {
 
     client.current.onMessageArrived = (msg) => {
       console.log("메시지 수신");
-      setMessage(JSON.parse(msg.payloadString));
+      var Jmessage = JSON.parse(msg.payloadString);
+      setMessage(() => {
+        return Jmessage;
+      });
     };
 
     client.current.connect({
       onSuccess: () => {
+        client.current.subscribe(subTopic);
         console.log("Mqtt 접속 성공");
       }
     });
@@ -54,10 +62,11 @@ function Treatment(props) {
 
   useEffect(() => {
     connectMqttBroker();
+    console.log("MESSAGE",message);
   });
 
-////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////
 
 
 

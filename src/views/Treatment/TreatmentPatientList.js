@@ -76,8 +76,6 @@ const getState = (patientlists) => {
 
 };
 
-  
-
   return (
     <div>
       <div className="TreatmentPatientList_title">진료대기환자</div>

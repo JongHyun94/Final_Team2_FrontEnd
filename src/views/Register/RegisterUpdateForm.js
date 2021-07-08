@@ -154,7 +154,7 @@ function RegisterUpdateForm(props) {
                 생년월일:
               </div>
               <div className="RegisterUpdateForm_content_list_input">
-                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={selectedPatient.patient_ssn} readOnly />
+                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={selectedPatient.patient_ssn? selectedPatient.patient_ssn.substring(0,6) : selectedPatient.patient_ssn} readOnly />
               </div>
             </div>
             <div className="RegisterUpdateForm_content_list">
