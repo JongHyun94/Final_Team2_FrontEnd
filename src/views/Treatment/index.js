@@ -15,7 +15,7 @@ function Treatment(props) {
   const [subTopic, setSubTopic] = useState("/138010/nurse");  // 병원코드/간호사
   const [prevSubTopic, setPrevSubTopic] = useState("/138010/nurse"); // 병원코드/간호사
   const [pubMessage, setPubMessage] = useState({
-    topic: "/138010/nurse",
+    topic: "/138010/inspector",
     content: "addInspects",  //검사추가
   });
   const [message, setMessage] = useState("");

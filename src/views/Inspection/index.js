@@ -1,9 +1,64 @@
 import "./Inspection.css";
 import InspectionPatientList from "./InspectionPatientList";
 import InspectionList from "./InspectionList";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Paho from "paho-mqtt";
+import { sendMqttMessage } from "apis/springframework";
 
 function Inspection(props) {
+  //-------------------------------------------------------------  
+  //상태 선언
+  //-------------------------------------------------------------
+  const [subTopic, setSubTopic] = useState("/138010/inspector");  // 병원코드/검사자
+  const [pubMessage, setPubMessage] = useState({
+    topic: "/138010/inspector",
+    content: "updateInspects",  //검사 업데이트
+  });
+  const [message, setMessage] = useState("");
+  //-------------------------------------------------------------
+  //버튼 이벤트 처리
+  //-------------------------------------------------------------
+  let client = useRef(null);
+  const connectMqttBroker = () => {
+    // Paho.Mqtt.Client x
+    client.current = new Paho.Client("localhost", 61614, "client-" + new Date().getTime());
+
+    client.current.onConnectionLost = () => {
+      console.log("Mqtt 접속 끊김");
+    };
+
+    client.current.onMessageArrived = (msg) => {
+      console.log("메시지 수신");
+      var Jmessage = JSON.parse(msg.payloadString);
+      setMessage(() => {
+        return Jmessage;
+      });
+    };
+
+    client.current.connect({
+      onSuccess: () => {
+        client.current.subscribe(subTopic);
+        console.log("Mqtt 접속 성공");
+      }
+    });
+  };
+
+  const disconnectMqttBroker = () => {
+    client.current.disconnect(); // onConnectionLost 실행됨
+  };
+
+  const publishTopic = async () => {
+    await sendMqttMessage(pubMessage);
+  };
+
+  useEffect(() => {
+    connectMqttBroker();
+  }, []);
+
+
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+
   //진료번호 상태
   const [treatmentId, setTreatmentId] = useState("");
 
@@ -42,13 +97,15 @@ function Inspection(props) {
           {/* 검사대기환자 */}
           <InspectionPatientList treatmentId={treatmentId} checkedtId={(id) => checkedtId(id)}
                                   iState={iState} handleBarcodeBack={handleBarcodeBack} 
-                                  iStateFinish={iStateFinish} handleFinishBack={handleFinishBack}/>
+                                  iStateFinish={iStateFinish} handleFinishBack={handleFinishBack}
+                                  message={message}/>
         </div>
         <div className="Inspection_2">
           {/* 검사상세내역 */}
           <InspectionList treatmentId={treatmentId}
                           handleBarcodeCheck={handleBarcodeCheck}
-                          handleFinish={handleFinish} handleFinishBack={handleFinishBack} />
+                          handleFinish={handleFinish} handleFinishBack={handleFinishBack}
+                          publishTopic={publishTopic} message={message}/>
         </div>
       </div>
   );
