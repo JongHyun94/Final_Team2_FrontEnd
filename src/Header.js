@@ -1,7 +1,7 @@
 import { removeAuthHeader } from "apis/axiosConfig";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { createSetAuthTokenAction, createSetUidAction } from "redux/auth-reducer";
+import { createSetAuthTokenAction, createSetHnameAction, createSetUidAction } from "redux/auth-reducer";
 import React, { useState } from "react";
 import Auth from "./views/Auth";
 import { RiCalendarCheckLine, RiStethoscopeFill, RiTestTubeFill } from "react-icons/ri";
@@ -11,16 +11,19 @@ import { test } from "apis/test";
 
 function Header(props) {  
   const globalUid = useSelector((state) => state.authReducer.uid);
+  const hname = useSelector((state) => state.authReducer.hname);
   const dispatch = useDispatch();
 
   const logout = (event) => {
     dispatch(createSetUidAction(""));
     dispatch(createSetAuthTokenAction(""));
+    dispatch(createSetHnameAction(""));
     removeAuthHeader();
     
     // SessionStorage에 인증 내용 제거
     sessionStorage.removeItem("uid");
     sessionStorage.removeItem("authToken");
+    sessionStorage.removeItem("hname");
   };
 
   // 모달 상태(open일 떄 true로 바뀌어 열림)
@@ -46,7 +49,7 @@ function Header(props) {
         <div className="col-2">
           {globalUid !== ""?
             <div className="header1_2 d-flex justify-content-between">
-              <div>서울 아산 병원</div>
+              <div>{hname}</div>
               <React.Fragment>
                 <div className="header_auth" onClick={openModal}>{globalUid} 님</div>
                 <Auth open={modalOpen} close={closeModal} globalUid={globalUid}></Auth>

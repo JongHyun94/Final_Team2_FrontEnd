@@ -1,7 +1,7 @@
 import { Modal } from "../../components/common/Address";
 import React, { useEffect, useState } from "react";
 import "./User.css";
-import { updateUser } from "apis/users";
+import { deleteUser, updateUser } from "apis/users";
 import moment from "moment";
 import { useForm } from "react-hook-form";
 
@@ -83,11 +83,22 @@ function UserUpdateForm(props) {
       const response = await updateUser(user);
       if(response.data) {
         alert("직원 정보를 수정 했습니다.");
+        props.publishTopic(0);
       }
     } catch (error) {
       console.log(error);
     }
   }; 
+
+  // 직원 삭제
+  const handleDelete = async (event) => {
+    try {
+      await deleteUser(userId);
+      alert("해당 직원을 삭제했습니다.");
+    } catch(error) {
+      console.log(error);
+    }
+  }
 
   // 모달 상태(open일 떄 true로 바뀌어 열림)
   const [modalOpen, setModalOpen] = useState(false);
@@ -243,10 +254,13 @@ function UserUpdateForm(props) {
           </div>
           <div className="User_item">
             <label className="col-sm-3 col-form-label pl-3 p-0">등록 날짜: </label>
-            <div className="col-sm d-flex align-items-center">{moment(user.user_regdate).format("yyyy-MM-DD")}</div>
+            <div className="col-sm d-flex align-items-center">{userId !== undefined? moment(user.user_regdate).format("yyyy-MM-DD") : ""}</div>
           </div>
           {userId !== undefined?
-          <div className= "d-flex justify-content-end"><button className="button_team2_fill" type="submit">수정</button></div> 
+          <div className= "d-flex justify-content-end">
+            <button className="button_team2_fill" type="submit">수정</button>
+            <div className="button_team2_empty" onClick={handleDelete}>삭제</div>
+          </div> 
           :<div className= "d-flex justify-content-end" style={{"visibility":"hidden"}}><button className="button_team2_fill">수정</button></div> 
           }
         </form>

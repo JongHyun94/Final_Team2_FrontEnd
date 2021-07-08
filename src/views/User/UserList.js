@@ -100,6 +100,21 @@ function UserList(props) {
     }
   };
 
+  useEffect(() => {
+    console.log("받습니다", props.message);
+    const work = async () => {
+      try {
+        const response = await getAllUserList();
+        // console.log(response.data.userList)
+        setUsers(response.data.userList);
+        setUserState(() => getUsersAuthority(response.data.userList));
+      } catch(error) {
+        console.log(error);
+      }
+    };
+    work();
+  },[props])
+
   const rowRenderer = ({index, key, style}) => {
     return (
       <div className="UserList_tr" key={key} style={style} onClick={() => handleClick(users[index])}>

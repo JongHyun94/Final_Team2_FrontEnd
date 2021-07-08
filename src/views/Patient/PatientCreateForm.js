@@ -60,7 +60,9 @@ function PatientCreateForm(props) {
           patient_detailaddress1: "", 
           patient_detailaddress2: ""
         });
+        setMasking("");
         alert("환자를 등록했습니다.");
+        props.publishTopic(1);
       }
     } catch(error) {
       console.log(error);

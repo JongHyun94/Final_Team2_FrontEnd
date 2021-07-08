@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import UserCreateForm from "./UserCreateForm";
 import UserList from "./UserList";
 import UserUpdateForm from "./UserUpdateForm";
+import Paho from "paho-mqtt";
+import { sendMqttMessage } from "apis/mqtt";
 
 function User(props) {
   // 직원 상태
@@ -27,25 +29,77 @@ function User(props) {
       user_regdate: user.user_regdate
     });
   };
-  console.log(user);
+  
+  // MQTT
+  const [subTopic, setSubTopic] = useState("/138010/doctor");
+  // const [pubMessage, setPubMessage] = useState({
+  //   topic: "/138010/doctor",
+  //   content: ""
+  // });
+  const pubMessage = [{
+    topic: "/138010/doctor",
+    content: "updateUser"}, {
+      topic: "/138010/doctor",
+      content: "addUser"
+    }]
+  const [message, setMessage] = useState("");
+
+  let client = useRef(null);
+
+  const connectMqttBroker = () => {
+    // Paho.Mqtt.Client x
+    client.current = new Paho.Client("localhost", 61614, "client-" + new Date().getTime());
+
+    client.current.onConnectionLost = () => {
+      console.log("Mqtt 접속 끊김");
+    };
+
+    client.current.onMessageArrived = (msg) => {
+      console.log("메시지 수신");
+      var Jmessage = JSON.parse(msg.payloadString);
+      setMessage(() => {
+        return Jmessage;
+      });
+    };
+
+    client.current.connect({
+      onSuccess: () => {
+        client.current.subscribe(subTopic);
+        console.log("Mqtt 접속 성공");
+      }
+    });
+  };
+
+  const disconnectMqttBroker = () => {
+    client.current.disconnect(); // onConnectionLost 실행됨
+  };
+
+  const publishTopic = async (num) => {
+    await sendMqttMessage(pubMessage[num]);
+  };
+
+  useEffect(() => {
+    connectMqttBroker();
+    console.log("MESSAGE: ", message);
+  });
 
   return (
     <div className="row no-gutters User">
       {/* 좌측 */}
       <div className="User_left UserList">
         {/* 직원 목록 */}
-        <UserList user={user} changeUser={changeUser}/>
+        <UserList user={user} changeUser={changeUser} message={message}/>
       </div>
 
       {/* 우측 */}
       <div className="User_right">
         <div>
           {/* 직원 정보 수정 */}
-          <UserUpdateForm user={user}/>
+          <UserUpdateForm user={user} publishTopic={publishTopic}/>
         </div>
         <div>
           {/* 직원 등록 */}
-          <UserCreateForm/>
+          <UserCreateForm publishTopic={publishTopic}/>
         </div>
       </div>
     </div>

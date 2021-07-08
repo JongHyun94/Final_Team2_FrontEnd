@@ -38,14 +38,27 @@ function PatientList(props) {
     } catch(error) {
       console.log(error);
     }
-  };
+  };  
 
   // 환자 선택
   const handleClick = (patient) => {
-    setId(patient.patientId);
+    setId(patient.patient_id);
     props.changePatient(patient);
   };
 
+  useEffect(() => {
+    console.log("받습니다", props.message);
+    const work = async () => {
+      try {
+        const response = await getPatientList();
+        setPatients(response.data.patientList);
+      } catch(error) {
+        console.log(error);
+      }
+    };
+    work();
+  }, [props])
+    
   const rowRenderer = ({index, key, style}) => {
     return (
       <div className="PatientList_tr" key={key} style={style} onClick={() => handleClick(patients[index])}>
@@ -60,6 +73,10 @@ function PatientList(props) {
       </div>
     );
   };
+
+  useEffect(() => {
+    console.log("받습니다", props.message);
+  },[props])
 
   return (    
     <div className="PatientList">

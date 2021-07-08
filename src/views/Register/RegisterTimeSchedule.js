@@ -36,10 +36,11 @@ function RegisterTimeSchedule(props) {
   //-------------------------------------------------------------  
   //상태 선언
   //-------------------------------------------------------------
-
+  const {registerDate, setRegisterDate} = props;
+  
   const [doctors, setDoctors] = useState([]);
   const [registers, setRegisters] = useState([]);
-  const [startDate, setStartDate] = useState(new Date());
+  //const [startDate, setStartDate] = useState(new Date());
   const [selectedRegister, setSelectedRegister] = useState(noneRegister);
 
   //신규 접수 등록 모달
@@ -55,7 +56,7 @@ function RegisterTimeSchedule(props) {
   //-------------------------------------------------------------
 
   const changeDateToday = () => {
-    setStartDate(new Date());
+    setRegisterDate(new Date());
   }
 
   const openModal = () => {
@@ -117,8 +118,8 @@ function RegisterTimeSchedule(props) {
     getDoctorLists();
   }, []);
   useEffect(() => {
-    getRegisterLists(moment(startDate).format("yyyy-MM-DD H:m"));
-  }, [startDate]);
+    getRegisterLists(moment(registerDate).format("yyyy-MM-DD H:m"));
+  }, [registerDate]);
 
   //-------------------------------------------------------------
   //렌더링 내용
@@ -160,8 +161,8 @@ function RegisterTimeSchedule(props) {
           <div className="RegisterTimeSchedule_content_title_today" onDoubleClick={changeDateToday}>
             <ReactDatePicker
               locale="ko"
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
+              selected={registerDate}
+              onChange={(date) => setRegisterDate(date)}
               dateFormat="M/dd"
             />
           </div>
@@ -176,7 +177,7 @@ function RegisterTimeSchedule(props) {
                   <div className="RegisterTimeSchedule_content_title_hours_hour_downside">
                     {mins.map((min, index) => {
                       let currentTime = moment().format("YYYY-MM-DD H:m");
-                      let minCurrentTime = moment(startDate).format("YYYY-MM-DD") + " " + hour + ":" + min;
+                      let minCurrentTime = moment(registerDate).format("YYYY-MM-DD") + " " + hour + ":" + min;
                       let maxCurrentTime = moment(minCurrentTime).add(15, "m");
                       if (moment(currentTime).isBetween(minCurrentTime, maxCurrentTime, undefined, '[)')) {
                         return (
@@ -216,7 +217,7 @@ function RegisterTimeSchedule(props) {
                                 //console.log(register.register_date);
                                 //console.log(moment().format("YYYY-MM-DD"));
                                 if ((register.register_user_id === doctor.user_id)
-                                  && (moment(register.register_date).format("YYYY-MM-DD H:m") === (moment(startDate).format("YYYY-MM-DD") + " " + hour + ":" + min))) {
+                                  && (moment(register.register_date).format("YYYY-MM-DD H:m") === (moment(registerDate).format("YYYY-MM-DD") + " " + hour + ":" + min))) {
                                   if (register.register_state === "대기") {
                                     if (index < 4 && index1 < 8) {
                                       return (
