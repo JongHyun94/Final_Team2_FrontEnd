@@ -27,7 +27,11 @@ function User(props) {
       user_regdate: user.user_regdate
     });
   };
-  console.log(user);
+  
+  // MQTT
+  const [subTopic, setSubTopic] = useState("/138010/doctor");
+  // const 
+
 
   return (
     <div className="row no-gutters User">
