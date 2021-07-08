@@ -1,40 +1,67 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./Treatment.css";
 import TreatmentCreateForm from "./TreatmentCreateForm";
 import TreatmentHistoryList from "./TreatmentHistoryList";
 import TreatmentPatientList from "./TreatmentPatientList";
-
-
-let treatmentList = [];
-
-function getPatientlists() {
-  const createpatientlists = [];
-  for (var i = 10; i >= 1; i--) {
-    createpatientlists.push({
-      registerId: "aed158" + i,
-      patientId: i,
-      registerPatientName: "김영자" + i,
-      patientSsn: "910111",
-      patientSex: "F",
-      registerMemo: "의사 소통 메모" + i,
-      registerState: "대기",
-    });
-  }
-  for (var i = 30; i >= 1; i--) {
-    createpatientlists.push({
-      registerId: "aed258" + i,
-      patientId: "10" + i,
-      registerPatientName: "이상현" + i,
-      patientSsn: "910111",
-      patientSex: "F",
-      registerMemo: "의사 소통 메모" + i,
-      registerState: "완료",
-    });
-  }
-  return createpatientlists;
-}
+import Paho from "paho-mqtt";
+import { sendMqttMessage } from "apis/springframework";
 
 function Treatment(props) {
+
+  //-------------------------------------------------------------  
+  //상태 선언
+  //-------------------------------------------------------------
+
+  const [subTopic, setSubTopic] = useState("/138010/nurse");  // 병원코드/간호사
+  const [prevSubTopic, setPrevSubTopic] = useState("/138010/nurse"); // 병원코드/간호사
+  const [pubMessage, setPubMessage] = useState({
+    topic: "/138010/nurse",
+    content: "addInspects",  //검사추가
+  });
+  const [message, setMessage] = useState("");
+
+  //-------------------------------------------------------------
+  //버튼 이벤트 처리
+  //-------------------------------------------------------------
+  let client = useRef(null);
+  const connectMqttBroker = () => {
+    // Paho.Mqtt.Client x
+    client.current = new Paho.Client("localhost", 61614, "client-" + new Date().getTime());
+
+    client.current.onConnectionLost = () => {
+      console.log("Mqtt 접속 끊김");
+    };
+
+    client.current.onMessageArrived = (msg) => {
+      console.log("메시지 수신");
+      setMessage(JSON.parse(msg.payloadString));
+    };
+
+    client.current.connect({
+      onSuccess: () => {
+        console.log("Mqtt 접속 성공");
+      }
+    });
+  };
+
+  const disconnectMqttBroker = () => {
+    client.current.disconnect(); // onConnectionLost 실행됨
+  };
+
+  const publishTopic = async () => {
+    await sendMqttMessage(pubMessage);
+  };
+
+  useEffect(() => {
+    connectMqttBroker();
+  });
+
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+
+
+
+  
   // 위에 생성한 환자 리스트
   // const [patientlists, setPatientlists] = useState([]);
 
@@ -43,13 +70,12 @@ function Treatment(props) {
   //진료 대기리스트에서 체크된 환자 정보
   const [checkedpatient, setCheckedpatient] = useState("");
 
-
   return (
     <div className="Treatment">
       <div className="TreatmentLeft">
         {/* 진료 대기 환자 */}
         <div className="TreatmentPatientList">
-          <TreatmentPatientList setCheckedpatient={setCheckedpatient} />
+          <TreatmentPatientList setCheckedpatient={setCheckedpatient} message={message} />
         </div>
         {/* 진료 기록 */}
         <div className="TreatmentHistoryList">
@@ -59,7 +85,7 @@ function Treatment(props) {
       <div className="TreatmentRight">
         {/* 진료 등록*/}
         <div className="TreatmentCreateForm">
-          <TreatmentCreateForm checkedpatient={checkedpatient} />
+          <TreatmentCreateForm checkedpatient={checkedpatient} publishTopic={publishTopic}/>
         </div>
       </div>
     </div>
