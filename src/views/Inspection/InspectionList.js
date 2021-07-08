@@ -229,8 +229,8 @@ function InspectionList(props) {
                 <th style={{ width: "1%" }}></th>
                 <th style={{ width: "9%" }}>진단검사명</th>
                 <th style={{ width: "10%" }}>검체명</th>
-                <th style={{ width: "15%" }}>검사명</th>
-                <th style={{ width: "10%" }}>결과</th>
+                <th style={{ width: "10%" }}>검사명</th>
+                <th style={{ width: "15%" }}>결과</th>
                 <th style={{ width: "10" }}>참고치</th>
                 <th style={{ width: "9%" }}>검사 시간</th>
                 <th style={{ width: "7%" }}>용기</th>
