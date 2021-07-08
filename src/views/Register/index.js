@@ -15,14 +15,24 @@ function Register(props) {
   ///////////////////////////////////////////////////////////////
 
   //-------------------------------------------------------------  
+  //메시지 종류
+  //-------------------------------------------------------------
+
+  // 1. 리스트 호출 - nurse -> nurse
+  // { topic: "/138010/nurse", content: "refreshRegisters"}
+  // 2. 진료 추가   - nurse -> doctor
+  // { topic: "/138010/doctor", content: "addTreatments"}
+  
+
+  //-------------------------------------------------------------  
   //상태 선언
   //-------------------------------------------------------------
 
   const [subTopic, setSubTopic] = useState("/138010/nurse");  // 병원코드/간호사
   const [prevSubTopic, setPrevSubTopic] = useState("/138010/nurse"); // 병원코드/간호사
   const [pubMessage, setPubMessage] = useState({
-    topic: "/138010/doctor",
-    content: "addTreatments",  // 진료추가
+    topic: "",
+    content: "", 
   });
   const [message, setMessage] = useState("");
 
@@ -145,7 +155,9 @@ function Register(props) {
           <RegisterList
             setSelectedPatient={setSelectedPatient} 
             registerDate={registerDate}
-            setRegisterDate={setRegisterDate}/>
+            setRegisterDate={setRegisterDate}
+            setPubMessage={setPubMessage}
+            />
         </div>
         {/* 접수 상세 내역 or 접수 수정*/}
         <div className="RegisterRead">
@@ -162,6 +174,7 @@ function Register(props) {
               cancelRegister={cancelRegister}
               selectedPatient={selectedPatient}
               doctors={doctors}
+              setPubMessage={setPubMessage}
             />
           }
         </div>
@@ -175,7 +188,9 @@ function Register(props) {
           <div className="RegisterTimeSchedule">
             <RegisterTimeSchedule 
             registerDate={registerDate}
-            setRegisterDate={setRegisterDate}/>
+            setRegisterDate={setRegisterDate}
+            setPubMessage={setPubMessage}
+            />
           </div>
         </div>
       </div>
