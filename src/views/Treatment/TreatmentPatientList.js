@@ -12,7 +12,7 @@ function TreatmentPatientList(props) {
   const { setCheckedpatient, message } = props;
   const [patientlists, setPatientlists] = useState([]);
   const [inputdate, setInputdate] = useState(new Date());
-
+  const [inputdate2, setInputdate2] = useState(new Date());
 
   // 접수아이디 선택 상태
   const [selectedRegisterId, setSelectedRegisterId] = useState("");
@@ -20,6 +20,19 @@ function TreatmentPatientList(props) {
   // const [state, setState] = useState(() => getState(patientlists));
   const [ready, setReady] = useState(0);
   const [done, setDone] = useState(0);
+
+  useEffect(() => {
+    getTreatmentPatientLists(inputdate2);
+  }, [inputdate2]);
+
+  useEffect(() => {
+    getState(patientlists);
+  }, [patientlists]);
+
+  useEffect(() => {
+    console.log(message);
+  },[props])
+
 
   //진료대기 환자 선택함수
   const checkedtreatmentPatient = (treatment_register_id, patientlist) => {
@@ -29,9 +42,9 @@ function TreatmentPatientList(props) {
     setCheckedpatient(patientlist);
   };
 
-  const getTreatmentPatientLists = async (date) => {
+  const getTreatmentPatientLists = async (inputdate2) => {
     try{
-      var list = await getTreatmentPatientList(moment(date).format("yyyy-MM-DD"));
+      const list = await getTreatmentPatientList(inputdate2);
       // console.log(list.data.treatmentlist);
       setPatientlists(list.data.treatmentlist);
     }catch (e){
@@ -39,6 +52,13 @@ function TreatmentPatientList(props) {
     }
 
   };
+
+    //날짜 이동 버튼
+    const searchDateBtn = (inputdate) => {
+      setInputdate2(moment(inputdate).format("yyyy-MM-DD HH:mm"));
+      // getPatient2(treatmentDate2);
+  };
+
 
   //진료 상태를 위한 함수
 const getState = (patientlists) => {
@@ -56,17 +76,7 @@ const getState = (patientlists) => {
 
 };
 
-  useEffect(() => {
-    getTreatmentPatientLists(moment(inputdate).format("yyyy-MM-DD"));
-  }, [inputdate]);
-
-  useEffect(() => {
-    getState(patientlists);
-  }, [patientlists]);
-
-  useEffect(() => {
-    console.log(message);
-  },[props])
+  
 
   return (
     <div>
@@ -76,7 +86,7 @@ const getState = (patientlists) => {
         <div className="TreatmentPatientList_search">
           {/* <input type="date" DatePicker selected={inputdate} onChange={(date) => setInputdate(date)} /> */}
           <DatePicker locale="ko" dateFormat="yyyy.MM.dd" selected={inputdate} onChange={(date) => setInputdate(date)} />
-          <button className="button_team2_fill">이동</button>
+          <button className="button_team2_fill" onClick={() => searchDateBtn(inputdate)}>이동</button>
           <div className="row_1">대기:{ready}명</div>
           <div className="row_2">완료:{done}명</div>
         </div>
@@ -84,14 +94,14 @@ const getState = (patientlists) => {
           <table className="table TreatmentPatientList_table">
             <thead className="TreatmentPatientList_table_thead">
               <tr>
-                <th width="5%"></th>
-                <th width="5%">접수 번호</th>
+                <th width="1%"></th>
+                <th width="5%">번호</th>
                 <th width="10%">환자명</th>
                 <th width="10%">생년월일</th>
-                <th width="5%">성별</th>
+                <th width="4%">성별</th>
                 <th width="20%">의사소통 메모</th>
-                <th width="20%">접수 날짜</th>
-                <th width="5%">상태</th>
+                <th width="15%">접수 날짜</th>
+                <th width="10%">상태</th>
               </tr>
             </thead>
 

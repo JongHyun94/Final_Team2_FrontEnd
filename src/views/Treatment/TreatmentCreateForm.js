@@ -1,37 +1,6 @@
 import React, { useState, useEffect   } from "react";
 import { updateTreatment, getSearchDurg, getCategoryInspectionList  } from "apis/treatments";
 
-function getDrugList() {
-  const druglists = [
-    { drug_injection_list_id: "NIZA15", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
-    { drug_injection_list_id: "IRES", drug_injection_list_name: "IRESSA Tab 250mg", drug_injection_list_category: "약품" },
-    { drug_injection_list_id: "ROPIN1", drug_injection_list_name: "ONIROL Tab 1mg", drug_injection_list_category: "약품" },
-    { drug_injection_list_id: "ROXN", drug_injection_list_name: "ROXAN Cap 75mg", drug_injection_list_category: "주사" },
-    { drug_injection_list_id: "NIZA16", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
-    { drug_injection_list_id: "NIZA17", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
-    { drug_injection_list_id: "NIZA18", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
-    { drug_injection_list_id: "NIZA19", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
-    { drug_injection_list_id: "NIZA20", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
-    { drug_injection_list_id: "NIZA21", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
-    { drug_injection_list_id: "NIZA22", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
-  ];
-  return druglists;
-}
-
-function getInspectionList() {
-  const inspectionLists = [
-    { inspectioncategory: "영상검사", inspection: "흉부촬영" },
-    { inspectioncategory: "영상검사", inspection: "고밀도 콜레스테롤" },
-    { inspectioncategory: "영상검사", inspection: "당뇨 검사" },
-    { inspectioncategory: "혈액검사", inspection: "빈혈 검사" },
-    { inspectioncategory: "혈액검사", inspection: "신경 특이 에놀라제" },
-    { inspectioncategory: "혈액검사", inspection: "빈혈 검사1" },
-    { inspectioncategory: "혈액검사", inspection: "빈혈 검사2" },
-    { inspectioncategory: "혈액검사", inspection: "빈혈 검사3" },
-  ];
-  return inspectionLists;
-}
-
 function TreatmentCreateForm(props) {
 
   const {publishTopic} = props;
@@ -54,20 +23,14 @@ function TreatmentCreateForm(props) {
   } else {
     checkedPatientlist = tempPatientlist;
   }
-
-  //soap 입력폼
-  const [smemo, setSmemo] = useState("");
-  const [omemo, setOmemo] = useState("");
-  const [amemo, setAmemo] = useState("");
-  const [pmemo, setPmemo] = useState("");
-
-  //의사소통메모
-  const [cmemo, setCmemo] = useState("");
-
   //검사 checkbox
   const [inspectionlist, setInspectionlist] = useState([]);
   const [inspectionOption, setInspectionOption] = useState("진단 검사 선택");
   // const [inspectionOption, setInspectionOption] = useState(["진단 검사 선택"]);
+  const [joinForm, setJoinForm] = useState({
+    uskill:[]
+  });
+
   const [druglists, setDrugLists] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState();
 
@@ -99,35 +62,6 @@ function TreatmentCreateForm(props) {
     getSearchDurgs();
   }, []);
 
-
-
-  const handleChangeSmemo = (event) => {
-    console.log("Subjective:", event.target.value);
-    setSmemo(event.target.value);
-  };
-  const handleChangeOmemo = (event) => {
-    console.log("Objective:", event.target.value);
-    setOmemo(event.target.value);
-  };
-  const handleChangeAmemo = (event) => {
-    console.log("Assessment:", event.target.value);
-    setAmemo(event.target.value);
-  };
-  const handleChangePmemo = (event) => {
-    console.log("Plan:", event.target.value);
-    setPmemo(event.target.value);
-  };
-
-  const handleChangeCmemo = (event) => {
-    console.log("Memo:", event.target.value);
-    setCmemo(event.target.value);
-  };
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("접수완료 : ", inspectionlist);
-  };
-
-
   const handleChange = (event) => {
     setInspectionOption(event.target.value);
   };
@@ -156,6 +90,37 @@ function TreatmentCreateForm(props) {
     setModalOpen(false);
   };
 
+  //soap 입력폼
+  const [smemo, setSmemo] = useState("");
+  const [omemo, setOmemo] = useState("");
+  const [amemo, setAmemo] = useState("");
+  const [pmemo, setPmemo] = useState("");
+
+  //의사소통메모
+  const [cmemo, setCmemo] = useState("");
+
+  const handleChangeSmemo = (event) => {
+    setSmemo(event.target.value);
+  };
+  const handleChangeOmemo = (event) => {
+    setOmemo(event.target.value);
+  };
+  const handleChangeAmemo = (event) => {
+    setAmemo(event.target.value);
+  };
+  const handleChangePmemo = (event) => {
+    setPmemo(event.target.value);
+  };
+
+  const handleChangeCmemo = (event) => {
+    setCmemo(event.target.value);
+  };
+
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("접수완료 : ", inspectionlist);
+  };
 
 // const handleCreate = (event) => {
 //   event.preventDefault();
@@ -163,18 +128,46 @@ function TreatmentCreateForm(props) {
 //   console.log("진료 등록: ", newTreatment);
 // };
 
-const updateTreatmentBtn = (event) => {
-  publishTopic();
-  event.preventDefault();
-  let newTreatment = {
-    treatment_smemo: smemo, 
-    treatment_omemo: omemo, 
-    treatment_amemo: amemo,
-    treatment_pmemo: pmemo, 
-    treatment_communication: cmemo
-  };
-};
+// const updateTreatmentBtn = (event) => {
+//   publishTopic();
+//   event.preventDefault();
+//   let newTreatment = {
+//     treatment_smemo: smemo, 
+//     treatment_omemo: omemo, 
+//     treatment_amemo: amemo,
+//     treatment_pmemo: pmemo, 
+//     treatment_communication: cmemo
+//   };
+//   setInspectionlist(newTreatment);
+// };
 
+const checkChange = (event) =>{
+  console.log("aaaaaaaa",event.target.name);
+      console.log("bbbbbbbb",event.target.value);
+  if(event.target.checked){//체크되었는지 유무
+
+    setJoinForm(prevJoinForm => {
+      return {
+        ...prevJoinForm,
+        uskill: prevJoinForm.uskill.concat(event.target.value)
+      };
+    })
+
+    }else {
+      
+      setJoinForm(prevJoinForm => {
+        return {
+          ...prevJoinForm,
+          uskill: prevJoinForm.uskill.filter(item => item !== event.target.value)
+        };
+      })
+
+    }
+};
+const handleSubmit2 = (event) => {
+  event.preventDefault();
+  console.log("jojojojo",joinForm);
+};
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -182,9 +175,9 @@ const updateTreatmentBtn = (event) => {
           {/* 진료 등록<button type="submit" className="button_team2_fill">진료완료</button> */}
           <div className="TreatmentCreateForm_title_1"> {checkedPatientlist.patient_name} 님 진료 등록 </div>
           <div className="TreatmentCreateForm_title_2">
-            <button type="submit" className="button_team2_fill" onClick={updateTreatmentBtn}>
+            {/* <button type="submit" className="button_team2_fill" onClick={handleSubmit2}>
               진료완료
-            </button>
+            </button> */}
           </div>
         </div>
         <div className="TreatmentCreateForm_border border">
@@ -231,7 +224,7 @@ const updateTreatmentBtn = (event) => {
                       <div key={inspection.inspection_list_name}>
                         {inspection.inspection_list_category === inspectionOption ? (
                           <div className="TreatmentCreateForm_checkbox_1" >
-                            <input type="checkbox" /> {inspection.inspection_list_name}
+                            <input type="checkbox"  /> {inspection.inspection_list_name}
                           </div>
                         ) : (
                           false
@@ -245,6 +238,9 @@ const updateTreatmentBtn = (event) => {
 
             <div className="TreatmentCreateForm_2_2_border border">
               <div className="TreatmentCreateForm_2_2_title">약품 목록</div>
+              <button type="submit" className="button_team2_fill" onClick={handleSubmit2}>
+              진료완료
+            </button>
               <div className="TreatmentCreateForm_2_2_content">
                 <div className="TreatmentSearch_1">
                   <input type="text" className="TreatmentSearch_1_1" onChange={changeKeyword} value={searchKeyword}/>
@@ -265,7 +261,7 @@ const updateTreatmentBtn = (event) => {
                       return (
                         <tr className="TreatmentSearch_2_2_tr" key={druglist.drug_injection_list_id}>
                           <td>
-                            <input type="checkbox" />
+                            <input type="checkbox"  name="uskill" value={druglist.drug_injection_list_id} onChange={checkChange} />
                           </td>
                           <th>{druglist.drug_injection_list_id}</th>
                           <th>{druglist.drug_injection_list_name}</th>
