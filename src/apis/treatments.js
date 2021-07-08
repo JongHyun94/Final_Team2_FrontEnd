@@ -1,6 +1,10 @@
 import axios from "axios";
 
-export function test(){
-  const promise = axios.get("/test");
+
+export function getTreatmentPatientList(date) {
+  const promise = axios.get("/treatment/treatmentlist", {params: {date}});
   return promise;
 }
+
+
+
