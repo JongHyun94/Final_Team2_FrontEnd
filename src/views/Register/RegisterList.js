@@ -33,11 +33,14 @@ function RegisterList(props) {
   //상태 선언
   //-------------------------------------------------------------
 
+  // 공통 날짜 상태 
+  const {registerDate, setRegisterDate} = props;
   // 접수 목록 상태
   const [registerList, setRegisterList] = useState([]);
 
   // 접수 날짜 검색
-  const [dateForRegister, setDateForRegister] = useState(new Date());
+  const [dateForRegister, setDateForRegister] = useState(registerDate);
+  //const [dateForRegister2, setDateForRegister2] = useState(registerDate);
 
   // 접수 상태 (대기, 완료, 취소)
   const [registerStateReady, setRegisterStateReady] = useState(0);
@@ -50,6 +53,11 @@ function RegisterList(props) {
   //-------------------------------------------------------------
   //버튼 이벤트 처리
   //-------------------------------------------------------------
+
+  // 날짜 이동 버튼
+  const searchDateBtn = (newDate) => {
+    setRegisterDate(newDate);
+  };
 
   // 체크박스 클릭시 체크 됨
   const checkboxHandler = (register_id) => {
@@ -69,7 +77,6 @@ function RegisterList(props) {
 
   // 진료 상태 대기 -> 완료로 
   const changeRegisterStateToFinish = async (register_id) => {
-    console.log(register_id);
     try {
       let selectRegister = registerList.find(register => {
         if (register.register_id === register_id) {
@@ -100,7 +107,6 @@ function RegisterList(props) {
 
   // 진료 상태 대기 -> 취소로 
   const changeRegisterStateToCancel = async (register_id) => {
-    console.log(register_id);
     try {
       let selectRegister = registerList.find(register => {
         if (register.register_id === register_id) {
@@ -129,6 +135,46 @@ function RegisterList(props) {
     // setRegisterList(newRegisters);
   };
 
+  // 전체 보여주기
+  const showTotal = async () => {
+    try{
+      var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"),"");
+      setRegisterList(list.data.registerList);
+    } catch(e) {
+      console.log(e);
+    }
+  };
+
+  // 대기 보여주기
+  const showReady = async () => {
+    try{
+      var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"),"대기");
+      setRegisterList(list.data.registerList);
+    } catch(e) {
+      console.log(e);
+    }
+  };
+
+  // 완료 보여주기
+  const showFinish = async () => {
+    try{
+      var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"),"완료");
+      setRegisterList(list.data.registerList);
+    } catch(e) {
+      console.log(e);
+    }
+  };
+
+  // 취소 보여주기
+  const showCancel = async () => {
+    try{
+      var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"),"취소");
+      setRegisterList(list.data.registerList);
+    } catch(e) {
+      console.log(e);
+    }
+  };
+  
   //-------------------------------------------------------------
   //실행 함수
   //-------------------------------------------------------------
@@ -136,8 +182,9 @@ function RegisterList(props) {
   //해당 날짜에 맞는 리스트 가져오기
   const getList = async (date) => {
     try {
-      var list = await getRegisterList(moment(date).format("yyyy-MM-DD HH:mm"));
+      var list = await getRegisterList(moment(date).format("yyyy-MM-DD HH:mm"),"");
       setRegisterList(list.data.registerList);
+      getRegistersState(list.data.registerList);
     } catch (e) {
       console.log(e);
     }
@@ -166,13 +213,24 @@ function RegisterList(props) {
   //마운트 및 언마운트에 실행할 내용
   //-------------------------------------------------------------
 
-  useEffect(() => {
-    getList(moment(dateForRegister).format("yyyy-MM-DD HH:mm"));
-  }, [dateForRegister]);
 
   useEffect(() => {
-    getRegistersState(registerList);
-  }, [registerList]);
+    const work = async () => {
+      try {
+        var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"),"");
+        setRegisterList(list.data.registerList);
+        getRegistersState(list.data.registerList);
+      } catch(error) {
+        console.log(error);
+      }
+    };
+    work();
+  }, []);
+
+  useEffect(() => {
+    getList(moment(registerDate).format("yyyy-MM-DD HH:mm"));
+  }, [registerDate]);
+
 
   //-------------------------------------------------------------
   //렌더링 내용
@@ -194,23 +252,23 @@ function RegisterList(props) {
         <div className="RegisterList_content_1">
           <div className="RegisterList_content_1_1">
             <div>
-              <DatePicker locale="ko" selected={dateForRegister} onChange={(date) => setDateForRegister(date)} dateFormat="yyyy.MM.dd" />
+              <DatePicker locale="ko" selected={registerDate} onChange={(date) => setRegisterDate(date)} dateFormat="yyyy.MM.dd" />
             </div>
             <div>
-              <button className="button_team2_fill">이동</button>
+              <button className="button_team2_fill" onClick={() => searchDateBtn(registerDate)}>이동</button>
             </div>
           </div>
           <div className="RegisterList_content_1_2">
-            <div className="RegisterList_content_1_2_total">
+            <div className="RegisterList_content_1_2_total" onClick={showTotal}>
               전체: {registerStateReady + registerStateFinish + registerStateCancel}명
             </div>
-            <div className="RegisterList_content_1_2_ready">
+            <div className="RegisterList_content_1_2_ready" onClick={showReady}>
               대기: {registerStateReady}명
             </div>
-            <div className="RegisterList_content_1_2_finish">
+            <div className="RegisterList_content_1_2_finish" onClick={showFinish}>
               완료: {registerStateFinish}명
             </div>
-            <div className="RegisterList_content_1_2_cancel">
+            <div className="RegisterList_content_1_2_cancel " onClick={showCancel}>
               취소: {registerStateCancel}명
             </div>
           </div>
@@ -247,7 +305,7 @@ function RegisterList(props) {
                     <td>{moment(register.register_date).format("yyyy-MM-DD HH:mm")}</td>
                     <td>{register.register_id}</td>
                     <td>{register.patient_name}</td>
-                    <td>{register.patient_ssn}</td>
+                    <td>{(register.patient_ssn).substring(0,6)}</td>
                     <td>{register.patient_sex}</td>
                     <td>{register.user_name}</td>
                     <td>{register.register_memo}</td>

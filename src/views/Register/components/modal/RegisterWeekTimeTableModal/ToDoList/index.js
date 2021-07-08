@@ -3,34 +3,10 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { createToDoLists, deleteToDoLists, getToDoLists, updateToDoLists } from "apis/register";
 
-// function getToDoList() {
-//   const someToDoList = [];
-//   for (var i = 1; i <= 10; i++) {
-//     someToDoList.push({
-//       id: i,
-//       doctorId: "의사1",
-//       content: "내용" + i,
-//       date: "2021-06-29",
-//       state: "yet"
-//     });
-//   }
-//   for (i = 11; i <= 20; i++) {
-//     someToDoList.push({
-//       id: i,
-//       doctorId: "의사1",
-//       content: "내용" + i,
-//       date: "2021-06-29",
-//       state: "done"
-//     });
-//   }
-//   return someToDoList;
-// }
 function ToDoList(props) {
-  const { selectedDoctor } = props;
+  const { selectedDoctor, selectDate, setSelectDate} = props;
 
   const [someDay, setSomeDay] = useState("");
-
-  const [idNo, setIdNo] = useState(21);
 
   const [inputText, setInputText] = useState("");
   const [toDoList, setToDoList] = useState([]);
@@ -143,8 +119,13 @@ function ToDoList(props) {
   //마운트 및 언마운트에 실행할 내용
   //-------------------------------------------------------------
 
+  useEffect(()=>{
+    return() => {
+      setSelectDate(moment().format("yyyy-MM-DD"));
+    };
+  },[]);
   useEffect(() => {
-    setSomeDay(props.selectDate ? props.selectDate : "");
+    setSomeDay(selectDate ? selectDate : new Date());
   }, [props]);
   useEffect(() => {
     getToDoList(someDay, selectedDoctor.user_id);
