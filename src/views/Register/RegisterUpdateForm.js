@@ -6,7 +6,7 @@ import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import { registerLocale } from "react-datepicker";
 import ko from 'date-fns/locale/ko';
-import { getDoctorList } from "apis/register";
+import { updateRegister } from "apis/register";
 import moment from "moment";
 
 registerLocale("ko", ko);
@@ -15,19 +15,7 @@ const _ = require('lodash');
 const years = _.range(1990, getYear(new Date()) + 1, 1);
 const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
 
-
 function RegisterUpdateForm(props) {
-
-  const updateRegister = (event) => {
-    props.changeRegister();
-  };
-  const cancelRegisterForm = (event) => {
-    props.cancelRegister();
-  };
-
-  // 환자 상태
-
-  const [patient, setPatient] = useState();
   const noneRegister = {
     register_id: "",
     register_patient_id: "",
@@ -48,7 +36,7 @@ function RegisterUpdateForm(props) {
     user_name: ""
   };
   var selectedPatient;
-  if(props.selectedPatient){
+  if (props.selectedPatient) {
     selectedPatient = props.selectedPatient;
   } else {
     selectedPatient = noneRegister;
@@ -58,7 +46,7 @@ function RegisterUpdateForm(props) {
     user_hospital_id: "",
     user_password: "",
     user_name: "",
-    user_ssn:"",
+    user_ssn: "",
     user_tel: "",
     user_email: "",
     user_sex: "",
@@ -71,11 +59,16 @@ function RegisterUpdateForm(props) {
     user_authority: "",
   };
   var doctors;
-  if(props.doctors){
+  if (props.doctors) {
     doctors = props.doctors;
   } else {
     doctors = noneDoctor;
   }
+
+  //-------------------------------------------------------------  
+  //상태 선언
+  //-------------------------------------------------------------
+
   // 진료 날짜 상태
 
   const [startDate, setStartDate] = useState(new Date());
@@ -85,36 +78,58 @@ function RegisterUpdateForm(props) {
   // 다른 의사들
   const [doctorsList, setDoctorsList] = useState(doctors);
   // 선택된 의사
-  const [newDoctor, setNewDoctor] = useState(selectedPatient.user_name);
-
+  const [newDoctor, setNewDoctor] = useState(selectedPatient.register_user_id);
   const changeNewDoctor = (event) => {
     setNewDoctor(event.target.value);
   };
 
-  // 진료 시간 상태
-
-  const [newTime, setNewTime] = useState(selectedPatient.registerTime);
-
-  const changeNewTime = (event) => {
-    setNewTime(event.target.value);
-  };
-
   // 접수 메모 상태
-
-  const [newMemo, setNewMemo] = useState(selectedPatient.registerMemo);
-
+  const [newMemo, setNewMemo] = useState(selectedPatient.register_memo);
   const changeNewMemo = (event) => {
     setNewMemo(event.target.value);
   };
 
   // 의사소통 메모 상태
-
   const [newCommunication, setNewCommunication] = useState(selectedPatient.register_communication);
-
   const changeNewCommunication = (event) => {
     setNewCommunication(event.target.value);
   };
+  //-------------------------------------------------------------
+  //버튼 이벤트 처리
+  //-------------------------------------------------------------
 
+  const updateRegisterBtn = async (event) => {
+    try {
+      let newRegister = {
+        register_id: selectedPatient.register_id,
+        register_patient_id: selectedPatient.register_patient_id,
+        register_user_id: newDoctor,
+        register_regdate: selectedPatient.register_regdate,
+        register_date: moment(startDate).format("yyyy-MM-DD HH:mm"),
+        register_starttime: "",
+        register_memo: newMemo,
+        register_communication: newCommunication,
+        register_state: selectedPatient.register_state,
+      };
+      console.log("new",newRegister);
+      var list = await updateRegister(newRegister);
+      console.log(list.data.result);
+      props.changeRegister();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const cancelRegisterForm = (event) => {
+    props.cancelRegister();
+  };
+
+  //-------------------------------------------------------------
+  //마운트 및 언마운트에 실행할 내용
+  //-------------------------------------------------------------
+
+  //-------------------------------------------------------------
+  //렌더링 내용
+  //-------------------------------------------------------------
   return (
     <>
       {/* 상단 메뉴 이름 */}
@@ -147,7 +162,7 @@ function RegisterUpdateForm(props) {
                 성별:
               </div>
               <div className="RegisterRead_content_list_input">
-                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.patient_sex} readOnly/>
+                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.patient_sex} readOnly />
               </div>
             </div>
             <div className="RegisterUpdateForm_content_list">
@@ -163,12 +178,12 @@ function RegisterUpdateForm(props) {
                 담당의:
               </div>
               <div className="RegisterUpdateForm_content_list_input">
-                <select className="RegisterUpdateForm_input_select" value={selectedPatient.user_name} onChange={changeNewDoctor}>
+                <select className="RegisterUpdateForm_input_select" value={newDoctor} onChange={changeNewDoctor}>
                   <option disabled>담당의를 선택해주세요</option>
                   {/* 임의의 데이터 넣어서 출력 해보기 */}
                   {doctorsList.map(doctor => {
                     return (
-                      <option key={doctor.user_id} value={doctor.user_name}>{doctor.user_name}</option>
+                      <option key={doctor.user_id} value={doctor.user_id}>{doctor.user_name}</option>
                     );
                   })}
                 </select>
@@ -179,7 +194,6 @@ function RegisterUpdateForm(props) {
                 진료 날짜:
               </div>
               <div className="RegisterUpdateForm_content_list_input">
-                {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
                 <DatePicker
                   renderCustomHeader={({
                     date,
@@ -249,7 +263,7 @@ function RegisterUpdateForm(props) {
                 접수 메모:
               </div>
               <div className="RegisterUpdateForm_content_list_input">
-                <input type="text" value={selectedPatient.register_memo} onChange={changeNewMemo} />
+                <input type="text" value={newMemo} onChange={changeNewMemo} />
               </div>
             </div>
             <div className="RegisterUpdateForm_content_list">
@@ -257,14 +271,14 @@ function RegisterUpdateForm(props) {
                 의사소통 메모:
               </div>
               <div className="RegisterUpdateForm_content_list_input">
-                <input type="text" value={selectedPatient.register_communication} onChange={changeNewCommunication} />
+                <input type="text" value={newCommunication} onChange={changeNewCommunication} />
               </div>
             </div>
           </form>
           {/* 수정 취소 버튼 */}
           <div className="RegisterUpdateForm_content_button">
             <button className="button_team2_empty" onClick={cancelRegisterForm} >취소</button>
-            <button className="button_team2_fill" type="submit" onClick={updateRegister} >수정</button>
+            <button className="button_team2_fill" type="submit" onClick={updateRegisterBtn} >수정</button>
           </div>
         </div>
       </div>

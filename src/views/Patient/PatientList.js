@@ -50,12 +50,12 @@ function PatientList(props) {
     return (
       <div className="PatientList_tr" key={key} style={style} onClick={() => handleClick(patients[index])}>
         <div style={{width: "3%"}} key={patients.patient_id}><input type="checkbox" name="patientCheck" checked={id === patients[index].patient_id? true : false} width={50} readOnly></input></div>
-        <div style={{width: "10%"}}>{patients[index].patient_id}</div>
+        <div style={{width: "8%"}}>{patients[index].patient_id}</div>
         <div style={{width: "10%"}}>{patients[index].patient_name}</div>
-        <div style={{width: "10%"}}>{patients[index].patient_ssn1}</div>
+        <div style={{width: "8%"}}>{patients[index].patient_ssn1}</div>
         <div style={{width: "5%"}}>{patients[index].patient_sex === "M"? "남" : "여"}</div>
-        <div style={{width: "15%"}}>{patients[index].patient_tel1}-{patients[index].patient_tel2}-{patients[index].patient_tel3}</div>
-        <div style={{width: "35%"}}>{patients[index].patient_address} {patients[index].patient_detailaddress1} {patients[index].patient_detailaddress2}</div>
+        <div style={{width: "12%"}}>{patients[index].patient_tel1}-{patients[index].patient_tel2}-{patients[index].patient_tel3}</div>
+        <div style={{width: "41%"}}>{patients[index].patient_address} {patients[index].patient_detailaddress1} {patients[index].patient_detailaddress2}</div>
         <div style={{width: "13%"}}>{moment(patients[index].patient_regdate).format("yyyy-MM-DD")}</div>
       </div>
     );
@@ -66,18 +66,18 @@ function PatientList(props) {
       <div className={`Patient_title`}>환자 목록</div>
       <div className={`PatientList_content border`}>
         <div className="mb-2">
-          <input type="text" className="col-3" name="search" placeholder="이름/생년월일을 입력하세요." onChange={handleChange}></input>
+          <input type="text" className="col-3" name="search" value={keyword} placeholder="이름/생년월일을 입력하세요." onChange={handleChange}></input>
           <button className="button_team2_fill" onClick={handleSearch}>검색</button>
         </div>
         <div className="text-center">
             <div className={`PatientList_Table`}>
-              <div style={{width: "2%"}}></div>
-              <div style={{width: "12%"}}>환자 코드</div>
+              <div style={{width: "3%"}}></div>
+              <div style={{width: "9%"}}>환자 코드</div>
               <div style={{width: "8%"}}>환자명</div>
-              <div style={{width: "12%"}}>생년월일</div>
+              <div style={{width: "10%"}}>생년월일</div>
               <div style={{width: "4%"}}>성별</div>
               <div style={{width: "15%"}}>전화번호</div>
-              <div style={{width: "35%"}}>주소</div>
+              <div style={{width: "39%"}}>주소</div>
               <div style={{width: "13%"}}>등록일</div>
               <div style={{width: "2%"}}></div>
             </div>

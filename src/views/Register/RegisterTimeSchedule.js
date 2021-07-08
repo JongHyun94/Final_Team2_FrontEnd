@@ -7,7 +7,6 @@ import { registerLocale } from "react-datepicker";
 import ko from 'date-fns/locale/ko';
 import RegisterWeekTimeTableModal from "./components/modal/RegisterWeekTimeTableModal";
 import { getDoctorList, getRegisterList } from "apis/register";
-import { format } from 'date-fns'
 
 registerLocale("ko", ko);
 const hours = ["9", "10", "11", "12", "13", "14", "15", "16", "17"];
@@ -33,18 +32,19 @@ function RegisterTimeSchedule(props) {
 
     user_name: "",
   };
+
+  //-------------------------------------------------------------  
+  //상태 선언
+  //-------------------------------------------------------------
+
   const [doctors, setDoctors] = useState([]);
   const [registers, setRegisters] = useState([]);
-
-
   const [startDate, setStartDate] = useState(new Date());
-
   const [selectedRegister, setSelectedRegister] = useState(noneRegister);
 
   //신규 접수 등록 모달
   const [modalOpen, setModalOpen] = useState(false);
   const [headerContent, setHeaderContent] = useState("신규");
-
 
   // 의사별 개인 타임 테이블 모달
   const [selectedDoctor, setSelectedDoctor] = useState({});
@@ -84,6 +84,7 @@ function RegisterTimeSchedule(props) {
   const closeRegisterWeekTimeTableOpen = () => {
     setRegisterWeekTimeTableOpen(false);
   };
+
   //-------------------------------------------------------------
   //실행 함수
   //-------------------------------------------------------------
@@ -111,6 +112,7 @@ function RegisterTimeSchedule(props) {
   //-------------------------------------------------------------
   //마운트 및 언마운트에 실행할 내용
   //-------------------------------------------------------------
+
   useEffect(() => {
     getDoctorLists();
   }, []);

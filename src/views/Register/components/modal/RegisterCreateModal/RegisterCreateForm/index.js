@@ -97,9 +97,19 @@ function RegisterCreateForm(props) {
   let handleColor = (time) => {
     return (time.getHours() > 8 && time.getHours() < 18 ? "hourStyle" : "");
   };
+
+  //-------------------------------------------------------------
+  //마운트 및 언마운트에 실행할 내용
+  //-------------------------------------------------------------
+
   useEffect(() => {
     setNewDoctor(register.register_user_id);
   },[]);
+
+
+  //-------------------------------------------------------------
+  //렌더링 내용
+  //-------------------------------------------------------------
   return (
     <div className={`${style.RegisterCreateForm_content} border`}>
       {/* 달력 */}

@@ -1,4 +1,4 @@
-import { getPatientList } from "apis/register";
+import { getPatientList } from "apis/patient";
 import { useEffect, useState } from "react";
 import style from "./RegisterPatientList.module.css";
 
@@ -33,7 +33,7 @@ function RegisterPatientList(props) {
   const [patientList, setPatientList] = useState([]);
 
   // 환자 검색창 상태 
-  const [searchContent, setSearchContent] = useState("");
+  const [searchContent, setSearchContent] = useState(register.patient_name);
 
   const changeSearchContent = (event) => {
     setSearchContent(
@@ -54,8 +54,15 @@ function RegisterPatientList(props) {
     }
   };
 
-  const handleSearch = () => {
+  const handleSearch = async (event) => {
     console.log("입력된 내용:" + searchContent);
+    try {
+      event.preventDefault();
+      const list = await getPatientList(searchContent);
+      setPatientList(list.data.patientList);
+    } catch(error) {
+      console.log(error);
+    }
   };
   const getPatientsLists = async () => {
     try {
@@ -66,15 +73,24 @@ function RegisterPatientList(props) {
       console.log(e);
     }
   };
+  
+  //-------------------------------------------------------------
+  //마운트 및 언마운트에 실행할 내용
+  //-------------------------------------------------------------
+
   useEffect(()=>{
     getPatientsLists();
   },[]);
+
+  //-------------------------------------------------------------
+  //렌더링 내용
+  //-------------------------------------------------------------
   return (
     <div className={style.RegisterPatientList}>
       <div className={`${style.RegisterPatientList_content} border`}>
         <div className={`${style.RegisterPatientList_search} mt-1`}>
           <div className={style.RegisterPatientList_search_input}>
-            <input type="text" className={style.RegisterPatientList_search_input_1} placeholder="이름/생년월일을 입력해 주세요." value={register.patient_name} onChange={changeSearchContent} />
+            <input type="text" className={style.RegisterPatientList_search_input_1} placeholder="이름/생년월일을 입력해 주세요." value={searchContent} onChange={changeSearchContent} />
           </div>
           <div className={style.RegisterPatientList_search_button}>
             <button className="button_team2_fill" onClick={handleSearch}>환자 검색</button>
@@ -100,7 +116,7 @@ function RegisterPatientList(props) {
                     <td><input type="checkbox" name="chk" checked={selectedPatient === patient.patient_id? true : false} readOnly/></td>
                     <td>{patient.patient_id}</td>
                     <td>{patient.patient_name}</td>
-                    <td>{patient.patient_ssn}</td>
+                    <td>{patient.patient_ssn1}</td>
                     <td>{patient.patient_sex}</td>
                     <td>{patient.patient_tel}</td>
                   </tr>

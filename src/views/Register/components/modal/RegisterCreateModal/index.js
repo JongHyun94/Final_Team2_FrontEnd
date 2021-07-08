@@ -29,10 +29,25 @@ function RegisterCreateModal(props) {
       close();
     }
   };
-  const updateRegister = () => {
+  const updateRegister = async () => {
     console.log("수정");
-    close();
+    try {
+      console.log(newRegister);
+      await updateRegister(newRegister);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      close();
+    }
   };
+
+  //-------------------------------------------------------------
+  //마운트 및 언마운트에 실행할 내용
+  //-------------------------------------------------------------  
+
+  //-------------------------------------------------------------
+  //렌더링 내용
+  //-------------------------------------------------------------
   return (
     <div className={style.RegisterCreateModal}>
       <div className={open ? `${style.openModal} ${style.modal}` : `${style.modal}`}>

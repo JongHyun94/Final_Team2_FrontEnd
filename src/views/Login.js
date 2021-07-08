@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
 import { createSetAuthTokenAction, createSetUidAction } from "redux/auth-reducer";
 import { useForm } from "react-hook-form";
 import Help from "./Help";
@@ -16,7 +15,6 @@ function Login(props) {
   });
 
   // 바인딩할 상태함수
-  const globalUid = useSelector((state) => state.authReducer.uid);
   const dispatch = useDispatch();
 
   // 유효성 검사를 위한 함수 사용
@@ -34,33 +32,34 @@ function Login(props) {
     try{
       // 로그인 요청
       const response = await login(user);
-      console.log(response);
-      // 요청 헤더에 JWT 토큰 추가
-      addAuthHeader(response.data.authToken);
-      // // Redux에 인증 내용 저장      
-      dispatch(createSetUidAction(response.data.userId));
-      dispatch(createSetAuthTokenAction(response.data.authToken));
-      // sessionStorage에 인증 내용 저장
-      sessionStorage.setItem("uid", response.data.userId);
-      sessionStorage.setItem("authToken", response.data.authToken);
+      console.log(response.data);
 
-      // dispatch(createSetUidAction(user.userId));
-      
-      // setUser({
-      //   userId: "",
-      //   userPassword: ""
-      // });
+      // 로그인 성공 시 JWT 저장 및 경로 이동
+      if (response.data.result === "success") {
+        alert("로그인 성공");
 
-      // 로그인 아이디에 따른 경로 지정
-      if(user.userId.slice(0,1) === "N") {
-        props.history.push("/Register");}
-      else if (user.userId.slice(0,1) === "D") {
-        props.history.push("/Treatment");
-      } else if (user.userId.slice(0,1) === "I") {      
-        props.history.push("/Inspection");
+        // 요청 헤더에 JWT 토큰 추가
+        addAuthHeader(response.data.authToken);
+        // // Redux에 인증 내용 저장      
+        dispatch(createSetUidAction(response.data.uid));
+        dispatch(createSetAuthTokenAction(response.data.authToken));
+        // sessionStorage에 인증 내용 저장
+        sessionStorage.setItem("uid", response.data.uid);
+        sessionStorage.setItem("authToken", response.data.authToken);
+        
+        // 로그인 아이디에 따른 경로 지정
+        if(user.userId.slice(0,1) === "N") {
+          props.history.push("/Register");}
+        else if (user.userId.slice(0,1) === "D") {
+          props.history.push("/Treatment");
+        } else if (user.userId.slice(0,1) === "I") {      
+          props.history.push("/Inspection");
+        } //else {
+        //   props.history.push("/User");
+        // }
       } else {
-        props.history.push("/User");
-      }
+        alert("로그인 실패 : 아이디 혹은 비밀번호가 맞지 않습니다.");
+      } 
     } catch(error) {
       console.log(error);
     }    
@@ -76,8 +75,6 @@ function Login(props) {
       setBid("0");
     }
   };
-
-  // console.log(user);
   
   return (
     <div className="box">

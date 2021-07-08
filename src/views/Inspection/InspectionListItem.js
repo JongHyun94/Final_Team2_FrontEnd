@@ -3,6 +3,7 @@ import InspectionImgFormModal from "./components/modal/InspectionImgFormModal";
 import InspectionImgCreateFormModal from "./components/modal/InspectionImgCreateFormModal";
 import InspectionImgModifyFormModal from "./components/modal/InspectionImgModifyFormModal";
 import moment from "moment";
+import { updateState, updateResult} from "apis/inspections";
 
 function InspectionListItem(props) {
   //검사 결과(사진 있는 결과의 경우, 사진이 있으면 결과에 img(아무거나) 넣어주기)
@@ -28,16 +29,25 @@ function InspectionListItem(props) {
   const handleResultChange = (event) => {
     setInspectionR(event.target.value);
   };
-
   //혈액검사 등록 버튼
-  const inspectionRRegister = (event) => {
-   props.inspection.inspection_result = inspectionR;
-   setInspectionR();
+  const inspectionRRegister = async (event) => {
+    try {
+      props.inspection.inspection_result = inspectionR;
+        await updateResult(props.id, inspectionR);
+      setInspectionR();
+    } catch(error) {
+      console.log(error);
+    }
   };
 
   //혈액검사 수정 버튼
-  const inspectionRModify = (event) => {
-    props.inspection.inspection_result = inspectionR;
+  const inspectionRModify = async (event) => {
+    try {
+      props.inspection.inspection_result = inspectionR;
+        await updateResult(props.id, inspectionR);
+    } catch(error) {
+      console.log(error);
+    }
     // setInspectionR(event.target.value);
   };
 
@@ -67,13 +77,19 @@ function InspectionListItem(props) {
    const openModal3 = (event) => {
     setModalOpen3(true);
   };
-  const modalRClose3 = (event) => {
+  const modalRClose3 = async (event) => {
     //모달 안에서 등록버튼으로 나옴
     //inspectionResult: "" ~> "img"
     // event.preventDefault();
-    setModalOpen3(false);
-    props.inspection.inspection_result = "img";
-    setInspectionR();
+    try {
+      setModalOpen3(false);
+      props.inspection.inspection_result = "img";
+        await updateResult(props.id, "img");
+      setInspectionR();
+    } catch(error) {
+      console.log(error);
+    }
+    
   };
   const modalClose3 = (event) => {
     event.preventDefault();
@@ -81,35 +97,51 @@ function InspectionListItem(props) {
   };
 
   //바코드 출력 확인버튼 : 검사상태(대기~>검사) 변경
-  const inspectionStateChange1 = () => {
-    if(props.inspection.inspection_id === props.id){
-      if(props.inspection.inspection_state === "대기"){
-        props.inspection.inspection_state = "검사";
+  const inspectionStateChange1 = async () => {
+    try {
+      if(props.inspection.inspection_id === props.id){
+        if(props.inspection.inspection_state === "대기"){
+          props.inspection.inspection_state = "검사";
+            await updateState(props.id, "검사");
+        }
       }
+      props.handleBarcode();
+    } catch(error) {
+      console.log(error);
     }
-    props.handleBarcode();
   };
 
   //검사 취소 버튼 : 검사상태(검사~>대기) 변경
-  const inspectionStateChange2 = () => {
-    if(props.inspection.inspection_id === props.id){
-      if(props.inspection.inspection_state === "검사"){
-        props.inspection.inspection_state = "대기";
+  const inspectionStateChange2 = async () => {
+    try {
+      if(props.inspection.inspection_id === props.id){
+        if(props.inspection.inspection_state === "검사"){
+          props.inspection.inspection_state = "대기";
+            await updateState(props.id, "대기");
+        }
       }
+      props.handleCancel();
+    } catch(error) {
+      console.log(error);
     }
-    props.handleCancel();
   };
 
   //검사 완료 버튼 : 검사상태(~>완료) 변경
-  const inspectionStateChange3 = () => {
-    if(props.inspection.inspection_id === props.id){
-      if(props.inspection.inspection_state === "검사"){
-        props.inspection.inspection_state = "완료";
-        //검사상태count ++
-        props.countIState();
+  const inspectionStateChange3 = async () => {
+    try {
+      if(props.inspection.inspection_id === props.id){
+        if(props.inspection.inspection_state === "검사"){
+          props.inspection.inspection_state = "완료";
+            await updateState(props.id, "완료");
+          //검사상태count ++
+          props.countIState();
+        }
       }
+      props.handleComplete();
+    } catch(error) {
+      console.log(error);
     }
-    props.handleComplete();
+    
   };
   
   return (
@@ -158,7 +190,7 @@ function InspectionListItem(props) {
               <div>
               <React.Fragment>
                 <button className="button_team2_empty" onClick={openModal3}>등록</button>
-                <InspectionImgCreateFormModal id={props.id} open={modalOpen3} closeR={modalRClose3} close={modalClose3}/>
+                <InspectionImgCreateFormModal id={props.id} open={modalOpen3} closeR={modalRClose3} close={modalClose3} inspection={props.inspection}/>
               </React.Fragment>
               </div>
             </td>
@@ -167,7 +199,7 @@ function InspectionListItem(props) {
               <td className="align-middle">
                 <React.Fragment>
                   <button className="button_team2_fill" onClick={openModal1}>보기</button>
-                  <InspectionImgFormModal id={props.id} open={modalOpen1} close={modalClose1}/>
+                  <InspectionImgFormModal id={props.id} open={modalOpen1} close={modalClose1} inspection={props.inspection}/>
                 </React.Fragment>
               </td>
               : 
@@ -175,9 +207,9 @@ function InspectionListItem(props) {
               <div className="InspectionListItem_1">
                 <React.Fragment>
                   <button className="button_team2_fill" onClick={openModal1}>보기</button>
-                  <InspectionImgFormModal id={props.id} open={modalOpen1} close={modalClose1}/>
+                  <InspectionImgFormModal id={props.id} open={modalOpen1} close={modalClose1} inspection={props.inspection}/>
                   <button className="button_team2_empty" onClick={openModal2}>수정</button>
-                  <InspectionImgModifyFormModal id={props.id} open={modalOpen2} closeM={modalMClose2} close={modalClose2}/>
+                  <InspectionImgModifyFormModal id={props.id} open={modalOpen2} closeM={modalMClose2} close={modalClose2} inspection={props.inspection}/>
                 </React.Fragment>
               </div>
             </td>
@@ -187,6 +219,9 @@ function InspectionListItem(props) {
         <td className="align-middle">{moment(props.inspection.inspection_date).format("HH:mm")}</td>
         {props.inspection.inspeciton_list_container === "EDTA" ?
           <td className="align-middle" style={{color:"#8041D9"}}>●{props.inspection.inspeciton_list_container}</td>
+          :
+          props.inspection.inspeciton_list_container === "SST" ?
+          <td className="align-middle" style={{color:"#FFE400"}}>●{props.inspection.inspeciton_list_container}</td>
           :
           <td className="align-middle">{props.inspection.inspeciton_list_container}</td>
         }

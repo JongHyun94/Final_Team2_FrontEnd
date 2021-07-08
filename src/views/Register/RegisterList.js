@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import ko from 'date-fns/locale/ko';
 import moment from "moment";
 import { registerLocale } from "react-datepicker";
-import { getRegisterList } from "apis/register";
+import { changeRegisterState, getRegisterList } from "apis/register";
 registerLocale("ko", ko);
 // 컬럼 : 순번(index), 예약시간, 접수번호(pk), 환자명, 생년월일, 성별, 담당의, 접수메모, 의사소통메모, 접수상태
 
@@ -27,7 +27,6 @@ registerLocale("ko", ko);
 // private String patient_tel;
 
 // private String user_name;
-
 
 function RegisterList(props) {
   //-------------------------------------------------------------  
@@ -55,7 +54,7 @@ function RegisterList(props) {
   // 체크박스 클릭시 체크 됨
   const checkboxHandler = (register_id) => {
     if (register_id === selectedRegister) {
-      setSelectedRegister("");
+      setSelectedRegister(register_id);
     } else {
       setSelectedRegister(register_id);
       const selectPatient = registerList.find(register => {
@@ -69,33 +68,65 @@ function RegisterList(props) {
   };
 
   // 진료 상태 대기 -> 완료로 
-  const changeRegisterStateToFinish = (register_id) => {
+  const changeRegisterStateToFinish = async (register_id) => {
     console.log(register_id);
-    const newRegisters = registerList.map(register => {
-      // 해당 아이디의 정보를 찾아서 수정
-      if (register.register_id === register_id) {
-        const newRegister = { ...register, register_state: "완료" };
-        return newRegister;
-      } else {
-        return register;
+    try {
+      let selectRegister = registerList.find(register => {
+        if (register.register_id === register_id) {
+          if (register.register_state === "대기") {
+            return register;
+          }
+        }
+      });
+      selectRegister.register_state="완료";
+      if (selectRegister) {
+        var list = await changeRegisterState(selectRegister);
+        //setRegisterList(list.data.registerList);
       }
-    });
-    setRegisterList(newRegisters);
+    } catch (e) {
+      console.log(e);
+    }
+    // const newRegisters = registerList.map(register => {
+    //   // 해당 아이디의 정보를 찾아서 수정
+    //   if (register.register_id === register_id) {
+    //     const newRegister = { ...register, register_state: "완료" };
+    //     return newRegister;
+    //   } else {
+    //     return register;
+    //   }
+    // });
+    // setRegisterList(newRegisters);
   };
 
   // 진료 상태 대기 -> 취소로 
-  const changeRegisterStateToCancel = (register_id) => {
+  const changeRegisterStateToCancel = async (register_id) => {
     console.log(register_id);
-    const newRegisters = registerList.map(register => {
-      // 해당 아이디의 정보를 찾아서 수정
-      if (register.register_id === register_id) {
-        const newRegister = { ...register, register_state: "취소" };
-        return newRegister;
-      } else {
-        return register;
+    try {
+      let selectRegister = registerList.find(register => {
+        if (register.register_id === register_id) {
+          if (register.register_state === "대기") {
+            return register;
+          }
+        }
+      });
+      selectRegister.register_state="취소";
+      if (selectRegister) {
+        var list = await changeRegisterState(selectRegister);
+        //setRegisterList(list.data.registerList);
       }
-    });
-    setRegisterList(newRegisters);
+    } catch (e) {
+      console.log(e);
+    }
+    // const newRegisters = registerList.map(register => {
+    //   // 해당 아이디의 정보를 찾아서 수정
+    //   if (register.register_id === register_id) {
+    //     const newRegister = { ...register, register_state: "취소" };
+    //     return newRegister;
+    //   } else {
+    //     return register;
+    //   }
+    // });
+    // setRegisterList(newRegisters);
   };
 
   //-------------------------------------------------------------
@@ -131,7 +162,6 @@ function RegisterList(props) {
     setRegisterStateCancel(count3); // 취소
   };
 
-  
   //-------------------------------------------------------------
   //마운트 및 언마운트에 실행할 내용
   //-------------------------------------------------------------
@@ -213,7 +243,7 @@ function RegisterList(props) {
                 return (
                   <tr key={index} className="RegisterList_content_2_tr" onClick={(event) => checkboxHandler(register.register_id)}>
                     <td><input type="checkbox" name="chk" checked={selectedRegister === register.register_id ? true : false} readOnly /></td>
-                    <td>{index+1}</td>
+                    <td>{index + 1}</td>
                     <td>{moment(register.register_date).format("yyyy-MM-DD HH:mm")}</td>
                     <td>{register.register_id}</td>
                     <td>{register.patient_name}</td>

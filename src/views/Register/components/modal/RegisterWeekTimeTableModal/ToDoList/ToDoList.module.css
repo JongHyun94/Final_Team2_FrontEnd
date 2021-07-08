@@ -13,6 +13,9 @@
   text-decoration: #00aaf0 underline;
   text-underline-position: under;
 }
+.ToDoList_header_date{
+  margin-left: 20px;
+}
 .ToDoList_header_inputLabel {
   display: flex;
   flex-direction: row;

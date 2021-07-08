@@ -67,13 +67,14 @@ function MonthTimeTable(props) {
     //setDate(calCalender(today));
   };
 
-  useEffect(() => {
-    setDates(calCalender(today));
-    
-    return () => {
-
-    };
-  }, [today]);
+  let selectToday = new Date();
+  let selectTodayYear = selectToday.getFullYear();
+  let selectTodayMonth = selectToday.getMonth() + 1;
+  let selectTodayDate = selectToday.getDate();
+  
+  //-------------------------------------------------------------
+  //마운트 및 언마운트에 실행할 내용
+  //-------------------------------------------------------------
 
   useEffect(() => {
 
@@ -83,11 +84,16 @@ function MonthTimeTable(props) {
 
   }, [props]);
 
-  let selectToday = new Date();
-  let selectTodayYear = selectToday.getFullYear();
-  let selectTodayMonth = selectToday.getMonth() + 1;
-  let selectTodayDate = selectToday.getDate();
+  useEffect(() => {
+    setDates(calCalender(today));
+    
+    return () => {
 
+    };
+  }, [today]);
+  //-------------------------------------------------------------
+  //렌더링 내용
+  //------------------------------------------------------------- 
   return (
     <div className={style.MonthTimeTable}>
       <div className={style.MonthTimeTable_btns}>

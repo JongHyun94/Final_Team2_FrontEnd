@@ -1,7 +1,7 @@
 import style from "./ToDoList.module.css";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
-import { getToDoLists } from "apis/register";
+import { createToDoLists, deleteToDoLists, getToDoLists, updateToDoLists } from "apis/register";
 
 // function getToDoList() {
 //   const someToDoList = [];
@@ -26,7 +26,7 @@ import { getToDoLists } from "apis/register";
 //   return someToDoList;
 // }
 function ToDoList(props) {
-  const {selectedDoctor} = props;
+  const { selectedDoctor } = props;
 
   const [someDay, setSomeDay] = useState("");
 
@@ -40,86 +40,126 @@ function ToDoList(props) {
       event.target.value
     );
   };
-  const addToDoList = () => {
-    console.log("click add ToDoList");
+  const addToDoList = async () => {
+    const newSchedule = {
+      schedule_id: "",
+      schedule_user_id: selectedDoctor.user_id,
+      schedule_content: inputText,
+      schedule_state: "대기",
+      schedule_regdate: moment().format("yyyy-MM-DD"),
+    };
 
-    
-    const newToDo = {
-      id: idNo,
-      doctorId: "의사1",
-      content: inputText,
-      date: "2021-06-29",
-      state: "대기"
+    try {
+      var list = await createToDoLists(newSchedule);
+      //console.log(list.data.result);
+    } catch (e) {
+      console.log(e);
     }
-    const newToDoList = toDoList.concat(newToDo);
-    newToDoList.sort((a, b) => {
-      return b.id - a.id; //내림차순
-    });
-    setToDoList(newToDoList);
-    setIdNo(idNo + 1);
+    // const newToDo = {
+    //   id: idNo,
+    //   doctorId: "의사1",
+    //   content: inputText,
+    //   date: "2021-06-29",
+    //   state: "대기"
+    // }
+    // const newToDoList = toDoList.concat(newToDo);
+    // newToDoList.sort((a, b) => {
+    //   return b.id - a.id; //내림차순
+    // });
+    // setToDoList(newToDoList);
+    // setIdNo(idNo + 1);
     setInputText("");
   };
 
-  const changeYet = (id) => {
+  const changeYet = async (id) => {
     console.log(id);
-    const newToDoList = toDoList.map(toDo => {
-      if (toDo.id === id) {
-        const newToDo = { ...toDo, state: "완료" };
-        return newToDo;
-      } else {
-        return toDo;
-      }
-    });
-    setToDoList(newToDoList);
+    const updateSchedule = {
+      schedule_id: id,
+      schedule_state: "완료",
+    };
+    try {
+      var list = await updateToDoLists(updateSchedule);
+      console.log(list.data.result);
+    } catch (e) {
+      console.log(e);
+    }
+    // const newToDoList = toDoList.map(toDo => {
+    //   if (toDo.id === id) {
+    //     const newToDo = { ...toDo, state: "완료" };
+    //     return newToDo;
+    //   } else {
+    //     return toDo;
+    //   }
+    // });
+    // setToDoList(newToDoList);
   };
-  const changeDone = (id) => {
+  const changeDone = async (id) => {
     console.log(id);
-    const newToDoList = toDoList.map(toDo => {
-      if (toDo.id === id) {
-        const newToDo = { ...toDo, state: "대기" };
-        return newToDo;
-      } else {
-        return toDo;
-      }
-    });
-    setToDoList(newToDoList);
+    const updateSchedule = {
+      schedule_id: id,
+      schedule_state: "대기",
+    };
+    try {
+      var list = await updateToDoLists(updateSchedule);
+      console.log(list.data.result);
+    } catch (e) {
+      console.log(e);
+    }
+    // const newToDoList = toDoList.map(toDo => {
+    //   if (toDo.id === id) {
+    //     const newToDo = { ...toDo, state: "대기" };
+    //     return newToDo;
+    //   } else {
+    //     return toDo;
+    //   }
+    // });
+    // setToDoList(newToDoList);
   };
-  const deleteToDo = (id) => {
-    const newToDoList = toDoList.filter(toDo => {
-      return toDo.id !== id;
-    });
-    setToDoList(newToDoList);
+  const deleteToDo = async (id) => {
+
+    try {
+      var list = await deleteToDoLists(id);
+      console.log(list.data.result);
+    } catch (e) {
+      console.log(e);
+    }
+    // const newToDoList = toDoList.filter(toDo => {
+    //   return toDo.id !== id;
+    // });
+    // setToDoList(newToDoList);
   };
 
-  const getToDoList = async (schedule_regdate,schedule_user_id) => {
+  const getToDoList = async (schedule_regdate, schedule_user_id) => {
     try {
-      // let schedule = {
-      //   schedule_id: "",
-      //   schedule_user_id: "",
-      //   schedule_content: "",
-      //   schedule_state: "",
-      //   schedule_regdate: "",
-      // };
-      var list = await getToDoLists(schedule_regdate,schedule_user_id);
+      var list = await getToDoLists(schedule_regdate, schedule_user_id);
       console.log(list.data.todolist);
       setToDoList(list.data.todolist);
     } catch (e) {
       console.log(e);
     }
   };
-  useEffect(()=>{
-    setSomeDay(props.selectDate? props.selectDate : "");
-  },[props]);
+
+  //-------------------------------------------------------------
+  //마운트 및 언마운트에 실행할 내용
+  //-------------------------------------------------------------
+
   useEffect(() => {
-    getToDoList(someDay,selectedDoctor.user_id);
-  },[someDay]);
+    setSomeDay(props.selectDate ? props.selectDate : "");
+  }, [props]);
+  useEffect(() => {
+    getToDoList(someDay, selectedDoctor.user_id);
+  }, [someDay]);
+
+  //-------------------------------------------------------------
+  //렌더링 내용
+  //-------------------------------------------------------------
   return (
     <div className={style.ToDoList}>
       <div className={style.ToDoList_header}>
         <div className={style.ToDoList_header_name}>
           <h2>To Do List</h2>
         </div>
-        <div>
+        <div className={style.ToDoList_header_date}>
           {someDay}
         </div>
         <div className={style.ToDoList_header_inputLabel}>
