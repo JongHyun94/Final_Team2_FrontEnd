@@ -1,21 +1,8 @@
 import { useRef, useState } from "react";
 import style from "./InspectionImgModifyModal.module.css";
 
-function getInspectionImgResults() {
-  const inspectionImgResults = {
-    inspectionListCategory: "영상검사",
-    inspectionListSpecimen: "x-ray",
-    inspectionListName: "흉부촬영",
-    inspectionId: "2001",
-    inspectionDoctorName: "김더존",
-    inspectionInspectorName: "박더존",
-    inspectionListLab: "검사실1",
-  };
-  return inspectionImgResults;
-}
-
 function InspectionImgCreateFormModal(props) {
-  const [inspectionImgResult, setInspecctionImgResult] = useState(getInspectionImgResults);
+  const [inspectionImgResult, setInspecctionImgResult] = useState(props.inspection);
 
   const { open, closeM, close } = props;
 
@@ -52,7 +39,6 @@ function InspectionImgCreateFormModal(props) {
                   <div className={`${style.InspectionImgCreateForm_1_1} row m-3`}>
                     <div className={`${style.InspectionImgCreateForm_1_1_1} mr-3`}>
                       <div className="mb-1">진단검사명 :</div>
-                      <div className="mb-1">검체명 :</div>
                       <div className="mb-1">검사명 :</div>
                       <div className="mb-1">검사번호 :</div>
                       <div className="mb-1">담당의 :</div>
@@ -63,14 +49,13 @@ function InspectionImgCreateFormModal(props) {
                       <div></div>
                     </div>
                     <div className={style.InspectionImgCreateForm_1_1_2}>
-                      <div className="mb-1">{inspectionImgResult.inspectionListCategory}</div>
-                      <div className="mb-1">{inspectionImgResult.inspectionListSpecimen}</div>
-                      <div className="mb-1">{inspectionImgResult.inspectionListName}</div>
+                      <div className="mb-1">{inspectionImgResult.inspection_list_category}</div>
+                      <div className="mb-1">{inspectionImgResult.inspection_list_name}</div>
                       {/* <div className="mb-1">{inspectionImgResult.inspectionId}</div> */}
                       <div className="mb-1">{props.id}</div>
-                      <div className="mb-1">{inspectionImgResult.inspectionDoctorName}</div>
-                      <div className="mb-1">{inspectionImgResult.inspectionInspectorName}</div>
-                      <div className="mb-1">{inspectionImgResult.inspectionListLab}</div>
+                      <div className="mb-1">{inspectionImgResult.inspection_doctor_name}</div>
+                      <div className="mb-1">{inspectionImgResult.inspection_inspector_name}</div>
+                      <div className="mb-1">{inspectionImgResult.inspection_lab}</div>
                       <div className="mb-1"><input name="iattach" type="file" multiple style={{ width: "100%" }} ref={inputFile} /></div>
                       {/* <div className="mb-1"><input name="iattach2" type="file" style={{ width: "100%" }} ref={inputFile2} /></div>
                       <div className="mb-1"><input name="iattach3" type="file" style={{ width: "100%" }} ref={inputFile3} /></div> */}

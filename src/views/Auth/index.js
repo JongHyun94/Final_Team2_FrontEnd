@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import style from "./style.module.css";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { getUser } from "apis/users";
+import { getUser, updateUserInfo } from "apis/users";
 
 function Auth(props) {
   const { open, close } = props;
@@ -13,32 +13,12 @@ function Auth(props) {
   const { handleSubmit, register, errors } = useForm({ mode: "onChange" });
 
   // 회원 상태
-  const [user, setUser] = useState({
-    // user_id: globalUid
-    // userName: "김더존",
-    // oldPassword: "",
-    // newPassword: "",
-    // rePassword: "",
-    // userAuthority: "의사",
-    // userSsn: "751026",
-    // userSex: "M",
-    // userTel1: "010",
-    // userTel2: "1234",
-    // userTel3: "5678",
-    // userEmail1: "abcde1234",
-    // userEmail2: "naver.com",
-    // userZipcode: "01234",
-    // userAddress: "서울 송파구",
-    // userDetailAddress1: "12층 강의실",
-    // userDetailAddress2: "아이티벤처타워",
-    // userRegDate: "2021-06-01",
-  });
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     const work = async () => {
       try {
         const response = await getUser(globalUid);
-        console.log(response.data);
         setUser(response.data);
       } catch(error) {
         console.log(error);
@@ -62,38 +42,49 @@ function Auth(props) {
     setUser({
       ...user,
       [event.target.name]: event.target.value,
+      user_tel: user.user_tel1 + "-" + user.user_tel2 + "-" + user.user_tel3,
+      user_email: user.user_email1 + "@" + user.user_email2
     });
   };
 
   // 회원정보 수정
-  const handleUpdate = (event) => {
-    // let newUser;
-    // if (user.oldPassword !== "" && user.oldPassword === user.newPassword) {
-    //   alert("이전 비밀번호와 동일합니다.");
-    // } else if (user.newPassword !== "" && user.newPassword === user.rePassword) {
-    //   newUser = { ...user };
-    //   alert("비밀번호가 변경되었습니다.");
-    //   setUser({
-    //     ...user,
-    //     oldPassword: "",
-    //     newPassword: "",
-    //     rePassword: "",
-    //   });
-    //   console.log(newUser);
-    // } else if (user.oldPassword !== "") {
-    //   alert("비밀번호가 동일하지 않습니다.");
-    // }
-    // // console.log("비밀번호 수정");
-    console.log(user);
-    close();
+  const handleUpdate = async (event) => {
+    try {      
+      if (user.old_password !== "" && user.old_password === user.new_password) {
+        alert("이전 비밀번호와 동일합니다.");
+      } else if (user.new_password !== "" && user.new_password === user.re_password) {
+        const response = await updateUserInfo(user);
+        if (response.data === "success") {
+          alert("회원 정보가 수정되었습니다.");
+          setUser({
+            ...user,
+            old_password: "",
+            new_password: "",
+            re_password: "",
+          });
+          close();
+        } else {
+          alert("기존 비밀번호가 맞지 않습니다.");
+        }
+        
+      } else if (user.old_password !== "") {
+        alert("비밀번호가 동일하지 않습니다.");
+      }
+    } catch(error) {
+      console.log(error);
+    }    
   };
 
   // 모달 상태(open일 떄 true로 바뀌어 열림)
   const [modalOpen, setModalOpen] = useState(false);
 
-  const openModal = (event) => {
-    event.preventDefault();
-    setModalOpen(true);
+  const openModal = async (event) => {
+    try {
+      event.preventDefault();
+      setModalOpen(true);
+    } catch(error) {
+      console.log(error);
+    }    
   };
   const closeModal = () => {
     setModalOpen(false);
@@ -205,9 +196,11 @@ function Auth(props) {
                       <label className="col-sm-4 m-0 pb-3">이메일: </label>
                       <div>
                         <div className="row col-sm p-0 m-0">
-                          <input type="text" className="col-sm mr-1" name="user_email1" value={user.user_email1} placeholder="ABC1234" ref={register({required: true})} onChange={handleChange}></input>
+                          <input type="text" className="col-sm mr-1" name="user_email1" value={user.user_email1} placeholder="ABC1234" onChange={handleChange} 
+                                  ref={register({required: true, pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z]).{2,}$/})}></input>
                           <div className="mr-1 d-flex align-items-center">@</div>
-                          <input type="text" className="col-sm mr-1" name="user_email2" value={user.user_email2} onChange={handleChange} ref={register({required: true})} disabled={email}></input>
+                          <input type="text" className="col-sm mr-1" name="user_email2" value={user.user_email2} onChange={handleChange} 
+                                  ref={register({required: true, pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z].{2,}$/})} disabled={email}></input>
                           <select className="col-sm" name="user_email2" onChange={handleChange} value={user.user_email2}>
                             <option value="naver.com">naver.com</option>
                             <option value="gmail.com">gmail.com</option>
@@ -216,7 +209,9 @@ function Auth(props) {
                             <option value={email === false? user.user_email2: ""}>직접입력</option>
                           </select>    
                         </div>                 
-                        <div className={(errors.user_email1 || errors.user_email2)? `${style.Auth_error}` : `${style.Auth_noterror}`}>이메일를 입력해주세요.</div>             
+                        <div className={(errors.user_email1 || errors.user_email2)? `${style.Auth_error}` : `${style.Auth_noterror}`}>
+                          {(errors.user_email2 || errors.user_email1)?.type === "pattern" ? "올바른 형식으로 입력해주세요." : "이메일를 입력해주세요."}
+                        </div>             
                       </div>
                     </div>
                     <div className={`${style.Auth_content}`}>
@@ -239,22 +234,36 @@ function Auth(props) {
                     <div className={`${style.Auth_content}`}>
                       <label className="col-sm-4 m-0 pb-3">기존 비밀번호: </label>
                       <div className="col-sm-8 p-0">
-                        <input type="password" className="col-sm Auth_password" name="oldPassword" ref={register({required: true})} onChange={handleChange}></input>
-                        <div className={errors.oldPassword? `${style.Auth_error}` : `${style.Auth_noterror}`}>비밀번호롤 입력하세요.</div>
+                        <input type="password" className={`col-sm ${style.Auth_password}`} name="old_password" ref={register({required: true})} onChange={handleChange}></input>
+                        <div className={errors.old_password? `${style.Auth_error}` : `${style.Auth_noterror}`}>비밀번호롤 입력하세요.</div>
                       </div>
                     </div>
                     <div className={`${style.Auth_content}`}>
                       <label className="col-sm-4 m-0 pb-3">새로운 비밀번호: </label>
                       <div className="col-sm-8 p-0">
-                        <input type="password" className="col-sm Auth_password" name="newPassword" ref={register({required: true})} onChange={handleChange}></input>
-                        <div className={errors.newPassword? `${style.Auth_error}` : `${style.Auth_noterror}`}>비밀번호롤 입력하세요.</div>
+                        <input type="password" className={`col-sm ${style.Auth_password}`} name="new_password" onChange={handleChange}
+                                ref={register({required: true,  minLength: 8, maxLength: 16, pattern: /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+])(?!.*[^a-zA-z0-9$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/})}></input>
+                        <div className={errors.new_password? `${style.Auth_error}` : `${style.Auth_noterror}`}>
+                          {(errors.new_password)?.type === "required" ? "비밀번호롤 입력하세요."
+                           : 
+                           (errors.new_password)?.type === "minLength" ? "8자리 이상 작성해주세요." 
+                           : 
+                           (errors.new_password)?.type === "maxLength" ? "16자리 이하로 작성해주세요." : "숫자, 영문, 특수문자 1개 이상 사용해주세요."}
+                          </div>
                       </div>
                     </div>
                     <div className={`${style.Auth_content}`}>
                       <label className="col-sm-4 m-0 pb-3">비밀번호 재입력: </label>
                       <div className="col-sm-8 p-0">
-                        <input type="password" className="col-sm Auth_password" name="rePassword" ref={register({required: true})} onChange={handleChange}></input>
-                        <div className={errors.rePassword? `${style.Auth_error}` : `${style.Auth_noterror}`}>비밀번호롤 입력하세요.</div>
+                        <input type="password" className={`col-sm ${style.Auth_password}`} name="re_password" onChange={handleChange}
+                                ref={register({required: true,  minLength: 8, maxLength: 16, pattern: /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+])(?!.*[^a-zA-z0-9$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/})}></input>
+                        <div className={errors.re_password? `${style.Auth_error}` : `${style.Auth_noterror}`}>
+                          {(errors.re_password)?.type === "required" ? "비밀번호롤 입력하세요."
+                           : 
+                           (errors.re_password)?.type === "minLength" ? "8자리 이상 작성해주세요." 
+                           : 
+                           (errors.re_password)?.type === "maxLength" ? "16자리 이하로 작성해주세요." : "숫자, 영문, 특수문자 1개 이상 사용해주세요."}
+                        </div>
                       </div>
                     </div>
                     <div className="d-flex justify-content-center">

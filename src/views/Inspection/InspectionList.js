@@ -37,6 +37,13 @@ function InspectionList(props) {
     }
 
     setIStateCount(completeCount);
+
+    //count 확인 후, 총검사결과: 검사~>완료 바꿀 istate true로 바꿈
+    if(inspections.length === iStateCount) {
+      props.handleFinish();
+    } else {
+      props.handleFinishBack();
+    }
   }
   
   const ExcelFile = ReactExport.ExcelFile;
@@ -52,9 +59,9 @@ function InspectionList(props) {
         result: inspections[i].inspection_result,
         reference: inspections[i].inspection_list_reference,
         date: inspections[i].inspection_date,
-        container: inspections[i].inspection_list_container,
+        container: inspections[i].inspeciton_list_container,
         doctor: inspections[i].inspection_doctor_name,
-        inspector: inspections[i].inspction_inspector_name,
+        inspector: inspections[i].inspeciton_list_container,
         lab: inspections[i].inspection_lab,
       });
     }
@@ -62,8 +69,10 @@ function InspectionList(props) {
   }
 
   useEffect(() => {
-    getInspections2(props.treatmentId);
-  }, [props.treatmentId]);
+    if(props.treatmentId){
+      getInspections2(props.treatmentId);
+    }
+  }, [props]);
 
   useEffect(() => {
     checkInspections(inspectionsList);
@@ -78,6 +87,7 @@ function InspectionList(props) {
     } catch(error) {
       console.log(error);
     }
+
     checkInspections(inspectionsList);
   };
 
@@ -93,17 +103,6 @@ function InspectionList(props) {
   const completeBtn = () => {
     //검사결과: 대기 ~> 완료
     setCompleteState(true);
-
-    console.log("길이", inspections.length);
-    console.log("카운트", iStateCount);
-
-
-    /**** 
-    //count 확인 후, 총검사결과: 검사~>완료 바꿀 istate true로 바꿈
-    if(inspections.length === iStateCount) {
-      props.handleFinish();
-    }
-    */
   };
   //검사상태count++
   const countIState = () => {
@@ -154,6 +153,8 @@ function InspectionList(props) {
   //검사상태: ~>완료 바꾼 후 state 원래대로 + 총검사상태count
   const handleComplete = () => {
     setCompleteState(false);
+
+    console.log()
   };
 
   const handleExcel = () => {
@@ -228,9 +229,9 @@ function InspectionList(props) {
                 <th style={{ width: "1%" }}></th>
                 <th style={{ width: "9%" }}>진단검사명</th>
                 <th style={{ width: "10%" }}>검체명</th>
-                <th style={{ width: "20%" }}>검사명</th>
-                <th style={{ width: "15%" }}>결과</th>
-                <th>참고치</th>
+                <th style={{ width: "15%" }}>검사명</th>
+                <th style={{ width: "10%" }}>결과</th>
+                <th style={{ width: "10" }}>참고치</th>
                 <th style={{ width: "9%" }}>검사 시간</th>
                 <th style={{ width: "7%" }}>용기</th>
                 <th style={{ width: "7%" }}>담당의</th>
