@@ -3,7 +3,7 @@ import InspectionPatientList from "./InspectionPatientList";
 import InspectionList from "./InspectionList";
 import { useEffect, useRef, useState } from "react";
 import Paho from "paho-mqtt";
-import { sendMqttMessage } from "apis/springframework";
+import { sendMqttMessage } from "apis/mqtt";
 
 function Inspection(props) {
   //-------------------------------------------------------------  
