@@ -30,8 +30,9 @@ function TreatmentPatientList(props) {
   }, [patientlists]);
 
   useEffect(() => {
-    // console.log(message);
-  },[props])
+    console.log(message);
+    getTreatmentPatientLists(inputdate2);
+  },[inputdate2, message, props])
 
 
   //진료대기 환자 선택함수
