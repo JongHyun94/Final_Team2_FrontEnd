@@ -16,7 +16,7 @@ function Treatment(props) {
   //상태 선언
   //-------------------------------------------------------------
 
-  const [subTopic, setSubTopic] = useState("/138010/nurse");  // 병원코드/간호사
+  const [subTopic, setSubTopic] = useState("/138010/doctor");  // 병원코드/간호사
   const [prevSubTopic, setPrevSubTopic] = useState("/138010/nurse"); // 병원코드/간호사
   const [pubMessage, setPubMessage] = useState({
     topic: "/138010/inspector",
@@ -84,17 +84,17 @@ function Treatment(props) {
       <div className="TreatmentLeft">
         {/* 진료 대기 환자 */}
         <div className="TreatmentPatientList">
-          <TreatmentPatientList setCheckedpatient={setCheckedpatient} message={message} />
+          <TreatmentPatientList setCheckedpatient={setCheckedpatient} message={message}/>
         </div>
         {/* 진료 기록 */}
         <div className="TreatmentHistoryList">
-          <TreatmentHistoryList checkedpatient={checkedpatient} />
+          <TreatmentHistoryList checkedpatient={checkedpatient}/>
         </div>
       </div>
       <div className="TreatmentRight">
         {/* 진료 등록*/}
         <div className="TreatmentCreateForm">
-          <TreatmentCreateForm checkedpatient={checkedpatient} publishTopic={publishTopic}/>
+          <TreatmentCreateForm checkedpatient={checkedpatient}/>
         </div>
       </div>
     </div>

@@ -81,7 +81,7 @@ function TreatmentHistoryRead(props) {
   useEffect(() => {
     //console.log("asasasas",checkedPatientlist.treatment_patient_id);
     getTreatmentHistoryReads(readTreatmentId);
-  }, [props]);
+  }, [props, readTreatmentId]);
 
 
   return (

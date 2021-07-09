@@ -1,7 +1,6 @@
 import DatePicker from "react-datepicker";
 import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { getYear, getMonth } from "date-fns";
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import { registerLocale } from "react-datepicker";
@@ -11,11 +10,9 @@ import moment from "moment";
 
 registerLocale("ko", ko);
 
-const _ = require('lodash');
-const years = _.range(1990, getYear(new Date()) + 1, 1);
-const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
-
 function RegisterUpdateForm(props) {
+  const { selectedPatient, doctors, setSelectedPatient, changeRegister, cancelRegister, publishTopic, setPubMessage } = props;
+
   const noneRegister = {
     register_id: "",
     register_patient_id: "",
@@ -35,11 +32,11 @@ function RegisterUpdateForm(props) {
 
     user_name: ""
   };
-  var selectedPatient;
-  if (props.selectedPatient) {
-    selectedPatient = props.selectedPatient;
+  var selectPatient;
+  if (selectedPatient) {
+    selectPatient = selectedPatient;
   } else {
-    selectedPatient = noneRegister;
+    selectPatient = noneRegister;
   }
   const noneDoctor = {
     user_id: "",
@@ -58,11 +55,11 @@ function RegisterUpdateForm(props) {
     user_enabled: "",
     user_authority: "",
   };
-  var doctors;
-  if (props.doctors) {
-    doctors = props.doctors;
+  var doctorlist;
+  if (doctors) {
+    doctorlist = doctors;
   } else {
-    doctors = noneDoctor;
+    doctorlist = noneDoctor;
   }
 
   //-------------------------------------------------------------  
@@ -76,57 +73,74 @@ function RegisterUpdateForm(props) {
   // 담당의 상태
 
   // 다른 의사들
-  const [doctorsList, setDoctorsList] = useState(doctors);
+  const [doctorsList, setDoctorsList] = useState(doctorlist);
   // 선택된 의사
-  const [newDoctor, setNewDoctor] = useState(selectedPatient.register_user_id);
+  const [newDoctor, setNewDoctor] = useState(selectPatient.register_user_id);
   const changeNewDoctor = (event) => {
     setNewDoctor(event.target.value);
   };
 
   // 접수 메모 상태
-  const [newMemo, setNewMemo] = useState(selectedPatient.register_memo);
+  const [newMemo, setNewMemo] = useState(selectPatient.register_memo);
   const changeNewMemo = (event) => {
     setNewMemo(event.target.value);
   };
 
   // 의사소통 메모 상태
-  const [newCommunication, setNewCommunication] = useState(selectedPatient.register_communication);
+  const [newCommunication, setNewCommunication] = useState(selectPatient.register_communication);
   const changeNewCommunication = (event) => {
     setNewCommunication(event.target.value);
   };
   //-------------------------------------------------------------
   //버튼 이벤트 처리
   //-------------------------------------------------------------
-
   const updateRegisterBtn = async (event) => {
     try {
+      let new_doctor = doctorsList.find((doctor) => {
+        if (doctor.user_id === newDoctor) {
+          return true;
+        }
+      });
       let newRegister = {
-        register_id: selectedPatient.register_id,
-        register_patient_id: selectedPatient.register_patient_id,
+        register_id: selectPatient.register_id,
+        register_patient_id: selectPatient.register_patient_id,
         register_user_id: newDoctor,
-        register_regdate: selectedPatient.register_regdate,
+        register_regdate: selectPatient.register_regdate,
         register_date: moment(startDate).format("yyyy-MM-DD HH:mm"),
         register_starttime: "",
         register_memo: newMemo,
         register_communication: newCommunication,
-        register_state: selectedPatient.register_state,
+        register_state: selectPatient.register_state,
+        patient_name: selectPatient.patient_name,
+        patient_ssn: selectPatient.patient_ssn,
+        patient_sex: selectPatient.patient_sex,
+        patient_tel: selectPatient.patient_tel,
+        user_name: new_doctor.user_name
       };
-      console.log("new",newRegister);
       var list = await updateRegister(newRegister);
-      console.log(list.data.result);
-      props.changeRegister();
+      //console.log("업데이트",list.data.result);
+      if (list.data.result === "중복") {
+        alert("이미 예약이 되어있습니다.");
+      } else if (list.data.result === "성공") {
+        publishTopic(0);
+        setSelectedPatient(newRegister);
+        changeRegister();
+      }
     } catch (e) {
       console.log(e);
     }
   };
   const cancelRegisterForm = (event) => {
-    props.cancelRegister();
+    cancelRegister();
   };
 
   //-------------------------------------------------------------
   //마운트 및 언마운트에 실행할 내용
   //-------------------------------------------------------------
+  useEffect(() => {
 
+    setStartDate(props.selectedPatient ? new Date(props.selectedPatient.register_date) : new Date());
+  }, [props.selectedPatient]);
   //-------------------------------------------------------------
   //렌더링 내용
   //-------------------------------------------------------------
@@ -146,7 +160,7 @@ function RegisterUpdateForm(props) {
                 환자명:
               </div>
               <div className="RegisterUpdateForm_content_list_input">
-                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={selectedPatient.patient_name} readOnly />
+                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={selectPatient.patient_name} readOnly />
               </div>
             </div>
             <div className="RegisterUpdateForm_content_list">
@@ -154,7 +168,7 @@ function RegisterUpdateForm(props) {
                 생년월일:
               </div>
               <div className="RegisterUpdateForm_content_list_input">
-                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={selectedPatient.patient_ssn? selectedPatient.patient_ssn.substring(0,6) : selectedPatient.patient_ssn} readOnly />
+                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={selectPatient.patient_ssn ? selectPatient.patient_ssn.substring(0, 6) : selectPatient.patient_ssn} readOnly />
               </div>
             </div>
             <div className="RegisterUpdateForm_content_list">
@@ -162,7 +176,7 @@ function RegisterUpdateForm(props) {
                 성별:
               </div>
               <div className="RegisterRead_content_list_input">
-                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectedPatient.patient_sex} readOnly />
+                <input className="RegisterRead_content_list_input_readOnly" type="text" value={selectPatient.patient_sex} readOnly />
               </div>
             </div>
             <div className="RegisterUpdateForm_content_list">
@@ -170,7 +184,7 @@ function RegisterUpdateForm(props) {
                 전화번호:
               </div>
               <div className="RegisterUpdateForm_content_list_input">
-                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={selectedPatient.patient_tel} readOnly />
+                <input className="RegisterUpdateForm_content_list_input_readOnly" type="text" value={selectPatient.patient_tel} readOnly />
               </div>
             </div>
             <div className="RegisterUpdateForm_content_list">
@@ -195,54 +209,6 @@ function RegisterUpdateForm(props) {
               </div>
               <div className="RegisterUpdateForm_content_list_input">
                 <DatePicker
-                  renderCustomHeader={({
-                    date,
-                    changeYear,
-                    changeMonth,
-                    decreaseMonth,
-                    increaseMonth,
-                    prevMonthButtonDisabled,
-                    nextMonthButtonDisabled
-                  }) => (
-                    <div
-                      style={{
-                        margin: 10,
-                        display: "flex",
-                        justifyContent: "center"
-                      }}
-                    >
-                      <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
-                        {"<"}
-                      </button>
-                      <select
-                        value={getYear(date)}
-                        onChange={({ target: { value } }) => changeYear(value)}
-                      >
-                        {years.map(option => (
-                          <option key={option} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-
-                      <select
-                        value={months[getMonth(date)]}
-                        onChange={({ target: { value } }) =>
-                          changeMonth(months.indexOf(value))
-                        }
-                      >
-                        {months.map(option => (
-                          <option key={option} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-
-                      <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
-                        {">"}
-                      </button>
-                    </div>
-                  )}
                   locale="ko"
                   showTimeSelect
                   selected={startDate}
