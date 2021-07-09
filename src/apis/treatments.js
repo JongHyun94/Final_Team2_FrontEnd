@@ -33,3 +33,11 @@ export function getCategoryInspectionList(categoryValue) {
   const promise = axios.get("/treatment/categoryValue", {params: {categoryValue}});
   return promise;
 }
+
+// drugsInjections 등록하기
+export function createDruglist(drugsInjections){
+  console.log("ㅗㅗㅗㅗㅗㅗ",drugsInjections);
+  const promise = axios.post("/treatment/drugsInjections", drugsInjections);
+  console.log(promise);
+  return promise;
+}
