@@ -4,6 +4,8 @@ import style from "./style.module.css";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { getUser, updateUserInfo } from "apis/users";
+import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
+import { ValidationModal } from "components/common/ValidationModal";
 
 function Auth(props) {
   const { open, close } = props;
@@ -51,11 +53,17 @@ function Auth(props) {
   const handleUpdate = async (event) => {
     try {      
       if (user.old_password !== "" && user.old_password === user.new_password) {
-        alert("이전 비밀번호와 동일합니다.");
+        // alert("이전 비밀번호와 동일합니다.");
+        openvalidationModal();
+        setErrorMsg({
+          ...errorMsg,
+          content: "이전 비밀번호와 동일합니다."
+        });  
       } else if (user.new_password !== "" && user.new_password === user.re_password) {
         const response = await updateUserInfo(user);
         if (response.data === "success") {
-          alert("회원 정보가 수정되었습니다.");
+          // alert("회원 정보가 수정되었습니다.");
+          ToastsStore.success("회원 정보가 수정되었습니다.");
           setUser({
             ...user,
             old_password: "",
@@ -64,33 +72,42 @@ function Auth(props) {
           });
           close();
         } else {
-          alert("기존 비밀번호가 맞지 않습니다.");
-        }
-        
+          // alert("기존 비밀번호가 맞지 않습니다.");
+          openvalidationModal();
+          setErrorMsg({
+            ...errorMsg,
+            content: "기존 비밀번호가 맞지 않습니다."
+          });
+        }        
       } else if (user.old_password !== "") {
-        alert("비밀번호가 동일하지 않습니다.");
+        // alert("비밀번호가 동일하지 않습니다.");
+        openvalidationModal();
+        setErrorMsg({
+          ...errorMsg,
+          content: "비밀번호가 동일하지 않습니다."
+        });
       }
     } catch(error) {
       console.log(error);
     }    
   };
 
-  // 모달 상태(open일 떄 true로 바뀌어 열림)
-  const [modalOpen, setModalOpen] = useState(false);
+  // 주소 모달 상태(open일 떄 true로 바뀌어 열림)
+  const [addressModalOpen, setAddressModalOpen] = useState(false);
 
-  const openModal = async (event) => {
+  const openAddressModal = async (event) => {
     try {
       event.preventDefault();
-      setModalOpen(true);
+      setAddressModalOpen(true);
     } catch(error) {
       console.log(error);
     }    
   };
-  const closeModal = () => {
-    setModalOpen(false);
+  const closeAddressModal = () => {
+    setAddressModalOpen(false);
   };
   const sendModal = (data) => {
-    setModalOpen(false);
+    setAddressModalOpen(false);
     console.log("send1 실행", data);
     setUser({
       ...user,
@@ -112,6 +129,21 @@ function Auth(props) {
         };
       });
     }
+  };
+
+  // validation 모달 상태(open일 떄 true로 바뀌어 열림)
+  const [validationModalOpen, setValidationModalOpen] = useState(false);
+  // 유효성 검사 오류 메시지
+  const [errorMsg, setErrorMsg] = useState({
+    title : "회원정보 수정 실패",
+    content: ""
+  });
+
+  const openvalidationModal = (event) => {
+    setValidationModalOpen(true);
+  };
+  const closeValidationModal = () => {
+    setValidationModalOpen(false);
   };
 
   return (
@@ -220,8 +252,8 @@ function Auth(props) {
                         <div className="row mb-2">
                           <input type="text" className="col-sm-6" name="user_zipcode" value={user.user_zipcode} placeholder="우편번호" readOnly></input>
                           <React.Fragment>
-                            <button className="button_team2_empty" onClick={openModal}>우편번호 찾기</button>
-                            <Modal open={modalOpen} close={closeModal} send={sendModal}></Modal>
+                            <button className="button_team2_empty" onClick={openAddressModal}>우편번호 찾기</button>
+                            <Modal open={addressModalOpen} close={closeAddressModal} send={sendModal}></Modal>
                           </React.Fragment>
                         </div>
                         <div className="row mb-2"><input type="text" className="col-sm" name="user_address" value={user.user_address} placeholder="주소" readOnly></input></div>
@@ -267,7 +299,11 @@ function Auth(props) {
                       </div>
                     </div>
                     <div className="d-flex justify-content-center">
-                      <button className={`button_team2_fill`} type="submit">수정</button>              
+                      <button className={`button_team2_fill`} type="submit">수정</button>  
+                      <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground/>        
+                      <React.Fragment>
+                        <ValidationModal open={validationModalOpen} close={closeValidationModal} errorMsg={errorMsg}></ValidationModal>
+                      </React.Fragment>
                     </div>
                   </form>
                 </div>

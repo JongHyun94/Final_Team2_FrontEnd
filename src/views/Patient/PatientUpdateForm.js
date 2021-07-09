@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { updatePatient } from "apis/patient";
 import { useForm } from "react-hook-form";
+import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 
 function PatientUpdateForm(props) {
   // 환자 상태
@@ -58,7 +59,8 @@ function PatientUpdateForm(props) {
       console.log("환자 정보 수정: ", patient);
       const response = await updatePatient(patient);
       if (response.data) {
-        alert("환자 정보를 수정했습니다.");
+        // alert("환자 정보를 수정했습니다.");
+        ToastsStore.success("환자 정보를 수정했습니다.");
         props.publishTopic(0);
       }
     } catch(error) {
@@ -191,7 +193,10 @@ function PatientUpdateForm(props) {
             <div className="col-sm d-flex align-items-center">{patientId !== undefined? moment(patient.patient_regdate).format("yyyy-MM-DD") : ""}</div>
           </div>
           {patientId !== undefined?
-          <div className="d-flex justify-content-end"><button className="button_team2_fill" type="submit">수정</button></div>
+          <div className="d-flex justify-content-end">
+            <button className="button_team2_fill" type="submit">수정</button>
+            <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground/> 
+          </div>
           :<div className="d-flex justify-content-end" style={{"visibility":"hidden"}}><button className="button_team2_fill">수정</button></div>
           }
         </form>

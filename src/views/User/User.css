@@ -72,6 +72,18 @@
   cursor: pointer;
 }
 
+.UserList_tr_block {
+  display: flex;
+  border-bottom: lightgray solid 0.5px;
+  align-items: center;
+  background-color: #F6F6F6;
+}
+
+.UserList_tr_block:hover {
+  background-color: #cff1ff;
+  cursor: pointer;
+}
+
 .UserList_container {
   /* display: flex; */
   flex: 1;
@@ -104,3 +116,16 @@
   display: flex;
   justify-content: end;
 }
+
+/* Toasts 알림 */ 
+/* .toast {
+  font-size: 16px !important;
+    color: #fff !important;
+    background-color: #0e110fd5 !important;
+    border-radius: 5px !important;
+    min-height: 30px !important; 
+    width: 300px !important;
+    margin: auto !important;
+    display: inline-block !important;
+    line-height: 30px !important;
+} */
