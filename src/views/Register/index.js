@@ -30,12 +30,13 @@ function Register(props) {
   //상태 선언
   //-------------------------------------------------------------
 
-  const [subTopic, setSubTopic] = useState("/138010/nurse");  // 병원코드/간호사
+  const [subTopic, setSubTopic] = useState(["/138010/nurse", "/138010/doctor"]);  // 병원코드/간호사
   const [prevSubTopic, setPrevSubTopic] = useState("/138010/nurse"); // 병원코드/간호사
-  const [pubMessage, setPubMessage] = useState({
-    topic: "",
-    content: "", 
-  });
+  const [pubMessage, setPubMessage] = useState([
+    { topic: "/138010/nurse", content: "refreshRegisters"}, 
+    { topic: "/138010/doctor", content: "addTreatments"},
+    { topic: "/138010/doctor", content: "refreshToDoList"}
+  ]);
   const [message, setMessage] = useState("");
 
   //-------------------------------------------------------------
@@ -53,6 +54,7 @@ function Register(props) {
     client.current.onMessageArrived = (msg) => {
       console.log("메시지 수신");
       var Jmessage = JSON.parse(msg.payloadString);
+      console.log(Jmessage);
       setMessage(() => {
         return Jmessage;
       });
@@ -60,6 +62,7 @@ function Register(props) {
 
     client.current.connect({
       onSuccess: () => {
+        client.current.subscribe(subTopic[1]);
         console.log("Mqtt 접속 성공");
       }
     });
@@ -70,18 +73,18 @@ function Register(props) {
   };
   const sendSubTopic = () => {
     client.current.unsubscribe(prevSubTopic);
-    client.current.subscribe(subTopic);
-    setPrevSubTopic(subTopic);
+    client.current.subscribe(subTopic[0]);
+    setPrevSubTopic(subTopic[0]);
   };
 
-  const publishTopic = async () => {
-    await sendMqttMessage(pubMessage);
+  const publishTopic = async (num) => {
+    await sendMqttMessage(pubMessage[num]);
   };
 
   useEffect(() => {
     //sendSubTopic();
     connectMqttBroker();
-    console.log("MESSAGE",message);
+    console.log("MESSAGE1: ",message);
   });
 
   //////////////////////////////////////////////////////////
@@ -166,7 +169,7 @@ function Register(props) {
             setSelectedPatient={setSelectedPatient} 
             registerDate={registerDate}
             setRegisterDate={setRegisterDate}
-            setPubMessage={setPubMessage}
+            message={message}
             publishTopic={publishTopic}
             />
         </div>
@@ -187,7 +190,6 @@ function Register(props) {
               selectedPatient={selectedPatient}
               setSelectedPatient={setSelectedPatient}
               doctors={doctors}
-              setPubMessage={setPubMessage}
               publishTopic={publishTopic}
             />
           }
@@ -203,7 +205,7 @@ function Register(props) {
             <RegisterTimeSchedule 
             registerDate={registerDate}
             setRegisterDate={setRegisterDate}
-            setPubMessage={setPubMessage}
+            message={message}
             publishTopic={publishTopic}
             setSubTopic={setSubTopic}
             />

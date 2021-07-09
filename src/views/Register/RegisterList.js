@@ -34,7 +34,7 @@ function RegisterList(props) {
   //-------------------------------------------------------------
 
   // 공통 날짜 상태 
-  const {registerDate, setSelectedPatient, setRegisterDate, setPubMessage, publishTopic} = props;
+  const {registerDate, setSelectedPatient, setRegisterDate, publishTopic, message} = props;
   // 접수 목록 상태
   const [registerList, setRegisterList] = useState([]);
 
@@ -89,8 +89,8 @@ function RegisterList(props) {
       if (selectRegister) {
         var list = await changeRegisterState(selectRegister);
         //setRegisterList(list.data.registerList);
-        setPubMessage({ topic: "/138010/nurse", content: "refreshRegisters"});
-        publishTopic();
+        publishTopic(0);
+        publishTopic(1);
       }
     } catch (e) {
       console.log(e);
@@ -121,8 +121,7 @@ function RegisterList(props) {
       if (selectRegister) {
         var list = await changeRegisterState(selectRegister);
         //setRegisterList(list.data.registerList);
-        setPubMessage({ topic: "/138010/nurse", content: "refreshRegisters"});
-        publishTopic();
+        publishTopic(0);
       }
     } catch (e) {
       console.log(e);
@@ -229,14 +228,15 @@ function RegisterList(props) {
       }
     };
     work();
-  }, []);
+  }, [registerDate]);
 
   useEffect(() => {
     getList(moment(registerDate).format("yyyy-MM-DD HH:mm"));
   }, [registerDate]);
 
  useEffect(() => {
-    const work = async () => {
+  console.log("MESSAGE: ", message);
+   const work = async () => {
       try {
         var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"),"");
         setRegisterList(list.data.registerList);
@@ -245,8 +245,10 @@ function RegisterList(props) {
         console.log(error);
       }
     };
+   if(message.content==="refreshRegisters"){
     work();
-  }, [props]);
+   } 
+  }, [message, props, registerDate]);
   //-------------------------------------------------------------
   //렌더링 내용
   //-------------------------------------------------------------

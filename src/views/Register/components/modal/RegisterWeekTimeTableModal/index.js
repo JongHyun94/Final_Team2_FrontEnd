@@ -13,7 +13,7 @@ function RegisterWeekTimeTableModal(props) {
   //-------------------------------------------------------------
 
   useEffect(() => {
-    setSubTopic("/138010/doctor");
+    //setSubTopic("/138010/doctor");
   },[]);
   useEffect(() => {
     //console.log(selectDate);

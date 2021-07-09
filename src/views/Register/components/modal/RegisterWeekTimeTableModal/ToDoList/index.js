@@ -25,8 +25,8 @@ function ToDoList(props) {
 
     try {
       var list = await createToDoLists(newSchedule);
-      setPubMessage({ topic: "/138010/doctor", content: "refreshToDoList"});
-      publishTopic();
+      //setPubMessage({ topic: "/138010/doctor", content: "refreshToDoList"});
+      publishTopic(2);
       //console.log(list.data.result);
     } catch (e) {
       console.log(e);
@@ -56,8 +56,8 @@ function ToDoList(props) {
     try {
       var list = await updateToDoLists(updateSchedule);
       //console.log(list.data.result);
-      setPubMessage({ topic: "/138010/doctor", content: "refreshToDoList"});
-      publishTopic();
+      //setPubMessage({ topic: "/138010/doctor", content: "refreshToDoList"});
+      publishTopic(2);
     } catch (e) {
       console.log(e);
     }
@@ -80,8 +80,8 @@ function ToDoList(props) {
     try {
       var list = await updateToDoLists(updateSchedule);
       //console.log(list.data.result);
-      setPubMessage({ topic: "/138010/doctor", content: "refreshToDoList"});
-      publishTopic();
+      //setPubMessage({ topic: "/138010/doctor", content: "refreshToDoList"});
+      publishTopic(2);
     } catch (e) {
       console.log(e);
     }
@@ -100,8 +100,8 @@ function ToDoList(props) {
     try {
       var list = await deleteToDoLists(id);
       //console.log(list.data.result);
-      setPubMessage({ topic: "/138010/doctor", content: "refreshToDoList"});
-      publishTopic();
+      //setPubMessage({ topic: "/138010/doctor", content: "refreshToDoList"});
+      publishTopic(2);
     } catch (e) {
       console.log(e);
     }
@@ -130,12 +130,12 @@ function ToDoList(props) {
     return() => {
       setSelectDate(moment().format("yyyy-MM-DD"));
     };
-  },[]);
+  },[selectDate, selectedDoctor.user_id, setSelectDate]);
 
   useEffect(() => {
     setSelectDate(selectDate ? selectDate : new Date());
     getToDoList(selectDate, selectedDoctor.user_id);
-  }, [props]);
+  }, [props, selectDate, selectedDoctor.user_id, setSelectDate]);
 
   //-------------------------------------------------------------
   //렌더링 내용

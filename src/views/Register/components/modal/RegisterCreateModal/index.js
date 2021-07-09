@@ -5,7 +5,7 @@ import RegisterPatientList from "./RegisterPatientList";
 import { createRegister, updateRegister } from "apis/register";
 import moment from "moment";
 function RegisterCreateModal(props) {
-  const { open, close, header, doctors, register, publishTopic, setPubMessage } = props;
+  const { open, close, header, doctors, register, publishTopic } = props;
 
   const [newRegister, setNewRegister] = useState(register.register_id ? register : {
     register_id: "",
@@ -56,14 +56,13 @@ function RegisterCreateModal(props) {
   const createNewRegister = async () => {
     console.log("등록");
     try {
-      //console.log(newRegister);
+      console.log("000접수",newRegister);
       var list = await createRegister(newRegister);
       console.log("결과값", list.data.result);
       if (list.data.result === "중복") {
-        alert("이미 예약이 되어있습니다.");
+        console.log("이미 예약이 되어있습니다.");
       } else if (list.data.result === "성공") {
-        setPubMessage({ topic: "/138010/nurse", content: "refreshRegisters" });
-        publishTopic();
+        publishTopic(0);
         close();
       }
     } catch (e) {
@@ -73,14 +72,13 @@ function RegisterCreateModal(props) {
   const updateNewRegister = async () => {
     console.log("수정");
     try {
-      //console.log(newRegister);
+      console.log("3333접수",newRegister);
       var list = await updateRegister(newRegister);
       console.log("결과값", list.data.result);
       if (list.data.result === "중복") {
-        alert("이미 예약이 되어있습니다.");
+        console.log("이미 예약이 되어있습니다.");
       } else if (list.data.result === "성공") {
-        setPubMessage({ topic: "/138010/nurse", content: "refreshRegisters" });
-        publishTopic();
+        publishTopic(0);
         close();
       }
     } catch (e) {
@@ -93,7 +91,7 @@ function RegisterCreateModal(props) {
   //-------------------------------------------------------------  
   useEffect(() => {
     setNewRegister({ ...newRegister, register_state: "대기" });
-  }, []);
+  }, [newRegister]);
   //-------------------------------------------------------------
   //렌더링 내용
   //-------------------------------------------------------------

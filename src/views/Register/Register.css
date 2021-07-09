@@ -433,7 +433,7 @@ th {
   height: 100px !important;
   outline: solid 0.5px #dee2e6 !important;
   border: solid 0.5px #dee2e6 !important;
-  /* cursor: pointer; */
+  /*  cursor: pointer; */
   border-radius: 5px;
 }
 .RegisterTimeSchedule_content_title_today .react-datepicker-ignore-onclickoutside {

@@ -36,7 +36,7 @@ function RegisterTimeSchedule(props) {
   //-------------------------------------------------------------  
   //상태 선언
   //-------------------------------------------------------------
-  const {registerDate, setRegisterDate, publishTopic, setPubMessage, setSubTopic} = props;
+  const {registerDate, setRegisterDate, publishTopic, setPubMessage, setSubTopic, message} = props;
   
   const [doctors, setDoctors] = useState([]);
   const [registers, setRegisters] = useState([]);
@@ -94,7 +94,6 @@ function RegisterTimeSchedule(props) {
   const getRegisterLists = async (date) => {
     try {
       var list = await getRegisterList(date);
-      //console.log(list.data.registerList);
       setRegisters(list.data.registerList);
     } catch (e) {
       console.log(e);
@@ -120,12 +119,23 @@ function RegisterTimeSchedule(props) {
 
   useEffect(()=>{
     getRegisterLists(moment(registerDate).format("yyyy-MM-DD H:m"));
-  },[props]);
-  
-  useEffect(() => {
-    getRegisterLists(moment(registerDate).format("yyyy-MM-DD H:m"));
-  }, [registerDate]);
+  },[props, registerDate]);
 
+  useEffect(() => {
+    console.log("타ㅁ미이이");
+    console.log("MESSAGE: ", message);
+     const work = async () => {
+        try {
+          var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"),"");
+          setRegisters(list.data.registerList);
+        } catch(error) {
+          console.log(error);
+        }
+      };
+     if(message.content==="refreshRegisters"){
+      work();
+     } 
+    }, [message, registerDate]);
   //-------------------------------------------------------------
   //렌더링 내용
   //-------------------------------------------------------------

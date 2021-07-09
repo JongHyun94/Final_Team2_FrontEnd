@@ -11,7 +11,7 @@ import moment from "moment";
 registerLocale("ko", ko);
 
 function RegisterUpdateForm(props) {
-  const { selectedPatient, doctors, setSelectedPatient, changeRegister, cancelRegister } = props;
+  const { selectedPatient, doctors, setSelectedPatient, changeRegister, cancelRegister, publishTopic, setPubMessage } = props;
 
   const noneRegister = {
     register_id: "",
@@ -122,6 +122,7 @@ function RegisterUpdateForm(props) {
       if (list.data.result === "중복") {
         alert("이미 예약이 되어있습니다.");
       } else if (list.data.result === "성공") {
+        publishTopic(0);
         setSelectedPatient(newRegister);
         changeRegister();
       }
@@ -137,8 +138,9 @@ function RegisterUpdateForm(props) {
   //마운트 및 언마운트에 실행할 내용
   //-------------------------------------------------------------
   useEffect(() => {
+
     setStartDate(props.selectedPatient ? new Date(props.selectedPatient.register_date) : new Date());
-  }, []);
+  }, [props.selectedPatient]);
   //-------------------------------------------------------------
   //렌더링 내용
   //-------------------------------------------------------------
