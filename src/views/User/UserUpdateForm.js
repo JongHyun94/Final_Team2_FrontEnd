@@ -9,9 +9,6 @@ function UserUpdateForm(props) {
   // 직원 상태
   const [user, setUser] = useState({});
   const [userId, setUserId] = useState("");
-  const [userRegdate, setUserRegdate] = useState("");
-  const date = user.user_regdate;
-  // console.log("###", date.substring(0,11));
 
   // 이메일 비교 상태
   const [email, setEmail] = useState(true);
@@ -68,7 +65,6 @@ function UserUpdateForm(props) {
       user_regdate: props.user.user_regdate
     });
     setUserId(props.user.user_id);
-    setUserRegdate(date);
   }, [props]);
 
   useEffect(() => {
@@ -87,6 +83,7 @@ function UserUpdateForm(props) {
       const response = await updateUser(user);
       if(response.data) {
         alert("직원 정보를 수정 했습니다.");
+        props.publishTopic(0);
       }
     } catch (error) {
       console.log(error);
@@ -257,7 +254,7 @@ function UserUpdateForm(props) {
           </div>
           <div className="User_item">
             <label className="col-sm-3 col-form-label pl-3 p-0">등록 날짜: </label>
-            <div className="col-sm d-flex align-items-center">{userRegdate}</div>
+            <div className="col-sm d-flex align-items-center">{userId !== undefined? moment(user.user_regdate).format("yyyy-MM-DD") : ""}</div>
           </div>
           {userId !== undefined?
           <div className= "d-flex justify-content-end">

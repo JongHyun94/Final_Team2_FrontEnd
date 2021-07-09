@@ -92,7 +92,9 @@ function UserCreateForm(props) {
           user_detailaddress1: "",
           user_detailaddress2: "",
         });
-        alert("직원을 등록했습니다.");        
+        setMasking("");
+        alert("직원을 등록했습니다."); 
+        props.publishTopic(1);
       }
     } catch(error) {
       console.log(error);
@@ -111,7 +113,7 @@ function UserCreateForm(props) {
   };
   const sendModal = (data) => {
     setModalOpen(false);
-    console.log("send1 실행", data);
+    // console.log("send1 실행", data);
     setUser({
       ...user,
       user_zipcode: data.zonecode,
@@ -245,7 +247,7 @@ function UserCreateForm(props) {
               </div>
               <input type="text" className="col-sm mb-2" name="user_address" placeholder="주소" value={user.user_address} onChange={handleChange} readOnly></input>
               <div className="row no-gutters mb-2">
-                <input type="text" className="col-sm mr-2" name="user_detailaddress1" value={user.user_detailaddress2} placeholder="상세주소" onChange={handleChange}></input>
+                <input type="text" className="col-sm mr-2" name="user_detailaddress1" value={user.user_detailaddress1} placeholder="상세주소" onChange={handleChange}></input>
                 <input type="text" className="col-sm" name="user_detailaddress2" value={user.user_detailaddress2} placeholder="참고항목" onChange={handleChange} readOnly></input>
               </div>
             </div>

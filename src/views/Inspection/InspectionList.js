@@ -41,6 +41,7 @@ function InspectionList(props) {
     //count 확인 후, 총검사결과: 검사~>완료 바꿀 istate true로 바꿈
     if(inspections.length === iStateCount) {
       props.handleFinish();
+      props.publishTopic();
     } else {
       props.handleFinishBack();
     }
@@ -77,7 +78,7 @@ function InspectionList(props) {
   useEffect(() => {
     checkInspections(inspectionsList);
     getCompleteCount();
-  });
+  }, []);
 
   const getInspections2 = async (treatmentId) => {
     try {
@@ -98,11 +99,13 @@ function InspectionList(props) {
   const cancelBtn = () => {
     //검사결과: 검사 ~> 대기
     setCancelState(true);
+    props.publishTopic();
   };
 
   const completeBtn = () => {
     //검사결과: 대기 ~> 완료
     setCompleteState(true);
+    props.publishTopic();
   };
   //검사상태count++
   const countIState = () => {
@@ -119,6 +122,7 @@ function InspectionList(props) {
         } else {
           setBarcodeState(true);
           props.handleBarcodeCheck();
+          props.publishTopic();
           return false;
         }
       }
@@ -130,6 +134,7 @@ function InspectionList(props) {
     setModalOpen(false);
     setBarcodeState(true);
     props.handleBarcodeCheck();
+    props.publishTopic();
   };
   const closeCancelModal = () => {
     setModalOpen(false);
@@ -153,8 +158,6 @@ function InspectionList(props) {
   //검사상태: ~>완료 바꾼 후 state 원래대로 + 총검사상태count
   const handleComplete = () => {
     setCompleteState(false);
-
-    console.log()
   };
 
   const handleExcel = () => {
@@ -229,8 +232,8 @@ function InspectionList(props) {
                 <th style={{ width: "1%" }}></th>
                 <th style={{ width: "9%" }}>진단검사명</th>
                 <th style={{ width: "10%" }}>검체명</th>
-                <th style={{ width: "15%" }}>검사명</th>
-                <th style={{ width: "10%" }}>결과</th>
+                <th style={{ width: "10%" }}>검사명</th>
+                <th style={{ width: "15%" }}>결과</th>
                 <th style={{ width: "10" }}>참고치</th>
                 <th style={{ width: "9%" }}>검사 시간</th>
                 <th style={{ width: "7%" }}>용기</th>

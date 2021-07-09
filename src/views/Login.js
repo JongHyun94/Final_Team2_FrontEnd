@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createSetAuthTokenAction, createSetUidAction } from "redux/auth-reducer";
+import { createSetAuthTokenAction, createSetHnameAction, createSetUidAction } from "redux/auth-reducer";
 import { useForm } from "react-hook-form";
 import Help from "./Help";
 import "./Login.css";
@@ -32,7 +32,7 @@ function Login(props) {
     try{
       // 로그인 요청
       const response = await login(user);
-      console.log(response.data);
+      // console.log(response.data);
 
       // 로그인 성공 시 JWT 저장 및 경로 이동
       if (response.data.result === "success") {
@@ -43,9 +43,11 @@ function Login(props) {
         // // Redux에 인증 내용 저장      
         dispatch(createSetUidAction(response.data.uid));
         dispatch(createSetAuthTokenAction(response.data.authToken));
+        dispatch(createSetHnameAction(response.data.hname));
         // sessionStorage에 인증 내용 저장
         sessionStorage.setItem("uid", response.data.uid);
         sessionStorage.setItem("authToken", response.data.authToken);
+        sessionStorage.setItem("hname", response.data.hname);
         
         // 로그인 아이디에 따른 경로 지정
         if(user.userId.slice(0,1) === "N") {

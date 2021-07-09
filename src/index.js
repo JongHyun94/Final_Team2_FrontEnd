@@ -8,7 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 import { createStore } from 'redux';
 import rootReducer from 'redux/root-reducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { createSetAuthTokenAction, createSetUidAction } from 'redux/auth-reducer';
+import { createSetAuthTokenAction, createSetHnameAction, createSetUidAction } from 'redux/auth-reducer';
 import { addAuthHeader } from 'apis/axiosConfig';
 import { Provider } from 'react-redux';
 
@@ -16,6 +16,7 @@ const store = createStore(rootReducer, composeWithDevTools());
 
 store.dispatch(createSetUidAction(sessionStorage.getItem("uid") || ""));
 store.dispatch(createSetAuthTokenAction(sessionStorage.getItem("authToken") || ""));
+store.dispatch(createSetHnameAction(sessionStorage.getItem("hname" || "")));
 
 if (sessionStorage.getItem("authToken")) {
   addAuthHeader(sessionStorage.getItem("authToken"));

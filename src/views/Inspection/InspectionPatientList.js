@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AutoSizer, List, Table } from "react-virtualized";
 import DatePicker from "react-datepicker";
 import moment from "moment";
@@ -8,6 +8,8 @@ import { readPatient } from "apis/inspections";
 let patientsList = [];
 
 function InspectionPatientList(props) {
+  
+
   //DatePicker 상태
   const [treatmentDate, setTreatmentDate] = useState(new Date());
   //날짜 이동 상태
@@ -19,6 +21,11 @@ function InspectionPatientList(props) {
 
   // 진료번호 비교를 위한 상태
   const [id, setId] = useState("");
+
+  useEffect(() => {
+    console.log(props.message);
+    getPatient2(treatmentDate2);
+  }, [props.message]);
 
   useEffect(() => {
     getPatient2(treatmentDate2);
