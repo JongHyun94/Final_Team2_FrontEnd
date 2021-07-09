@@ -33,11 +33,11 @@ function Treatment(props) {
     client.current = new Paho.Client("localhost", 61614, "client-" + new Date().getTime());
 
     client.current.onConnectionLost = () => {
-      console.log("Mqtt 접속 끊김");
+      // console.log("Mqtt 접속 끊김");
     };
 
     client.current.onMessageArrived = (msg) => {
-      console.log("메시지 수신");
+      // console.log("메시지 수신");
       var Jmessage = JSON.parse(msg.payloadString);
       setMessage(() => {
         return Jmessage;
@@ -47,7 +47,7 @@ function Treatment(props) {
     client.current.connect({
       onSuccess: () => {
         client.current.subscribe(subTopic);
-        console.log("Mqtt 접속 성공");
+        // console.log("Mqtt 접속 성공");
       }
     });
   };
@@ -62,7 +62,7 @@ function Treatment(props) {
 
   useEffect(() => {
     connectMqttBroker();
-    console.log("MESSAGE",message);
+    // console.log("MESSAGE",message);
   });
 
   //////////////////////////////////////////////////////////

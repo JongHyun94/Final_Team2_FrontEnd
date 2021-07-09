@@ -30,7 +30,7 @@ function TreatmentPatientList(props) {
   }, [patientlists]);
 
   useEffect(() => {
-    console.log(message);
+    // console.log(message);
   },[props])
 
 
