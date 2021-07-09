@@ -1,5 +1,5 @@
 import React, { useState, useEffect   } from "react";
-import { updateTreatment, getSearchDurg, getCategoryInspectionList, createDruglist  } from "apis/treatments";
+import { updateTreatment, getSearchDurg, getCategoryInspectionList  } from "apis/treatments";
 
 function TreatmentCreateForm(props) {
 
@@ -27,18 +27,18 @@ function TreatmentCreateForm(props) {
   const [inspectionlist, setInspectionlist] = useState([]);
   const [inspectionOption, setInspectionOption] = useState("진단 검사 선택");
   // const [inspectionOption, setInspectionOption] = useState(["진단 검사 선택"]);
-  const [drugForm, setDrugForm] = useState({
-    selectedDrug:[]
+  const [joinForm, setJoinForm] = useState({
+    uskill:[]
   });
 
   const [druglists, setDrugLists] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState();
-  const [treatmentId, setTreatmentId] = useState("");
+
   const getCategoryInspectionLists = async (categoryValue) => {
     try{
  
       var list = await getCategoryInspectionList(categoryValue);
-      // console.log("hi",list);
+      console.log("hi",list);
       setInspectionlist(list.data.inspectionList);
     }catch (e){
       console.log(e);
@@ -95,6 +95,8 @@ function TreatmentCreateForm(props) {
   const [omemo, setOmemo] = useState("");
   const [amemo, setAmemo] = useState("");
   const [pmemo, setPmemo] = useState("");
+
+  //의사소통메모
   const [cmemo, setCmemo] = useState("");
 
   const handleChangeSmemo = (event) => {
@@ -114,92 +116,11 @@ function TreatmentCreateForm(props) {
     setCmemo(event.target.value);
   };
 
-  const [treatment, setTreatment] = useState({});
 
-  // const handleChange = (event) => {
-  //   setTreatment({
-  //     ...treatment,
-  //     treatment_id: checkedPatientlist.treatment_id,
-  //     [event.target.name]: event.target.value 
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   setTreatment({
-  //     ...treatment,
-  //     treatment_id : checkedPatientlist.treatment_id,
-  //     treatment_smemo : smemo,
-  //     trtreatment_omemo: omemo, 
-  //     treatment_amemo: amemo,
-  //     treatment_pmemo: pmemo, 
-  //     treatment_communication: cmemo
-  //   });
-  //   setTreatmentId(checkedPatientlist.treatment_id);
-  // },[props]);
-
-  // const handleUpdate = async (event) => {
-  //   try{
-  //     // event.preventDefault();
-  //     console.log("진료 정보 수정: ", treatment);
-  //     const response = await updateTreatment(treatment);
-  //     if (response.data) {
-  //       alert("진료 정보를 수정했습니다.");
-  //     }
-  //   } catch(error) {
-  //     console.log(error);
-  //   }    
-  // };
-
-  const updateTreatmentBtn = async (event) => {
-    publishTopic();
-    // event.preventDefault();
-    try{
-      let newTreatment = {
-        treatment_id : checkedPatientlist.treatment_id,
-        treatment_smemo: smemo, 
-        treatment_omemo: omemo, 
-        treatment_amemo: amemo,
-        treatment_pmemo: pmemo, 
-        treatment_communication: cmemo
-      };
-      console.log("newtt", newTreatment);
-      var list = await updateTreatment(newTreatment);
-      console.log("list",list);
-      // console.log(list.data.result)
-  
-      // setInspectionlist(newTreatment);
-    }catch(e){
-      console.log(e);
-    }
-    
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("접수완료 : ", inspectionlist);
   };
-  
-
-
-  // const handleUpdate = async (event) => {
-  //   event.preventDefault();
-  //   const dirtyBoard = {...board};
-  //   await updateBoard(dirtyBoard);
-  //   props.history.goBack();
-  //   try{
-
-  //   }catch(error){
-  //     console.log(error);
-  //   }
-  // };
-
-  // const handleChange = (event) => {
-  //   setBoard({
-  //     ...board,
-  //     [event.target.name] : event.target.value
-  //   })
-  // };
-
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   console.log("접수완료 : ", inspectionlist);
-  // };
 
 // const handleCreate = (event) => {
 //   event.preventDefault();
@@ -207,24 +128,37 @@ function TreatmentCreateForm(props) {
 //   console.log("진료 등록: ", newTreatment);
 // };
 
+// const updateTreatmentBtn = (event) => {
+//   publishTopic();
+//   event.preventDefault();
+//   let newTreatment = {
+//     treatment_smemo: smemo, 
+//     treatment_omemo: omemo, 
+//     treatment_amemo: amemo,
+//     treatment_pmemo: pmemo, 
+//     treatment_communication: cmemo
+//   };
+//   setInspectionlist(newTreatment);
+// };
+
 const checkChange = (event) =>{
-  // console.log("aaaaaaaa",event.target.name);
-  //     console.log("bbbbbbbb",event.target.value);
+  console.log("aaaaaaaa",event.target.name);
+      console.log("bbbbbbbb",event.target.value);
   if(event.target.checked){//체크되었는지 유무
 
-    setDrugForm(prevDrugForm => {
+    setJoinForm(prevJoinForm => {
       return {
-        ...prevDrugForm,
-        selectedDrug: prevDrugForm.selectedDrug.concat(event.target.value)
+        ...prevJoinForm,
+        uskill: prevJoinForm.uskill.concat(event.target.value)
       };
     })
 
     }else {
       
-      setDrugForm(prevDrugForm => {
+      setJoinForm(prevJoinForm => {
         return {
-          ...prevDrugForm,
-          selectedDrug: prevDrugForm.selectedDrug.filter(item => item !== event.target.value)
+          ...prevJoinForm,
+          uskill: prevJoinForm.uskill.filter(item => item !== event.target.value)
         };
       })
 
@@ -232,29 +166,16 @@ const checkChange = (event) =>{
 };
 const handleSubmit2 = (event) => {
   event.preventDefault();
-  console.log("drugForm",drugForm);
+  console.log("jojojojo",joinForm);
 };
-
-const createNewDruglist = async () => {
-  console.log("등록");
-  try {
-    console.log(drugForm);
-    await createDruglist(drugForm);
-  } catch (e) {
-    console.log(e);
-  } 
-};
-
-
-
   return (
     <div>
-      <form >
+
         <div className="TreatmentCreateForm_title">
           {/* 진료 등록<button type="submit" className="button_team2_fill">진료완료</button> */}
           <div className="TreatmentCreateForm_title_1"> {checkedPatientlist.patient_name} 님 진료 등록 </div>
           <div className="TreatmentCreateForm_title_2">
-            <button type="submit" className="button_team2_fill" onClick={updateTreatmentBtn}>
+            <button type="submit" className="button_team2_fill" onClick={handleSubmit}>
               진료완료
             </button>
           </div>
@@ -317,9 +238,8 @@ const createNewDruglist = async () => {
 
             <div className="TreatmentCreateForm_2_2_border border">
               <div className="TreatmentCreateForm_2_2_title">약품 목록</div>
-             <div> <button className="button_team2_fill" onClick={createNewDruglist}>등록</button></div>
               <button type="submit" className="button_team2_fill" onClick={handleSubmit2}>
-              선택완료
+              진료완료
             </button>
               <div className="TreatmentCreateForm_2_2_content">
                 <div className="TreatmentSearch_1">
@@ -338,10 +258,10 @@ const createNewDruglist = async () => {
                   </thead>
                   <tbody>
                     {druglists.map((druglist) => {
-                      return ( 
+                      return (
                         <tr className="TreatmentSearch_2_2_tr" key={druglist.drug_injection_list_id}>
                           <td>
-                            <input type="checkbox"  name="selectedDrug" value={druglist.drug_injection_list_id} onChange={checkChange}  />
+                            <input type="checkbox"  name="uskill" value={druglist.drug_injection_list_id} onChange={checkChange} />
                           </td>
                           <th>{druglist.drug_injection_list_id}</th>
                           <th>{druglist.drug_injection_list_name}</th>
@@ -359,7 +279,7 @@ const createNewDruglist = async () => {
             </div>
           </div>
         </div>
-      </form>
+     
     </div>
   );
 }
