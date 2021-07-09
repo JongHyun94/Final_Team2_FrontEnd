@@ -26,22 +26,31 @@ function User(props) {
       user_address: user.user_address,
       user_detailaddress1: user.user_detailaddress1,
       user_detailaddress2: user.user_detailaddress2,
-      user_regdate: user.user_regdate
+      user_regdate: user.user_regdate,
+      user_enabled: user.user_enabled
     });
   };
   
   // MQTT
   const [subTopic, setSubTopic] = useState("/138010/doctor");
-  // const [pubMessage, setPubMessage] = useState({
-  //   topic: "/138010/doctor",
-  //   content: ""
-  // });
-  const pubMessage = [{
+  const pubMessage = [
+    {
     topic: "/138010/doctor",
-    content: "updateUser"}, {
+    content: "updateUser"
+    }, 
+    {
       topic: "/138010/doctor",
       content: "addUser"
-    }]
+    },
+    {
+      topic: "/138010/doctor",
+      content: "blockUser"
+    },
+    {
+      topic: "/138010/doctor",
+      content: "allowUser"
+    }
+  ]
   const [message, setMessage] = useState("");
 
   let client = useRef(null);
@@ -95,7 +104,7 @@ function User(props) {
       <div className="User_right">
         <div>
           {/* 직원 정보 수정 */}
-          <UserUpdateForm user={user} publishTopic={publishTopic}/>
+          <UserUpdateForm user={user} publishTopic={publishTopic} message={message}/>
         </div>
         <div>
           {/* 직원 등록 */}

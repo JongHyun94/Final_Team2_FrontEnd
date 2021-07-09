@@ -7,7 +7,7 @@ function UserList(props) {
   // 직원 목록 상태
   const [users, setUsers] = useState([]);
   // 직원 직책 수 상태
-  const [userState, setUserState] = useState([]);
+  const [userCount, setUserCount] = useState([]);
 
   useEffect(() => {
     const work = async () => {
@@ -15,7 +15,7 @@ function UserList(props) {
         const response = await getAllUserList();
         // console.log(response.data.userList)
         setUsers(response.data.userList);
-        setUserState(() => getUsersAuthority(response.data.userList));
+        setUserCount(() => getUsersCount(response.data.userList));
       } catch(error) {
         console.log(error);
       }
@@ -24,35 +24,45 @@ function UserList(props) {
   }, []);
 
   // 직원 직책 카운트
-  function getUsersAuthority(userList) {
-    const userAuthority = [];
+  function getUsersCount(userList) {
+    const userCount = [];
     var count1 = 0;
     var count2 = 0;
     var count3 = 0;
+    var count4 = 0;
+    var count5 = 0;
     var countAll = 0;
     for (var i = 0; i < userList.length; i++) {
+      countAll++;
       if(userList[i].user_authority === "ROLE_DOCTOR") {
         count1++;
       } else if(userList[i].user_authority === "ROLE_NURSE") {
         count2++;
       } else if(userList[i].user_authority === "ROLE_INSPECTOR") {
         count3++;
+      } 
+      
+      if (userList[i].user_enabled === 1) {
+        count4++;
+      } else if (userList[i].user_enabled === 0) {
+        count5++;
       }
-      countAll++;
     }
-    userAuthority.push(count1);
-    userAuthority.push(count2);
-    userAuthority.push(count3);
-    userAuthority.push(countAll);
+    userCount.push(countAll);
+    userCount.push(count1);
+    userCount.push(count2);
+    userCount.push(count3);
+    userCount.push(count4);
+    userCount.push(count5);
   
-    return userAuthority;
+    return userCount;
   };
 
   // 검색 상태
   const [keyword, setKeyword] = useState("");
 
   // 직책 상태
-  const [authority, setAuthority] = useState("");
+  const [condition, setCondition] = useState("");
 
   // 직원 코드 비교를 위한 상태
   const [id, setId] = useState("");
@@ -66,7 +76,7 @@ function UserList(props) {
     try {
       event.preventDefault();
       console.log(keyword);
-      const response = await getUserList(keyword, authority);
+      const response = await getUserList(keyword, condition);
       console.log(response.data.userList)
       setUsers(response.data.userList);
     } catch(error) {
@@ -81,20 +91,22 @@ function UserList(props) {
   };
 
   // 직책 선택
-  const clickAuthority = async (selectAtuthority) => {
+  const clickCondition = async (selectCondition) => {
     try {
-      if (authority !== selectAtuthority) {
-        console.log(selectAtuthority, "선택");
-        setAuthority(selectAtuthority);
-        const response = await getUserList(keyword, selectAtuthority);
+      if (condition !== selectCondition) {
+        console.log(selectCondition, "선택");
+        setCondition(selectCondition);
+        const response = await getUserList(keyword, selectCondition);
         setUsers(response.data.userList);
+        console.log(response.data);
       } else {
-        setAuthority("");
+        setCondition("");
         setKeyword("");
         const response = await getAllUserList();
         setUsers(response.data.userList);
+        console.log(response.data);
       }
-      
+            
     } catch(error) {
       console.log(error);
     }
@@ -107,7 +119,8 @@ function UserList(props) {
         const response = await getAllUserList();
         // console.log(response.data.userList)
         setUsers(response.data.userList);
-        setUserState(() => getUsersAuthority(response.data.userList));
+        setUserCount(() => getUsersCount(response.data.userList));
+        
       } catch(error) {
         console.log(error);
       }
@@ -117,7 +130,7 @@ function UserList(props) {
 
   const rowRenderer = ({index, key, style}) => {
     return (
-      <div className="UserList_tr" key={key} style={style} onClick={() => handleClick(users[index])}>
+      <div className={users[index].user_enabled === 1 ? "UserList_tr" : "UserList_tr_block"} key={key} style={style} onClick={() => handleClick(users[index])}>
         <div style={{width: "3%"}} key={users.user_id}><input type="checkbox" width={50} checked={id === users[index].user_id? true : false} readOnly></input></div>
         <div style={{width: "11%"}}>{users[index].user_id}</div>
         <div style={{width: "6%"}}>{users[index].user_name}</div>
@@ -143,10 +156,12 @@ function UserList(props) {
             <button className="button_team2_fill" onClick={handleSearch}>검색</button>
           </div>
           <div className="UserList_content1_2">
-          <div className="pr-3" onClick={() => clickAuthority("")}>전체: {userState[3]}명</div>
-            <div className="pr-3" onClick={() => clickAuthority("ROLE_DOCTOR")}>의사: {userState[0]}명</div>
-            <div className="pr-3" onClick={() => clickAuthority("ROLE_NURSE")}>간호사: {userState[1]}명</div>
-            <div onClick={() => clickAuthority("ROLE_INSPECTOR")}>임상병리사: {userState[2]}명</div>
+          <div className="pr-3" onClick={() => clickCondition("")}>전체: {userCount[0]}명</div>
+            <div className="pr-3" onClick={() => clickCondition("ROLE_DOCTOR")}>의사: {userCount[1]}명</div>
+            <div className="pr-3" onClick={() => clickCondition("ROLE_NURSE")}>간호사: {userCount[2]}명</div>
+            <div className="pr-3" onClick={() => clickCondition("ROLE_INSPECTOR")}>임상병리사: {userCount[3]}명</div>
+            <div className="pr-3" onClick={() => clickCondition("1")}>활성화: {userCount[4]}명</div>
+            <div onClick={() => clickCondition("0")}>비활성화: {userCount[5]}명</div>
           </div>
         </div>
         <div className="text-center">
