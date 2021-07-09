@@ -1,9 +1,11 @@
 import { Modal } from "../../components/common/Address";
 import React, { useEffect, useState } from "react";
 import "./User.css";
-import { deleteUser, updateUser } from "apis/users";
+import { updateUser, updateUserEnabled } from "apis/users";
 import moment from "moment";
 import { useForm } from "react-hook-form";
+import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
+import { ValidationModal } from "components/common/ValidationModal";
 
 function UserUpdateForm(props) {
   // 직원 상태
@@ -62,8 +64,9 @@ function UserUpdateForm(props) {
       user_address: props.user.user_address,
       user_detailaddress1: props.user.user_detailaddress1,
       user_detailaddress2: props.user.user_detailaddress2,
-      user_regdate: props.user.user_regdate
-    });
+      user_regdate: props.user.user_regdate,
+      user_enabled: props.user.user_enabled
+    });    
     setUserId(props.user.user_id);
   }, [props]);
 
@@ -82,7 +85,8 @@ function UserUpdateForm(props) {
       console.log("직원 정보 수정: ", user);
       const response = await updateUser(user);
       if(response.data) {
-        alert("직원 정보를 수정 했습니다.");
+        // alert("직원 정보를 수정 했습니다.");
+        ToastsStore.success("직원 정보를 수정했습니다.");
         props.publishTopic(0);
       }
     } catch (error) {
@@ -90,28 +94,53 @@ function UserUpdateForm(props) {
     }
   }; 
 
-  // 직원 삭제
-  const handleDelete = async (event) => {
+  // 직원 활성화 OR 비활성화
+  const handleEnabled = async (event) => {
     try {
-      await deleteUser(userId);
-      alert("해당 직원을 삭제했습니다.");
+      await updateUserEnabled(user);
+      if (user.user_enabled === 1) {
+        // alert("해당 직원을 비활성화했습니다.");
+        ToastsStore.success("해당 직원을 비활성화했습니다.");
+        props.publishTopic(2);
+      } else {
+        // alert("해당 직원을 활성화했습니다.");
+        ToastsStore.success("해당 직원을 활성화했습니다.");
+        props.publishTopic(3);
+      }      
     } catch(error) {
       console.log(error);
     }
-  }
+  };
+
+  useEffect(() => {
+    console.log("받습니다", props.message);
+    if(props.message.content === "blockUser") {
+      setUser({
+        ...user,
+        user_enabled: 0
+      });
+    } else if(props.message.content === "allowUser") {
+      setUser({
+        ...user,
+        user_enabled: 1
+      });
+    }
+  }, [props.message]);
+
+  console.log(user);
 
   // 모달 상태(open일 떄 true로 바뀌어 열림)
-  const [modalOpen, setModalOpen] = useState(false);
+  const [AddressModalOpen, setAddressModalOpen] = useState(false);
 
-  const openModal = (event) => {
+  const openAddressModal = (event) => {
     event.preventDefault();
-    setModalOpen(true);
+    setAddressModalOpen(true);
   };
-  const closeModal = () => {
-    setModalOpen(false);
+  const closeAddressModal = () => {
+    setAddressModalOpen(false);
   };
   const sendModal = (data) => {
-    setModalOpen(false);
+    setAddressModalOpen(false);
     console.log("send1 실행", data);
     setUser({
       ...user,
@@ -133,6 +162,21 @@ function UserUpdateForm(props) {
         };
       });
     }
+  };
+
+  // validation 모달 상태(open일 떄 true로 바뀌어 열림)
+  const [validationModalOpen, setValidationModalOpen] = useState(false);
+  // 유효성 검사 오류 메시지
+  const [errorMsg, setErrorMsg] = useState({
+    title : "회원정보 수정 실패",
+    content: ""
+  });
+
+  const openvalidationModal = (event) => {
+    setValidationModalOpen(true);
+  };
+  const closeValidationModal = () => {
+    setValidationModalOpen(false);
   };
 
   return (
@@ -241,8 +285,8 @@ function UserUpdateForm(props) {
               <div className="row mb-2"> 
                 <input type="text" className="col-sm-5 ml-3" name="user_zipcode" value={user.user_zipcode} placeholder="우편번호" readOnly></input>
                 <React.Fragment>
-                  <button className="button_team2_empty" onClick={openModal}>우편번호 찾기</button>
-                  <Modal open={modalOpen} close={closeModal} send={sendModal}></Modal>
+                  <button className="button_team2_empty" onClick={openAddressModal}>우편번호 찾기</button>
+                  <Modal open={AddressModalOpen} close={closeAddressModal} send={sendModal}></Modal>
                 </React.Fragment>   
               </div>
               <input type="text" className="col-sm mb-2" name="user_address" value={user.user_address} placeholder="주소" readOnly></input>
@@ -258,8 +302,12 @@ function UserUpdateForm(props) {
           </div>
           {userId !== undefined?
           <div className= "d-flex justify-content-end">
-            <button className="button_team2_fill" type="submit">수정</button>
-            <div className="button_team2_empty" onClick={handleDelete}>삭제</div>
+            <button className="button_team2_fill" type="submit">수정</button>           
+            <div className="button_team2_empty" onClick={handleEnabled}>{user.user_enabled === 0 ? "활성화" : "비활성화"}</div>
+            <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground/> 
+            <React.Fragment>
+              <ValidationModal open={validationModalOpen} close={closeValidationModal} errorMsg={errorMsg}></ValidationModal>
+            </React.Fragment>
           </div> 
           :<div className= "d-flex justify-content-end" style={{"visibility":"hidden"}}><button className="button_team2_fill">수정</button></div> 
           }

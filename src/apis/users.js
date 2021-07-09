@@ -6,14 +6,18 @@ export function getAllUserList(){
   return promise;
 }
 
-export function getUserList(keyword="", authority=""){
-  const promise = axios.get("/user/select", {params: {keyword, authority}});
+export function getUserList(keyword="", condition=""){
+  const promise = axios.get("/user/select", {params: {keyword, condition}});
   return promise;
 }
 
 export function updateUser(user) {
   const promise = axios.put("/user", user);
   return promise;
+}
+
+export function updateUserEnabled(user) {
+  return axios.put("/user/enabled", user);
 }
 
 export function createUser(user) {
@@ -30,9 +34,4 @@ export function getUser(user_id) {
 export function updateUserInfo(user) {
   const promise = axios.put("/user/update", user);
   return promise;
-}
-
-export function deleteUser(user_id) {
-  console.log("탈퇴", user_id);
-  return axios.delete("/user", {params: {user_id}});
 }

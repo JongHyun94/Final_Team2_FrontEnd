@@ -2,6 +2,7 @@ import { Modal } from "../../components/common/Address";
 import React, { useState } from "react";
 import { createPatient } from "apis/patient";
 import { useForm } from "react-hook-form";
+import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 
 function PatientCreateForm(props) {
   // 환자 상태
@@ -61,7 +62,8 @@ function PatientCreateForm(props) {
           patient_detailaddress2: ""
         });
         setMasking("");
-        alert("환자를 등록했습니다.");
+        // alert("환자를 등록했습니다.");
+        ToastsStore.success("환자를 등록했습니다.");
         props.publishTopic(1);
       }
     } catch(error) {
@@ -186,7 +188,10 @@ function PatientCreateForm(props) {
               </div>
             </div>
           </div>
-          <div className="d-flex justify-content-end"><button className="button_team2_fill" type="submit">등록</button></div>
+          <div className="d-flex justify-content-end">
+            <button className="button_team2_fill" type="submit">등록</button>
+            <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground/> 
+          </div>
         </form>
       </div>
       
