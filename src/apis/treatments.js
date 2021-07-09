@@ -24,7 +24,7 @@ export function updateTreatment(treatment) {
   
 }
 
-export function getSearchDurg(keyword) {
+export function getSearchDurg(keyword="") {
   const promise = axios.get("/treatment/keyword", {params: {keyword}});
   return promise;
 }
@@ -36,8 +36,6 @@ export function getCategoryInspectionList(categoryValue) {
 
 // drugsInjections 등록하기
 export function createDruglist(drugsInjections){
-  console.log("ㅗㅗㅗㅗㅗㅗ",drugsInjections);
   const promise = axios.post("/treatment/drugsInjections", drugsInjections);
-  console.log(promise);
   return promise;
 }

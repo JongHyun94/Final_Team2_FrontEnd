@@ -65,7 +65,7 @@ const getState = (patientlists) => {
     var readyState = 0;
     var doneState = 0;
     for (var i = 0; i < patientlists.length; i++) {
-      if (patientlists[i].treatment_state == "대기") {
+      if (patientlists[i].treatment_state === "대기") {
         readyState++;
       } else {
         doneState++;
