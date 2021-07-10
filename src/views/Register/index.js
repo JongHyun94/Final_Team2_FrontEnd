@@ -1,4 +1,4 @@
-import { getDoctorList, getRegisterList } from "apis/register";
+import { getDoctorList } from "apis/register";
 import { useEffect, useRef, useState } from "react";
 import RegisterList from "./RegisterList";
 import RegisterRead from "./RegisterRead";
@@ -35,7 +35,7 @@ function Register(props) {
   const [pubMessage, setPubMessage] = useState([
     { topic: "/138010/nurse", content: "refreshRegisters"}, 
     { topic: "/138010/doctor", content: "addTreatments"},
-    { topic: "/138010/doctor", content: "refreshToDoList"}
+    { topic: "/138010", content: "refreshToDoList"}
   ]);
   const [message, setMessage] = useState("");
 
@@ -62,7 +62,7 @@ function Register(props) {
 
     client.current.connect({
       onSuccess: () => {
-        client.current.subscribe(subTopic[1]);
+        client.current.subscribe(subTopic[0]);
         console.log("Mqtt 접속 성공");
       }
     });
@@ -105,7 +105,7 @@ function Register(props) {
   const [registerDate, setRegisterDate] = useState(new Date());
 
   // 접수 내역 배열 
-  const [registerList, setRegisterList] = useState();
+  //const [registerList, setRegisterList] = useState();
 
   // 선택된 환자 내용
   const [selectedPatient, setSelectedPatient] = useState({});

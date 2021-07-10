@@ -27,9 +27,12 @@ function TreatmentCreateForm(props) {
   const [inspectionlist, setInspectionlist] = useState([]);
   const [inspectionOption, setInspectionOption] = useState("진단 검사 선택");
   // const [inspectionOption, setInspectionOption] = useState(["진단 검사 선택"]);
-  // const [drugForm, setDrugForm] = useState({
-  //   selectedDrug:[]
-  // });
+  const [inspectionForm, setInspectionForm] = useState({
+    selectInspection: []
+  });
+  const [drugForm, setDrugForm] = useState({
+    selectedDrug: []
+  });
 
   const [druglists, setDrugLists] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState();
@@ -38,7 +41,7 @@ function TreatmentCreateForm(props) {
     try{
  
       var list = await getCategoryInspectionList(categoryValue);
-      // console.log("hi",list);
+      console.log("hi",list.data.inspectionList);
       setInspectionlist(list.data.inspectionList);
     }catch (e){
       console.log(e);
@@ -191,49 +194,73 @@ function TreatmentCreateForm(props) {
   //   console.log("접수완료 : ", inspectionlist);
   // };
 
-// const handleCreate = (event) => {
-//   event.preventDefault();
-//   const newTreatment = {...treatment};
-//   console.log("진료 등록: ", newTreatment);
-// };
+  // const handleCreate = (event) => {
+  //   event.preventDefault();
+  //   const newTreatment = {...treatment};
+  //   console.log("진료 등록: ", newTreatment);
+  // };
 
-// const checkChange = (event) =>{
-//   // console.log("aaaaaaaa",event.target.name);
-//   //     console.log("bbbbbbbb",event.target.value);
-//   if(event.target.checked){//체크되었는지 유무
+  const checkChange = (event) => {
+    // console.log("aaaaaaaa",event.target.name);
+    //     console.log("bbbbbbbb",event.target.value);
+    if (event.target.checked) {//체크되었는지 유무
 
-//     setDrugForm(prevDrugForm => {
-//       return {
-//         ...prevDrugForm,
-//         selectedDrug: prevDrugForm.selectedDrug.concat(event.target.value)
-//       };
-//     })
+      setDrugForm(prevDrugForm => {
+        return {
+          ...prevDrugForm,
+          selectedDrug: prevDrugForm.selectedDrug.concat(event.target.value)
+        };
+      })
 
-//     }else {
-      
-//       setDrugForm(prevDrugForm => {
-//         return {
-//           ...prevDrugForm,
-//           selectedDrug: prevDrugForm.selectedDrug.filter(item => item !== event.target.value)
-//         };
-//       })
+    } else {
 
-//     }
-// };
-// const handleSubmit2 = (event) => {
-//   event.preventDefault();
-//   console.log("drugForm",drugForm);
-// };
+      setDrugForm(prevDrugForm => {
+        return {
+          ...prevDrugForm,
+          selectedDrug: prevDrugForm.selectedDrug.filter(item => item !== event.target.value)
+        };
+      })
 
-// const createNewDruglist = async () => {
-//   console.log("등록");
-//   try {
-//     console.log(drugForm);
-//     await createDruglist(drugForm);
-//   } catch (e) {
-//     console.log(e);
-//   } 
-// };
+    }
+  };
+  // Inspection
+  const checkChange2 = (event) => {
+
+    if (event.target.checked) {//체크되었는지 유무
+
+      setInspectionForm(prevInspectionForm => {
+        return {
+          ...prevInspectionForm,
+          selectInspection: prevInspectionForm.selectInspection.concat(event.target.value)
+        };
+      })
+
+    } else {
+
+      setInspectionForm(prevInspectionForm => {
+        return {
+          ...prevInspectionForm,
+          selectInspection: prevInspectionForm.selectInspection.filter(item => item !== event.target.value)
+        };
+      })
+
+    }
+  };
+  const handleSubmit2 = (event) => {
+    event.preventDefault();
+    console.log("drugForm", drugForm.selectedDrug);
+    console.log("selectInspection",inspectionForm.selectInspection);
+  };
+
+  const createNewDruglist = async () => {
+    console.log("등록");
+    try {
+      console.log(drugForm.selectedDrug);
+      await createDruglist(drugForm.selectedDrug);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
 
 
@@ -248,29 +275,34 @@ function TreatmentCreateForm(props) {
             </button>
           </div>
         </div>
-        <div className="TreatmentCreateForm_border border">
-          <div className="TreatmentCreateForm_1">
-            <div className="TreatmentCreateForm_1_border">
-              <div className="TreatmentCreateForm_1_1_title">Subjective</div>
-              <textarea className="TreatmentCreateForm_1_1_content border" rows="6" cols="40" onChange={handleChangeSmemo} value={smemo}>
-                당일 검사 요청
-              </textarea>
-              <div className="TreatmentCreateForm_1_1_title">Objective</div>
-              <textarea className="TreatmentCreateForm_1_1_content border" rows="6" cols="40" onChange={handleChangeOmemo} value={omemo}>
-                당일 검사 요청
-              </textarea>
-              <div className="TreatmentCreateForm_1_1_title">Assessment</div>
-              <textarea className="TreatmentCreateForm_1_1_content border" rows="6" cols="40" onChange={handleChangeAmemo} value={amemo}>
-                당일 검사 요청
-              </textarea>
-              <div className="TreatmentCreateForm_1_1_title">Plan</div>
-              <textarea className="TreatmentCreateForm_1_1_content border" rows="6" cols="40" onChange={handleChangePmemo} value={pmemo}>
-                당일 검사 요청
-              </textarea>
-              <div className="TreatmentCreateForm_1_1_title">의사소통 메모</div>
-              <textarea className="TreatmentCreateForm_1_1_content border" rows="6" cols="40" onChange={handleChangeCmemo} value={cmemo}>
-                당일 검사 요청
-              </textarea>
+        <div className="TreatmentCreateForm_2">
+          <div className="TreatmentCreateForm_2_1_border border">
+            <div className="TreatmentCreateForm_2_1_title">진단 검사</div>
+            <div className="TreatmentCreateForm_2_1_content">
+              <div className="TreatmentCreateForm_select">
+                <select name="inspectioncategory" className="TreatmentCreateForm_select_1" onChange={handleChange} value={inspectionOption}>
+                  <option disabled>진단 검사 선택</option>
+                  <option value="혈액검사">혈액검사</option>
+                  <option value="영상검사">영상검사</option>
+                </select>
+              </div>
+              {/* 검사별 상태 만들어서 전달, 조건문으로 맵 돌리기 */}
+
+              <div className="TreatmentCreateForm_checkbox">
+                {inspectionlist.map((inspection) => {
+                  return (
+                    <div key={inspection.inspection_list_name}>
+                      {inspection.inspection_list_category === inspectionOption ? (
+                        <div className="TreatmentCreateForm_checkbox_1" >
+                          <input type="checkbox" name="selectInspection" value={inspection.inspection_list_id} onChange={checkChange2}/> {inspection.inspection_list_name}
+                        </div>
+                      ) : (
+                        false
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
           <div className="TreatmentCreateForm_2">
@@ -289,7 +321,7 @@ function TreatmentCreateForm(props) {
                 <div className="TreatmentCreateForm_checkbox">
                   {inspectionlist.map((inspection) => {
                     return (
-                      <div key={inspection.inspection_list_name}>
+                      <div key={inspection.inspection_list_id}>
                         {inspection.inspection_list_category === inspectionOption ? (
                           <div className="TreatmentCreateForm_checkbox_1" >
                             <input type="checkbox"  /> {inspection.inspection_list_name}
@@ -327,7 +359,7 @@ function TreatmentCreateForm(props) {
                   </thead>
                   <tbody>
                     {druglists.map((druglist) => {
-                      return ( 
+                      return (
                         <tr className="TreatmentSearch_2_2_tr" key={druglist.drug_injection_list_id}>
                           <td>
                             <input type="checkbox"  name="selectedDrug" value={druglist.drug_injection_list_id}/>

@@ -1,7 +1,6 @@
 import DatePicker from "react-datepicker";
 import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { getYear, getMonth } from "date-fns";
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import { registerLocale } from "react-datepicker";
@@ -10,10 +9,6 @@ import style from "./RegisterCreateForm.module.css";
 import moment from "moment";
 
 registerLocale("ko", ko);
-const _ = require('lodash');
-const years = _.range(1990, getYear(new Date()) + 1, 1);
-const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
-
 
 function RegisterCreateForm(props) {
   const noneRegister = {
@@ -105,12 +100,10 @@ function RegisterCreateForm(props) {
   useEffect(() => {
     setStartDate(props.register? new Date(props.register.register_date) : new Date());
     setDoctorsList(doctors);
-  },[]);
+  },[doctors, props.register]);
 
   useEffect(() => {
-    setNewDoctor("doctor");
-    setNewMemo("");
-    setNewCMemo("");
+    //setNewDoctor("doctor");
   },[props.register]);
 
   //-------------------------------------------------------------

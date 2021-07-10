@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import style from "./WeatherAPI.module.css";
 
 const API_KEY = '722e5a754ab41987e87ad60035c356f2';
