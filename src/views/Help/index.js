@@ -1,11 +1,10 @@
 import "./Help.css";
 import { RiCustomerServiceLine } from "react-icons/ri";
-import { useStore } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { downloadFile } from "apis/auth";
 
 function Help(props) {
-  const [guideFile, setGuideFile] = useStore(null);
+  const [guideFile, setGuideFile] = useState(null);
 
   const downLoad = async () => {
     try {
