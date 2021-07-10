@@ -28,7 +28,7 @@ function TreatmentCreateForm(props) {
   const [inspectionOption, setInspectionOption] = useState("진단 검사 선택");
   // const [inspectionOption, setInspectionOption] = useState(["진단 검사 선택"]);
   const [inspectionForm, setInspectionForm] = useState({
-    selectInspection: []
+    selectedInspection: []
   });
   const [drugForm, setDrugForm] = useState({
     selectedDrug: []
@@ -153,7 +153,9 @@ function TreatmentCreateForm(props) {
         treatment_omemo: omemo,
         treatment_amemo: amemo,
         treatment_pmemo: pmemo,
-        treatment_communication: cmemo
+        treatment_communication: cmemo,
+        selectedInspection : inspectionForm.selectedInspection,
+        selectedDrug : drugForm.selectedDrug
       };
       console.log("newtt", newTreatment);
       var list = await updateTreatment(newTreatment);
@@ -231,7 +233,7 @@ function TreatmentCreateForm(props) {
       setInspectionForm(prevInspectionForm => {
         return {
           ...prevInspectionForm,
-          selectInspection: prevInspectionForm.selectInspection.concat(event.target.value)
+          selectedInspection: prevInspectionForm.selectedInspection.concat(event.target.value)
         };
       })
 
@@ -240,7 +242,7 @@ function TreatmentCreateForm(props) {
       setInspectionForm(prevInspectionForm => {
         return {
           ...prevInspectionForm,
-          selectInspection: prevInspectionForm.selectInspection.filter(item => item !== event.target.value)
+          selectedInspection: prevInspectionForm.selectedInspection.filter(item => item !== event.target.value)
         };
       })
 
@@ -249,7 +251,7 @@ function TreatmentCreateForm(props) {
   const handleSubmit2 = (event) => {
     event.preventDefault();
     console.log("drugForm", drugForm.selectedDrug);
-    console.log("selectInspection",inspectionForm.selectInspection);
+    console.log("selectedInspection",inspectionForm.selectedInspection);
   };
 
   const createNewDruglist = async () => {
@@ -319,7 +321,7 @@ function TreatmentCreateForm(props) {
                     <div key={inspection.inspection_list_id}>
                       {inspection.inspection_list_category === inspectionOption ? (
                         <div className="TreatmentCreateForm_checkbox_1" >
-                          <input type="checkbox" name="selectInspection" value={inspection.inspection_list_id} onChange={checkChange2}/> {inspection.inspection_list_name}
+                          <input type="checkbox" name="selectedInspection" value={inspection.inspection_list_id} onChange={checkChange2}/> {inspection.inspection_list_name}
                         </div>
                       ) : (
                         false
