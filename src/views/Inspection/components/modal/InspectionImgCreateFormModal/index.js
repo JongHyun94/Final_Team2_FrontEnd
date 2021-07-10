@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import style from "./InspectionImgCreateFormModal.module.css";
+import { createImage } from "apis/inspections";
 
 function InspectionImgCreateFormModal(props) {
   const [inspectionImgResult, setInspecctionImgResult] = useState(props.inspection);
@@ -10,23 +11,33 @@ function InspectionImgCreateFormModal(props) {
   // const inputFile2 = useRef();
   // const inputFile3 = useRef();
 
-  const inspectionImgResultBtn = (event) => {
+  const inspectionImgResultBtn = async (event) => {
     event.preventDefault();
 
     // console.log(inputFile.current.files.length);
-
-    const formData = new FormData();
-    formData.append("inspectionId", inspectionImgResult.inspectionId);
-    for(var i=0; i<=inputFile.current.files.length-1; i++){
-      formData.append("iattach", inputFile.current.files[i]);
-    }
+    try {
+      const formData = new FormData();
+      formData.append("inspection_img_inspection_id", inspectionImgResult.inspection_id);
+      for(var i=0; i<=inputFile.current.files.length-1; i++){
+      formData.append("inspection_img_attach", inputFile.current.files[i]);
+      }
+      await createImage(formData);
 
     // formData 콘솔 찍는 법
     // for (let value of formData.values()) {
     //   console.log(value);
     // }
 
-    closeR();
+    } catch(error) {
+      console.log(error);
+    }
+    
+    if(inputFile.current.files.length === 0) {
+      alert("첨부파일이 없습니다.");
+    } else {
+      closeR();
+    }
+    
   };
 
   return (
@@ -37,7 +48,7 @@ function InspectionImgCreateFormModal(props) {
             <div className={style.InspectionImgCreateForm}>
               <div className={`${style.InspectionImgCreateForm_title} m-2`}>검사 결과 등록</div>
               <div className={`${style.InspectionImgCreateForm_1} border`}>
-                <form>
+                <form encType="multipartFormData">
                   <div className={`${style.InspectionImgCreateForm_1_1} mt-3 mb-3`}>
                     <div className={`${style.InspectionImgCreateForm_1_1_1} mr-3`}>
                       <div className="mb-1">진단검사명 :</div>

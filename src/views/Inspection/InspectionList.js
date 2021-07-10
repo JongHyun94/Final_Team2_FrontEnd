@@ -37,14 +37,6 @@ function InspectionList(props) {
     }
 
     setIStateCount(completeCount);
-
-    //count 확인 후, 총검사결과: 검사~>완료 바꿀 istate true로 바꿈
-    if(inspections.length === iStateCount) {
-      props.handleFinish();
-      props.publishTopic();
-    } else {
-      props.handleFinishBack();
-    }
   }
   
   const ExcelFile = ReactExport.ExcelFile;
@@ -73,12 +65,24 @@ function InspectionList(props) {
     if(props.treatmentId){
       getInspections2(props.treatmentId);
     }
+    getCompleteCount();
   }, [props]);
 
   useEffect(() => {
     checkInspections(inspectionsList);
-    getCompleteCount();
+    // getCompleteCount();
   }, []);
+
+  useEffect(() => {
+    //여기에 붙임
+    //count 확인 후, 총검사결과: 검사~>완료 바꿀 istate true로 바꿈
+    if(inspections.length === iStateCount) {
+      props.handleFinish();
+      props.publishTopic();
+    } else {
+      props.handleFinishBack();
+    }
+  }, [iStateCount]);
 
   const getInspections2 = async (treatmentId) => {
     try {
@@ -99,16 +103,19 @@ function InspectionList(props) {
   const cancelBtn = () => {
     //검사결과: 검사 ~> 대기
     setCancelState(true);
-    props.publishTopic();
+    //props.publishTopic();
   };
 
   const completeBtn = () => {
     //검사결과: 대기 ~> 완료
     setCompleteState(true);
-    props.publishTopic();
+    //검사상태count ++
+    //props.countIState();
+    //props.publishTopic();
   };
   //검사상태count++
   const countIState = () => {
+    getCompleteCount();
     setIStateCount(iStateCount + 1);
   };
 
@@ -134,7 +141,7 @@ function InspectionList(props) {
     setModalOpen(false);
     setBarcodeState(true);
     props.handleBarcodeCheck();
-    props.publishTopic();
+    //props.publishTopic();
   };
   const closeCancelModal = () => {
     setModalOpen(false);
@@ -258,6 +265,7 @@ function InspectionList(props) {
                     complete={completeState}
                     handleComplete={handleComplete}
                     countIState={countIState}
+                    publishTopic={props.publishTopic}
                   />
                 );
               })}
