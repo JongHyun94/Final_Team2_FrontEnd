@@ -1,7 +1,6 @@
 import DatePicker from "react-datepicker";
 import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { getYear, getMonth } from "date-fns";
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import { registerLocale } from "react-datepicker";
@@ -10,10 +9,6 @@ import style from "./RegisterCreateForm.module.css";
 import moment from "moment";
 
 registerLocale("ko", ko);
-const _ = require('lodash');
-const years = _.range(1990, getYear(new Date()) + 1, 1);
-const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
-
 
 function RegisterCreateForm(props) {
   const noneRegister = {
@@ -21,7 +16,7 @@ function RegisterCreateForm(props) {
     register_patient_id: "",
     register_user_id: "",
     register_regdate: "",
-    register_date: new Date(),
+    register_date: moment().format("yyyy-MM-DD HH:mm"),
     register_starttime: "",
     register_memo: "",
     register_communication: "",
@@ -68,10 +63,9 @@ function RegisterCreateForm(props) {
   const [startDate, setStartDate] = useState(new Date());
 
   // 담당의 상태
-  //const { doctors } = props;
   const [doctorsList, setDoctorsList] = useState(doctors);
 
-  const [newDoctor, setNewDoctor] = useState("담당의를 선택해주세요");
+  const [newDoctor, setNewDoctor] = useState(register.register_user_id? register.register_user_id:"doctor");
 
   const changeNewDoctor = (event) => {
     setNewDoctor(event.target.value);
@@ -94,6 +88,7 @@ function RegisterCreateForm(props) {
     props.setNewRegister({ ...props.newRegister, register_communication: event.target.value });
   };
 
+  // datepicker 옵션
   let handleColor = (time) => {
     return (time.getHours() > 8 && time.getHours() < 18 ? "hourStyle" : "");
   };
@@ -103,9 +98,13 @@ function RegisterCreateForm(props) {
   //-------------------------------------------------------------
 
   useEffect(() => {
-    setNewDoctor(register.register_user_id);
-  },[]);
+    setStartDate(props.register? new Date(props.register.register_date) : new Date());
+    setDoctorsList(doctors);
+  },[doctors, props.register]);
 
+  useEffect(() => {
+    //setNewDoctor("doctor");
+  },[props.register]);
 
   //-------------------------------------------------------------
   //렌더링 내용
@@ -115,54 +114,6 @@ function RegisterCreateForm(props) {
       {/* 달력 */}
       <div className={style.RegisterCreateForm_cal}>
         <DatePicker
-          renderCustomHeader={({
-            date,
-            changeYear,
-            changeMonth,
-            decreaseMonth,
-            increaseMonth,
-            prevMonthButtonDisabled,
-            nextMonthButtonDisabled
-          }) => (
-            <div
-              style={{
-                margin: 10,
-                display: "flex",
-                justifyContent: "center"
-              }}
-            >
-              <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
-                {"<"}
-              </button>
-              <select
-                value={getYear(date)}
-                onChange={({ target: { value } }) => changeYear(value)}
-              >
-                {years.map(option => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-
-              <select
-                value={months[getMonth(date)]}
-                onChange={({ target: { value } }) =>
-                  changeMonth(months.indexOf(value))
-                }
-              >
-                {months.map(option => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-
-              <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
-                {">"}
-              </button>
-            </div>
-          )}
           locale="ko"
           showTimeSelect
           selected={startDate}
@@ -187,7 +138,7 @@ function RegisterCreateForm(props) {
             <div>의사 이름</div>
             <div>
               <select className={style.RegisterCreateForm_input_select} value={newDoctor} onChange={changeNewDoctor}>
-                <option disabled>담당의를 선택해주세요</option>
+                <option disabled value="doctor">담당의를 선택해주세요</option>
                 {/* 임의의 데이터 넣어서 출력 해보기 */}
                 {doctorsList.map(doctor => {
                   return (

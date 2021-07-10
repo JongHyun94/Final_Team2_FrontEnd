@@ -80,7 +80,7 @@ function TreatmentHistoryList(props) {
   useEffect(() => {
     //console.log("asasasas",checkedPatientlist.treatment_patient_id);
     getTreatmentHistoryLists(checkedPatientlist.treatment_patient_id);
-  }, [props]);
+  }, [checkedPatientlist.treatment_patient_id, props]);
   return (
     <div>
       <div className="TreatmentHistoryList_title">

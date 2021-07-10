@@ -2,8 +2,6 @@ import { getPatientList } from "apis/patient";
 import { useEffect, useState } from "react";
 import style from "./RegisterPatientList.module.css";
 
-
-
 function RegisterPatientList(props) {
   const noneRegister = {
     register_id: "",
