@@ -92,7 +92,6 @@ function RegisterCreateModal(props) {
   //-------------------------------------------------------------  
   useEffect(() => {
     setNewRegister(register);
-    console.log("rere",newRegister);
   }, [props, register]);
   //-------------------------------------------------------------
   //렌더링 내용

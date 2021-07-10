@@ -69,6 +69,7 @@ function RegisterUpdateForm(props) {
   // 진료 날짜 상태
 
   const [startDate, setStartDate] = useState(new Date());
+  const [minTime, setMinTime] = useState(new Date());
 
   // 담당의 상태
 
@@ -146,6 +147,15 @@ function RegisterUpdateForm(props) {
 
     setStartDate(props.selectedPatient ? new Date(props.selectedPatient.register_date) : new Date());
   }, [props.selectedPatient]);
+
+  useEffect(() => {
+    setMinTime(() => 
+              ((startDate.getFullYear() === new Date().getFullYear())
+                && (startDate.getMonth() === new Date().getMonth())
+                && (startDate.getDate() === new Date().getDate()))
+                ? new Date() : setHours(setMinutes(new Date(), 0), 9)
+            );
+  },[startDate]);
   //-------------------------------------------------------------
   //렌더링 내용
   //-------------------------------------------------------------
@@ -224,7 +234,7 @@ function RegisterUpdateForm(props) {
                   timeIntervals={15}
                   timeCaption="시간"
                   minDate={new Date()}
-                  minTime={setHours(setMinutes(new Date(), 0), 9)}
+                  minTime={minTime}
                   maxTime={setHours(setMinutes(new Date(), 45), 17)}
                   timeClassName={handleColor}
                   dateFormat="yyyy-MM-dd h:mm"
