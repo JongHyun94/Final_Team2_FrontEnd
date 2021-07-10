@@ -134,6 +134,11 @@ function RegisterUpdateForm(props) {
     cancelRegister();
   };
 
+   // datepicker 옵션
+  let handleColor = (time) => {
+    return (time.getHours() > 8 && time.getHours() < 18 ? "hourStyle" : "");
+  };
+
   //-------------------------------------------------------------
   //마운트 및 언마운트에 실행할 내용
   //-------------------------------------------------------------
@@ -218,8 +223,10 @@ function RegisterUpdateForm(props) {
                   }
                   timeIntervals={15}
                   timeCaption="시간"
+                  minDate={new Date()}
                   minTime={setHours(setMinutes(new Date(), 0), 9)}
                   maxTime={setHours(setMinutes(new Date(), 45), 17)}
+                  timeClassName={handleColor}
                   dateFormat="yyyy-MM-dd h:mm"
                 />
               </div>

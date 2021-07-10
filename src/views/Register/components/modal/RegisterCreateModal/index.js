@@ -7,25 +7,26 @@ import moment from "moment";
 function RegisterCreateModal(props) {
   const { open, close, header, doctors, register, publishTopic } = props;
 
-  const [newRegister, setNewRegister] = useState(register.register_id ? register : {
-    register_id: "",
-    register_patient_id: "",
-    register_user_id: "",
-    register_regdate: "",
-    register_date: moment().format("yyyy-MM-DD H:m"),
-    register_starttime: "",
-    register_memo: "",
-    register_communication: "",
-    register_state: "",
+  const [newRegister, setNewRegister] = useState(register);
+  //   ? register : {
+  //   register_id: "",
+  //   register_patient_id: "",
+  //   register_user_id: "",
+  //   register_regdate: "",
+  //   register_date: moment().format("yyyy-MM-DD H:m"),
+  //   register_starttime: "",
+  //   register_memo: "",
+  //   register_communication: "",
+  //   register_state: "",
 
-    // Add Data
-    patient_name: "",
-    patient_ssn: "",
-    patient_sex: "",
-    patient_tel: "",
+  //   // Add Data
+  //   patient_name: "",
+  //   patient_ssn: "",
+  //   patient_sex: "",
+  //   patient_tel: "",
 
-    user_name: "",
-  });
+  //   user_name: "",
+  // });
   // const noneDoctor = {
   //   user_id: "",
   //   user_hospital_id: "",
@@ -90,8 +91,9 @@ function RegisterCreateModal(props) {
   //마운트 및 언마운트에 실행할 내용
   //-------------------------------------------------------------  
   useEffect(() => {
-    setNewRegister({ ...newRegister, register_state: "대기" });
-  }, []);
+    setNewRegister(register);
+    console.log("rere",newRegister);
+  }, [props, register]);
   //-------------------------------------------------------------
   //렌더링 내용
   //-------------------------------------------------------------

@@ -55,16 +55,16 @@ function RegisterTimeSchedule(props) {
   //버튼 이벤트 처리
   //-------------------------------------------------------------
 
-  const changeDateToday = () => {
-    setRegisterDate(new Date());
-  }
+  // const changeDateToday = () => {
+  //   setRegisterDate(new Date());
+  // }
 
   const openModal = () => {
     setModalOpen(true);
-  }
+  };
   const closeModal = () => {
     setModalOpen(false);
-  }
+  };
 
   //기존 접수 수정 모달
   const [registerModalOpen, setRegisterModalOpen] = useState(false);
@@ -121,8 +121,11 @@ function RegisterTimeSchedule(props) {
     getRegisterLists(moment(registerDate).format("yyyy-MM-DD H:m"));
   },[props, registerDate]);
 
+  // useEffect(() => {
+  //   setSelectedRegister(selectedRegister);
+  // },[registerModalOpen]);
+
   useEffect(() => {
-    console.log("타ㅁ미이이");
     console.log("MESSAGE: ", message);
      const work = async () => {
         try {
@@ -180,7 +183,7 @@ function RegisterTimeSchedule(props) {
       <div className="RegisterTimeSchedule_content">
         <div className="RegisterTimeSchedule_content_title">
           {/* 오늘 날짜 */}
-          <div className="RegisterTimeSchedule_content_title_today" onDoubleClick={changeDateToday}>
+          <div className="RegisterTimeSchedule_content_title_today">
             <ReactDatePicker
               locale="ko"
               selected={registerDate}

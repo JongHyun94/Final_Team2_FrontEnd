@@ -27,6 +27,9 @@ function TreatmentCreateForm(props) {
   const [inspectionlist, setInspectionlist] = useState([]);
   const [inspectionOption, setInspectionOption] = useState("진단 검사 선택");
   // const [inspectionOption, setInspectionOption] = useState(["진단 검사 선택"]);
+  const [inspectionForm, setInspectionForm] = useState({
+    selectInspection: []
+  });
   const [drugForm, setDrugForm] = useState({
     selectedDrug: []
   });
@@ -38,7 +41,7 @@ function TreatmentCreateForm(props) {
     try {
 
       var list = await getCategoryInspectionList(categoryValue);
-      // console.log("hi",list);
+      console.log("hi",list.data.inspectionList);
       setInspectionlist(list.data.inspectionList);
     } catch (e) {
       console.log(e);
@@ -220,16 +223,40 @@ function TreatmentCreateForm(props) {
 
     }
   };
+  // Inspection
+  const checkChange2 = (event) => {
+
+    if (event.target.checked) {//체크되었는지 유무
+
+      setInspectionForm(prevInspectionForm => {
+        return {
+          ...prevInspectionForm,
+          selectInspection: prevInspectionForm.selectInspection.concat(event.target.value)
+        };
+      })
+
+    } else {
+
+      setInspectionForm(prevInspectionForm => {
+        return {
+          ...prevInspectionForm,
+          selectInspection: prevInspectionForm.selectInspection.filter(item => item !== event.target.value)
+        };
+      })
+
+    }
+  };
   const handleSubmit2 = (event) => {
     event.preventDefault();
-    console.log("drugForm", drugForm);
+    console.log("drugForm", drugForm.selectedDrug);
+    console.log("selectInspection",inspectionForm.selectInspection);
   };
 
   const createNewDruglist = async () => {
     console.log("등록");
     try {
-      console.log(drugForm);
-      await createDruglist(drugForm);
+      console.log(drugForm.selectedDrug);
+      await createDruglist(drugForm.selectedDrug);
     } catch (e) {
       console.log(e);
     }
@@ -292,7 +319,7 @@ function TreatmentCreateForm(props) {
                     <div key={inspection.inspection_list_name}>
                       {inspection.inspection_list_category === inspectionOption ? (
                         <div className="TreatmentCreateForm_checkbox_1" >
-                          <input type="checkbox" /> {inspection.inspection_list_name}
+                          <input type="checkbox" name="selectInspection" value={inspection.inspection_list_id} onChange={checkChange2}/> {inspection.inspection_list_name}
                         </div>
                       ) : (
                         false
@@ -328,7 +355,7 @@ function TreatmentCreateForm(props) {
                   <tbody>
                     {druglists.map((druglist) => {
                       return (
-                        <tr className="TreatmentSearch_2_2_tr" key={druglist.drug_injection_list_id}>
+                        <tr className="TreatmentSearch_2_2_tr" key={druglist.drug_injection_list_name}>
                           <td>
                             <input type="checkbox" name="selectedDrug" value={druglist.drug_injection_list_id} onChange={checkChange} />
                           </td>
