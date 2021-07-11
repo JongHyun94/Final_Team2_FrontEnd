@@ -186,18 +186,18 @@ function TreatmentHistoryRead(props) {
                                       open={modalOpen}
                                       close={closeModal}
                                       inspectionImg="xray01.jpg"
-                                      inspectionlistName={inspectionlists[5].inspection_list_name}
-                                      inspectionlistCategory={inspectionlists[5].inspection_list_category}
+                                      inspectionlistName={inspectionlists.inspection_list_name}
+                                      inspectionlistCategory={inspectionlists.inspection_list_category}
                                       inspectionTreatmentId="50546"
-                                      inspection_date={inspectionlists[5].inspection_date}
+                                      inspection_date={inspectionlists.inspection_date}
                                     >
                                       모달 내용
                                     </TreatmentImgRead>
                                   </React.Fragment>
                                 </td>
                               ) : (
-                                <td>{inspectionlist.inspectionResult}</td>
-                              )}
+                                <td>{inspectionlist.inspection_result}</td>
+                              )} 
                             </tr>
                           );
                         })}

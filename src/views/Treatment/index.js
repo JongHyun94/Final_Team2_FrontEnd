@@ -13,15 +13,34 @@ function Treatment(props) {
   ///////////////////////////////////////////////////////////////
 
   //-------------------------------------------------------------  
+  //메시지 종류
+  //-------------------------------------------------------------
+
+  // 1. 리스트 호출 - nurse -> docter
+  // { topic: "/138010/docter", content: "refreshTreatments"}
+  // 2. 검사 추가   - doctor -> inspector
+  // { topic: "/138010/inspector", content: "addInspections"}
+  // 3.  추가
+  // { topic: "/138010/doctor", content: "refreshToDoList"}
+  
+  //-------------------------------------------------------------  
   //상태 선언
   //-------------------------------------------------------------
 
-  const [subTopic, setSubTopic] = useState("/138010/doctor");  // 병원코드/간호사
+  // const [subTopic, setSubTopic] = useState("/138010/doctor");  // 병원코드/간호사
+  // const [prevSubTopic, setPrevSubTopic] = useState("/138010/nurse"); // 병원코드/간호사
+  // const [pubMessage, setPubMessage] = useState({
+  //   topic: "/138010/inspector",
+  //   content: "addInspects",  //검사추가
+  // });
+  const [subTopic, setSubTopic] = useState("/138010/doctor","/138010/inspector");  // 병원코드/간호사
   const [prevSubTopic, setPrevSubTopic] = useState("/138010/nurse"); // 병원코드/간호사
   const [pubMessage, setPubMessage] = useState({
     topic: "/138010/inspector",
     content: "addInspects",  //검사추가
   });
+  
+
   const [message, setMessage] = useState("");
 
   //-------------------------------------------------------------
@@ -66,11 +85,7 @@ function Treatment(props) {
   });
 
   //////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////
 
-
-
-  
   // 위에 생성한 환자 리스트
   // const [patientlists, setPatientlists] = useState([]);
 

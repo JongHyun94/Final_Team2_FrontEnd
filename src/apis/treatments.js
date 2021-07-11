@@ -1,8 +1,8 @@
 import axios from "axios";
-import qs from "qs";
 
-export function getTreatmentPatientList(date) {
-  const promise = axios.get("/treatment/treatmentlist", {params: {date}});
+
+export function getTreatmentPatientList(date, state="") {
+  const promise = axios.get("/treatment/treatmentlist", {params: {date, state}});
   return promise;
 }
 

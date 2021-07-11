@@ -149,14 +149,18 @@ function TreatmentCreateForm(props) {
     try {
       let newTreatment = {
         treatment_id: checkedPatientlist.treatment_id,
+        treatment_user_id : checkedPatientlist.treatment_user_id,
+        treatment_patient_id: checkedPatientlist.treatment_patient_id,
         treatment_smemo: smemo,
         treatment_omemo: omemo,
         treatment_amemo: amemo,
         treatment_pmemo: pmemo,
         treatment_communication: cmemo,
         selectedInspection : inspectionForm.selectedInspection,
-        selectedDrug : drugForm.selectedDrug
+        selectedDrug : drugForm.selectedDrug,
+        inspectionOption:inspectionOption
       };
+      console.log("sseeCATEGORY: ",newTreatment.selectedInspection);
       console.log("newtt", newTreatment);
       var list = await updateTreatment(newTreatment);
       console.log("list", list);
@@ -248,22 +252,6 @@ function TreatmentCreateForm(props) {
 
     }
   };
-  const handleSubmit2 = (event) => {
-    event.preventDefault();
-    console.log("drugForm", drugForm.selectedDrug);
-    console.log("selectedInspection",inspectionForm.selectedInspection);
-  };
-
-  const createNewDruglist = async () => {
-    console.log("등록");
-    try {
-      console.log(drugForm.selectedDrug);
-      await createDruglist(drugForm.selectedDrug);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
 
 
   return (
@@ -335,10 +323,6 @@ function TreatmentCreateForm(props) {
 
           <div className="TreatmentCreateForm_2_2_border border">
             <div className="TreatmentCreateForm_2_2_title">약품 목록</div>
-            <div> <button className="button_team2_fill" onClick={createNewDruglist}>등록</button></div>
-              <button type="submit" className="button_team2_fill" onClick={handleSubmit2}>
-                선택완료
-              </button>
             <div className="TreatmentCreateForm_2_2_content">
               <div className="TreatmentSearch_1">
                 <input type="text" className="TreatmentSearch_1_1" onChange={changeKeyword} value={searchKeyword} />
