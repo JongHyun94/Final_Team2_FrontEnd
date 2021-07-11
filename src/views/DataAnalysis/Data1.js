@@ -1,28 +1,26 @@
-import { ResponsiveBar } from '@nivo/bar'
+import { ResponsiveBar } from '@nivo/bar';
+import style from "./DataAnalysis.module.css";
 
 function Data1(props) {
   const data = [
     {
       "month": "전전달",
       "treatments": 59,
-      "treatmentsColor": "hsl(287, 70%, 50%)"
     },
     {
       "month": "전달",
       "treatments": 40,
-      "treatmentsColor": "hsl(67, 70%, 50%)"
     },
     {
       "month": "이번달",
       "treatments": 72,
-      "treatmentsColor": "hsl(67, 70%, 50%)"
     }
   ];
 
   return (
     <>
-      <div className="DataAnalysis_col_header" >최근 3달 진료수</div>
-      <div className="DataAnalysis_col_content" >
+      <div className={style.DataAnalysis_col_header}>최근 3달 진료수</div>
+      <div className={style.DataAnalysis_col_content}>
         <ResponsiveBar
           data={data}
           keys={['treatments']}

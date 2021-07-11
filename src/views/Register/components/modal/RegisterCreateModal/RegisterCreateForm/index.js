@@ -61,6 +61,7 @@ function RegisterCreateForm(props) {
   }
 
   const [startDate, setStartDate] = useState(new Date());
+  const [minDate, setMinDate] = useState(new Date());
   const [minTime, setMinTime] = useState(new Date());
 
   // 담당의 상태
@@ -108,13 +109,20 @@ function RegisterCreateForm(props) {
   }, [props.register]);
 
   useEffect(() => {
-    setMinTime(() => 
-              ((startDate.getFullYear() === new Date().getFullYear())
-                && (startDate.getMonth() === new Date().getMonth())
-                && (startDate.getDate() === new Date().getDate()))
-                ? new Date() : setHours(setMinutes(new Date(), 0), 9)
-            );
-  },[startDate]);
+    setMinTime(() =>
+      ((startDate.getFullYear() === new Date().getFullYear())
+        && (startDate.getMonth() === new Date().getMonth())
+        && (startDate.getDate() === new Date().getDate()))
+        ? new Date() : setHours(setMinutes(new Date(), 0), 9)
+    );
+    setMinDate(() =>
+      ((startDate.getFullYear() === new Date().getFullYear())
+        && (startDate.getMonth() === new Date().getMonth())
+        && (startDate.getDate() === new Date().getDate())
+        && (startDate.getHours() > 17))
+        ? startDate.setDate(startDate.getDate() + 1) : new Date()
+    );
+  }, [startDate]);
 
   //-------------------------------------------------------------
   //렌더링 내용
@@ -134,7 +142,7 @@ function RegisterCreateForm(props) {
           }
           timeIntervals={15}
           timeCaption="시간"
-          minDate={new Date()}
+          minDate={minDate}
           minTime={minTime}
           maxTime={setHours(setMinutes(new Date(), 45), 17)}
           dateFormat="yyyy-MM-dd h:mm"
