@@ -220,7 +220,7 @@ function InspectionListItem(props) {
         }
 
         <td className="align-middle">{props.inspection.inspection_list_reference}</td>
-        <td className="align-middle">{moment(props.inspection.inspection_date).format("HH:mm")}</td>
+        <td className="align-middle">{props.inspection.inspection_date !== undefined ? moment(props.inspection.inspection_date).format("HH:mm") : ""}</td>
         {props.inspection.inspeciton_list_container === "EDTA" ?
           <td className="align-middle" style={{color:"#8041D9"}}>●{props.inspection.inspeciton_list_container}</td>
           :

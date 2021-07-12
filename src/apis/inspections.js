@@ -15,8 +15,8 @@ export function updateIstateC(treatmentId) {
   return promise;
 }
 
-export function readInspection(treatmentId) {
-  const promise = axios.get("/inspection/inspections", {params:{treatmentId}});
+export function readInspection(treatmentId, globalUid) {
+  const promise = axios.get("/inspection/inspections", {params:{treatmentId, globalUid}});
   return promise;
 }
 
