@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import style from "./style.module.css";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { getUser, updateUserInfo } from "apis/users";
+import { getUser, updateUserInfo } from "apis/auth";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 import { ValidationModal } from "components/common/ValidationModal";
 

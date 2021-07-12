@@ -9,3 +9,14 @@ export function login(user){
 export function downloadFile() {
   return axios.get("/download", {responseType: "blob"});
 }
+
+
+export function getUser(user_id) {
+  const promise = axios.get("/auth/read", {params: {user_id}});
+  return promise;
+}
+
+export function updateUserInfo(user) {
+  const promise = axios.put("/auth/update", user);
+  return promise;
+}
