@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./User.css";
 import { updateUser, updateUserEnabled } from "apis/users";
 import moment from "moment";
-import { useForm } from "react-hook-form";
+import { get, useForm } from "react-hook-form";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 import { ValidationModal } from "components/common/ValidationModal";
 
@@ -127,8 +127,6 @@ function UserUpdateForm(props) {
     }
   }, [props.message]);
 
-  console.log(user);
-
   // 모달 상태(open일 떄 true로 바뀌어 열림)
   const [AddressModalOpen, setAddressModalOpen] = useState(false);
 
@@ -168,7 +166,7 @@ function UserUpdateForm(props) {
   const [validationModalOpen, setValidationModalOpen] = useState(false);
   // 유효성 검사 오류 메시지
   const [errorMsg, setErrorMsg] = useState({
-    title : "회원정보 수정 실패",
+    title : "직원정보 수정 실패",
     content: ""
   });
 
@@ -178,6 +176,108 @@ function UserUpdateForm(props) {
   const closeValidationModal = () => {
     setValidationModalOpen(false);
   };
+
+  useEffect(() => {
+    if (get(errors, 'user_name') !== undefined) {
+      if (get(errors, 'user_name').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "직원명을 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "직원명을 2자 이상 작성해주세요."
+        });
+        return openvalidationModal();
+      }
+    } else if (get(errors, 'user_ssn1') !== undefined) {
+      if (get(errors, 'user_ssn1').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "주민등록번호 앞자리를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 주민등록번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      }
+    } else if (get(errors, 'user_ssn2') !== undefined) {
+      if (get(errors, 'user_ssn2').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "주민등록번호 뒷자리를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 주민등록번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      }
+    } else if (get(errors, 'user_tel2') !== undefined) {
+      if (get(errors, 'user_tel2').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "전화번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 전화번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      }
+    } else if (get(errors, 'user_tel3') !== undefined) {
+      if (get(errors, 'user_tel3').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "전화번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 전화번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      }
+    } else if (get(errors, 'user_email1') !== undefined) {
+      if (get(errors, 'user_email1').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "이메일을 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 이메일 형식으로 입력해주세요."
+        });
+        return openvalidationModal();
+      }
+    } else if (get(errors, 'user_email2') !== undefined) {
+      if (get(errors, 'user_email2').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "이메일을 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 이메일 형식으로 입력해주세요."
+        });
+        return openvalidationModal();
+      }
+    };
+  }, [errors]);
 
   return (
     <div>

@@ -67,8 +67,8 @@ function UserCreateForm(props) {
     setMasking(event.target.value);
   };
 
-  // 직원 정보 수정
-  const handleCreate = async (errors) => {
+  // 직원 등록
+  const handleCreate = async () => {
     try {
       // event.preventDefault();
       console.log("직원 등록: ", user);
@@ -143,39 +143,130 @@ function UserCreateForm(props) {
   const [validationModalOpen, setValidationModalOpen] = useState(false);
   // 유효성 검사 오류 메시지
   const [errorMsg, setErrorMsg] = useState({
-    title : "회원정보 수정 실패",
+    title : "직원 등록 실패",
     content: ""
   });
 
-  const openvalidationModal = (message) => {
-    console.log(message);
+  const openvalidationModal = () => {
     setValidationModalOpen(true);
-    setErrorMsg({
-      ...errorMsg,
-      content: message
-    });
   };
+
   const closeValidationModal = () => {
     setValidationModalOpen(false);
   };
 
-  console.log(get(errors, 'user_name'));
-
-  // useEffect(() => {
-
-  // }, [])
+  useEffect(() => {
+    if (get(errors, 'user_name') !== undefined) {
+      if (get(errors, 'user_name').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "직원명을 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "직원명을 2자 이상 작성해주세요."
+        });
+        return openvalidationModal();
+      }
+    } else if (get(errors, 'user_ssn1') !== undefined) {
+      if (get(errors, 'user_ssn1').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "주민등록번호 앞자리를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 주민등록번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      }
+    } else if (get(errors, 'user_ssn2') !== undefined) {
+      if (get(errors, 'user_ssn2').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "주민등록번호 뒷자리를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 주민등록번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      }
+    } else if (get(errors, 'user_tel2') !== undefined) {
+      if (get(errors, 'user_tel2').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "전화번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 전화번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      }
+    } else if (get(errors, 'user_tel3') !== undefined) {
+      if (get(errors, 'user_tel3').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "전화번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 전화번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      }
+    } else if (get(errors, 'user_email1') !== undefined) {
+      if (get(errors, 'user_email1').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "이메일을 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 이메일 형식으로 입력해주세요."
+        });
+        return openvalidationModal();
+      }
+    } else if (get(errors, 'user_email2') !== undefined) {
+      if (get(errors, 'user_email2').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "이메일을 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 이메일 형식으로 입력해주세요."
+        });
+        return openvalidationModal();
+      }
+    };
+  }, [errors]);
 
   return (
     <div className="mt-2">
       <div className="User_title">직원 등록</div>
       <div className="border p-2">
-        <form onSubmit={handleSubmit(() => handleCreate(errors))}>
+        <form onSubmit={handleSubmit(handleCreate)}>
           <div className="User_item">
-            <label className="col-sm-3 m-0">직원명<>*</> : </label>
+            <label className="col-sm-3 m-0">직원명 : </label>
             <div className="col-sm">
               <input type="text" name="user_name" placeholder="직원명" value={user.user_name} onChange={handleChange} ref={register({required: true, minLength: 2})}></input>
               {/* {(errors.user_name)?.type === "required" ? (() => openvalidationModal("직원명을 입력하세요.")) : (() => openvalidationModal("직원명을 2자 이상 작성해주세요."))} */}
-              {(errors.user_name)?.type === "required" ? "required" : "minmax"}
               <React.Fragment>
                 <ValidationModal open={validationModalOpen} close={closeValidationModal} errorMsg={errorMsg}></ValidationModal>
               </React.Fragment>
@@ -221,7 +312,7 @@ function UserCreateForm(props) {
           <div className="User_item">
             <label className="col-sm-3 m-0 pr-0">전화 번호: </label>
             <div className="row col-sm mr-0">
-              <select className="col-sm ml-3" name="user_tel1" value={user.user_tel1} onChange={handleChange} defaultValue="010">
+              <select className="col-sm ml-3" name="user_tel1" value={user.user_tel1} onChange={handleChange}>
                 <option value="010">010</option>
                 <option value="011">011</option>
                 <option value="016">016</option>
