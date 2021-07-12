@@ -30,12 +30,12 @@ function Register(props) {
   //상태 선언
   //-------------------------------------------------------------
 
-  const [subTopic, setSubTopic] = useState(["/138010/nurse", "/138010/doctor"]);  // 병원코드/간호사
+  const [subTopic, setSubTopic] = useState(["/138010/#", "/138010/doctor"]);  // 병원코드/간호사
   const [prevSubTopic, setPrevSubTopic] = useState("/138010/nurse"); // 병원코드/간호사
   const [pubMessage, setPubMessage] = useState([
-    { topic: "/138010/nurse", content: "refreshRegisters"}, 
+    { topic: "/138010/", content: "refreshRegisters"}, 
     { topic: "/138010/doctor", content: "addTreatments"},
-    { topic: "/138010", content: "refreshToDoList"}
+    { topic: "/138010/", content: "refreshToDoList"}
   ]);
   const [message, setMessage] = useState("");
 

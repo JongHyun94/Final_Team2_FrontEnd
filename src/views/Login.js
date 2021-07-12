@@ -34,7 +34,7 @@ function Login(props) {
     try{
       // 로그인 요청
       const response = await login(user);
-      // console.log(response.data);
+      console.log("로그인 데이터",response.data);
 
       // 로그인 성공 시 JWT 저장 및 경로 이동
       if (response.data.result === "success") {
