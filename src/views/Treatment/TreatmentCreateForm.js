@@ -163,6 +163,8 @@ function TreatmentCreateForm(props) {
       console.log("sseeCATEGORY: ",newTreatment.selectedInspection);
       console.log("newtt", newTreatment);
       var list = await updateTreatment(newTreatment);
+      publishTopic(0);
+      publishTopic(1);
       console.log("list", list);
       // console.log(list.data.result)
 

@@ -33,14 +33,19 @@ function Treatment(props) {
   //   topic: "/138010/inspector",
   //   content: "addInspects",  //검사추가
   // });
-  const [subTopic, setSubTopic] = useState("/138010/doctor","/138010/inspector");  // 병원코드/간호사
+  const [subTopic, setSubTopic] = useState(["/138010/doctor","/138010/inspector"]);  // 병원코드/간호사
   const [prevSubTopic, setPrevSubTopic] = useState("/138010/nurse"); // 병원코드/간호사
-  const [pubMessage, setPubMessage] = useState({
-    topic: "/138010/inspector",
-    content: "addInspects",  //검사추가
-  });
-  
-
+  const [pubMessage, setPubMessage] = useState([
+    {
+      topic: "/138010/doctor",
+      content: "refreshTreatments" 
+    },
+    {
+      topic: "/138010/inspector",
+      content: "addInspections"
+    }
+  ]
+  );
   const [message, setMessage] = useState("");
 
   //-------------------------------------------------------------
@@ -58,6 +63,7 @@ function Treatment(props) {
     client.current.onMessageArrived = (msg) => {
        console.log("메시지 수신");
       var Jmessage = JSON.parse(msg.payloadString);
+      console.log(Jmessage);
       setMessage(() => {
         return Jmessage;
       });
@@ -65,7 +71,7 @@ function Treatment(props) {
 
     client.current.connect({
       onSuccess: () => {
-        client.current.subscribe(subTopic);
+        client.current.subscribe(subTopic[0]);
         console.log("Mqtt 접속 성공");
       }
     });
@@ -75,9 +81,20 @@ function Treatment(props) {
     client.current.disconnect(); // onConnectionLost 실행됨
   };
 
-  const publishTopic = async () => {
-    await sendMqttMessage(pubMessage);
+  const sendSubTopic = () => {
+    client.current.unsubscribe(prevSubTopic);
+    client.current.subscribe(subTopic[0]);
+    setPrevSubTopic(subTopic[0]);
   };
+
+  const publishTopic = async (num) => {
+    await sendMqttMessage(pubMessage[num]);
+  };
+
+
+  // const publishTopic = async () => {
+  //   await sendMqttMessage(pubMessage);
+  // };
 
   useEffect(() => {
     connectMqttBroker();
@@ -99,7 +116,8 @@ function Treatment(props) {
       <div className="TreatmentLeft">
         {/* 진료 대기 환자 */}
         <div className="TreatmentPatientList">
-          <TreatmentPatientList setCheckedpatient={setCheckedpatient} message={message}/>
+          <TreatmentPatientList setCheckedpatient={setCheckedpatient} 
+          message={message} publishTopic={publishTopic}/>
         </div>
         {/* 진료 기록 */}
         <div className="TreatmentHistoryList">
@@ -109,7 +127,7 @@ function Treatment(props) {
       <div className="TreatmentRight">
         {/* 진료 등록*/}
         <div className="TreatmentCreateForm">
-          <TreatmentCreateForm checkedpatient={checkedpatient}/>
+          <TreatmentCreateForm checkedpatient={checkedpatient} publishTopic={publishTopic}/>
         </div>
       </div>
     </div>

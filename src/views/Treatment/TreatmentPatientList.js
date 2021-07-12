@@ -9,7 +9,7 @@ import moment from "moment";
 function TreatmentPatientList(props) {
   
   //부모에서 생성한 환자 리스트, 체크된환자정보 담을 상태
-  const { setCheckedpatient, message } = props;
+  const { setCheckedpatient,publishTopic, message } = props;
 
   //환자 대기 목록 상태
   const [patientlists, setPatientlists] = useState([]);
@@ -52,10 +52,26 @@ function TreatmentPatientList(props) {
     getList(inputdate2);
   }, [inputdate2]);
 
-  // useEffect(() => {
-  //   console.log(message);
-  //   getList(inputdate2);
-  // },[inputdate2, message, props])
+  useEffect(() => {
+    console.log(message);
+    getList(inputdate2);
+  },[inputdate2, message, props])
+
+  useEffect(() => {
+    const work = async () =>{
+      try{
+          var list = await getTreatmentPatientList(inputdate2, "");
+          setPatientlists(list.data.treatmentlist);
+          getState(list.data.treatmentlist);
+      }catch(error){
+        console.log(error);
+      }
+    };
+    if(message.content==="refreshTreatments")
+    work();
+  }, [inputdate2, message, props]);
+
+
 
   //버튼 이벤트 처리---------------------------------------------------
 
@@ -72,8 +88,9 @@ function TreatmentPatientList(props) {
     setCheckedpatient(patientlist);
   };
 
-// 전체 보여주기
-const showTotal = async () => {
+
+//필터
+const totalFilter = async () => {
   try{
     var list = await getTreatmentPatientList(inputdate2,"");
     setPatientlists(list.data.treatmentlist);
@@ -82,8 +99,8 @@ const showTotal = async () => {
   }
 };
 
-// 대기 보여주기
-const showReady = async () => {
+
+const readyFilter = async () => {
   try{
     var list = await getTreatmentPatientList(inputdate2,"대기");
     setPatientlists(list.data.treatmentlist);
@@ -92,8 +109,8 @@ const showReady = async () => {
   }
 };
 
-// 완료 보여주기
-const showFinish = async () => {
+
+const finishFilter = async () => {
   try{
     var list = await getTreatmentPatientList(inputdate2,"완료");
     setPatientlists(list.data.treatmentlist);
@@ -141,9 +158,9 @@ const getState = (patientlists) => {
           {/* <input type="date" DatePicker selected={inputdate} onChange={(date) => setInputdate(date)} /> */}
           <DatePicker locale="ko" dateFormat="yyyy.MM.dd" selected={inputdate} onChange={(date) => setInputdate(date)} />
           <button className="button_team2_fill" onClick={() => searchDateBtn(inputdate)}>이동</button>
-          <div onClick={showTotal}>전체:{ready + done}명</div>
-          <div className="row_1" onClick={showReady}>대기:{ready}명</div>
-          <div className="row_2" onClick={showFinish}>완료:{done}명</div>
+          <div onClick={totalFilter}>전체:{ready + done}명</div>
+          <div className="row_1" onClick={readyFilter}>대기:{ready}명</div>
+          <div className="row_2" onClick={finishFilter}>완료:{done}명</div>
         </div>
         <div className="TreatmentPatientList_Totaltable">
           <table className="table TreatmentPatientList_table">
