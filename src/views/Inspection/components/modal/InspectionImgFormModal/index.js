@@ -2,37 +2,42 @@ import { useEffect, useState } from "react";
 import  style from "./InspectionImgFormModal.module.css";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-import { readImage } from "apis/inspections";
+import { readImage, selectImgId, downloadImg } from "apis/inspections";
 
 function InspectionImgFormModal(props) {
-  const [inspectionImgResult, setInspecctionImgResult] = useState(props.inspection);
+  const [inspectionImgResult, setInspectionImgResult] = useState(props.inspection);
 
   const { open, close } = props;
 
-  //let images = [];
-  var response;
+  let images = [];
+
+  const work = async () => {
+    try {
+      if(props.id === props.inspection.inspection_id){
+        const response = await readImage(props.id);
+        for(var i=0; i<=response.data.inspectionImgList.length-1; i++) {
+          images.push({
+            original: response.data.inspectionImgList[i].inspection_img_path,
+            thumbnail: response.data.inspectionImgList[i].inspection_img_path
+          });
+        }
+
+        const responseImgId = await selectImgId(props.id);
+
+        for(var i=0; i<=responseImgId.data.inspectionImgList.length-1; i++){
+          await downloadImg(responseImgId.data.inspectionImgList[i].inspection_img_id);
+        }
+
+        
+      }
+    } catch(error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const work = async () => {
-      try {
-        if(props.id === props.inspection.inspection_id){
-            response = await readImage(props.id);
-            console.log(response.data);
-            // console.log(response.data.inspectionImgList);
-            // for(var i=0; i<=response.data.inspectionImgList.length-1; i++) {
-            //   images.push({
-            //     original: response.data.inspectionImgList[i].inspection_img_path,
-            //     thumbnail: response.data.inspectionImgList[i].inspection_img_path
-            //   });
-            // }
-        }
-      } catch(error) {
-        console.log(error);
-      }
-    };
     work();
-  });
-
+  }, [open]);
 
   return (
     <div className={style.InspectionImgModal}>
@@ -61,8 +66,8 @@ function InspectionImgFormModal(props) {
                 </div>
               </div>
               <div className={`${style.InspectionImgForm_1_2} m-3`}>
-                <img src={response} width="100%" height="100%" alt=""></img>
-                {/* <ImageGallery items={images}/> */}
+                {/* <img src={'resources/img/xray01.jpg'} width="100%" height="100%" alt=""></img> */}
+                <ImageGallery items={images}/>
               </div>
             </div>
             <div className={`${style.InspectionImgForm_2} m-2`}>

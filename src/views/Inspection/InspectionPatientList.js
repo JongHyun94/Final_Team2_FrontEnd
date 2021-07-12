@@ -25,21 +25,22 @@ function InspectionPatientList(props) {
   useEffect(() => {
     console.log(props.message);
     getPatient2(treatmentDate2);
-  }, [props.message]);
+  }, [props]);
 
   useEffect(() => {
     getPatient2(treatmentDate2);
   },[treatmentDate2]);
 
-  useEffect(() => {
-    checkIState(patients);
-  })
+  // useEffect(() => {
+  //   checkIState(patients);
+  // })
 
   const getPatient2 = async (treatmentDate2) => {
     try {
-      const response = await readPatient(treatmentDate2);
+      const response = await readPatient(moment(treatmentDate2).format("yyyy-MM-DD HH:mm"), "");
       patientsList = response.data.treatmentList;
       setPatients(patientsList);
+      checkIState(patients);
     } catch(error) {
       console.log(error);
     }
@@ -77,7 +78,7 @@ function InspectionPatientList(props) {
 
   //날짜 이동 버튼
   const searchDateBtn = (treatmentDate) => {
-      setTreatmentDate2(moment(treatmentDate).format("yyyy-MM-DD HH:mm"));
+      setTreatmentDate2(treatmentDate);
       // getPatient2(treatmentDate2);
   };
 
@@ -91,6 +92,46 @@ function InspectionPatientList(props) {
     setIstateWaiting(getIstateWaiting(patients));
     setIstateInspection(getIstateInspection(patients));
     setIstateCompletion(getIstateCompletion(patients));
+  };
+
+  const showTotal = async (treatmentDate2) => {
+    try {
+      const response = await readPatient(moment(treatmentDate2).format("yyyy-MM-DD HH:mm"), "");
+      patientsList = response.data.treatmentList;
+      setPatients(patientsList);
+    } catch(error) {
+      console.log(error);
+    }
+  };
+
+  const showReady = async (treatmentDate2) => {
+    try {
+      const response = await readPatient(moment(treatmentDate2).format("yyyy-MM-DD HH:mm"), "대기");
+      patientsList = response.data.treatmentList;
+      setPatients(patientsList);
+    } catch(error) {
+      console.log(error);
+    }
+  };
+
+  const showInspection = async (treatmentDate2) => {
+    try {
+      const response = await readPatient(moment(treatmentDate2).format("yyyy-MM-DD HH:mm"), "검사");
+      patientsList = response.data.treatmentList;
+      setPatients(patientsList);
+    } catch(error) {
+      console.log(error);
+    }
+  };
+
+  const showFinish = async (treatmentDate2) => {
+    try {
+      const response = await readPatient(moment(treatmentDate2).format("yyyy-MM-DD HH:mm"), "완료");
+      patientsList = response.data.treatmentList;
+      setPatients(patientsList);
+    } catch(error) {
+      console.log(error);
+    }
   };
 
   // const rowRenderer = ({index, key, style}) => {
@@ -123,10 +164,10 @@ function InspectionPatientList(props) {
             </button>
           </div>
           <div className="InspectionPatientList_1_2_3 p-0">
-            <div className="InspectionPatientList_1_3_0">전체:{istateWaiting+istateInspection+istateCompletion}명</div>
-            <div className="InspectionPatientList_1_3_1">대기:{istateWaiting}명</div>
-            <div className="InspectionPatientList_1_3_2">검사:{istateInspection}명</div>
-            <div className="InspectionPatientList_1_3_3">완료:{istateCompletion}명</div>
+            <div className="InspectionPatientList_1_3_0" onClick={() => showTotal(treatmentDate2)}>전체:{istateWaiting+istateInspection+istateCompletion}명</div>
+            <div className="InspectionPatientList_1_3_1" onClick={() => showReady(treatmentDate2)}>대기:{istateWaiting}명</div>
+            <div className="InspectionPatientList_1_3_2" onClick={() => showInspection(treatmentDate2)}>검사:{istateInspection}명</div>
+            <div className="InspectionPatientList_1_3_3" onClick={() => showFinish(treatmentDate2)}>완료:{istateCompletion}명</div>
           </div>
         </div>
 
@@ -153,7 +194,8 @@ function InspectionPatientList(props) {
                 return (
                   <InspectionPatientListItem key={patient.treatment_id} patient={patient} id={id} handleChecked={(treatmentId) => handleChecked(treatmentId)} 
                                               iState={props.iState} handleBarcodeBack={props.handleBarcodeBack}
-                                              iStateFinish={props.iStateFinish} handleFinishBack={props.handleFinishBack}/>
+                                              iStateFinish={props.iStateFinish} handleFinishBack={props.handleFinishBack}
+                                              publishTopic={props.publishTopic}/>
                 );
               })}
             </tbody>

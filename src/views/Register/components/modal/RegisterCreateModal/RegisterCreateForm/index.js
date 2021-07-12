@@ -61,11 +61,13 @@ function RegisterCreateForm(props) {
   }
 
   const [startDate, setStartDate] = useState(new Date());
+  const [minDate, setMinDate] = useState(new Date());
+  const [minTime, setMinTime] = useState(new Date());
 
   // 담당의 상태
   const [doctorsList, setDoctorsList] = useState(doctors);
 
-  const [newDoctor, setNewDoctor] = useState(register.register_user_id? register.register_user_id:"doctor");
+  const [newDoctor, setNewDoctor] = useState(register.register_user_id ? register.register_user_id : "doctor");
 
   const changeNewDoctor = (event) => {
     setNewDoctor(event.target.value);
@@ -98,13 +100,29 @@ function RegisterCreateForm(props) {
   //-------------------------------------------------------------
 
   useEffect(() => {
-    setStartDate(props.register? new Date(props.register.register_date) : new Date());
+    setStartDate(props.register ? new Date(props.register.register_date) : new Date());
     setDoctorsList(doctors);
-  },[doctors, props.register]);
+  }, [doctors, props.register]);
 
   useEffect(() => {
     //setNewDoctor("doctor");
-  },[props.register]);
+  }, [props.register]);
+
+  useEffect(() => {
+    setMinTime(() =>
+      ((startDate.getFullYear() === new Date().getFullYear())
+        && (startDate.getMonth() === new Date().getMonth())
+        && (startDate.getDate() === new Date().getDate()))
+        ? new Date() : setHours(setMinutes(new Date(), 0), 9)
+    );
+    setMinDate(() =>
+      ((startDate.getFullYear() === new Date().getFullYear())
+        && (startDate.getMonth() === new Date().getMonth())
+        && (startDate.getDate() === new Date().getDate())
+        && (startDate.getHours() > 17))
+        ? startDate.setDate(startDate.getDate() + 1) : new Date()
+    );
+  }, [startDate]);
 
   //-------------------------------------------------------------
   //렌더링 내용
@@ -124,7 +142,8 @@ function RegisterCreateForm(props) {
           }
           timeIntervals={15}
           timeCaption="시간"
-          minTime={setHours(setMinutes(new Date(), 0), 9)}
+          minDate={minDate}
+          minTime={minTime}
           maxTime={setHours(setMinutes(new Date(), 45), 17)}
           dateFormat="yyyy-MM-dd h:mm"
           timeClassName={handleColor}

@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export function readPatient(treatmentDate) {
-  const promise = axios.get("/inspection", {params:{treatmentDate}});
+export function readPatient(treatmentDate, state="") {
+  const promise = axios.get("/inspection", {params:{treatmentDate, state}});
   return promise;
 }
 
@@ -30,7 +30,28 @@ export function updateResult(inspectionId, inspectionResult) {
   return promise;
 }
 
+//수정 필요
+export function selectImgId(inspectionId) {
+  const promise = axios.get("/inspection/imgId", {params:{inspectionId}});
+  return promise;
+}
+
+export function downloadImg(inspectionImgId) {
+  const promise = axios.get("/inspection/images/" + inspectionImgId, {responseType: "blob"});
+  return promise;
+}
+
 export function readImage(inspectionId) {
   const promise = axios.get("/inspection/images", {params:{inspectionId}});
+  return promise;
+}
+
+export function createImage(multipartFormData) {
+  const promise = axios.post("/inspection/images", multipartFormData);
+  return promise;
+}
+
+export function deleteImage(inspectionId) {
+  const promise = axios.delete("/inspection/images", {params:{inspectionId}});
   return promise;
 }

@@ -2,8 +2,9 @@ import { Modal } from "../../components/common/Address";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { updatePatient } from "apis/patient";
-import { useForm } from "react-hook-form";
+import { get, useForm } from "react-hook-form";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
+import { ValidationModal } from "components/common/ValidationModal";
 
 function PatientUpdateForm(props) {
   // 환자 상태
@@ -69,17 +70,17 @@ function PatientUpdateForm(props) {
   }; 
 
   // 모달 상태(open일 떄 true로 바뀌어 열림)
-  const [modalOpen, setModalOpen] = useState(false);
+  const [addressModalOpen, setAddressModalOpen] = useState(false);
 
-  const openModal = (event) => {
+  const openAddressModal = (event) => {
     event.preventDefault();
-    setModalOpen(true);
+    setAddressModalOpen(true);
   };
-  const closeModal = () => {
-    setModalOpen(false);
+  const closeAddressModal = () => {
+    setAddressModalOpen(false);
   };
   const sendModal = (data) => {
-    setModalOpen(false);
+    setAddressModalOpen(false);
     console.log("send1 실행", data);
     setPatient({
       ...patient,
@@ -103,6 +104,96 @@ function PatientUpdateForm(props) {
     }
   };
 
+   // validation 모달 상태(open일 떄 true로 바뀌어 열림)
+   const [validationModalOpen, setValidationModalOpen] = useState(false);
+   // 유효성 검사 오류 메시지
+   const [errorMsg, setErrorMsg] = useState({
+     title : "환자정보 수정 실패",
+     content: ""
+   });
+ 
+   const openvalidationModal = () => {
+     setValidationModalOpen(true);
+   };
+ 
+   const closeValidationModal = () => {
+     setValidationModalOpen(false);
+   };
+ 
+   useEffect(() => {
+     if (get(errors, 'patient_name') !== undefined) {
+       if (get(errors, 'patient_name').type === "required") {
+         setErrorMsg({
+           ...errorMsg,
+           content: "환자명을 입력해주세요."
+         });
+         return openvalidationModal();
+       } else {
+         setErrorMsg({
+           ...errorMsg,
+           content: "환자명을 2자 이상 작성해주세요."
+         });
+         return openvalidationModal();
+       }
+     } else if (get(errors, 'patient_ssn1') !== undefined) {
+       if (get(errors, 'patient_ssn1').type === "required") {
+         setErrorMsg({
+           ...errorMsg,
+           content: "주민등록번호 앞자리를 입력해주세요."
+         });
+         return openvalidationModal();
+       } else {
+         setErrorMsg({
+           ...errorMsg,
+           content: "올바른 주민등록번호를 입력해주세요."
+         });
+         return openvalidationModal();
+       }
+     } else if (get(errors, 'patient_ssn2') !== undefined) {
+       if (get(errors, 'patient_ssn2').type === "required") {
+         setErrorMsg({
+           ...errorMsg,
+           content: "주민등록번호 뒷자리를 입력해주세요."
+         });
+         return openvalidationModal();
+       } else {
+         setErrorMsg({
+           ...errorMsg,
+           content: "올바른 주민등록번호를 입력해주세요."
+         });
+         return openvalidationModal();
+       }
+     } else if (get(errors, 'patient_tel2') !== undefined) {
+       if (get(errors, 'patient_tel2').type === "required") {
+         setErrorMsg({
+           ...errorMsg,
+           content: "전화번호를 입력해주세요."
+         });
+         return openvalidationModal();
+       } else {
+         setErrorMsg({
+           ...errorMsg,
+           content: "올바른 전화번호를 입력해주세요."
+         });
+         return openvalidationModal();
+       }
+     } else if (get(errors, 'patient_tel3') !== undefined) {
+       if (get(errors, 'patient_tel3').type === "required") {
+         setErrorMsg({
+           ...errorMsg,
+           content: "전화번호를 입력해주세요."
+         });
+         return openvalidationModal();
+       } else {
+         setErrorMsg({
+           ...errorMsg,
+           content: "올바른 전화번호를 입력해주세요."
+         });
+         return openvalidationModal();
+       }
+     };
+   }, [errors]);
+
   return (
     <div>
       <div className={`Patient_title`}>환자 정보 수정</div>
@@ -111,6 +202,9 @@ function PatientUpdateForm(props) {
           <div className="Patient_item">
             <label className="col-sm-3 pl-3 p-0 m-0">환자 코드: </label>
             <div className="col-sm d-flex ">{patient.patient_id}</div>
+            <React.Fragment>
+              <ValidationModal open={validationModalOpen} close={closeValidationModal} errorMsg={errorMsg}></ValidationModal>
+            </React.Fragment>
           </div>
           <div className="Patient_item">
             <label className="col-sm-3 pl-3 p-0 m-0">환자명: </label>
@@ -177,8 +271,8 @@ function PatientUpdateForm(props) {
               <div className="row mb-2"> 
                 <input type="text" className="col-sm-3 ml-3" name="patient_zipcode" value={patient.patient_zipcode} placeholder="우편번호" readOnly></input>
                 <React.Fragment>
-                  <button className="button_team2_empty" onClick={openModal}>우편번호 찾기</button>
-                  <Modal open={modalOpen} close={closeModal} send={sendModal}></Modal>
+                  <button className="button_team2_empty" onClick={openAddressModal}>우편번호 찾기</button>
+                  <Modal open={addressModalOpen} close={closeAddressModal} send={sendModal}></Modal>
                 </React.Fragment>   
               </div>
               <input type="text" className="col-sm mb-2" name="patient_address" value={patient.patient_address} placeholder="주소" readOnly></input>

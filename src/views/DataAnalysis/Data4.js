@@ -1,42 +1,33 @@
 import React from "react";
-import { ResponsivePie } from '@nivo/pie'
+import { ResponsivePie } from '@nivo/pie';
+import style from "./DataAnalysis.module.css";
 const data = [
   {
     "id": "1분기",
     "label": "1분기",
     "value": 220,
-    "color": "hsl(128, 70%, 50%)"
   },
-  // {
-  //   "id": "java",
-  //   "label": "java",
-  //   "value": 72,
-  //   "color": "hsl(70, 70%, 50%)"
-  // },
   {
     "id": "2분기",
     "label": "2분기",
     "value": 149,
-    "color": "hsl(300, 70%, 50%)"
   },
   {
     "id": "3분기",
     "label": "3분기",
     "value": 125,
-    "color": "hsl(172, 70%, 50%)"
   },
   {
     "id": "4분기",
     "label": "4분기",
     "value": 182,
-    "color": "hsl(180, 70%, 50%)"
   }
 ]
 function Data4() {
   return (
     <>
-      <div className="DataAnalysis_col_header" >분기별 환자 현황</div>
-      <div className="DataAnalysis_col_content" >
+      <div className={style.DataAnalysis_col_header}>분기별 환자 현황</div>
+      <div className={style.DataAnalysis_col_content}>
         <ResponsivePie
           data={data}
           margin={{ top: 40, right: 80, bottom: 80, left: 80 }}

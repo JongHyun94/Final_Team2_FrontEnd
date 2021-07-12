@@ -98,7 +98,7 @@ function Inspection(props) {
           <InspectionPatientList treatmentId={treatmentId} checkedtId={(id) => checkedtId(id)}
                                   iState={iState} handleBarcodeBack={handleBarcodeBack} 
                                   iStateFinish={iStateFinish} handleFinishBack={handleFinishBack}
-                                  message={message}/>
+                                  publishTopic={publishTopic} message={message}/>
         </div>
         <div className="Inspection_2">
           {/* 검사상세내역 */}

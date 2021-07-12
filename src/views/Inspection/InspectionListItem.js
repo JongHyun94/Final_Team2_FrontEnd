@@ -106,6 +106,7 @@ function InspectionListItem(props) {
         }
       }
       props.handleBarcode();
+      props.publishTopic();
     } catch(error) {
       console.log(error);
     }
@@ -121,6 +122,7 @@ function InspectionListItem(props) {
         }
       }
       props.handleCancel();
+      props.publishTopic();
     } catch(error) {
       console.log(error);
     }
@@ -138,6 +140,7 @@ function InspectionListItem(props) {
         }
       }
       props.handleComplete();
+      props.publishTopic();
     } catch(error) {
       console.log(error);
     }
