@@ -8,12 +8,7 @@ import style from "./DataAnalysis.module.css";
 
 function DataAnalysis(props) {
 
-  const [data1, setData1] = useState([
-    {
-      "month": "",
-      "treatments": 0,
-    },
-  ]);
+  const [data1, setData1] = useState([]);
   const [data2, setData2] = useState([]);
   const [data3, setData3] = useState([]);
   const [data4, setData4] = useState([]);
@@ -32,41 +27,54 @@ function DataAnalysis(props) {
     let count1 = 0;
     let count2 = 0;
     let count3 = 0;
-    for(var data of datalist){
-      if(new Date(data.register_starttime).getMonth() === new Date().getMonth()){
+    for (var data of datalist) {
+      if (new Date(data.register_starttime).getMonth() === new Date().getMonth()) {
         count1++;
-      } else if(new Date(data.register_starttime).getMonth() === new Date().getMonth()-1){
+      } else if (new Date(data.register_starttime).getMonth() === new Date().getMonth() - 1) {
         count2++;
-      } else if(new Date(data.register_starttime).getMonth() === new Date().getMonth()-2){
+      } else if (new Date(data.register_starttime).getMonth() === new Date().getMonth() - 2) {
         count3++
       }
     }
     // console.log(count1);
     // console.log(count2);
     // console.log(count3);
-    const newDataList = [{"month": "전전달"}, {"month":""} ]
-    setData1({...data1,});
+    const newDataList = [
+      {
+        "month": "전전달",
+        "treatments": count3
+      },
+      {
+        "month": "전달",
+        "treatments": count2
+      },
+      {
+        "month": "이번달",
+        "treatments": count1
+      }
+    ]
+    setData1(newDataList);
   };
   useEffect(() => {
     getData();
-  },[]);
+  }, []);
 
   return (
     <div className={style.DataAnalysis}>
       <div className={style.DataAnalysis_row1}>
         <div className={style.DataAnalysis_col}>
-          <Data1 data1={data1}/>
-          </div>
+          <Data1 data1={data1} />
+        </div>
         <div className={style.DataAnalysis_col}>
-          <Data2 data2={data2}/>
-          </div>
+          <Data2 data2={data2} />
+        </div>
       </div>
       <div className={style.DataAnalysis_row2}>
         <div className={style.DataAnalysis_col}>
-          <Data3 data3={data3}/>
+          <Data3 data3={data3} />
         </div>
         <div className={style.DataAnalysis_col}>
-          <Data4 data4={data4}/>
+          <Data4 data4={data4} />
         </div>
       </div>
     </div>
