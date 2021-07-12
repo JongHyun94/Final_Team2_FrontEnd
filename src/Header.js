@@ -1,29 +1,35 @@
 import { removeAuthHeader } from "apis/axiosConfig";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { createSetAuthTokenAction, createSetHnameAction, createSetUidAction } from "redux/auth-reducer";
+import { createSetAuthTokenAction, createSetUidAction } from "redux/auth-reducer";
 import React, { useState } from "react";
 import Auth from "./views/Auth";
 import { RiCalendarCheckLine, RiStethoscopeFill, RiTestTubeFill } from "react-icons/ri";
 import { IoBarChart } from "react-icons/io5";
 import WeatherAPI from "components/common/WeatherAPI";
-import { test } from "apis/test";
+import { createSetHaddressAction, createSetHidAction, createSetHnameAction, createSetHurlAction } from "redux/hospital-reducer";
 
 function Header(props) {  
   const globalUid = useSelector((state) => state.authReducer.uid);
-  const hname = useSelector((state) => state.authReducer.hname);
+  const hname = useSelector((state) => state.hospitalReducer.hname);
   const dispatch = useDispatch();
 
   const logout = (event) => {
     dispatch(createSetUidAction(""));
     dispatch(createSetAuthTokenAction(""));
     dispatch(createSetHnameAction(""));
+    dispatch(createSetHidAction(""));
+    dispatch(createSetHaddressAction(""));
+    dispatch(createSetHurlAction(""));
     removeAuthHeader();
     
     // SessionStorage에 인증 내용 제거
     sessionStorage.removeItem("uid");
     sessionStorage.removeItem("authToken");
     sessionStorage.removeItem("hname");
+    sessionStorage.removeItem("hid");
+    sessionStorage.removeItem("haddress");
+    sessionStorage.removeItem("hurl");
   };
 
   // 모달 상태(open일 떄 true로 바뀌어 열림)

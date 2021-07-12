@@ -32,22 +32,22 @@ function User(props) {
   };
   
   // MQTT
-  const [subTopic, setSubTopic] = useState("/138010/doctor");
+  const [subTopic, setSubTopic] = useState("/138010/master");
   const pubMessage = [
     {
-    topic: "/138010/doctor",
+    topic: "/138010/master",
     content: "updateUser"
     }, 
     {
-      topic: "/138010/doctor",
+      topic: "/138010/master",
       content: "addUser"
     },
     {
-      topic: "/138010/doctor",
+      topic: "/138010/master",
       content: "blockUser"
     },
     {
-      topic: "/138010/doctor",
+      topic: "/138010/master",
       content: "allowUser"
     }
   ]

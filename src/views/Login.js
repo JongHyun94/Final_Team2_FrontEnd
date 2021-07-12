@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createSetAuthTokenAction, createSetHnameAction, createSetUidAction } from "redux/auth-reducer";
+import { createSetAuthTokenAction, createSetUidAction } from "redux/auth-reducer";
 import { useForm } from "react-hook-form";
 import Help from "./Help";
 import "./Login.css";
@@ -8,6 +8,7 @@ import { addAuthHeader } from "apis/axiosConfig";
 import { login } from "apis/auth";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 import { ValidationModal } from "../components/common/ValidationModal";
+import { createSetHaddressAction, createSetHidAction, createSetHnameAction, createSetHurlAction } from "redux/hospital-reducer";
 
 function Login(props) {
   // 유저 상태
@@ -47,10 +48,17 @@ function Login(props) {
         dispatch(createSetUidAction(response.data.uid));
         dispatch(createSetAuthTokenAction(response.data.authToken));
         dispatch(createSetHnameAction(response.data.hname));
+        dispatch(createSetHidAction(response.data.hid));
+        dispatch(createSetHaddressAction(response.data.haddress));
+        dispatch(createSetHurlAction(response.data.hurl));
+
         // sessionStorage에 인증 내용 저장
         sessionStorage.setItem("uid", response.data.uid);
         sessionStorage.setItem("authToken", response.data.authToken);
         sessionStorage.setItem("hname", response.data.hname);
+        sessionStorage.setItem("hid", response.data.hid);
+        sessionStorage.setItem("haddress", response.data.haddress);
+        sessionStorage.setItem("hurl", response.data.hurl);
         
         // 로그인 아이디에 따른 경로 지정
         if(user.userId.slice(0,1) === "N") {
@@ -62,6 +70,13 @@ function Login(props) {
         } //else {
         //   props.history.push("/User");
         // }
+      } else if(response.data.result === "notEnabled") {
+        openModal();
+        // alert("로그인 실패 : 아이디 혹은 비밀번호가 맞지 않습니다.");
+        setErrorMsg({
+          ...errorMsg,
+          content: "비활성화된 계정입니다."
+        })
       } else {
         openModal();
         // alert("로그인 실패 : 아이디 혹은 비밀번호가 맞지 않습니다.");

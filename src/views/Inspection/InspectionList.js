@@ -109,8 +109,17 @@ function InspectionList(props) {
   };
 
   const completeBtn = () => {
+    if(window.confirm("검사완료 시, 결과 수정이 불가합니다")){
+      setCompleteState(true);
+    }
+    else{
+      return;
+    }
+  
+  
+    //alert("검사완료 시, 결과 수정이 불가합니다.");
     //검사결과: 대기 ~> 완료
-    setCompleteState(true);
+    //setCompleteState(true);
     //검사상태count ++
     //props.countIState();
     //props.publishTopic();
