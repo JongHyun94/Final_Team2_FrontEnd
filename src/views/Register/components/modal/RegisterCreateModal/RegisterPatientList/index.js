@@ -2,8 +2,6 @@ import { getPatientList } from "apis/patient";
 import { useEffect, useState } from "react";
 import style from "./RegisterPatientList.module.css";
 
-
-
 function RegisterPatientList(props) {
   const noneRegister = {
     register_id: "",
@@ -49,13 +47,11 @@ function RegisterPatientList(props) {
       setSelectedPatient("");
     } else {
       setSelectedPatient(patient_id);
-      console.log(patient_id);
       props.setNewRegister({...props.newRegister,register_patient_id:patient_id});
     }
   };
 
   const handleSearch = async (event) => {
-    console.log("입력된 내용:" + searchContent);
     try {
       event.preventDefault();
       const list = await getPatientList(searchContent);
@@ -67,7 +63,6 @@ function RegisterPatientList(props) {
   const getPatientsLists = async () => {
     try {
       var list = await getPatientList();
-      console.log(list.data.patientList);
       setPatientList(list.data.patientList);
     } catch (e) {
       console.log(e);

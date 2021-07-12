@@ -1,5 +1,5 @@
 import { ResponsivePie } from "@nivo/pie";
-
+import style from "./DataAnalysis.module.css";
 
 function Data2(props) {
   const data = [
@@ -7,20 +7,18 @@ function Data2(props) {
       id: "완료",
       label: "완료",
       value: 432,
-      color: "hsl(100, 70%, 50%)",
     },
     {
       id: "미완료",
       label: "미완료",
       value: 180,
-      color: "hsl(277, 70%, 50%)",
     }
   ]
 
   return (
     <>
-      <div className="DataAnalysis_col_header" >검사 현황</div>
-      <div className="DataAnalysis_col_content">
+      <div className={style.DataAnalysis_col_header}>접수 현황</div>
+      <div className={style.DataAnalysis_col_content}>
         <ResponsivePie
           data={data}
           margin={{ top: 40, right: 80, bottom: 80, left: 80 }}

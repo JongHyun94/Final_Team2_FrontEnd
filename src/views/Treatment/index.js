@@ -16,7 +16,7 @@ function Treatment(props) {
   //상태 선언
   //-------------------------------------------------------------
 
-  const [subTopic, setSubTopic] = useState("/138010/nurse");  // 병원코드/간호사
+  const [subTopic, setSubTopic] = useState("/138010/doctor");  // 병원코드/간호사
   const [prevSubTopic, setPrevSubTopic] = useState("/138010/nurse"); // 병원코드/간호사
   const [pubMessage, setPubMessage] = useState({
     topic: "/138010/inspector",
@@ -33,11 +33,11 @@ function Treatment(props) {
     client.current = new Paho.Client("localhost", 61614, "client-" + new Date().getTime());
 
     client.current.onConnectionLost = () => {
-      console.log("Mqtt 접속 끊김");
+      // console.log("Mqtt 접속 끊김");
     };
 
     client.current.onMessageArrived = (msg) => {
-      console.log("메시지 수신");
+      // console.log("메시지 수신");
       var Jmessage = JSON.parse(msg.payloadString);
       setMessage(() => {
         return Jmessage;
@@ -47,7 +47,7 @@ function Treatment(props) {
     client.current.connect({
       onSuccess: () => {
         client.current.subscribe(subTopic);
-        console.log("Mqtt 접속 성공");
+        // console.log("Mqtt 접속 성공");
       }
     });
   };
@@ -62,7 +62,7 @@ function Treatment(props) {
 
   useEffect(() => {
     connectMqttBroker();
-    console.log("MESSAGE",message);
+    // console.log("MESSAGE",message);
   });
 
   //////////////////////////////////////////////////////////
@@ -84,17 +84,17 @@ function Treatment(props) {
       <div className="TreatmentLeft">
         {/* 진료 대기 환자 */}
         <div className="TreatmentPatientList">
-          <TreatmentPatientList setCheckedpatient={setCheckedpatient} message={message} />
+          <TreatmentPatientList setCheckedpatient={setCheckedpatient} message={message}/>
         </div>
         {/* 진료 기록 */}
         <div className="TreatmentHistoryList">
-          <TreatmentHistoryList checkedpatient={checkedpatient} />
+          <TreatmentHistoryList checkedpatient={checkedpatient}/>
         </div>
       </div>
       <div className="TreatmentRight">
         {/* 진료 등록*/}
         <div className="TreatmentCreateForm">
-          <TreatmentCreateForm checkedpatient={checkedpatient} publishTopic={publishTopic}/>
+          <TreatmentCreateForm checkedpatient={checkedpatient}/>
         </div>
       </div>
     </div>

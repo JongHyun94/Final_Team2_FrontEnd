@@ -70,7 +70,7 @@ function TreatmentHistoryList(props) {
   const getTreatmentHistoryLists = async (treatment_patient_id) => {
     try{
       var list = await getTreatmentHistoryList(treatment_patient_id);
-      console.log(list.data.historylist);
+      // console.log(list.data.historylist);
       setTreatmentHistoryList(list.data.historylist);
     }catch (e){
       console.log(e);
@@ -80,7 +80,7 @@ function TreatmentHistoryList(props) {
   useEffect(() => {
     //console.log("asasasas",checkedPatientlist.treatment_patient_id);
     getTreatmentHistoryLists(checkedPatientlist.treatment_patient_id);
-  }, [props]);
+  }, [checkedPatientlist.treatment_patient_id, props]);
   return (
     <div>
       <div className="TreatmentHistoryList_title">

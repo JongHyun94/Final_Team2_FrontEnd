@@ -1,4 +1,4 @@
-import { getDoctorList, getRegisterList } from "apis/register";
+import { getDoctorList } from "apis/register";
 import { useEffect, useRef, useState } from "react";
 import RegisterList from "./RegisterList";
 import RegisterRead from "./RegisterRead";
@@ -15,15 +15,28 @@ function Register(props) {
   ///////////////////////////////////////////////////////////////
 
   //-------------------------------------------------------------  
+  //메시지 종류
+  //-------------------------------------------------------------
+
+  // 1. 리스트 호출 - nurse -> nurse
+  // { topic: "/138010/nurse", content: "refreshRegisters"}
+  // 2. 진료 추가   - nurse -> doctor
+  // { topic: "/138010/doctor", content: "addTreatments"}
+  // 3. To Do List 추가
+  // { topic: "/138010/doctor", content: "refreshToDoList"}
+  
+
+  //-------------------------------------------------------------  
   //상태 선언
   //-------------------------------------------------------------
 
-  const [subTopic, setSubTopic] = useState("/138010/nurse");  // 병원코드/간호사
+  const [subTopic, setSubTopic] = useState(["/138010/#", "/138010/doctor"]);  // 병원코드/간호사
   const [prevSubTopic, setPrevSubTopic] = useState("/138010/nurse"); // 병원코드/간호사
-  const [pubMessage, setPubMessage] = useState({
-    topic: "/138010/doctor",
-    content: "addTreatments",  // 진료추가
-  });
+  const [pubMessage, setPubMessage] = useState([
+    { topic: "/138010/", content: "refreshRegisters"}, 
+    { topic: "/138010/doctor", content: "addTreatments"},
+    { topic: "/138010/", content: "refreshToDoList"}
+  ]);
   const [message, setMessage] = useState("");
 
   //-------------------------------------------------------------
@@ -41,6 +54,7 @@ function Register(props) {
     client.current.onMessageArrived = (msg) => {
       console.log("메시지 수신");
       var Jmessage = JSON.parse(msg.payloadString);
+      console.log(Jmessage);
       setMessage(() => {
         return Jmessage;
       });
@@ -48,7 +62,7 @@ function Register(props) {
 
     client.current.connect({
       onSuccess: () => {
-        client.current.subscribe(subTopic);
+        client.current.subscribe(subTopic[0]);
         console.log("Mqtt 접속 성공");
       }
     });
@@ -57,14 +71,20 @@ function Register(props) {
   const disconnectMqttBroker = () => {
     client.current.disconnect(); // onConnectionLost 실행됨
   };
+  const sendSubTopic = () => {
+    client.current.unsubscribe(prevSubTopic);
+    client.current.subscribe(subTopic[0]);
+    setPrevSubTopic(subTopic[0]);
+  };
 
-  const publishTopic = async () => {
-    await sendMqttMessage(pubMessage);
+  const publishTopic = async (num) => {
+    await sendMqttMessage(pubMessage[num]);
   };
 
   useEffect(() => {
+    //sendSubTopic();
     connectMqttBroker();
-    console.log("MESSAGE",message);
+    console.log("MESSAGE1: ",message);
   });
 
   //////////////////////////////////////////////////////////
@@ -85,7 +105,7 @@ function Register(props) {
   const [registerDate, setRegisterDate] = useState(new Date());
 
   // 접수 내역 배열 
-  const [registerList, setRegisterList] = useState();
+  //const [registerList, setRegisterList] = useState();
 
   // 선택된 환자 내용
   const [selectedPatient, setSelectedPatient] = useState({});
@@ -132,6 +152,9 @@ function Register(props) {
   useEffect(()=>{
     getDoctorLists();
   },[]);
+  useEffect(() => {
+    
+  },[selectedPatient]);
 
   //-------------------------------------------------------------
   //렌더링 내용
@@ -145,7 +168,10 @@ function Register(props) {
           <RegisterList
             setSelectedPatient={setSelectedPatient} 
             registerDate={registerDate}
-            setRegisterDate={setRegisterDate}/>
+            setRegisterDate={setRegisterDate}
+            message={message}
+            publishTopic={publishTopic}
+            />
         </div>
         {/* 접수 상세 내역 or 접수 수정*/}
         <div className="RegisterRead">
@@ -154,6 +180,7 @@ function Register(props) {
               registerRead={registerRead}
               changeRegister={changeRegister}
               selectedPatient={selectedPatient}
+              setSelectedPatient={setSelectedPatient}
             />
             :
             <RegisterUpdateForm
@@ -161,7 +188,9 @@ function Register(props) {
               changeRegister={changeRegister}
               cancelRegister={cancelRegister}
               selectedPatient={selectedPatient}
+              setSelectedPatient={setSelectedPatient}
               doctors={doctors}
+              publishTopic={publishTopic}
             />
           }
         </div>
@@ -175,7 +204,11 @@ function Register(props) {
           <div className="RegisterTimeSchedule">
             <RegisterTimeSchedule 
             registerDate={registerDate}
-            setRegisterDate={setRegisterDate}/>
+            setRegisterDate={setRegisterDate}
+            message={message}
+            publishTopic={publishTopic}
+            setSubTopic={setSubTopic}
+            />
           </div>
         </div>
       </div>

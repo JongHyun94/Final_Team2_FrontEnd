@@ -1,4 +1,5 @@
-import { ResponsiveBar } from '@nivo/bar'
+import { ResponsiveBar } from '@nivo/bar';
+import style from "./DataAnalysis.module.css";
 const patient_data = [
   {
     "dayOfWeek": "월",
@@ -65,8 +66,8 @@ function Data3(props) {
 
   return (
     <>
-      <div className="DataAnalysis_col_header" >요일별 나이대별 환자 검사 통계</div>
-      <div className="DataAnalysis_col_content" >
+      <div className={style.DataAnalysis_col_header}>요일별 나이대별 환자 검사 통계</div>
+      <div className={style.DataAnalysis_col_content}>
         <ResponsiveBar
           data={patient_data}
           keys={['10대', '20대', '30대', '40대', '50대', '60대', '70대', '80대', '90대']}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createSetAuthTokenAction, createSetHnameAction, createSetUidAction } from "redux/auth-reducer";
 import { useForm } from "react-hook-form";
@@ -6,6 +6,8 @@ import Help from "./Help";
 import "./Login.css";
 import { addAuthHeader } from "apis/axiosConfig";
 import { login } from "apis/auth";
+import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
+import { ValidationModal } from "../components/common/ValidationModal";
 
 function Login(props) {
   // 유저 상태
@@ -32,11 +34,12 @@ function Login(props) {
     try{
       // 로그인 요청
       const response = await login(user);
-      // console.log(response.data);
+      console.log("로그인 데이터",response.data);
 
       // 로그인 성공 시 JWT 저장 및 경로 이동
       if (response.data.result === "success") {
-        alert("로그인 성공");
+        // alert("로그인 성공");
+        ToastsStore.success("로그인 성공");
 
         // 요청 헤더에 JWT 토큰 추가
         addAuthHeader(response.data.authToken);
@@ -60,7 +63,12 @@ function Login(props) {
         //   props.history.push("/User");
         // }
       } else {
-        alert("로그인 실패 : 아이디 혹은 비밀번호가 맞지 않습니다.");
+        openModal();
+        // alert("로그인 실패 : 아이디 혹은 비밀번호가 맞지 않습니다.");
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 아이디/비밀번호를 입력해주세요."
+        })        
       } 
     } catch(error) {
       console.log(error);
@@ -76,6 +84,21 @@ function Login(props) {
     } else {
       setBid("0");
     }
+  };
+
+  // 모달 상태(open일 떄 true로 바뀌어 열림)
+  const [modalOpen, setModalOpen] = useState(false);
+  // 유효성 검사 오류 메시지
+  const [errorMsg, setErrorMsg] = useState({
+    title : "로그인 실패",
+    content: ""
+  });
+
+  const openModal = (event) => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
   };
   
   return (
@@ -103,7 +126,13 @@ function Login(props) {
                 <div className={errors.userPassword? "Login_error" : "Login_noterror"}>비밀번호를 입력해주세요.</div>
               </div>
             </div>
-            <div className="d-flex justify-content-end"><button className="button_team2_fill" type="submit">LOGIN</button></div>
+            <div className="d-flex justify-content-end">
+              <button className="button_team2_fill" type="submit">LOGIN</button>
+              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground/> 
+              <React.Fragment>
+                <ValidationModal open={modalOpen} close={closeModal} errorMsg={errorMsg}></ValidationModal>
+              </React.Fragment>
+            </div>
           </form>
         </div>
       </div>

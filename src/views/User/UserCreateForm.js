@@ -2,7 +2,9 @@ import { Modal } from "../../components/common/Address";
 import React, { useEffect, useState } from "react";
 import { createUser } from "apis/users";
 import { useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
+import { get, useForm } from "react-hook-form";
+import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
+import { ValidationModal } from "components/common/ValidationModal";
 
 function UserCreateForm(props) {
   const globalUid = useSelector((state) => state.authReducer.uid);
@@ -11,12 +13,12 @@ function UserCreateForm(props) {
   // 직원 상태
   const [user, setUser] = useState({
     user_name: "",
-    user_authority: "",
+    user_authority: "ROLE_DOCTOR",
     user_hospital_id: hospital_id,
     user_ssn: "",
     user_ssn1: "",
     user_ssn2: "",
-    user_sex: "",
+    user_sex: "M",
     user_tel: "",
     user_tel1: "010",
     user_tel2: "",
@@ -65,8 +67,8 @@ function UserCreateForm(props) {
     setMasking(event.target.value);
   };
 
-  // 직원 정보 수정
-  const handleCreate = async (event) => {
+  // 직원 등록
+  const handleCreate = async () => {
     try {
       // event.preventDefault();
       console.log("직원 등록: ", user);
@@ -74,12 +76,12 @@ function UserCreateForm(props) {
       if (response.data) {
         setUser({
           user_name: "",
-          user_authority: "",
+          user_authority: "ROLE_DOCTOR",
           user_hospital_id: hospital_id,
           user_ssn: "",
           user_ssn1: "",
           user_ssn2: "",
-          user_sex: "",
+          user_sex: "M",
           user_tel: "",
           user_tel1: "010",
           user_tel2: "",
@@ -93,7 +95,8 @@ function UserCreateForm(props) {
           user_detailaddress2: "",
         });
         setMasking("");
-        alert("직원을 등록했습니다."); 
+        // alert("직원을 등록했습니다."); 
+        ToastsStore.success("직원을 등록했습니다.");
         props.publishTopic(1);
       }
     } catch(error) {
@@ -102,17 +105,17 @@ function UserCreateForm(props) {
   };
 
   // 모달 상태(open일 떄 true로 바뀌어 열림)
-  const [modalOpen, setModalOpen] = useState(false);
+  const [addressModalOpen, setAddressModalOpen] = useState(false);
 
-  const openModal = (event) => {
+  const openAddressModal = (event) => {
     event.preventDefault();
-    setModalOpen(true);
+    setAddressModalOpen(true);
   };
-  const closeModal = () => {
-    setModalOpen(false);
+  const closeAddressModal = () => {
+    setAddressModalOpen(false);
   };
   const sendModal = (data) => {
-    setModalOpen(false);
+    setAddressModalOpen(false);
     // console.log("send1 실행", data);
     setUser({
       ...user,
@@ -136,15 +139,137 @@ function UserCreateForm(props) {
     }
   };
 
+  // validation 모달 상태(open일 떄 true로 바뀌어 열림)
+  const [validationModalOpen, setValidationModalOpen] = useState(false);
+  // 유효성 검사 오류 메시지
+  const [errorMsg, setErrorMsg] = useState({
+    title : "직원 등록 실패",
+    content: ""
+  });
+
+  const openvalidationModal = () => {
+    setValidationModalOpen(true);
+  };
+
+  const closeValidationModal = () => {
+    setValidationModalOpen(false);
+  };
+
+  useEffect(() => {
+    if (get(errors, 'user_name') !== undefined) {
+      if (get(errors, 'user_name').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "직원명을 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "직원명을 2자 이상 작성해주세요."
+        });
+        return openvalidationModal();
+      }
+    } else if (get(errors, 'user_ssn1') !== undefined) {
+      if (get(errors, 'user_ssn1').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "주민등록번호 앞자리를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 주민등록번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      }
+    } else if (get(errors, 'user_ssn2') !== undefined) {
+      if (get(errors, 'user_ssn2').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "주민등록번호 뒷자리를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 주민등록번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      }
+    } else if (get(errors, 'user_tel2') !== undefined) {
+      if (get(errors, 'user_tel2').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "전화번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 전화번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      }
+    } else if (get(errors, 'user_tel3') !== undefined) {
+      if (get(errors, 'user_tel3').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "전화번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 전화번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      }
+    } else if (get(errors, 'user_email1') !== undefined) {
+      if (get(errors, 'user_email1').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "이메일을 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 이메일 형식으로 입력해주세요."
+        });
+        return openvalidationModal();
+      }
+    } else if (get(errors, 'user_email2') !== undefined) {
+      if (get(errors, 'user_email2').type === "required") {
+        setErrorMsg({
+          ...errorMsg,
+          content: "이메일을 입력해주세요."
+        });
+        return openvalidationModal();
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 이메일 형식으로 입력해주세요."
+        });
+        return openvalidationModal();
+      }
+    };
+  }, [errors]);
+
   return (
     <div className="mt-2">
       <div className="User_title">직원 등록</div>
       <div className="border p-2">
         <form onSubmit={handleSubmit(handleCreate)}>
           <div className="User_item">
-            <label className="col-sm-3 m-0">직원명: </label>
+            <label className="col-sm-3 m-0">직원명 : </label>
             <div className="col-sm">
               <input type="text" name="user_name" placeholder="직원명" value={user.user_name} onChange={handleChange} ref={register({required: true, minLength: 2})}></input>
+              {/* {(errors.user_name)?.type === "required" ? (() => openvalidationModal("직원명을 입력하세요.")) : (() => openvalidationModal("직원명을 2자 이상 작성해주세요."))} */}
+              <React.Fragment>
+                <ValidationModal open={validationModalOpen} close={closeValidationModal} errorMsg={errorMsg}></ValidationModal>
+              </React.Fragment>
             </div>
           </div>
           <div className="User_item">
@@ -172,22 +297,22 @@ function UserCreateForm(props) {
           <div className="User_item">
             <label className="col-sm-3 m-0">직책:</label>
             <div className="col-sm d-flex align-items-center">
-              <input type="radio" name="user_authority" value="ROLE_DOCTOR" checked={user.user_authority !== ""? true : false} onChange={handleChange}></input>
+              <input type="radio" name="user_authority" value="ROLE_DOCTOR" checked={user.user_authority === "ROLE_DOCTOR"? true : false} onChange={handleChange}></input>
               <label className="ml-3 mb-0">의사</label>
             </div>
             <div className="col-sm d-flex align-items-center">
-              <input type="radio" name="user_authority" value="ROLE_NURSE" checked={user.user_authority !== ""? true : false} onChange={handleChange}></input>
+              <input type="radio" name="user_authority" value="ROLE_NURSE" checked={user.user_authority === "ROLE_NURSE"? true : false} onChange={handleChange}></input>
               <label className="ml-3 mb-0">간호사</label>
             </div>
             <div className="col-sm-4 d-flex align-items-center">
-              <input type="radio" name="user_authority" value="ROLE_INSPECTOR" checked={user.user_authority !== ""? true : false} onChange={handleChange}></input>
+              <input type="radio" name="user_authority" value="ROLE_INSPECTOR" checked={user.user_authority === "ROLE_INSPECTOR"? true : false} onChange={handleChange}></input>
               <label className="ml-3 mb-0">임상병리사</label>
             </div>
           </div>
           <div className="User_item">
             <label className="col-sm-3 m-0 pr-0">전화 번호: </label>
             <div className="row col-sm mr-0">
-              <select className="col-sm ml-3" name="user_tel1" value={user.user_tel1} onChange={handleChange} defaultValue="010">
+              <select className="col-sm ml-3" name="user_tel1" value={user.user_tel1} onChange={handleChange}>
                 <option value="010">010</option>
                 <option value="011">011</option>
                 <option value="016">016</option>
@@ -239,10 +364,10 @@ function UserCreateForm(props) {
               <div className="row mb-2 pr-0">
                 <input type="text" className="col-sm-5 ml-3" name="user_zipcode" value={user.user_zipcode} placeholder="우편번호" onChange={handleChange} readOnly></input>
                 <React.Fragment>
-                  <button className="button_team2_empty" onClick={openModal}>
+                  <button className="button_team2_empty" onClick={openAddressModal}>
                     우편번호 찾기
                   </button>
-                  <Modal open={modalOpen} close={closeModal} send={sendModal}></Modal>
+                  <Modal open={addressModalOpen} close={closeAddressModal} send={sendModal}></Modal>
                 </React.Fragment>
               </div>
               <input type="text" className="col-sm mb-2" name="user_address" placeholder="주소" value={user.user_address} onChange={handleChange} readOnly></input>
@@ -253,9 +378,9 @@ function UserCreateForm(props) {
             </div>
           </div>
           <div className="d-flex justify-content-end">
-            <button className="button_team2_fill" type="submit">
-              등록
-            </button>
+            <button className="button_team2_fill" type="submit">등록</button>
+            <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground/>
+            
           </div>
         </form>
       </div>

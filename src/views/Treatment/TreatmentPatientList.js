@@ -31,7 +31,8 @@ function TreatmentPatientList(props) {
 
   useEffect(() => {
     console.log(message);
-  },[props])
+    getTreatmentPatientLists(inputdate2);
+  },[inputdate2, message, props])
 
 
   //진료대기 환자 선택함수
@@ -65,7 +66,7 @@ const getState = (patientlists) => {
     var readyState = 0;
     var doneState = 0;
     for (var i = 0; i < patientlists.length; i++) {
-      if (patientlists[i].treatment_state == "대기") {
+      if (patientlists[i].treatment_state === "대기") {
         readyState++;
       } else {
         doneState++;
