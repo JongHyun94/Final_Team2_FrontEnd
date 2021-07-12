@@ -1,46 +1,47 @@
-import { TreatmentImgRead } from "../TreatmentImgReadModal";
+// import { TreatmentImgRead } from "../TreatmentImgReadModal";
 import React, { useState, useEffect  } from "react";
 // import "./TreatmentHistoryReadModal.css";
 import style from "./style.module.css";
 import { getTreatmentHistoryRead } from "apis/treatments";
+import InspectionImgFormModal from "views/Inspection/components/modal/InspectionImgFormModal";
+// import InspectionImgFormModal from "./components/modal/InspectionImgFormModal";
+// function getSOAP() {
+//   const soap = [{ treatment_id: "1", treatment_smemo: "목 아픔", treatment_omemo: "인후염", treatment_amemo: "온열찜질기 실행", treatment_pmemo: "다음 내원시 Lab test" }];
 
-function getSOAP() {
-  const soap = [{ treatment_id: "1", treatment_smemo: "목 아픔", treatment_omemo: "인후염", treatment_amemo: "온열찜질기 실행", treatment_pmemo: "다음 내원시 Lab test" }];
+//   return soap;
+// }
 
-  return soap;
-}
+// function getInspectionList() {
+//   const inspectionlists = [
+//     { inspection_id: "1", inspection_list_category: "혈액검사", inspection_date: "2021-06-01", user_name: "김검사", inspection_list_name: "백혈구 백분율", inspection_list_reference: "4000~10000μL", inspectionResult: "8000" },
+//     {
+//       inspection_id: "2",
+//       inspection_list_category: "혈액검사",
+//       inspection_date: "2021-06-01",
+//       user_name: "김검사",
+//       inspection_list_name: "순환기능검사-적혈구량측",
+//       inspection_list_reference: "3000~7500/mm3",
+//       inspectionResult: "6000",
+//     },
+//     { inspection_id: "3", inspection_list_category: "혈액검사", inspection_date: "2021-06-01", user_name: "김검사", inspection_list_name: "백혈구 백분율", inspection_list_reference: "12.0~16.0g/dL", inspectionResult: "14" },
+//     { inspection_id: "4", inspection_list_category: "혈액검사", inspection_date: "2021-06-01", user_name: "김검사", inspection_list_name: "백혈구 백분율", inspection_list_reference: "", inspectionResult: "" },
+//     { inspection_id: "5", inspection_list_category: "유리검사", inspection_date: "2021-06-01", user_name: "나꼼꼼", inspection_list_name: "백혈구 백분율", inspection_list_reference: "", inspectionResult: "" },
+//     { inspection_id: "6", inspection_list_category: "영상촬영", inspection_date: "2021-06-01", user_name: "박사능", inspection_list_name: "흉부", inspection_list_reference: "", inspectionResult: "" },
+//   ];
+//   return inspectionlists;
+// }
 
-function getInspectionList() {
-  const inspectionlists = [
-    { inspection_id: "1", inspection_list_category: "혈액검사", inspection_date: "2021-06-01", user_name: "김검사", inspection_list_name: "백혈구 백분율", inspection_list_reference: "4000~10000μL", inspectionResult: "8000" },
-    {
-      inspection_id: "2",
-      inspection_list_category: "혈액검사",
-      inspection_date: "2021-06-01",
-      user_name: "김검사",
-      inspection_list_name: "순환기능검사-적혈구량측",
-      inspection_list_reference: "3000~7500/mm3",
-      inspectionResult: "6000",
-    },
-    { inspection_id: "3", inspection_list_category: "혈액검사", inspection_date: "2021-06-01", user_name: "김검사", inspection_list_name: "백혈구 백분율", inspection_list_reference: "12.0~16.0g/dL", inspectionResult: "14" },
-    { inspection_id: "4", inspection_list_category: "혈액검사", inspection_date: "2021-06-01", user_name: "김검사", inspection_list_name: "백혈구 백분율", inspection_list_reference: "", inspectionResult: "" },
-    { inspection_id: "5", inspection_list_category: "유리검사", inspection_date: "2021-06-01", user_name: "나꼼꼼", inspection_list_name: "백혈구 백분율", inspection_list_reference: "", inspectionResult: "" },
-    { inspection_id: "6", inspection_list_category: "영상촬영", inspection_date: "2021-06-01", user_name: "박사능", inspection_list_name: "흉부", inspection_list_reference: "", inspectionResult: "" },
-  ];
-  return inspectionlists;
-}
-
-function getDrugList() {
-  const druglists = [
-    { treatment_date: "2021-06-01", user_name: "나의사", drug_injection_drug_injection_list_id: "NIZA15", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
-    { treatment_date: "2021-06-01", user_name: "나의사", drug_injection_drug_injection_list_id: "IRES", drug_injection_list_name: "IRESSA Tab 250mg", drug_injection_list_category: "약품" },
-    { treatment_date: "2021-06-01", user_name: "나의사", drug_injection_drug_injection_list_id: "ROPIN1", drug_injection_list_name: "ONIROL Tab 1mg", drug_injection_list_category: "약품" },
-    { treatment_date: "2021-06-01", user_name: "나의사", drug_injection_drug_injection_list_id: "ROXN", drug_injection_list_name: "ROXAN Cap 75mg", drug_injection_list_category: "주사" },
-    { treatment_date: "2021-06-01", user_name: "나의사", drug_injection_drug_injection_list_id: "NIZA16", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
-    { treatment_date: "2021-06-01", user_name: "나의사", drug_injection_drug_injection_list_id: "NIZA17", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
-  ];
-  return druglists;
-}
+// function getDrugList() {
+//   const druglists = [
+//     { treatment_date: "2021-06-01", user_name: "나의사", drug_injection_drug_injection_list_id: "NIZA15", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
+//     { treatment_date: "2021-06-01", user_name: "나의사", drug_injection_drug_injection_list_id: "IRES", drug_injection_list_name: "IRESSA Tab 250mg", drug_injection_list_category: "약품" },
+//     { treatment_date: "2021-06-01", user_name: "나의사", drug_injection_drug_injection_list_id: "ROPIN1", drug_injection_list_name: "ONIROL Tab 1mg", drug_injection_list_category: "약품" },
+//     { treatment_date: "2021-06-01", user_name: "나의사", drug_injection_drug_injection_list_id: "ROXN", drug_injection_list_name: "ROXAN Cap 75mg", drug_injection_list_category: "주사" },
+//     { treatment_date: "2021-06-01", user_name: "나의사", drug_injection_drug_injection_list_id: "NIZA16", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
+//     { treatment_date: "2021-06-01", user_name: "나의사", drug_injection_drug_injection_list_id: "NIZA17", drug_injection_list_name: "AXID Cap 150mg", drug_injection_list_category: "약품" },
+//   ];
+//   return druglists;
+// }
 
 function TreatmentHistoryRead(props) {
   //historylist에서 클릭한 진료 번호 가져오기
@@ -175,24 +176,14 @@ function TreatmentHistoryRead(props) {
                               <td>{inspectionlist.user_name}</td>
                               <td>{inspectionlist.inspection_list_name}</td>
                               <td>{inspectionlist.inspection_list_reference}</td>
-                              {inspectionlist.inspection_list_category === "영상촬영" ? (
+                              {inspectionlist.inspection_list_category === "영상검사" ? (
                                 <td>
                                   <React.Fragment>
                                     {" "}
                                     <button className="button_team2_empty" onClick={openModal}>
                                       보기
                                     </button>
-                                    <TreatmentImgRead
-                                      open={modalOpen}
-                                      close={closeModal}
-                                      inspectionImg="xray01.jpg"
-                                      inspectionlistName={inspectionlists.inspection_list_name}
-                                      inspectionlistCategory={inspectionlists.inspection_list_category}
-                                      inspectionTreatmentId="50546"
-                                      inspection_date={inspectionlists.inspection_date}
-                                    >
-                                      모달 내용
-                                    </TreatmentImgRead>
+                                    <InspectionImgFormModal id={inspectionlist.inspection_id} open={modalOpen} close={closeModal} inspection={inspectionlist}/>
                                   </React.Fragment>
                                 </td>
                               ) : (
