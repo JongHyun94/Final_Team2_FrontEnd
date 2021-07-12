@@ -7,7 +7,6 @@ import Auth from "./views/Auth";
 import { RiCalendarCheckLine, RiStethoscopeFill, RiTestTubeFill } from "react-icons/ri";
 import { IoBarChart } from "react-icons/io5";
 import WeatherAPI from "components/common/WeatherAPI";
-import { test } from "apis/test";
 
 function Header(props) {  
   const globalUid = useSelector((state) => state.authReducer.uid);
