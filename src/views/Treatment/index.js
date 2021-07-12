@@ -33,15 +33,15 @@ function Treatment(props) {
   //   topic: "/138010/inspector",
   //   content: "addInspects",  //검사추가
   // });
-  const [subTopic, setSubTopic] = useState(["/138010/doctor","/138010/inspector"]);  // 병원코드/간호사
+  const [subTopic, setSubTopic] = useState(["/138010/nurse/doctor","/138010/inspector"]);  // 병원코드/간호사
   const [prevSubTopic, setPrevSubTopic] = useState("/138010/nurse"); // 병원코드/간호사
   const [pubMessage, setPubMessage] = useState([
     {
-      topic: "/138010/doctor",
+      topic: "/138010/nurse/doctor",
       content: "refreshTreatments" 
     },
     {
-      topic: "/138010/inspector",
+      topic: "/138010/nurse/doctor/inspector",
       content: "addInspections"
     }
   ]

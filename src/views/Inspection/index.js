@@ -9,9 +9,9 @@ function Inspection(props) {
   //-------------------------------------------------------------  
   //상태 선언
   //-------------------------------------------------------------
-  const [subTopic, setSubTopic] = useState("/138010/inspector");  // 병원코드/검사자
+  const [subTopic, setSubTopic] = useState("/138010/nurse/doctor/inspector");  // 병원코드/검사자
   const [pubMessage, setPubMessage] = useState({
-    topic: "/138010/inspector",
+    topic: "/138010/nurse/doctor/inspector",
     content: "updateInspects",  //검사 업데이트
   });
   const [message, setMessage] = useState("");
