@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { AutoSizer, List } from "react-virtualized";
 import { getAllUserList, getUserList } from "apis/users";
 import moment from "moment";
+import Spinner from "components/common/Spinner";
 
 function UserList(props) {
   // 직원 목록 상태
@@ -11,6 +12,7 @@ function UserList(props) {
 
   useEffect(() => {
     const work = async () => {
+      setLoading(true);
       try {
         const response = await getAllUserList();
         // console.log(response.data.userList)
@@ -18,6 +20,8 @@ function UserList(props) {
         setUserCount(() => getUsersCount(response.data.userList));
       } catch(error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     work();
@@ -67,12 +71,16 @@ function UserList(props) {
   // 직원 코드 비교를 위한 상태
   const [id, setId] = useState("");
 
+  // Spinner
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (event) => {
     setKeyword(event.target.value);
   };
 
   // 검색
   const handleSearch = async (event) => {
+    setLoading(true);
     try {
       event.preventDefault();
       console.log(keyword);
@@ -81,6 +89,8 @@ function UserList(props) {
       setUsers(response.data.userList);
     } catch(error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -92,6 +102,7 @@ function UserList(props) {
 
   // 직책 선택
   const clickCondition = async (selectCondition) => {
+    setLoading(true);
     try {
       if (condition !== selectCondition) {
         console.log(selectCondition, "선택");
@@ -105,24 +116,27 @@ function UserList(props) {
         const response = await getAllUserList();
         setUsers(response.data.userList);
         console.log(response.data);
-      }
-            
+      }            
     } catch(error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     console.log("받습니다", props.message);
-    const work = async () => {
+    const work = async () => {      
       try {
         const response = await getAllUserList();
         // console.log(response.data.userList)
         setUsers(response.data.userList);
         setUserCount(() => getUsersCount(response.data.userList));
-        
+        setLoading(true);
       } catch(error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     work();
@@ -145,6 +159,8 @@ function UserList(props) {
       </div>
     );
   };
+
+
 
   return (
     <div>
@@ -178,11 +194,13 @@ function UserList(props) {
               <div style={{width: "11%"}}>등록일</div>
             </div>
           <div>
-            <AutoSizer disableHeight>
-              {({width, height}) => {
-                return <List width={width} height={660} list={users} rowCount={users.length} rowHeight={44} rowRenderer={rowRenderer} overscanRowCount={5}></List>
-              }}
-            </AutoSizer>
+            {loading ? <Spinner /> : <>
+              <AutoSizer disableHeight>
+                {({width, height}) => {
+                  return <List width={width} height={660} list={users} rowCount={users.length} rowHeight={44} rowRenderer={rowRenderer} overscanRowCount={5}></List>
+                }}
+              </AutoSizer>
+            </>}
           </div>
         </div>
         {/* <div className="UserList_container">

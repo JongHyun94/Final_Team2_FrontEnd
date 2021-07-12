@@ -1,38 +1,22 @@
 import "./Help.css";
 import { RiCustomerServiceLine } from "react-icons/ri";
-import { useEffect, useState } from "react";
-import { downloadFile } from "apis/auth";
 
 function Help(props) {
-  const [guideFile, setGuideFile] = useState(null);
-
-  const downLoad = async () => {
-    try {
-      const response = await downloadFile();
-      setGuideFile(URL.createObjectURL(response.data));
-    } catch(error) {
-      console.log(error);
-    };
-  };
-
-  useEffect(() => {
-    const work = async () => {
-      
-    };
-    work();
-  });
-
   return (
     <div className={`Help`}>
-      <div className={`user_guide`} onClick={downLoad}>
+      <div className={`user_guide`}>
+        <a  className="user_guide_a" href="/resources/pdf/더존ICT그룹_프로젝트과제_H_ERP_0527.pdf" download>
         <div>사용자 가이드</div>
-        <div className={`icon mt-2`}><i className="bi bi-question-circle"></i></div>        
+        <div className={`icon mt-2`}><i className="bi bi-question-circle"></i></div> 
+        <div className="user_guide_explain">※ 클릭 시 사용자 가이드가 <br/>다운로드 됩니다.</div>
+        </a>       
       </div>
       <div className={`online_center`}>        
         <div>온라인 고객센터</div>
           <a href="https://help.douzone.com/support/voice.jsp">
             <div className={`icon icon1 mt-2`}><i className="bi bi-globe"></i></div>
           </a>
+        <div className="user_guide_explain">※ 클릭 시 온라인 고객센터 페이지로 <br/>이동됩니다.</div>
       </div>
       <div className={`as`}>
         <div>원격 A/S</div>

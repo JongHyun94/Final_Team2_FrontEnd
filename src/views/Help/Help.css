@@ -12,7 +12,18 @@
   padding: 1rem;
   margin-right: 1rem;
   background-color: #0070C0;
-  font-size: 1.5rem;
+  font-size: 1.5rem;  
+}
+.user_guide_a {
+  color: white;
+}
+.user_guide_a:hover {
+  color: white;
+  text-decoration-line: none;
+}
+.user_guide_explain {
+  font-size: 0.7rem;
+  text-align: center;
 }
 
 /* online_center */
