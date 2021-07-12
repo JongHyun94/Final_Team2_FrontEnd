@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import ReactExport from "react-export-excel";
 import InspectionListItem from "./InspectionListItem";
 import { readInspection } from "apis/inspections";
+import { useSelector } from "react-redux";
 
 let inspectionsList = [];
 
 function InspectionList(props) {
   //console.log("검사 상세 내역");
   //console.log(props.treatmentId);
+  const globalUid = useSelector((state) => state.authReducer.uid);
   
   const [inspections, setInspections] = useState(inspectionsList);
 
@@ -63,7 +65,7 @@ function InspectionList(props) {
 
   useEffect(() => {
     if(props.treatmentId){
-      getInspections2(props.treatmentId);
+      getInspections2(props.treatmentId, globalUid);
     }
     getCompleteCount();
   }, [props]);
@@ -84,9 +86,9 @@ function InspectionList(props) {
     }
   }, [iStateCount]);
 
-  const getInspections2 = async (treatmentId) => {
+  const getInspections2 = async (treatmentId, globalUid) => {
     try {
-      const response = await readInspection(treatmentId);
+      const response = await readInspection(treatmentId, globalUid);
       inspectionsList = response.data.inspectionList;
       setInspections(inspectionsList);
     } catch(error) {
