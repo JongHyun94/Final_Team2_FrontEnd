@@ -1,10 +1,30 @@
 import "./Help.css";
 import { RiCustomerServiceLine } from "react-icons/ri";
+import { useEffect, useState } from "react";
+import { downloadFile } from "apis/auth";
 
 function Help(props) {
+  const [guideFile, setGuideFile] = useState(null);
+
+  const downLoad = async () => {
+    try {
+      const response = await downloadFile();
+      setGuideFile(URL.createObjectURL(response.data));
+    } catch(error) {
+      console.log(error);
+    };
+  };
+
+  useEffect(() => {
+    const work = async () => {
+      
+    };
+    work();
+  });
+
   return (
     <div className={`Help`}>
-      <div className={`user_guide`}>
+      <div className={`user_guide`} onClick={downLoad}>
         <div>사용자 가이드</div>
         <div className={`icon mt-2`}><i className="bi bi-question-circle"></i></div>        
       </div>
