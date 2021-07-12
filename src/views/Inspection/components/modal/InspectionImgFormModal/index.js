@@ -28,7 +28,6 @@ function InspectionImgFormModal(props) {
           await downloadImg(responseImgId.data.inspectionImgList[i].inspection_img_id);
         }
 
-        
       }
     } catch(error) {
       console.log(error);
