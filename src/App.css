@@ -115,3 +115,17 @@
 .ReactVirtualized__List::-webkit-scrollbar-track {
   background-color: lightgray;
 }
+
+/* Toasts 알림 */ 
+/* .toast {
+  font-size: 16px !important;
+    color: #fff !important;
+    background-color: #0e110fd5 !important;
+    border-radius: 5px !important;
+    min-height: 30px !important; 
+    width: 300px !important;
+    margin: auto !important;
+    display: inline-block !important;
+    line-height: 30px !important;
+    height: 20px !important;
+} */

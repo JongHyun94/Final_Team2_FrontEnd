@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AutoSizer, List } from "react-virtualized";
 import { getPatientList } from "apis/patient";
 import moment from "moment";
+import Spinner from "components/common/Spinner";
 
 function PatientList(props) {
   // 환자 목록 상태
@@ -9,11 +10,14 @@ function PatientList(props) {
 
   useEffect(() => {
     const work = async () => {
+      setLoading(true);
       try {
         const response = await getPatientList();
         setPatients(response.data.patientList);
       } catch(error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     work();
@@ -25,18 +29,24 @@ function PatientList(props) {
   // 환자 코드 비교를 위한 상태
   const [id, setId] = useState("");
 
+  // Spinner
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (event) => {
     setKeyword(event.target.value);
   };
 
   // 검색
   const handleSearch = async (event) => {
+    setLoading(true);
     try {
       event.preventDefault();
       const response = await getPatientList(keyword);
       setPatients(response.data.patientList);
     } catch(error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };  
 
@@ -52,8 +62,11 @@ function PatientList(props) {
       try {
         const response = await getPatientList();
         setPatients(response.data.patientList);
+        setLoading(true);
       } catch(error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     work();
@@ -99,11 +112,13 @@ function PatientList(props) {
               <div style={{width: "2%"}}></div>
             </div>
           <div>
-            <AutoSizer disableHeight>
-              {({width, height}) => {
-                return <List width={width} height={675} list={patients} rowCount={patients.length} rowHeight={44} rowRenderer={rowRenderer} overscanRowCount={5}></List>
-              }}
-            </AutoSizer>
+            {loading ? <Spinner /> : <>
+              <AutoSizer disableHeight>
+                {({width, height}) => {
+                  return <List width={width} height={675} list={patients} rowCount={patients.length} rowHeight={44} rowRenderer={rowRenderer} overscanRowCount={5}></List>
+                }}
+              </AutoSizer>
+            </>}
           </div>
         </div>
       </div>
