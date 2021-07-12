@@ -51,6 +51,7 @@ function RegisterList(props) {
   // 선택된 접수 상태
   const [selectedRegister, setSelectedRegister] = useState();
 
+  // spinner 
   const [loading, setLoading] = useState(false);
 
   //-------------------------------------------------------------
@@ -143,31 +144,40 @@ function RegisterList(props) {
 
   // 전체 보여주기
   const showTotal = async () => {
+    setLoading(true);
     try {
       var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"), "");
       setRegisterList(list.data.registerList);
     } catch (e) {
       console.log(e);
+    } finally {
+      setLoading(false);
     }
   };
 
   // 대기 보여주기
   const showReady = async () => {
+    setLoading(true);
     try {
       var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"), "대기");
       setRegisterList(list.data.registerList);
     } catch (e) {
       console.log(e);
+    } finally {
+      setLoading(false);
     }
   };
 
   // 완료 보여주기
   const showFinish = async () => {
+    setLoading(true);
     try {
       var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"), "완료");
       setRegisterList(list.data.registerList);
     } catch (e) {
       console.log(e);
+    } finally {
+      setLoading(false);
     }
   };
 
