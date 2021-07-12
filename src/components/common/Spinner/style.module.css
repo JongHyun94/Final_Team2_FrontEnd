@@ -1,0 +1,6 @@
+.spinner2 {
+  display: block;
+  position: fixed;
+  top: calc(50% - (300px / 2));
+  right: calc(65% - (50px / 2));
+}

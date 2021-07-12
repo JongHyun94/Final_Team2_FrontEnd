@@ -7,6 +7,7 @@ import ko from 'date-fns/locale/ko';
 import moment from "moment";
 import { registerLocale } from "react-datepicker";
 import { changeRegisterState, getRegisterList } from "apis/register";
+import Spinner from "components/common/Spinner";
 registerLocale("ko", ko);
 // 컬럼 : 순번(index), 예약시간, 접수번호(pk), 환자명, 생년월일, 성별, 담당의, 접수메모, 의사소통메모, 접수상태
 
@@ -34,7 +35,7 @@ function RegisterList(props) {
   //-------------------------------------------------------------
 
   // 공통 날짜 상태 
-  const {registerDate, setSelectedPatient, setRegisterDate, publishTopic, message} = props;
+  const { registerDate, setSelectedPatient, setRegisterDate, publishTopic, message } = props;
   // 접수 목록 상태
   const [registerList, setRegisterList] = useState([]);
 
@@ -49,6 +50,8 @@ function RegisterList(props) {
 
   // 선택된 접수 상태
   const [selectedRegister, setSelectedRegister] = useState();
+
+  const [loading, setLoading] = useState(false);
 
   //-------------------------------------------------------------
   //버튼 이벤트 처리
@@ -85,7 +88,7 @@ function RegisterList(props) {
           }
         }
       });
-      selectRegister.register_state="완료";
+      selectRegister.register_state = "완료";
       if (selectRegister) {
         var list = await changeRegisterState(selectRegister);
         //setRegisterList(list.data.registerList);
@@ -117,7 +120,7 @@ function RegisterList(props) {
           }
         }
       });
-      selectRegister.register_state="취소";
+      selectRegister.register_state = "취소";
       if (selectRegister) {
         var list = await changeRegisterState(selectRegister);
         //setRegisterList(list.data.registerList);
@@ -140,56 +143,62 @@ function RegisterList(props) {
 
   // 전체 보여주기
   const showTotal = async () => {
-    try{
-      var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"),"");
+    try {
+      var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"), "");
       setRegisterList(list.data.registerList);
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     }
   };
 
   // 대기 보여주기
   const showReady = async () => {
-    try{
-      var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"),"대기");
+    try {
+      var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"), "대기");
       setRegisterList(list.data.registerList);
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     }
   };
 
   // 완료 보여주기
   const showFinish = async () => {
-    try{
-      var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"),"완료");
+    try {
+      var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"), "완료");
       setRegisterList(list.data.registerList);
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     }
   };
 
   // 취소 보여주기
   const showCancel = async () => {
-    try{
-      var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"),"취소");
+    setLoading(true);
+    try {
+      var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"), "취소");
       setRegisterList(list.data.registerList);
-    } catch(e) {
+    } catch (e) {
       console.log(e);
+    } finally {
+      setLoading(false);
     }
   };
-  
+
   //-------------------------------------------------------------
   //실행 함수
   //-------------------------------------------------------------
 
   //해당 날짜에 맞는 리스트 가져오기
   const getList = async (date) => {
+    setLoading(true);
     try {
-      var list = await getRegisterList(moment(date).format("yyyy-MM-DD HH:mm"),"");
+      var list = await getRegisterList(moment(date).format("yyyy-MM-DD HH:mm"), "");
       setRegisterList(list.data.registerList);
       getRegistersState(list.data.registerList);
     } catch (e) {
       console.log(e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -219,12 +228,15 @@ function RegisterList(props) {
 
   useEffect(() => {
     const work = async () => {
+      setLoading(true);
       try {
-        var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"),"");
+        var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"), "");
         setRegisterList(list.data.registerList);
         getRegistersState(list.data.registerList);
-      } catch(error) {
+      } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     work();
@@ -234,20 +246,23 @@ function RegisterList(props) {
     getList(moment(registerDate).format("yyyy-MM-DD HH:mm"));
   }, [registerDate]);
 
- useEffect(() => {
-  console.log("MESSAGE: ", message);
-   const work = async () => {
+  useEffect(() => {
+    console.log("MESSAGE: ", message);
+    const work = async () => {
+      setLoading(true);
       try {
-        var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"),"");
+        var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"), "");
         setRegisterList(list.data.registerList);
         getRegistersState(list.data.registerList);
-      } catch(error) {
+      } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
-   if(message.content==="refreshRegisters"){
-    work();
-   } 
+    if (message.content === "refreshRegisters") {
+      work();
+    }
   }, [message, props, registerDate]);
   //-------------------------------------------------------------
   //렌더링 내용
@@ -314,29 +329,30 @@ function RegisterList(props) {
             </thead>
             <tbody>
               {/* 임의의 데이터 넣어서 출력 해보기 */}
-              {registerList.map((register, index) => {
-                return (
-                  <tr key={index} className="RegisterList_content_2_tr" onClick={(event) => checkboxHandler(register.register_id)}>
-                    <td><input type="checkbox" name="chk" checked={selectedRegister === register.register_id ? true : false} readOnly /></td>
-                    <td>{index + 1}</td>
-                    <td>{moment(register.register_date).format("yyyy-MM-DD HH:mm")}</td>
-                    <td>{register.register_id}</td>
-                    <td>{register.patient_name}</td>
-                    <td>{(register.patient_ssn).substring(0,6)}</td>
-                    <td>{register.patient_sex}</td>
-                    <td>{register.user_name}</td>
-                    <td>{register.register_memo}</td>
-                    <td>{register.register_communication}</td>
-                    <td className={
-                      register.register_state === "완료" ? "RegisterList_content_2_tr_td_finish" : "" ||
-                        register.register_state === "취소" ? "RegisterList_content_2_tr_td_cancel" : "" ||
-                          register.register_state === "대기" ? "RegisterList_content_2_tr_td_ready" : ""
-                    }>
-                      {register.register_state}
-                    </td>
-                  </tr>
-                );
-              })}
+              {loading ? <Spinner /> : <>
+                {registerList.map((register, index) => {
+                  return (
+                    <tr key={index} className="RegisterList_content_2_tr" onClick={(event) => checkboxHandler(register.register_id)}>
+                      <td><input type="checkbox" name="chk" checked={selectedRegister === register.register_id ? true : false} readOnly /></td>
+                      <td>{index + 1}</td>
+                      <td>{moment(register.register_date).format("yyyy-MM-DD HH:mm")}</td>
+                      <td>{register.register_id}</td>
+                      <td>{register.patient_name}</td>
+                      <td>{(register.patient_ssn).substring(0, 6)}</td>
+                      <td>{register.patient_sex}</td>
+                      <td>{register.user_name}</td>
+                      <td>{register.register_memo}</td>
+                      <td>{register.register_communication}</td>
+                      <td className={
+                        register.register_state === "완료" ? "RegisterList_content_2_tr_td_finish" : "" ||
+                          register.register_state === "취소" ? "RegisterList_content_2_tr_td_cancel" : "" ||
+                            register.register_state === "대기" ? "RegisterList_content_2_tr_td_ready" : ""
+                      }>
+                        {register.register_state}
+                      </td>
+                    </tr>
+                  );
+                })} </>}
             </tbody>
           </table>
         </div>
