@@ -10,25 +10,6 @@ import { changeRegisterState, getRegisterList } from "apis/register";
 import Spinner from "components/common/Spinner";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 registerLocale("ko", ko);
-// 컬럼 : 순번(index), 예약시간, 접수번호(pk), 환자명, 생년월일, 성별, 담당의, 접수메모, 의사소통메모, 접수상태
-
-// private int register_id;
-// private int register_patient_id;
-// private String register_user_id;
-// private Date register_regdate;
-// private Date register_date;
-// private Date register_starttime;
-// private String register_memo;
-// private String register_communication;
-// private String register_state;
-
-// // Add Data
-// private String patient_name;
-// private String patient_ssn;
-// private String patient_sex;
-// private String patient_tel;
-
-// private String user_name;
 
 function RegisterList(props) {
   //-------------------------------------------------------------  
@@ -231,10 +212,6 @@ function RegisterList(props) {
     work();
   }, [registerDate]);
 
-  // useEffect(() => {
-  //   getList(moment(registerDate).format("yyyy-MM-DD HH:mm"));
-  // }, [registerDate]);
-
   useEffect(() => {
     console.log("MESSAGE: ", message);
     const work = async () => {
@@ -254,6 +231,7 @@ function RegisterList(props) {
       work();
     }
   }, [message]);
+  
   //-------------------------------------------------------------
   //렌더링 내용
   //-------------------------------------------------------------
