@@ -163,7 +163,9 @@ function RegisterUpdateForm(props) {
     setMinTime(() =>
       ((startDate.getFullYear() === new Date().getFullYear())
         && (startDate.getMonth() === new Date().getMonth())
-        && (startDate.getDate() === new Date().getDate()))
+        && (startDate.getDate() === new Date().getDate())
+        && (startDate.getHours() < 8)
+        && (startDate.getHours() > 17))
         ? new Date() : setHours(setMinutes(new Date(), 0), 9)
     );
     setMinDate(() =>

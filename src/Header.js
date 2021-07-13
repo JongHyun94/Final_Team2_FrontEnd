@@ -7,11 +7,14 @@ import Auth from "./views/Auth";
 import { RiCalendarCheckLine, RiStethoscopeFill, RiTestTubeFill } from "react-icons/ri";
 import { IoBarChart } from "react-icons/io5";
 import WeatherAPI from "components/common/WeatherAPI";
-import { createSetHaddressAction, createSetHidAction, createSetHnameAction, createSetHurlAction } from "redux/hospital-reducer";
+import { createSetHaddressAction, createSetHidAction, createSetHLATAction, createSetHLONGAction, createSetHnameAction, createSetHurlAction } from "redux/hospital-reducer";
 
 function Header(props) {  
   const globalUid = useSelector((state) => state.authReducer.uid);
   const hname = useSelector((state) => state.hospitalReducer.hname);
+  const hlat = useSelector((state) => state.hospitalReducer.hlat);
+  const hlong = useSelector((state) => state.hospitalReducer.hlong);
+
   const dispatch = useDispatch();
 
   const logout = (event) => {
@@ -21,6 +24,8 @@ function Header(props) {
     dispatch(createSetHidAction(""));
     dispatch(createSetHaddressAction(""));
     dispatch(createSetHurlAction(""));
+    dispatch(createSetHLATAction(""));
+    dispatch(createSetHLONGAction(""));
     removeAuthHeader();
     
     // SessionStorage에 인증 내용 제거
@@ -30,6 +35,8 @@ function Header(props) {
     sessionStorage.removeItem("hid");
     sessionStorage.removeItem("haddress");
     sessionStorage.removeItem("hurl");
+    sessionStorage.removeItem("hlat");
+    sessionStorage.removeItem("hlong");
   };
 
   // 모달 상태(open일 떄 true로 바뀌어 열림)
@@ -50,7 +57,7 @@ function Header(props) {
           <span className="logo">TEAM2<img src="/resources/img/logo_white_bold.png" alt="" width={30}></img></span>
         </div>
         <div className="col-5">
-          <WeatherAPI/>
+          <WeatherAPI hlat={hlat} hlong={hlong} />
         </div>
         <div className="col-2">
           {globalUid !== ""?

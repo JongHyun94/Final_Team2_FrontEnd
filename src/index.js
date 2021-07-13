@@ -11,7 +11,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { createSetAuthTokenAction, createSetUidAction } from 'redux/auth-reducer';
 import { addAuthHeader } from 'apis/axiosConfig';
 import { Provider } from 'react-redux';
-import { createSetHaddressAction, createSetHidAction, createSetHnameAction, createSetHurlAction } from 'redux/hospital-reducer';
+import { createSetHaddressAction, createSetHidAction, createSetHLATAction, createSetHLONGAction, createSetHnameAction, createSetHurlAction } from 'redux/hospital-reducer';
 
 const store = createStore(rootReducer, composeWithDevTools());
 
@@ -21,6 +21,8 @@ store.dispatch(createSetHnameAction(sessionStorage.getItem("hname" || "")));
 store.dispatch(createSetHidAction(sessionStorage.getItem("hid") || ""));
 store.dispatch(createSetHaddressAction(sessionStorage.getItem("haddress") || ""));
 store.dispatch(createSetHurlAction(sessionStorage.getItem("hurl" || "")));
+store.dispatch(createSetHLATAction(sessionStorage.getItem("hlat" || "")));
+store.dispatch(createSetHLONGAction(sessionStorage.getItem("hlong" || "")));
 
 if (sessionStorage.getItem("authToken")) {
   addAuthHeader(sessionStorage.getItem("authToken"));

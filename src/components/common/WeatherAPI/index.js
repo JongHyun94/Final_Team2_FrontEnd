@@ -26,33 +26,33 @@ class WeatherAPI extends Component {
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        // console.log("position:");
-        // console.log(position);
         this.setState({
           ...this.state,
           lat: position.coords.latitude,
           long: position.coords.longitude
         });
-        // console.log("@@@");
-        // console.log(this.state);
       }, (error) => {
         console.log(error)
       }, options);
     }
-    // console.log("###");
-    // console.log(this.state);
+
+    if(this.props.hlat === ""){
+      this.setState({
+        ...this.state,
+        lat: this.props.hlat,
+        long: this.props.hlong
+      });
+    }
+    
     fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${this.state.lat}&lon=${this.state.long}&APPID=${API_KEY}`)
       .then(response => response.json())
       .then(json => {
-        //console.log(json);
         this.setState({
           ...this.state,
           temperature: Math.floor(json.main.temp - 273.15),
           name: json.weather[0].main,
           icon: json.weather[0].icon,
         });
-        //console.log("%%%");
-        //console.log(this.state);
       });
 
   }
@@ -73,9 +73,6 @@ class WeatherAPI extends Component {
         <div className={style.WeatherAPI_item}>
           온도 : {temperature}°C
         </div>
-        {/* <div className="WeatherAPI_item">
-          <p>날씨 : {name}</p>
-        </div> */}
       </div>
     );
   }
