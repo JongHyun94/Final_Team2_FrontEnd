@@ -36,9 +36,6 @@ function DataAnalysis(props) {
         count3++
       }
     }
-    // console.log(count1);
-    // console.log(count2);
-    // console.log(count3);
     const newDataList = [
       {
         "month": "전전달",

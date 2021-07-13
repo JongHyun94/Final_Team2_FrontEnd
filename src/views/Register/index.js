@@ -35,7 +35,7 @@ function Register(props) {
   const [pubMessage, setPubMessage] = useState([
     { topic: "/138010/nurse", content: "refreshRegisters"}, 
     { topic: "/138010/nurse/doctor", content: "addTreatments"},
-    { topic: "/138010/nurse/docotr", content: "refreshToDoList"}
+    { topic: "/138010/nurse", content: "refreshToDoList"}
   ]);
   const [message, setMessage] = useState("");
 
@@ -84,8 +84,7 @@ function Register(props) {
   useEffect(() => {
     //sendSubTopic();
     connectMqttBroker();
-    console.log("MESSAGE1: ",message);
-  });
+  },[]);
 
   //////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////

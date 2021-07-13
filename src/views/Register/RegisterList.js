@@ -252,9 +252,9 @@ function RegisterList(props) {
     work();
   }, [registerDate]);
 
-  useEffect(() => {
-    getList(moment(registerDate).format("yyyy-MM-DD HH:mm"));
-  }, [registerDate]);
+  // useEffect(() => {
+  //   getList(moment(registerDate).format("yyyy-MM-DD HH:mm"));
+  // }, [registerDate]);
 
   useEffect(() => {
     console.log("MESSAGE: ", message);
@@ -273,7 +273,7 @@ function RegisterList(props) {
     if (message.content === "refreshRegisters") {
       work();
     }
-  }, [message, props, registerDate]);
+  }, [message, registerDate]);
   //-------------------------------------------------------------
   //렌더링 내용
   //-------------------------------------------------------------

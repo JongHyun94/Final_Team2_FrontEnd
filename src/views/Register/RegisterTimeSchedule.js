@@ -119,7 +119,7 @@ function RegisterTimeSchedule(props) {
 
   useEffect(()=>{
     getRegisterLists(moment(registerDate).format("yyyy-MM-DD H:m"));
-  },[props, registerDate]);
+  },[registerDate]);
 
   // useEffect(() => {
   //   setSelectedRegister(selectedRegister);
