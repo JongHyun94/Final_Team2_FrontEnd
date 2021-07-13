@@ -1,5 +1,6 @@
 import "./Help.css";
 import { RiCustomerServiceLine } from "react-icons/ri";
+import { useSelector } from "react-redux";
 
 function Help(props) {
   return (
@@ -13,7 +14,7 @@ function Help(props) {
       </div>
       <div className={`online_center`}>        
         <div>온라인 고객센터</div>
-          <a href="https://help.douzone.com/support/voice.jsp">
+          <a href="https://help.douzone.com/support/voice.jsp" target="_blank">
             <div className={`icon icon1 mt-2`}><i className="bi bi-globe"></i></div>
           </a>
         <div className="user_guide_explain">※ 클릭 시 온라인 고객센터 페이지로 <br/>이동됩니다.</div>

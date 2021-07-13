@@ -31,6 +31,14 @@
   color: #2D3040;
   cursor: pointer;
 }
+.header_url {
+  color: white;
+}
+.header_url:hover {
+  color: #2D3040;
+  cursor: pointer;
+  text-decoration-line: none;
+}
 .logo{
   color:white;
   font-size: x-large;

@@ -7,8 +7,7 @@ import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toa
 import { ValidationModal } from "components/common/ValidationModal";
 
 function UserCreateForm(props) {
-  const globalUid = useSelector((state) => state.authReducer.uid);
-  const hospital_id = globalUid.slice(1, 7);
+  const hospital_id = useSelector((state) => state.hospitalReducer.hid);
   
   // 직원 상태
   const [user, setUser] = useState({

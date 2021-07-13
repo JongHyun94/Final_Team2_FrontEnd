@@ -12,6 +12,8 @@ import { createSetHaddressAction, createSetHidAction, createSetHnameAction, crea
 function Header(props) {  
   const globalUid = useSelector((state) => state.authReducer.uid);
   const hname = useSelector((state) => state.hospitalReducer.hname);
+  const hospital_url = useSelector((state) => state.hospitalReducer.hurl);
+  
   const dispatch = useDispatch();
 
   const logout = (event) => {
@@ -55,7 +57,9 @@ function Header(props) {
         <div className="col-2">
           {globalUid !== ""?
             <div className="header1_2 d-flex justify-content-between">
-              <div>{hname}</div>
+              <a className="header_url" href={hospital_url} target="_blank">
+                <div>{hname}</div>
+              </a>              
               <React.Fragment>
                 <div className="header_auth" onClick={openModal}>{globalUid} 님</div>
                 <Auth open={modalOpen} close={closeModal} globalUid={globalUid}></Auth>

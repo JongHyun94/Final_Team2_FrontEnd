@@ -40,7 +40,7 @@ function Login(props) {
       // 로그인 성공 시 JWT 저장 및 경로 이동
       if (response.data.result === "success") {
         // alert("로그인 성공");
-        ToastsStore.success("로그인 성공");
+        // ToastsStore.success("로그인 성공");
 
         // 요청 헤더에 JWT 토큰 추가
         addAuthHeader(response.data.authToken);
@@ -71,12 +71,11 @@ function Login(props) {
         //   props.history.push("/User");
         // }
       } else if(response.data.result === "notEnabled") {
-        openModal();
-        // alert("로그인 실패 : 아이디 혹은 비밀번호가 맞지 않습니다.");
-        setErrorMsg({
-          ...errorMsg,
-          content: "비활성화된 계정입니다."
-        })
+        // openModal();
+        // setErrorMsg({
+        //   ...errorMsg,
+        //   content: "비활성화된 계정입니다."
+        // })
       } else {
         openModal();
         // alert("로그인 실패 : 아이디 혹은 비밀번호가 맞지 않습니다.");
@@ -87,6 +86,11 @@ function Login(props) {
       } 
     } catch(error) {
       console.log(error);
+      openModal();
+      setErrorMsg({
+        ...errorMsg,
+        content: "비활성화된 계정입니다."
+      });
     }    
   };
   
@@ -143,7 +147,7 @@ function Login(props) {
             </div>
             <div className="d-flex justify-content-end">
               <button className="button_team2_fill" type="submit">LOGIN</button>
-              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground/> 
+              {/* <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground/>  */}
               <React.Fragment>
                 <ValidationModal open={modalOpen} close={closeModal} errorMsg={errorMsg}></ValidationModal>
               </React.Fragment>
