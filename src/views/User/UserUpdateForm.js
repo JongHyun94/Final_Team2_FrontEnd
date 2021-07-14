@@ -49,15 +49,12 @@ function UserUpdateForm(props) {
       user_id: props.user.user_id,
       user_name: props.user.user_name,
       user_authority : props.user.user_authority,
-      // user_ssn: props.user.user_ssn1,
       user_ssn1: props.user.user_ssn1,
       user_ssn2: props.user.user_ssn2,
       user_sex: props.user.user_sex,
-      // user_tel: props.user.user_tel1 + "-" + props.user.user_tel2 + "-" + props.user.user_tel3,
       user_tel1: props.user.user_tel1,
       user_tel2: props.user.user_tel2,
       user_tel3: props.user.user_tel3,
-      // user_email: props.user.user_email1 + "@" + props.user.user_email2,
       user_email1: props.user.user_email1,
       user_email2: props.user.user_email2,
       user_zipcode: props.user.user_zipcode,
@@ -82,7 +79,6 @@ function UserUpdateForm(props) {
   const handleUpdate = async (event) => {
     try {
       // event.preventDefault();
-      console.log("직원 정보 수정: ", user);
       const response = await updateUser(user);
       if(response.data) {
         // alert("직원 정보를 수정 했습니다.");
@@ -139,7 +135,6 @@ function UserUpdateForm(props) {
   };
   const sendModal = (data) => {
     setAddressModalOpen(false);
-    console.log("send1 실행", data);
     setUser({
       ...user,
       user_zipcode: data.zonecode, 

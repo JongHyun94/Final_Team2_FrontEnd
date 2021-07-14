@@ -3,13 +3,11 @@
   font-family: 'GmarketSansMedium', sans-serif!important;
 }
 .header1{
-  /* display: flex; */
+  display: flex;
   height: 60px;
   background-color: #00AAF0;
-  /* flex-direction: row; */
+  flex-direction: row;
   align-items: center;
-  padding-left: 10px;
-  padding-right: 20px;
 }
 .header2{
   height: 50px;
@@ -19,11 +17,21 @@
   padding-left: 30px;
 }
 .header1_1{
-  /* display: flex;
-  flex-grow: 1; */
+  width: 10%;
+  padding-left: 30px;
 }
 .header1_2{
+  width: 70%;
+  margin-right: 0;
+  padding-right: 3rem;
+}
+.header1_3 {
+  width: 20%;
+  padding-right: 30px;
+}
+.header1_3_1{
   display: flex;
+  justify-content: space-between;
   flex-grow: 3;
   color: white;
 }
@@ -59,7 +67,6 @@
 * {
   font-family: 'NanumSquare', sans-serif;
 }
-
 
 /* custom css */
 .button_team2_empty{
@@ -125,15 +132,16 @@
 }
 
 /* Toasts 알림 */ 
-/* .toast {
-  font-size: 16px !important;
-    color: #fff !important;
-    background-color: #0e110fd5 !important;
-    border-radius: 5px !important;
-    min-height: 30px !important; 
-    width: 300px !important;
-    margin: auto !important;
+.toast {
+    font-size: large !important;
+    font-weight: bold !important;
+    color: #2D3040 !important;
     display: inline-block !important;
-    line-height: 30px !important;
-    height: 20px !important;
-} */
+    background-color: #cff1ff !important;
+    box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.16) !important;
+    opacity: 0.7 !important;
+    width: 35rem !important;
+    line-height: 3rem !important;
+    max-height: 4rem !important;
+    margin-top: 100px !important;
+}

@@ -11,7 +11,7 @@ function PatientCreateForm(props) {
     patient_name: "", 
     patient_ssn1: "", 
     patient_ssn2: "",
-    patient_sex: "", 
+    patient_sex: "M", 
     patient_tel1: "010", 
     patient_tel2: "", 
     patient_tel3: "", 
@@ -46,14 +46,13 @@ function PatientCreateForm(props) {
   const handleCreate = async (event) => {
     try {
       // event.preventDefault();
-      console.log("환자 등록: ", patient);
       const response = await createPatient(patient);
       if (response.data) {        
         setPatient({
           patient_name: "", 
           patient_ssn1: "", 
           patient_ssn2: "",
-          patient_sex: "", 
+          patient_sex: "M", 
           patient_tel1: "010", 
           patient_tel2: "", 
           patient_tel3: "", 

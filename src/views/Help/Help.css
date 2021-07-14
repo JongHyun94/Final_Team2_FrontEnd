@@ -1,5 +1,5 @@
 .Help {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   color: white;
   display: flex;
   justify-content: center;
@@ -8,7 +8,7 @@
 /* user_guide */
 .user_guide {
   width: 14rem;
-  height: 13rem;
+  height: 15rem;
   padding: 1rem;
   margin-right: 1rem;
   background-color: #0070C0;
@@ -29,7 +29,7 @@
 /* online_center */
 .online_center {
   width: 14rem;
-  height: 13rem;
+  height: 15rem;
   padding: 1rem;
   margin-right: 1rem;
   background-color: #0283EE;
@@ -40,7 +40,7 @@
 /* as */
 .as {
   width: 14rem;
-  height: 13rem;
+  height: 15rem;
   padding: 1rem;
   background-color: #65BFF7;
   font-size: 1.5rem;
@@ -51,7 +51,7 @@
   color: white;
   font-size: 4rem;
   text-align: center;
-  /* padding-top: 5rem; */
+  margin-bottom: 1rem;
 }
 .icon1:hover {
   color: #65BFF7;

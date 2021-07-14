@@ -57,7 +57,6 @@ function PatientUpdateForm(props) {
   const handleUpdate = async (event) => {
     try{
       // event.preventDefault();
-      console.log("환자 정보 수정: ", patient);
       const response = await updatePatient(patient);
       if (response.data) {
         // alert("환자 정보를 수정했습니다.");
