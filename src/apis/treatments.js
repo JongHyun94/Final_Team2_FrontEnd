@@ -1,10 +1,16 @@
 import axios from "axios";
 
 
-export function getTreatmentPatientList(date, state="") {
-  const promise = axios.get("/treatment/treatmentlist", {params: {date, state}});
+export function getTreatmentPatientList(date, state="",globalUid) {
+  const promise = axios.get("/treatment/treatmentlist", {params: {date, state, globalUid}});
   return promise;
 }
+
+// export function getTreatmentPatientList(date, state="") {
+//   const promise = axios.get("/treatment/treatmentlist", {params: {date, state}});
+//   return promise;
+// }
+
 
 export function getTreatmentHistoryList(treatment_patient_id) {
   const promise = axios.get("/treatment/historyList", {params: {treatment_patient_id}});

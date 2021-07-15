@@ -33,7 +33,7 @@ function Treatment(props) {
   //   topic: "/138010/inspector",
   //   content: "addInspects",  //검사추가
   // });
-  const [subTopic, setSubTopic] = useState(["/138010/nurse/doctor","/138010/inspector"]);  // 병원코드/간호사
+  const [subTopic, setSubTopic] = useState(["/138010/nurse/doctor"]);  // 병원코드/간호사
   const [prevSubTopic, setPrevSubTopic] = useState("/138010/nurse"); // 병원코드/간호사
   const [pubMessage, setPubMessage] = useState([
     {
@@ -98,8 +98,8 @@ function Treatment(props) {
 
   useEffect(() => {
     connectMqttBroker();
-    console.log("MESSAGE",message);
-  });
+    // console.log("MESSAGE",message);
+  },[]);
 
   //////////////////////////////////////////////////////////
 
@@ -117,7 +117,7 @@ function Treatment(props) {
         {/* 진료 대기 환자 */}
         <div className="TreatmentPatientList">
           <TreatmentPatientList setCheckedpatient={setCheckedpatient} 
-          message={message} publishTopic={publishTopic}/>
+          message={message}/>
         </div>
         {/* 진료 기록 */}
         <div className="TreatmentHistoryList">
