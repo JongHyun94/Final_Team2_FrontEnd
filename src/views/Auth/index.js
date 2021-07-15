@@ -2,13 +2,13 @@ import { Modal } from "../../components/common/Address";
 import React, { useEffect, useState } from "react";
 import style from "./style.module.css";
 import { useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
+import { get, useForm } from "react-hook-form";
 import { getUser, updateUserInfo } from "apis/auth";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 import { ValidationModal } from "components/common/ValidationModal";
 
 function Auth(props) {
-  const { open, close } = props;
+  const { openModal, closeModal } = props;
   const globalUid = useSelector((state) => state.authReducer.uid);
   
   // 유효성 검사를 위한 함수 사용
@@ -54,7 +54,7 @@ function Auth(props) {
     try {      
       if (user.old_password !== "" && user.old_password === user.new_password) {
         // alert("이전 비밀번호와 동일합니다.");
-        openvalidationModal();
+        openValidationModal();
         setErrorMsg({
           ...errorMsg,
           content: "이전 비밀번호와 동일합니다."
@@ -70,10 +70,10 @@ function Auth(props) {
             new_password: "",
             re_password: "",
           });
-          close();
+          closeModal();
         } else {
           // alert("기존 비밀번호가 맞지 않습니다.");
-          openvalidationModal();
+          openValidationModal();
           setErrorMsg({
             ...errorMsg,
             content: "기존 비밀번호가 맞지 않습니다."
@@ -81,7 +81,7 @@ function Auth(props) {
         }        
       } else if (user.old_password !== "") {
         // alert("비밀번호가 동일하지 않습니다.");
-        openvalidationModal();
+        openValidationModal();
         setErrorMsg({
           ...errorMsg,
           content: "비밀번호가 동일하지 않습니다."
@@ -97,7 +97,6 @@ function Auth(props) {
 
   const openAddressModal = async (event) => {
     try {
-      event.preventDefault();
       setAddressModalOpen(true);
     } catch(error) {
       console.log(error);
@@ -108,7 +107,6 @@ function Auth(props) {
   };
   const sendModal = (data) => {
     setAddressModalOpen(false);
-    console.log("send1 실행", data);
     setUser({
       ...user,
       user_zipcode: data.zonecode,
@@ -139,7 +137,7 @@ function Auth(props) {
     content: ""
   });
 
-  const openvalidationModal = (event) => {
+  const openValidationModal = (event) => {
     setValidationModalOpen(true);
   };
   const closeValidationModal = () => {
@@ -148,12 +146,12 @@ function Auth(props) {
 
   return (
     <div className={`${style.Auth}`}>
-      <div className={open ? `${style.openModal} ${style.modal}` : `${style.modal}`}>
-        {open ? (
+      <div className={openModal ? `${style.openModal} ${style.modal}` : `${style.modal}`}>
+        {openModal ? (
           <section>
             <div className={`${style.Auth_header}`}>
               <div>회원정보 수정</div>
-              <button className="close" onClick={close}>
+              <button className="close" onClick={closeModal}>
                 {" "}
                 &times;{" "}
               </button>
@@ -173,7 +171,9 @@ function Auth(props) {
                     <div className={`${style.Auth_content}`}>
                       <label className="col-sm-4 m-0">직급: </label>
                       <div className="col-sm">{user.user_authority === "ROLE_DOCTOR"? "의사" 
-                                              : (user.user_authority === "ROLE_NURSE"? "간호사" : "임상병리사")}</div>
+                                              : (user.user_authority === "ROLE_NURSE"? "간호사"
+                                              : (user.user_authority === "ROLE_INSPECTOR" ? "임상병리사": "의사"))}
+                      </div>
                     </div>
                     <div className={`${style.Auth_content}`}>
                       <label className="col-sm-4 m-0">생년월일: </label>
@@ -218,8 +218,9 @@ function Auth(props) {
                         <div className={(errors.user_tel2 || errors.user_tel3)? `${style.Auth_error}` : `${style.Auth_noterror}`}>
                           {(errors.user_tel2 || errors.user_tel3)?.type === "required" ? "전화번호를 입력해주세요." 
                           :
-                            (errors.userTel2 || errors.userTel3)?.type === "minLength" ? "3자리 이상 작성해주세요." :
-                            "4자리 이하 작성해주세요."
+                          (errors.user_tel2 || errors.user_tel3)?.type === "minLength" ? "3자리 이상 작성해주세요." 
+                          :
+                          "4자리 이하 작성해주세요."
                           }
                         </div>
                       </div>
@@ -242,7 +243,11 @@ function Auth(props) {
                           </select>    
                         </div>                 
                         <div className={(errors.user_email1 || errors.user_email2)? `${style.Auth_error}` : `${style.Auth_noterror}`}>
-                          {(errors.user_email2 || errors.user_email1)?.type === "pattern" ? "올바른 형식으로 입력해주세요." : "이메일를 입력해주세요."}
+                          {(errors.user_email2 || errors.user_email1)?.type === "pattern" ? "올바른 형식으로 입력해주세요." 
+                          : 
+                          (errors.user_email2 || errors.user_email1)?.type === "required" ? "이메일를 입력해주세요."
+                          : email === true ? "" : ""
+                          }
                         </div>             
                       </div>
                     </div>
@@ -294,7 +299,9 @@ function Auth(props) {
                            : 
                            (errors.re_password)?.type === "minLength" ? "8자리 이상 작성해주세요." 
                            : 
-                           (errors.re_password)?.type === "maxLength" ? "16자리 이하로 작성해주세요." : "숫자, 영문, 특수문자 1개 이상 사용해주세요."}
+                           (errors.re_password)?.type === "maxLength" ? "16자리 이하로 작성해주세요." 
+                           : 
+                           "숫자, 영문, 특수문자 1개 이상 사용해주세요."}
                         </div>
                       </div>
                     </div>

@@ -31,16 +31,14 @@ function Patient(props) {
   
   // MQTT
   const [subTopic, setSubTopic] = useState("/138010/nurse");
-  // const [pubMessage, setPubMessage] = useState({
-  //   topic: "/138010/doctor",
-  //   content: ""
-  // });
+
   const pubMessage = [{
     topic: "/138010/nurse",
     content: "updatePatient"}, {
       topic: "/138010/nurse",
       content: "addPatient"
-    }]
+    }];
+
   const [message, setMessage] = useState("");
 
   let client = useRef(null);
