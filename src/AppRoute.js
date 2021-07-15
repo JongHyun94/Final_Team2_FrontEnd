@@ -7,9 +7,10 @@ import Login from "views/Login";
 import DataAnalysis from "views/DataAnalysis";
 import User from "views/User";
 import Page404 from "views/errors/page404";
-import DoctorRoute from "DoctorRoute";
-import InspectorRoute from "InspectorRoute";
-import MasterRoute from "MasterRoute";
+import NurseRoute from "components/common/CustomeRoute/NurseRoute";
+import DoctorRoute from "components/common/CustomeRoute/DoctorRoute";
+import InspectorRoute from "components/common/CustomeRoute/InspectorRoute";
+import MasterRoute from "components/common/CustomeRoute/MasterRoute";
 import { useSelector } from "react-redux";
 
 function AppRoute() {
@@ -17,8 +18,18 @@ function AppRoute() {
     return (
         <Switch>
             <Route path="/" exact component={Login} />
-            <Route path="/Patient" component={Patient} />
-            <Route path="/Register" component={Register} />
+            {/* <Route path="/Patient" component={Patient} /> */}
+            <NurseRoute
+                path="/Patient"
+                component={Patient}
+                role={Uauthority}
+            />
+            {/* <Route path="/Register" component={Register} /> */}
+            <NurseRoute
+                path="/Register"
+                component={Register}
+                role={Uauthority}
+            />
             {/* <Route path="/Treatment" component={Treatment}/> */}
             <DoctorRoute
                 path="/Treatment"
