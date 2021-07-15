@@ -37,7 +37,7 @@ function RegisterTimeSchedule(props) {
   //-------------------------------------------------------------  
   //상태 선언
   //-------------------------------------------------------------
-  const { registerDate, setRegisterDate, publishTopic, setPubMessage, setSubTopic, message } = props;
+  const { registerDate, setRegisterDate, publishTopic, setPubMessage, message } = props;
 
   const [doctors, setDoctors] = useState([]);
   const [registers, setRegisters] = useState([]);
@@ -176,7 +176,6 @@ function RegisterTimeSchedule(props) {
             selectedDoctor={selectedDoctor}
             setPubMessage={setPubMessage}
             publishTopic={publishTopic}
-            setSubTopic={setSubTopic}
           />
         </React.Fragment>
       </div>
