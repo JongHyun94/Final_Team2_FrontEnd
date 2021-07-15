@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createSetAuthTokenAction, createSetUidAction } from "redux/auth-reducer";
 import { useForm } from "react-hook-form";
 import Help from "./Help";
 import "./Login.css";
 import { addAuthHeader } from "apis/axiosConfig";
 import { login } from "apis/auth";
-import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 import { ValidationModal } from "../components/common/ValidationModal";
 import { createSetHaddressAction, createSetHidAction, createSetHnameAction, createSetHurlAction } from "redux/hospital-reducer";
 
@@ -16,6 +15,9 @@ function Login(props) {
     userId: "",
     userPassword: ""
   });
+
+  // Spinner
+  const [loading, setLoading] = useState(false);
 
   // 바인딩할 상태함수
   const dispatch = useDispatch();
@@ -32,15 +34,14 @@ function Login(props) {
 
   // 로그인
   const loginUser = async (event) => {
+    setLoading(true);
     try{
       // 로그인 요청
       const response = await login(user);
-      console.log("로그인 데이터",response.data);
 
       // 로그인 성공 시 JWT 저장 및 경로 이동
       if (response.data.result === "success") {
         // alert("로그인 성공");
-        ToastsStore.success("로그인 성공");
 
         // 요청 헤더에 JWT 토큰 추가
         addAuthHeader(response.data.authToken);
@@ -70,13 +71,12 @@ function Login(props) {
         } //else {
         //   props.history.push("/User");
         // }
-      } else if(response.data.result === "notEnabled") {
-        openModal();
-        // alert("로그인 실패 : 아이디 혹은 비밀번호가 맞지 않습니다.");
-        setErrorMsg({
-          ...errorMsg,
-          content: "비활성화된 계정입니다."
-        })
+      // } else if(response.data.result === "notEnabled") {
+        // openModal();
+        // setErrorMsg({
+        //   ...errorMsg,
+        //   content: "비활성화된 계정입니다."
+        // })
       } else {
         openModal();
         // alert("로그인 실패 : 아이디 혹은 비밀번호가 맞지 않습니다.");
@@ -87,7 +87,14 @@ function Login(props) {
       } 
     } catch(error) {
       console.log(error);
-    }    
+      openModal();
+      setErrorMsg({
+        ...errorMsg,
+        content: "비활성화된 계정입니다."
+      });
+    } finally {
+      setLoading(false);
+    }  
   };
   
   // 공지사항
@@ -142,8 +149,13 @@ function Login(props) {
               </div>
             </div>
             <div className="d-flex justify-content-end">
-              <button className="button_team2_fill" type="submit">LOGIN</button>
-              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground/> 
+              {loading ? 
+              <button className="button_team2_fill" disabled>
+                <div className="spinner-border spinner-border-sm"></div>
+                <span className="pl-1">LOADING</span>
+              </button>              
+              :
+              <button className="button_team2_fill" type="submit">LOGIN</button> }
               <React.Fragment>
                 <ValidationModal open={modalOpen} close={closeModal} errorMsg={errorMsg}></ValidationModal>
               </React.Fragment>

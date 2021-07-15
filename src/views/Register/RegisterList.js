@@ -8,26 +8,8 @@ import moment from "moment";
 import { registerLocale } from "react-datepicker";
 import { changeRegisterState, getRegisterList } from "apis/register";
 import Spinner from "components/common/Spinner";
+import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 registerLocale("ko", ko);
-// 컬럼 : 순번(index), 예약시간, 접수번호(pk), 환자명, 생년월일, 성별, 담당의, 접수메모, 의사소통메모, 접수상태
-
-// private int register_id;
-// private int register_patient_id;
-// private String register_user_id;
-// private Date register_regdate;
-// private Date register_date;
-// private Date register_starttime;
-// private String register_memo;
-// private String register_communication;
-// private String register_state;
-
-// // Add Data
-// private String patient_name;
-// private String patient_ssn;
-// private String patient_sex;
-// private String patient_tel;
-
-// private String user_name;
 
 function RegisterList(props) {
   //-------------------------------------------------------------  
@@ -92,23 +74,12 @@ function RegisterList(props) {
       selectRegister.register_state = "완료";
       if (selectRegister) {
         var list = await changeRegisterState(selectRegister);
-        //setRegisterList(list.data.registerList);
         publishTopic(0);
         publishTopic(1);
       }
     } catch (e) {
       console.log(e);
     }
-    // const newRegisters = registerList.map(register => {
-    //   // 해당 아이디의 정보를 찾아서 수정
-    //   if (register.register_id === register_id) {
-    //     const newRegister = { ...register, register_state: "완료" };
-    //     return newRegister;
-    //   } else {
-    //     return register;
-    //   }
-    // });
-    // setRegisterList(newRegisters);
   };
 
   // 진료 상태 대기 -> 취소로 
@@ -124,22 +95,11 @@ function RegisterList(props) {
       selectRegister.register_state = "취소";
       if (selectRegister) {
         var list = await changeRegisterState(selectRegister);
-        //setRegisterList(list.data.registerList);
         publishTopic(0);
       }
     } catch (e) {
       console.log(e);
     }
-    // const newRegisters = registerList.map(register => {
-    //   // 해당 아이디의 정보를 찾아서 수정
-    //   if (register.register_id === register_id) {
-    //     const newRegister = { ...register, register_state: "취소" };
-    //     return newRegister;
-    //   } else {
-    //     return register;
-    //   }
-    // });
-    // setRegisterList(newRegisters);
   };
 
   // 전체 보여주기
@@ -253,10 +213,6 @@ function RegisterList(props) {
   }, [registerDate]);
 
   useEffect(() => {
-    getList(moment(registerDate).format("yyyy-MM-DD HH:mm"));
-  }, [registerDate]);
-
-  useEffect(() => {
     console.log("MESSAGE: ", message);
     const work = async () => {
       setLoading(true);
@@ -271,9 +227,11 @@ function RegisterList(props) {
       }
     };
     if (message.content === "refreshRegisters") {
+      ToastsStore.success("접수현황이 갱신 되었습니다.");
       work();
     }
-  }, [message, props, registerDate]);
+  }, [message]);
+  
   //-------------------------------------------------------------
   //렌더링 내용
   //-------------------------------------------------------------
@@ -288,6 +246,7 @@ function RegisterList(props) {
           <Link to="/Patient" ><button className="button_team2_fill">신규 환자 등록</button></Link>
         </div>
       </div>
+      <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground/> 
       {/* 하단 내용 */}
       <div className="RegisterList_content border">
         {/* 달력 , 상태 , 완료 버튼 */}

@@ -1,35 +1,36 @@
 import React from "react";
 import { ResponsivePie } from '@nivo/pie';
 import style from "./DataAnalysis.module.css";
-const data = [
-  {
-    "id": "1분기",
-    "label": "1분기",
-    "value": 220,
-  },
-  {
-    "id": "2분기",
-    "label": "2분기",
-    "value": 149,
-  },
-  {
-    "id": "3분기",
-    "label": "3분기",
-    "value": 125,
-  },
-  {
-    "id": "4분기",
-    "label": "4분기",
-    "value": 182,
-  }
-]
-function Data4() {
+// const data = [
+//   {
+//     "id": "1분기",
+//     "label": "1분기",
+//     "value": 220,
+//   },
+//   {
+//     "id": "2분기",
+//     "label": "2분기",
+//     "value": 149,
+//   },
+//   {
+//     "id": "3분기",
+//     "label": "3분기",
+//     "value": 125,
+//   },
+//   {
+//     "id": "4분기",
+//     "label": "4분기",
+//     "value": 182,
+//   }
+// ];
+function Data4(props) {
+  const {data4} = props;
   return (
     <>
       <div className={style.DataAnalysis_col_header}>분기별 환자 현황</div>
       <div className={style.DataAnalysis_col_content}>
         <ResponsivePie
-          data={data}
+          data={data4}
           margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
           innerRadius={0.5}
           padAngle={0.7}

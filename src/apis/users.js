@@ -6,7 +6,7 @@ export function getAllUserList(){
   return promise;
 }
 
-export function getUserList(keyword="", condition=""){
+export function getUserList(keyword="", condition="all"){
   const promise = axios.get("/user/select", {params: {keyword, condition}});
   return promise;
 }

@@ -66,7 +66,7 @@ function UserList(props) {
   const [keyword, setKeyword] = useState("");
 
   // 직책 상태
-  const [condition, setCondition] = useState("");
+  const [condition, setCondition] = useState("all");
 
   // 직원 코드 비교를 위한 상태
   const [id, setId] = useState("");
@@ -83,7 +83,6 @@ function UserList(props) {
     setLoading(true);
     try {
       event.preventDefault();
-      console.log(keyword);
       const response = await getUserList(keyword, condition);
       console.log(response.data.userList)
       setUsers(response.data.userList);
@@ -111,7 +110,7 @@ function UserList(props) {
         setUsers(response.data.userList);
         console.log(response.data);
       } else {
-        setCondition("");
+        setCondition("all");
         setKeyword("");
         const response = await getAllUserList();
         setUsers(response.data.userList);
@@ -160,8 +159,6 @@ function UserList(props) {
     );
   };
 
-
-
   return (
     <div>
       <div className="User_title">직원 목록</div>
@@ -172,7 +169,7 @@ function UserList(props) {
             <button className="button_team2_fill" onClick={handleSearch}>검색</button>
           </div>
           <div className="UserList_content1_2">
-          <div className="pr-3" onClick={() => clickCondition("")}>전체: {userCount[0]}명</div>
+          <div className="pr-3" onClick={() => clickCondition("all")}>전체: {userCount[0]}명</div>
             <div className="pr-3" onClick={() => clickCondition("ROLE_DOCTOR")}>의사: {userCount[1]}명</div>
             <div className="pr-3" onClick={() => clickCondition("ROLE_NURSE")}>간호사: {userCount[2]}명</div>
             <div className="pr-3" onClick={() => clickCondition("ROLE_INSPECTOR")}>임상병리사: {userCount[3]}명</div>
@@ -203,25 +200,6 @@ function UserList(props) {
             </>}
           </div>
         </div>
-        {/* <div className="UserList_container">
-          <div className="content">
-            <AutoSizer disableHeight>
-              {({width, height}) => {
-                return <Table headerHeight={44} width={width} height={500} rowHeight={200} rowCount={users.length} rowGetter={({index}) => users[index]} overscanRowCount={5}>
-                  <Column className="border" label="선택" dataKey="userId" width={width}><input type="checkbox"></input></Column>
-                  <Column label="직원 코드" dataKey="userId" width={width}/>
-                  <Column label="직원명" dataKey="userName" width={width}/>
-                  <Column label="직책" dataKey="userAuthority" width={width}/>
-                  <Column label="생년월일" dataKey="userSSn" width={width}/>
-                  <Column label="성별" dataKey="userSex" width={width}/>
-                  <Column label="전화번호" dataKey="userTel1" width={width}/>
-                  <Column label="주소" dataKey="userAddress" width={width}/>
-                  <Column label="등록일" dataKey="userRegDate" width={width}/>
-                </Table>
-              }}
-            </AutoSizer>
-          </div>
-        </div> */}
       </div>
     </div>
   );
