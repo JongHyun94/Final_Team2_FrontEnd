@@ -40,7 +40,10 @@ function RegisterRead(props) {
   useEffect(() => {
     setSelectPatient(selectedPatient);
   }, [props]);
-  
+
+  useEffect(() => {
+    //setSelectPatient(noneRegister);
+  },[props.registerDate]);
   //-------------------------------------------------------------
   //렌더링 내용
   //-------------------------------------------------------------

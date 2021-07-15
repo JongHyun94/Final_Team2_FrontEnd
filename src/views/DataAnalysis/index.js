@@ -18,7 +18,11 @@ function DataAnalysis(props) {
     try {
       var response = await getDatas();
       console.log(response.data.data1);
+      console.log(response.data.data3);
+      console.log(response.data.data4);
       calcData1(response.data.data1);
+      calcData3(response.data.data3);
+      calcData4(response.data.data4);
     } catch (e) {
       console.log(e);
     }
@@ -52,10 +56,109 @@ function DataAnalysis(props) {
     ]
     setData1(newDataList);
   };
+  const calcData3 = (datalist) => {
+    let count1 = 0;
+    let count2 = 0;
+    let count3 = 0;
+    let count4 = 0;
+    let count5 = 0;
+    let count6 = 0;
+    let count7 = 0;
+    let count8 = 0;
+    let count9 = 0;
+    let pAge = 0;
+    let yearToday = new Date().getFullYear();
+    yearToday *= 1;
+    console.log("year:",yearToday);
+    for (var data of datalist) {
+      // 월요일
+      if(new Date(data.register_starttime).getDay() === 1){
+        if((data.patient_ssn.slice(7,8) === "3")||(data.patient_ssn.slice(7,8) === "4")){
+          var newAge = "20" + (data.patient_ssn.slice(0,2));
+          newAge *= 1;
+          console.log(yearToday - newAge);
+          pAge = yearToday - newAge;
+        } else {
+          var newAge2 = "19" + (data.patient_ssn.slice(0,2));
+          newAge2 *= 1;
+          console.log(yearToday - newAge2);
+          pAge = yearToday - newAge2;
+        }
+      }
+      // 화요일
+      else if(new Date(data.register_starttime).getDay() === 2){
+      
+      }
+      // 수요일
+      else if(new Date(data.register_starttime).getDay() === 3){
+      
+      }
+      // 목요일
+      else if(new Date(data.register_starttime).getDay() === 4){
+      
+      }
+      // 금요일
+      else if(new Date(data.register_starttime).getDay() === 5){
+      
+      }
+      // // 2000년생 3 , 4
+      // if((data.patient_ssn.slice(7,8) === "3")||(data.patient_ssn.slice(7,8) === "4")){
+      //   // 월요일
+      //   if(new Date(data.register_starttime).getDay() === 1){
+      //     var newAge = "20" + (data.patient_ssn.slice(0,2));
+      //     newAge *= 1;
+      //     console.log(yearToday - newAge);
+      //   }
+      // }
+      // // 1900년생 1, 2 
+      // else {
+
+      // }
+    }
+  }
+  const calcData4 = (datalist) => {
+    let countQ1 = 0;
+    let countQ2 = 0;
+    let countQ3 = 0;
+    let countQ4 = 0;
+    for (var data of datalist) {
+      if (new Date(data.register_starttime).getMonth() >= 0 && new Date(data.register_starttime).getMonth() < 3) {
+        countQ1++;
+      } else if (new Date(data.register_starttime).getMonth() >= 3 && new Date(data.register_starttime).getMonth() < 6) {
+        countQ2++;
+      } else if (new Date(data.register_starttime).getMonth() >= 6 && new Date(data.register_starttime).getMonth() < 9) {
+        countQ3++
+      } else if (new Date(data.register_starttime).getMonth() >= 9 && new Date(data.register_starttime).getMonth() < 12) {
+        countQ4++
+      }
+    }
+    const newDataList = [
+      {
+        "id": "1분기",
+        "label": "1분기",
+        "value": countQ1,
+      },
+      {
+        "id": "2분기",
+        "label": "2분기",
+        "value": countQ2,
+      },
+      {
+        "id": "3분기",
+        "label": "3분기",
+        "value": countQ3,
+      },
+      {
+        "id": "4분기",
+        "label": "4분기",
+        "value": countQ4,
+      }
+    ]
+    setData4(newDataList);
+  };
   useEffect(() => {
     getData();
   }, []);
-
   return (
     <div className={style.DataAnalysis}>
       <div className={style.DataAnalysis_row1}>

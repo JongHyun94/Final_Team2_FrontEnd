@@ -178,6 +178,7 @@ function Register(props) {
             <RegisterRead
               registerRead={registerRead}
               changeRegister={changeRegister}
+              registerDate={registerDate}
               selectedPatient={selectedPatient}
               setSelectedPatient={setSelectedPatient}
             />
