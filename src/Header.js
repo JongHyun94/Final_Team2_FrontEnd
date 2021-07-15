@@ -9,14 +9,14 @@ import { IoBarChart } from "react-icons/io5";
 import WeatherAPI from "components/common/WeatherAPI";
 import { createSetHaddressAction, createSetHidAction, createSetHLATAction, createSetHLONGAction, createSetHnameAction, createSetHurlAction } from "redux/hospital-reducer";
 
-function Header(props) {
+function Header(props) {  
   const globalUid = useSelector((state) => state.authReducer.uid);
   const hname = useSelector((state) => state.hospitalReducer.hname);
   const hlat = useSelector((state) => state.hospitalReducer.hlat);
   const hlong = useSelector((state) => state.hospitalReducer.hlong);
 
   const hospital_url = useSelector((state) => state.hospitalReducer.hurl);
-
+  
   const dispatch = useDispatch();
 
   const logout = (event) => {
@@ -29,7 +29,7 @@ function Header(props) {
     dispatch(createSetHLATAction(""));
     dispatch(createSetHLONGAction(""));
     removeAuthHeader();
-
+    
     // SessionStorage에 인증 내용 제거
     sessionStorage.removeItem("uid");
     sessionStorage.removeItem("authToken");
@@ -54,7 +54,7 @@ function Header(props) {
     setAuthModalOpen(false);
     console.log("닫기");
   };
-  console.log("$$ ", authModalOpen);
+  console.log("$$ ",authModalOpen);
 
   return (
     <div className="header">
@@ -63,44 +63,43 @@ function Header(props) {
           <span className="logo">TEAM2<img className="ml-1" src="/resources/img/logo_white_bold.png" alt="" width={30}></img></span>
         </div>
         <div className="col-5">
-          <div className="header1_2">
-            <WeatherAPI hlat={hlat} hlong={hlong} />
-          </div>
-          <div className="header1_3">
-            {globalUid !== "" ?
-              <div className="header1_3_1">
-                <div>
-                  <a className="header_url" href={hospital_url} target="_blank" rel="noreferrer">{hname}</a>
-                </div>
-                <div className="header_auth" onClick={openAuthModal}>
-                  <React.Fragment>
-                    {globalUid} 님
-                    <Auth openModal={authModalOpen} closeModal={closeAuthModal}></Auth>
-                  </React.Fragment>
-                </div>
-                <div><Link to="/"><button className="button_team2_empty" onClick={logout}>LOGOUT</button></Link></div>
+          <WeatherAPI hlat={hlat} hlong={hlong} />
+        </div>
+        <div className="header1_3">
+          {globalUid !== ""?
+            <div className="header1_3_1">
+              <div>
+                <a className="header_url" href={hospital_url} target="_blank" rel="noreferrer">{hname}</a>
               </div>
-              :
-              <div className="d-flex justify-content-end"><Link to="/" className="button_team2_empty">LOGIN</Link></div>
-            }
+              <div className="header_auth" onClick={openAuthModal}>         
+                <React.Fragment>
+                  {globalUid} 님
+                  <Auth openModal={authModalOpen} closeModal={closeAuthModal}></Auth>
+                </React.Fragment>
+              </div>
+              <div><Link to="/"><button className="button_team2_empty" onClick={logout}>LOGOUT</button></Link></div>
+            </div>
+          :
+            <div className="d-flex justify-content-end"><Link to="/" className="button_team2_empty">LOGIN</Link></div>
+          }
+        </div>
+      </div>
+      {globalUid === ""? "":
+        <div className="header2 row no-gutters">
+          <div className="col-4 row d-flex justify-content-between ml-1">
+            <div><Link to="/Register" className="link_team2"><RiCalendarCheckLine className="mr-1"/>접수</Link></div>
+            <div><Link to="/Treatment" className="link_team2"><RiStethoscopeFill className="mr-1"/>진료</Link></div>
+            <div><Link to="/Inspection" className="link_team2"><RiTestTubeFill className="mr-1"/>검사 및 치료</Link></div>
+            <div><Link to="/DataAnalysis" className="link_team2"><IoBarChart className="mr-1"/>데이터분석</Link></div>
+          </div>
+          <div className="col-7"></div>
+          <div className="col-1 row d-flex justify-content-end">
+            <div><Link to="/User" className="link_team2 mr-2"><i className="bi bi-people-fill mr-1"></i>직원관리</Link></div>
           </div>
         </div>
-        {globalUid === "" ? "" :
-          <div className="header2 row no-gutters">
-            <div className="col-4 row d-flex justify-content-between ml-1">
-              <div><Link to="/Register" className="link_team2"><RiCalendarCheckLine className="mr-1" />접수</Link></div>
-              <div><Link to="/Treatment" className="link_team2"><RiStethoscopeFill className="mr-1" />진료</Link></div>
-              <div><Link to="/Inspection" className="link_team2"><RiTestTubeFill className="mr-1" />검사 및 치료</Link></div>
-              <div><Link to="/DataAnalysis" className="link_team2"><IoBarChart className="mr-1" />데이터분석</Link></div>
-            </div>
-            <div className="col-7"></div>
-            <div className="col-1 row d-flex justify-content-end">
-              <div><Link to="/User" className="link_team2 mr-2"><i className="bi bi-people-fill mr-1"></i>직원관리</Link></div>
-            </div>
-          </div>
-        }
-      </div>
-      );
+      }
+    </div>
+  );
 }
 
-      export default Header;
+export default Header;
