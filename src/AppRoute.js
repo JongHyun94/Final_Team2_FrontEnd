@@ -4,25 +4,58 @@ import Register from "views/Register";
 import Treatment from "views/Treatment";
 import Inspection from "views/Inspection";
 import Login from "views/Login";
-import Auth from "views/Auth";
-import Help from "views/Help";
 import DataAnalysis from "views/DataAnalysis";
 import User from "views/User";
+import Page404 from "views/errors/page404";
+import NurseRoute from "components/common/CustomeRoute/NurseRoute";
+import DoctorRoute from "components/common/CustomeRoute/DoctorRoute";
+import InspectorRoute from "components/common/CustomeRoute/InspectorRoute";
+import MasterRoute from "components/common/CustomeRoute/MasterRoute";
+import { useSelector } from "react-redux";
 
 function AppRoute() {
-    return(
+    const Uauthority = useSelector((state) => state.authReducer.uauthority);
+    return (
         <Switch>
-            {/* <Route path="/" exact component={Login}/> */}
-            <Route path="/Patient" component={Patient}/>
-            <Route path="/Register" component={Register}/>
-            <Route path="/Treatment" component={Treatment}/>
-            <Route path="/Inspection" component={Inspection}/>   
-            <Route path="/DataAnalysis" component={DataAnalysis}/> 
-            <Route path="/User" component={User}/>
-            <Route path="/Auth" component={Auth}/>
-            <Route path="/Help" component={Help}/>
-            <Route path="/" component={Login}/>
-            <Redirect to="/Register"/>
+            <Route path="/" exact component={Login} />
+            {/* <Route path="/Patient" component={Patient} /> */}
+            <NurseRoute
+                path="/Patient"
+                component={Patient}
+                role={Uauthority}
+            />
+            {/* <Route path="/Register" component={Register} /> */}
+            <NurseRoute
+                path="/Register"
+                component={Register}
+                role={Uauthority}
+            />
+            {/* <Route path="/Treatment" component={Treatment}/> */}
+            <DoctorRoute
+                path="/Treatment"
+                component={Treatment}
+                role={Uauthority}
+            />
+            {/* <Route path="/Inspection" component={Inspection}/>    */}
+            <InspectorRoute
+                path="/Inspection"
+                component={Inspection}
+                role={Uauthority}
+            />
+            {/* <Route path="/DataAnalysis" component={DataAnalysis}/>  */}
+            <MasterRoute
+                path="/DataAnalysis"
+                component={DataAnalysis}
+                role={Uauthority}
+            />
+            {/* <Route path="/User" component={User} /> */}
+            <MasterRoute
+                path="/User"
+                component={User}
+                role={Uauthority}
+            />
+            <Route component={Page404} />
+            {/* <Redirect to="/Register"/> */}
         </Switch>
     );
 }

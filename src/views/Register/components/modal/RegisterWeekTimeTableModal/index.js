@@ -5,7 +5,7 @@ import ToDoList from "./ToDoList";
 import moment from "moment";
 function RegisterWeekTimeTableModal(props) {
 
-  const { open, close, header, selectedDoctor, setPubMessage, publishTopic, setSubTopic } = props;
+  const { open, close, header, selectedDoctor, setPubMessage, publishTopic } = props;
   const [selectDate, setSelectDate] = useState(moment().format("yyyy-MM-DD"));
 
   //-------------------------------------------------------------

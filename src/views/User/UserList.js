@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AutoSizer, List } from "react-virtualized";
 import { getAllUserList, getUserList } from "apis/users";
 import moment from "moment";
 import Spinner from "components/common/Spinner";
+import Nodata from "components/common/NoData";
 
 function UserList(props) {
   // 직원 목록 상태
@@ -139,7 +140,7 @@ function UserList(props) {
       }
     };
     work();
-  },[props])
+  },[props.message])
 
   const rowRenderer = ({index, key, style}) => {
     return (
@@ -160,7 +161,7 @@ function UserList(props) {
   };
 
   return (
-    <div>
+    <div className="UserList">
       <div className="User_title">직원 목록</div>
       <div className="UserList_content border">
         <div className="mb-2 UserList_content1">
@@ -191,7 +192,13 @@ function UserList(props) {
               <div style={{width: "11%"}}>등록일</div>
             </div>
           <div>
-            {loading ? <Spinner /> : <>
+            {loading ? <Spinner /> 
+            : users.length === 0 ? 
+              <React.Fragment>
+                <Nodata />
+              </React.Fragment>
+            :
+            <>
               <AutoSizer disableHeight>
                 {({width, height}) => {
                   return <List width={width} height={660} list={users} rowCount={users.length} rowHeight={44} rowRenderer={rowRenderer} overscanRowCount={5}></List>

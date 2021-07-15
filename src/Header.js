@@ -1,7 +1,7 @@
 import { removeAuthHeader } from "apis/axiosConfig";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { createSetAuthTokenAction, createSetUidAction } from "redux/auth-reducer";
+import { createSetAuthTokenAction, createSetUidAction, cresteSetUauthorityAction } from "redux/auth-reducer";
 import React, { useState } from "react";
 import Auth from "./views/Auth";
 import { RiCalendarCheckLine, RiStethoscopeFill, RiTestTubeFill } from "react-icons/ri";
@@ -14,7 +14,6 @@ function Header(props) {
   const hname = useSelector((state) => state.hospitalReducer.hname);
   const hlat = useSelector((state) => state.hospitalReducer.hlat);
   const hlong = useSelector((state) => state.hospitalReducer.hlong);
-
   const hospital_url = useSelector((state) => state.hospitalReducer.hurl);
   
   const dispatch = useDispatch();
@@ -22,6 +21,7 @@ function Header(props) {
   const logout = (event) => {
     dispatch(createSetUidAction(""));
     dispatch(createSetAuthTokenAction(""));
+    dispatch(cresteSetUauthorityAction(""));
     dispatch(createSetHnameAction(""));
     dispatch(createSetHidAction(""));
     dispatch(createSetHaddressAction(""));
@@ -33,6 +33,7 @@ function Header(props) {
     // SessionStorage에 인증 내용 제거
     sessionStorage.removeItem("uid");
     sessionStorage.removeItem("authToken");
+    sessionStorage.removeItem("uauthority");
     sessionStorage.removeItem("hname");
     sessionStorage.removeItem("hid");
     sessionStorage.removeItem("haddress");
