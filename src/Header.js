@@ -62,7 +62,7 @@ function Header(props) {
         <div className="header1_1">
           <span className="logo">TEAM2<img className="ml-1" src="/resources/img/logo_white_bold.png" alt="" width={30}></img></span>
         </div>
-        <div className="col-5">
+        <div className="header1_2">
           <WeatherAPI hlat={hlat} hlong={hlong} />
         </div>
         <div className="header1_3">
