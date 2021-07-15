@@ -4,6 +4,7 @@ import ReactExport from "react-export-excel";
 import InspectionListItem from "./InspectionListItem";
 import { readInspection } from "apis/inspections";
 import { useSelector } from "react-redux";
+import Spinner from "components/common/Spinner";
 
 let inspectionsList = [];
 
@@ -29,6 +30,9 @@ function InspectionList(props) {
 
   //검사번호 비교를 위한 상태
   const [id, setId] = useState("");
+
+  // Spinner
+  const [loading, setLoading] = useState(false);
 
   function getCompleteCount() {
     let completeCount = 0;
@@ -80,19 +84,21 @@ function InspectionList(props) {
     //count 확인 후, 총검사결과: 검사~>완료 바꿀 istate true로 바꿈
     if(inspections.length === iStateCount) {
       props.handleFinish();
-      props.publishTopic();
     } else {
       props.handleFinishBack();
     }
   }, [iStateCount]);
 
   const getInspections2 = async (treatmentId, globalUid) => {
+    setLoading(true);
     try {
       const response = await readInspection(treatmentId, globalUid);
       inspectionsList = response.data.inspectionList;
       setInspections(inspectionsList);
     } catch(error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
 
     checkInspections(inspectionsList);
@@ -105,7 +111,6 @@ function InspectionList(props) {
   const cancelBtn = () => {
     //검사결과: 검사 ~> 대기
     setCancelState(true);
-    //props.publishTopic();
   };
 
   const completeBtn = () => {
@@ -115,14 +120,6 @@ function InspectionList(props) {
     else{
       return;
     }
-  
-  
-    //alert("검사완료 시, 결과 수정이 불가합니다.");
-    //검사결과: 대기 ~> 완료
-    //setCompleteState(true);
-    //검사상태count ++
-    //props.countIState();
-    //props.publishTopic();
   };
   //검사상태count++
   const countIState = () => {
@@ -140,7 +137,7 @@ function InspectionList(props) {
         } else {
           setBarcodeState(true);
           props.handleBarcodeCheck();
-          props.publishTopic();
+          props.publishTopic(0);
           return false;
         }
       }
@@ -152,7 +149,6 @@ function InspectionList(props) {
     setModalOpen(false);
     setBarcodeState(true);
     props.handleBarcodeCheck();
-    //props.publishTopic();
   };
   const closeCancelModal = () => {
     setModalOpen(false);
@@ -262,6 +258,11 @@ function InspectionList(props) {
               </tr>
             </thead>
             <tbody>
+              {loading ? <div className="spinner2">
+      <div className="spinner-border text-primary" role="status">
+        <span className="sr-only">loading...</span>
+      </div>
+    </div> : <>
               {inspections.map((inspection) => {
                 return (
                   <InspectionListItem
@@ -277,9 +278,11 @@ function InspectionList(props) {
                     handleComplete={handleComplete}
                     countIState={countIState}
                     publishTopic={props.publishTopic}
+                    iStateFinish={props.iStateFinish}
                   />
                 );
               })}
+              </>}
             </tbody>
           </table>
         </div>

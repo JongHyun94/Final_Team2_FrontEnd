@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 import InspectionPatientListItem from "./InspectionPatientListItem";
 import { readPatient } from "apis/inspections";
+// import Spinner from "components/common/Spinner";
 
 let patientsList = [];
 
@@ -22,8 +23,10 @@ function InspectionPatientList(props) {
   // 진료번호 비교를 위한 상태
   const [id, setId] = useState("");
 
+  // Spinner
+  // const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    console.log(props.message);
     getPatient2(treatmentDate2);
   }, [props]);
 
@@ -36,14 +39,18 @@ function InspectionPatientList(props) {
   // })
 
   const getPatient2 = async (treatmentDate2) => {
+    // setLoading(true);
     try {
       const response = await readPatient(moment(treatmentDate2).format("yyyy-MM-DD HH:mm"), "");
       patientsList = response.data.treatmentList;
       setPatients(patientsList);
-      checkIState(patients);
+      checkIState(patientsList);
     } catch(error) {
       console.log(error);
     }
+    //  finally {
+    //   setLoading(false);
+    // }
   };
 
   function getIstateWaiting(patients) {
@@ -190,6 +197,7 @@ function InspectionPatientList(props) {
                 return <List width={width} height={500} list={patient} rowCount={patient.length} rowHeight={44} rowRenderer={rowRenderer} overscanRowCount={11} />;
               }}
             </AutoSizer> */}
+            {/* {loading ? <Spinner /> : <> */}
               {patients.map((patient) => {
                 return (
                   <InspectionPatientListItem key={patient.treatment_id} patient={patient} id={id} handleChecked={(treatmentId) => handleChecked(treatmentId)} 
@@ -198,6 +206,7 @@ function InspectionPatientList(props) {
                                               publishTopic={props.publishTopic}/>
                 );
               })}
+              {/* </>} */}
             </tbody>
           </table>
         </div>

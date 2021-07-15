@@ -34,6 +34,7 @@ function InspectionPatientListItem(props) {
         if(props.patient.treatment_istate === "검사"){
           //props.patient.treatment_istate = "완료";
             await updateIstateC(props.id);
+            props.publishTopic(1);
         }
       }
       props.handleFinishBack();

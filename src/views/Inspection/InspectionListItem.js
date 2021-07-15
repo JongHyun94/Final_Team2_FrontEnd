@@ -31,24 +31,31 @@ function InspectionListItem(props) {
   };
   //혈액검사 등록 버튼
   const inspectionRRegister = async (event) => {
-    try {
-      props.inspection.inspection_result = inspectionR;
-        await updateResult(props.id, inspectionR);
-      setInspectionR();
-    } catch(error) {
-      console.log(error);
+    if(inspectionR === "") {
+      alert("검사결과를 입력해주세요.");
+    } else {
+      try {
+        props.inspection.inspection_result = inspectionR;
+          await updateResult(props.id, inspectionR);
+        setInspectionR();
+      } catch(error) {
+        console.log(error);
+      }
     }
   };
 
   //혈액검사 수정 버튼
   const inspectionRModify = async (event) => {
-    try {
-      props.inspection.inspection_result = inspectionR;
-        await updateResult(props.id, inspectionR);
-    } catch(error) {
-      console.log(error);
+    if(inspectionR === "") {
+      alert("검사결과를 입력해주세요.");
+    } else {
+      try {
+        props.inspection.inspection_result = inspectionR;
+          await updateResult(props.id, inspectionR);
+      } catch(error) {
+        console.log(error);
+      }
     }
-    // setInspectionR(event.target.value);
   };
 
   //영상검사 보기 버튼
@@ -106,7 +113,7 @@ function InspectionListItem(props) {
         }
       }
       props.handleBarcode();
-      props.publishTopic();
+      props.publishTopic(0);
     } catch(error) {
       console.log(error);
     }
@@ -122,7 +129,7 @@ function InspectionListItem(props) {
         }
       }
       props.handleCancel();
-      props.publishTopic();
+      props.publishTopic(0);
     } catch(error) {
       console.log(error);
     }
@@ -130,21 +137,25 @@ function InspectionListItem(props) {
 
   //검사 완료 버튼 : 검사상태(~>완료) 변경
   const inspectionStateChange3 = async () => {
-    try {
-      if(props.inspection.inspection_id === props.id){
-        if(props.inspection.inspection_state === "검사"){
-          //props.inspection.inspection_state = "완료";
-            await updateState(props.id, "완료");
-          //검사상태count ++
-          props.countIState();
+      try {
+        if(props.inspection.inspection_id === props.id){
+          if(props.inspection.inspection_state === "검사"){
+            if(inspectionR === "") {
+              alert("검사결과를 입력해주세요.");
+            } else {
+              //props.inspection.inspection_state = "완료";
+              await updateState(props.id, "완료");
+            //검사상태count ++
+            props.countIState();
+            }
+            
+          }
         }
+        props.handleComplete();
+        props.publishTopic(0);
+      } catch(error) {
+        console.log(error);
       }
-      props.handleComplete();
-      props.publishTopic();
-    } catch(error) {
-      console.log(error);
-    }
-    
   };
   
   return (

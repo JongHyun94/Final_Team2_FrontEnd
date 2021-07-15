@@ -8,36 +8,59 @@ function InspectionImgCreateFormModal(props) {
   const { open, closeR, close } = props;
 
   const inputFile = useRef();
-  // const inputFile2 = useRef();
-  // const inputFile3 = useRef();
 
   const inspectionImgResultBtn = async (event) => {
+    console.log("타입", inputFile.current.files[0].type);
     event.preventDefault();
 
-    // console.log(inputFile.current.files.length);
-    try {
-      const formData = new FormData();
-      formData.append("inspection_img_inspection_id", inspectionImgResult.inspection_id);
-      for(var i=0; i<=inputFile.current.files.length-1; i++){
-      formData.append("inspection_img_attach", inputFile.current.files[i]);
+    var maxSize = 1 * 1024 * 1024;
+    var sizeIndex = 0;
+    var size = true;
+
+    var typeIndex = 0;
+    var type = true;
+
+    for (var i = 0; i <= inputFile.current.files.length - 1; i++) {
+      if (inputFile.current.files[i].type.substring(0, inputFile.current.files[i].type.lastIndexOf("/")) !== "image") {
+        type = false;
+        typeIndex = i;
+        break;
       }
-      await createImage(formData);
 
-    // formData 콘솔 찍는 법
-    // for (let value of formData.values()) {
-    //   console.log(value);
-    // }
-
-    } catch(error) {
-      console.log(error);
+      if (inputFile.current.files[i].size >= maxSize) {
+        size = false;
+        sizeIndex = i;
+        break;
+      }
     }
-    
-    if(inputFile.current.files.length === 0) {
+
+    if (inputFile.current.files.length === 0) {
       alert("첨부파일이 없습니다.");
+    } else if(!type) {
+      alert(typeIndex + 1 + "번째 첨부파일이 이미지파일이 아닙니다.");
+    } else if (inputFile.current.files.length >= 5) {
+      alert("첨부파일은 최대 4개까지 선택할 수 있습니다.");
+    } else if (!size) {
+      alert(sizeIndex + 1 + "번째 첨부파일의 크기가 1MB를 초과했습니다.");
     } else {
+      try {
+        const formData = new FormData();
+        formData.append("inspection_img_inspection_id", inspectionImgResult.inspection_id);
+        for (var i = 0; i <= inputFile.current.files.length - 1; i++) {
+          formData.append("inspection_img_attach", inputFile.current.files[i]);
+        }
+        await createImage(formData);
+
+        // formData 콘솔 찍는 법
+        // for (let value of formData.values()) {
+        //   console.log(value);
+        // }
+      } catch (error) {
+        console.log(error);
+      }
+
       closeR();
     }
-    
   };
 
   return (
@@ -69,9 +92,15 @@ function InspectionImgCreateFormModal(props) {
                       <div className="mb-1">{inspectionImgResult.inspection_doctor_name}</div>
                       <div className="mb-1">{inspectionImgResult.inspection_inspector_name}</div>
                       <div className="mb-1">{inspectionImgResult.inspection_lab}</div>
-                      <div className="mb-1"><input name="iattach" type="file" multiple style={{ width: "100%" }} ref={inputFile} /></div>
-                      {/* <div className="mb-1"><input name="iattach2" type="file" style={{ width: "100%" }} ref={inputFile2} /></div> */}
-                      {/* <div className="mb-1"><input name="iattach3" type="file" style={{ width: "100%" }} ref={inputFile3} /></div> */}
+                      <div className="mb-1">
+                        <input name="iattach" type="file" multiple style={{ width: "100%" }} ref={inputFile} accept="image/*" />
+                      </div>
+                      <div className={`font-weight-lighter font-italic`}>
+                        <small>※최대 4개까지 선택 가능</small>
+                      </div>
+                      <div className={`font-weight-lighter font-italic`}>
+                        <small>※이미지파일 크기는 1MB 초과 불과</small>
+                      </div>
                     </div>
                   </div>
                   <div className={`${style.InspectionImgCreateForm_1_2} mb-3`}>

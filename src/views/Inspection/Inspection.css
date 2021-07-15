@@ -198,3 +198,19 @@
   flex-direction: row;
   justify-content: flex-end;
 }
+
+.spinner2 {
+  /* display: block;
+  position: fixed;
+  top: calc(50% - (300px / 2));
+  right: calc(65% - (50px / 2)); */
+  position: fixed;
+   z-index: 999;
+   top: 0;
+   left: 30%;
+   width: 70%;
+   height: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
