@@ -95,7 +95,7 @@ function User(props) {
   return (
     <div className="row no-gutters User">
       {/* 좌측 */}
-      <div className="User_left UserList">
+      <div className="User_left">
         {/* 직원 목록 */}
         <UserList user={user} changeUser={changeUser} message={message}/>
       </div>
