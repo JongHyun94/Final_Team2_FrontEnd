@@ -4,24 +4,44 @@ import Register from "views/Register";
 import Treatment from "views/Treatment";
 import Inspection from "views/Inspection";
 import Login from "views/Login";
-import Auth from "views/Auth";
-import Help from "views/Help";
 import DataAnalysis from "views/DataAnalysis";
 import User from "views/User";
+import Page404 from "views/errors/page404";
+import DoctorRoute from "DoctorRoute";
+import InspectorRoute from "InspectorRoute";
+import MasterRoute from "MasterRoute";
 
 function AppRoute() {
-    return(
+    return (
         <Switch>
-            <Route path="/" component={Login}/>
-            <Route path="/Patient" component={Patient}/>
-            <Route path="/Register" component={Register}/>
-            <Route path="/Treatment" component={Treatment}/>
-            <Route path="/Inspection" component={Inspection}/>   
-            <Route path="/DataAnalysis" component={DataAnalysis}/> 
-            <Route path="/User" component={User}/>
-            <Route path="/Auth" component={Auth}/>
-            <Route path="/Help" component={Help}/>
-            <Route component={Page404}/>
+            <Route path="/" exact component={Login} />
+            <Route path="/Patient" component={Patient} />
+            <Route path="/Register" component={Register} />
+            {/* <Route path="/Treatment" component={Treatment}/> */}
+            <DoctorRoute
+                path="/Treatment"
+                component={Treatment}
+                role={"ROLE_DOCTOR"}
+            />
+            {/* <Route path="/Inspection" component={Inspection}/>    */}
+            <InspectorRoute
+                path="/Inspection"
+                component={Inspection}
+                role={"ROLE_DOCTOR"}
+            />
+            {/* <Route path="/DataAnalysis" component={DataAnalysis}/>  */}
+            <MasterRoute
+                path="/DataAnalysis"
+                component={DataAnalysis}
+                role={"ROLE_DOCTOR"}
+            />
+            {/* <Route path="/User" component={User} /> */}
+            <MasterRoute
+                path="/User"
+                component={User}
+                role={"ROLE_DOCTOR"}
+            />
+            <Route component={Page404} />
             {/* <Redirect to="/Register"/> */}
         </Switch>
     );
