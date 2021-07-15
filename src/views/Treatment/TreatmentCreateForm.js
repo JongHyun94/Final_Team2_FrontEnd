@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { updateTreatment, getSearchDurg, getCategoryInspectionList, createDruglist } from "apis/treatments";
+import Spinner from "components/common/Spinner";
+import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 
 function TreatmentCreateForm(props) {
 
   const { publishTopic } = props;
-
+  // spinner 
+  const [loading, setLoading] = useState(false);
   //임시 환자 리스트
   var tempPatientlist = {
     treatment_register_id: "",
@@ -26,9 +29,13 @@ function TreatmentCreateForm(props) {
   //검사 checkbox
   const [inspectionlist, setInspectionlist] = useState([]);
   const [inspectionOption, setInspectionOption] = useState("진단 검사 선택");
-  // const [inspectionOption, setInspectionOption] = useState(["진단 검사 선택"]);
+  
+
+
+
   const [inspectionForm, setInspectionForm] = useState({
-    selectedInspection: []
+    selectedInspection: [],
+    selectedInspection2: []
   });
   const [drugForm, setDrugForm] = useState({
     selectedDrug: []
@@ -53,11 +60,14 @@ function TreatmentCreateForm(props) {
 
 
   const getSearchDurgs = async () => {
+    setLoading(true);
     try {
       var list = await getSearchDurg();
       setDrugLists(list.data.druglist);
     } catch (e) {
       console.log(e);
+    }finally {
+      setLoading(false);
     }
   }
   // 마운트될때 전체 출력이 된다
@@ -75,11 +85,14 @@ function TreatmentCreateForm(props) {
   };
 
   const searchClick = async () => {
+    setLoading(true);
     try {
       var list = await getSearchDurg(searchKeyword);
       setDrugLists(list.data.druglist);
-    } catch (e) {
-
+    } catch (error) {
+      console.log(error);
+    }finally {
+      setLoading(false);
     }
   };
 
@@ -107,42 +120,6 @@ function TreatmentCreateForm(props) {
     setCmemo(event.target.value);
   };
 
-  //const [treatment, setTreatment] = useState({});
-
-  // const handleChange = (event) => {
-  //   setTreatment({
-  //     ...treatment,
-  //     treatment_id: checkedPatientlist.treatment_id,
-  //     [event.target.name]: event.target.value 
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   setTreatment({
-  //     ...treatment,
-  //     treatment_id : checkedPatientlist.treatment_id,
-  //     treatment_smemo : smemo,
-  //     trtreatment_omemo: omemo, 
-  //     treatment_amemo: amemo,
-  //     treatment_pmemo: pmemo, 
-  //     treatment_communication: cmemo
-  //   });
-  //   setTreatmentId(checkedPatientlist.treatment_id);
-  // },[props]);
-
-  // const handleUpdate = async (event) => {
-  //   try{
-  //     // event.preventDefault();
-  //     console.log("진료 정보 수정: ", treatment);
-  //     const response = await updateTreatment(treatment);
-  //     if (response.data) {
-  //       alert("진료 정보를 수정했습니다.");
-  //     }
-  //   } catch(error) {
-  //     console.log(error);
-  //   }    
-  // };
-
   const updateTreatmentBtn = async (event) => {
     //publishTopic();
     // event.preventDefault();
@@ -157,56 +134,43 @@ function TreatmentCreateForm(props) {
         treatment_pmemo: pmemo,
         treatment_communication: cmemo,
         selectedInspection : inspectionForm.selectedInspection,
+        selectedInspection2 : inspectionForm.selectedInspection2,
         selectedDrug : drugForm.selectedDrug,
-        inspectionOption:inspectionOption
+   
       };
+ 
+
       console.log("sseeCATEGORY: ",newTreatment.selectedInspection);
+      console.log("sseeCATEGORY selectedInspection2: ",newTreatment.selectedInspection2);
       console.log("newtt", newTreatment);
       var list = await updateTreatment(newTreatment);
-      publishTopic(0);
-      publishTopic(1);
-      console.log("list", list);
+      if(list.data){
+        ToastsStore.success("진료 등록 완료");
+        publishTopic(0);
+        publishTopic(1);
+        console.log("list", list);
+        setSmemo("");
+        setOmemo("");
+        setAmemo("");
+        setPmemo("");
+        setCmemo("");
+
+     
+      setInspectionForm({selectedInspection:[""]},{selectedInspection2:[""]});
+      
+      }
+     
       // console.log(list.data.result)
 
       // setInspectionlist(newTreatment);
+    
+   
+     
     } catch (e) {
       console.log(e);
     }
 
   };
-
-
-
-  // const handleUpdate = async (event) => {
-  //   event.preventDefault();
-  //   const dirtyBoard = {...board};
-  //   await updateBoard(dirtyBoard);
-  //   props.history.goBack();
-  //   try{
-
-  //   }catch(error){
-  //     console.log(error);
-  //   }
-  // };
-
-  // const handleChange = (event) => {
-  //   setBoard({
-  //     ...board,
-  //     [event.target.name] : event.target.value
-  //   })
-  // };
-
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   console.log("접수완료 : ", inspectionlist);
-  // };
-
-  // const handleCreate = (event) => {
-  //   event.preventDefault();
-  //   const newTreatment = {...treatment};
-  //   console.log("진료 등록: ", newTreatment);
-  // };
 
   const checkChange = (event) => {
     // console.log("aaaaaaaa",event.target.name);
@@ -254,7 +218,42 @@ function TreatmentCreateForm(props) {
 
     }
   };
+  const checkChange3 = (event) => {
 
+    if (event.target.checked) {//체크되었는지 유무
+
+      setInspectionForm(prevInspectionForm => {
+        return {
+          ...prevInspectionForm,
+          selectedInspection2: prevInspectionForm.selectedInspection2.concat(event.target.value)
+        };
+      })
+
+    } else {
+
+      setInspectionForm(prevInspectionForm => {
+        return {
+          ...prevInspectionForm,
+          selectedInspection2: prevInspectionForm.selectedInspection2.filter(item => item !== event.target.value)
+        };
+      })
+
+    }
+  };
+  const onReset = () => {
+    // setUser({ username: "", age: "" });
+    setDrugForm({selectedDrug:""});
+    setInspectionForm({selectedInspection:""});
+  };
+
+
+  // //진료대기 환자 선택함수
+  // const checkedInspectionlists = (inspection_list_id) => {
+  //   // setSelectedRegisterId(treatment_register_id);
+  //   setInspectionForm(inspection_list_id);
+   
+  //   setCheckedpatient(patientlist);
+  // };
 
   return (
     <div>
@@ -262,6 +261,7 @@ function TreatmentCreateForm(props) {
         {/* 진료 등록<button type="submit" className="button_team2_fill">진료완료</button> */}
         <div className="TreatmentCreateForm_title_1"> {checkedPatientlist.patient_name} 님 진료 등록 </div>
         <div className="TreatmentCreateForm_title_2">
+          <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground/> 
           <button type="submit" className="button_team2_fill" onClick={updateTreatmentBtn}>
             진료완료
           </button>
@@ -308,10 +308,15 @@ function TreatmentCreateForm(props) {
               <div className="TreatmentCreateForm_checkbox">
                 {inspectionlist.map((inspection) => {
                   return (
-                    <div key={inspection.inspection_list_id}>
+                    <div key={inspection.inspection_list_id}  >
                       {inspection.inspection_list_category === inspectionOption ? (
+                        inspection.inspection_list_category ==="혈액검사"?
                         <div className="TreatmentCreateForm_checkbox_1" >
                           <input type="checkbox" name="selectedInspection" value={inspection.inspection_list_id} onChange={checkChange2}/> {inspection.inspection_list_name}
+                        </div>
+                        :
+                        <div className="TreatmentCreateForm_checkbox_1" >
+                          <input type="checkbox" name="selectedInspection2" value={inspection.inspection_list_id} onChange={checkChange3}/> {inspection.inspection_list_name}
                         </div>
                       ) : (
                         false
@@ -327,7 +332,7 @@ function TreatmentCreateForm(props) {
             <div className="TreatmentCreateForm_2_2_title">약품 목록</div>
             <div className="TreatmentCreateForm_2_2_content">
               <div className="TreatmentSearch_1">
-                <input type="text" className="TreatmentSearch_1_1" onChange={changeKeyword} value={searchKeyword} />
+                <input type="text" className="TreatmentSearch_1_1" placeholder="약품/주사명을 입력하세요." onChange={changeKeyword} value={searchKeyword} />
                 <button className="button_team2_fill" onClick={searchClick}>검색</button>
               </div>
               <div className="TreatmentSearch_2_Totaltable">
@@ -341,6 +346,7 @@ function TreatmentCreateForm(props) {
                     </tr>
                   </thead>
                   <tbody>
+                  {loading ? <Spinner /> : <>
                     {druglists.map((druglist) => {
                       return (
                         <tr className="TreatmentSearch_2_2_tr" key={druglist.drug_injection_list_id}>
@@ -353,6 +359,7 @@ function TreatmentCreateForm(props) {
                         </tr>
                       );
                     })}
+                     </>}
                   </tbody>
                 </table>
               </div>

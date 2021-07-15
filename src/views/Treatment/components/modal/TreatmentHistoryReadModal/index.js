@@ -4,6 +4,8 @@ import React, { useState, useEffect  } from "react";
 import style from "./style.module.css";
 import { getTreatmentHistoryRead } from "apis/treatments";
 import InspectionImgFormModal from "views/Inspection/components/modal/InspectionImgFormModal";
+import moment from "moment";
+import Spinner from "components/common/Spinner";
 // import InspectionImgFormModal from "./components/modal/InspectionImgFormModal";
 // function getSOAP() {
 //   const soap = [{ treatment_id: "1", treatment_smemo: "목 아픔", treatment_omemo: "인후염", treatment_amemo: "온열찜질기 실행", treatment_pmemo: "다음 내원시 Lab test" }];
@@ -53,7 +55,8 @@ function TreatmentHistoryRead(props) {
   
   const [img, setImg] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-
+  // spinner 
+  const [loading, setLoading] = useState(false);
   const openModal = () => {
     setModalOpen(true);
   };
@@ -70,6 +73,7 @@ function TreatmentHistoryRead(props) {
   }
 
   const getTreatmentHistoryReads = async (treatment_id) =>{
+    setLoading(true);
     try{
       var list = await getTreatmentHistoryRead(treatment_id);
       setSoap(list.data.treatmentSoaplist);
@@ -77,6 +81,8 @@ function TreatmentHistoryRead(props) {
       setDrugLists(list.data.treatmentDrugsInjectionlist);
     }catch (e){
       console.log(e);
+    }finally {
+      setLoading(false);
     }
   }
   useEffect(() => {
@@ -89,7 +95,9 @@ function TreatmentHistoryRead(props) {
     <div className={style.TreatmentHistorymodal}>
       <div className={open ? `${style.openModal} ${style.modal}`:`${style.modal}`} >
         {open ? (
+            
           <section>
+            {loading ? <Spinner /> : <>
             <div className={style.TreatmentHistoryRead}>
               <div className={style.TreatmentHistoryRead_title}> 진료번호 : {readTreatmentId} . 진료상세 </div>
               <div className={`${style.TreatmentHistoryRead_border} border`}>
@@ -172,23 +180,26 @@ function TreatmentHistoryRead(props) {
                           return (
                             <tr key={inspectionlist.inspection_id}>
                               <td>{inspectionlist.inspection_list_category}</td>
-                              <td>{inspectionlist.inspection_date}</td>
+                              <td>{moment(inspectionlist.inspection_date).format("yyyy-MM-DD HH:mm")}</td>
                               <td>{inspectionlist.user_name}</td>
                               <td>{inspectionlist.inspection_list_name}</td>
                               <td>{inspectionlist.inspection_list_reference}</td>
-                              {inspectionlist.inspection_list_category === "영상검사" ? (
-                                <td>
-                                  <React.Fragment>
-                                    {" "}
-                                    <button className="button_team2_empty" onClick={openModal}>
-                                      보기
-                                    </button>
-                                    <InspectionImgFormModal id={inspectionlist.inspection_id} open={modalOpen} close={closeModal} inspection={inspectionlist}/>
-                                  </React.Fragment>
-                                </td>
-                              ) : (
+                              {/* <td>{inspectionlist.inspection_state}</td> */}
+                              {inspectionlist.inspection_list_category === "영상검사" ? 
+                                inspectionlist.inspection_result === "img" ?
+                                      <td>
+                                        <React.Fragment>
+                                          {" "}
+                                          <button className="button_team2_empty" onClick={openModal}>
+                                            보기
+                                          </button>
+                                          <InspectionImgFormModal id={inspectionlist.inspection_id} open={modalOpen} close={closeModal} inspection={inspectionlist}/>
+                                        </React.Fragment>
+                                      </td>
+                                  : <td></td>
+                                  :
                                 <td>{inspectionlist.inspection_result}</td>
-                              )} 
+                              } 
                             </tr>
                           );
                         })}
@@ -213,7 +224,7 @@ function TreatmentHistoryRead(props) {
                         {druglists.map((druglist) => {
                           return (
                             <tr key={druglist.drug_injection_drug_injection_list_id}>
-                              <th>{druglist.treatment_date}</th>
+                              <th>{moment(druglist.treatment_date).format("yyyy-MM-DD HH:mm")}</th>
                               <th>{druglist.user_name}</th>
                               <th>{druglist.drug_injection_drug_injection_list_id}</th>
                               <th>{druglist.drug_injection_list_name}</th>
@@ -233,7 +244,9 @@ function TreatmentHistoryRead(props) {
                 </button>
               </div>
             </div>
+            </>}
           </section>
+         
         ) : null}
       </div>
     </div>
