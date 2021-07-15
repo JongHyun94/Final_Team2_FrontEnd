@@ -12,7 +12,7 @@ import User from "views/User";
 function AppRoute() {
     return(
         <Switch>
-            {/* <Route path="/" exact component={Login}/> */}
+            <Route path="/" component={Login}/>
             <Route path="/Patient" component={Patient}/>
             <Route path="/Register" component={Register}/>
             <Route path="/Treatment" component={Treatment}/>
@@ -21,8 +21,8 @@ function AppRoute() {
             <Route path="/User" component={User}/>
             <Route path="/Auth" component={Auth}/>
             <Route path="/Help" component={Help}/>
-            <Route path="/" component={Login}/>
-            <Redirect to="/Register"/>
+            <Route component={Page404}/>
+            {/* <Redirect to="/Register"/> */}
         </Switch>
     );
 }

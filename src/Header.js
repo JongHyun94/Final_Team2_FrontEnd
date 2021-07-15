@@ -14,7 +14,6 @@ function Header(props) {
   const hname = useSelector((state) => state.hospitalReducer.hname);
   const hlat = useSelector((state) => state.hospitalReducer.hlat);
   const hlong = useSelector((state) => state.hospitalReducer.hlong);
-
   const hospital_url = useSelector((state) => state.hospitalReducer.hurl);
   
   const dispatch = useDispatch();
