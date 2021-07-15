@@ -3,6 +3,7 @@ import { AutoSizer, List } from "react-virtualized";
 import { getPatientList } from "apis/patient";
 import moment from "moment";
 import Spinner from "components/common/Spinner";
+import Nodata from "components/common/NoData";
 
 function PatientList(props) {
   // 환자 목록 상태
@@ -70,7 +71,7 @@ function PatientList(props) {
       }
     };
     work();
-  }, [props])
+  }, [props.message])
     
   const rowRenderer = ({index, key, style}) => {
     return (
@@ -112,7 +113,14 @@ function PatientList(props) {
               <div style={{width: "2%"}}></div>
             </div>
           <div>
-            {loading ? <Spinner /> : <>
+            {loading ? <Spinner /> 
+            : 
+            patients.length === 0 ?
+            <React.Fragment>
+              <Nodata />
+            </React.Fragment>
+            :
+            <>
               <AutoSizer disableHeight>
                 {({width, height}) => {
                   return <List width={width} height={675} list={patients} rowCount={patients.length} rowHeight={44} rowRenderer={rowRenderer} overscanRowCount={5}></List>
