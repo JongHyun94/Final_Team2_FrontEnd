@@ -48,14 +48,23 @@
 }
 
 .row_1 {
-  color: #009900;
+
   margin-left: 20%;
+  cursor: pointer;
   /* font-size: small; */
 }
 
 .row_2 {
+  color: #009900;
+  margin-left: 3%;
+  cursor: pointer;
+  /* font-size: small; */
+}
+
+.row_3 {
   color: #00AAF0;
   margin-left: 3%;
+  cursor: pointer;
   /* font-size: small; */
 }
 

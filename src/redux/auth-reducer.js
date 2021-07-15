@@ -23,7 +23,6 @@ export const createSetAuthTokenAction = (authToken) => {
   };
 };
 
-
 //리듀스 선언
 const authReducer = (state = initialState, action) => { //default값 넣어줌 initialState
   if (action.type === SET_UID) {

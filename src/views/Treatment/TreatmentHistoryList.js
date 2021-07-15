@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import TreatmentHistoryRead from "./components/modal/TreatmentHistoryReadModal";
 import { getTreatmentHistoryList } from "apis/treatments";
-
+import moment from "moment";
+import Spinner from "components/common/Spinner";
 //진료 기록 생성 하기
 // function getTreatmentHistory() {
 //   const createTreatmentHistoryList = [];
@@ -21,7 +22,8 @@ function TreatmentHistoryList(props) {
   //진료 기록 생성 상태로
   const [treatmentHistoryList, setTreatmentHistoryList] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-
+  // spinner 
+  const [loading, setLoading] = useState(false);
   //임시 환자 리스트
   var tempPatientlist = {
     treatment_register_id :"",
@@ -68,12 +70,15 @@ function TreatmentHistoryList(props) {
 
 
   const getTreatmentHistoryLists = async (treatment_patient_id) => {
+    setLoading(true);
     try{
       var list = await getTreatmentHistoryList(treatment_patient_id);
       // console.log(list.data.historylist);
       setTreatmentHistoryList(list.data.historylist);
     }catch (e){
       console.log(e);
+    }finally {
+      setLoading(false);
     }
 
   };
@@ -103,6 +108,7 @@ function TreatmentHistoryList(props) {
               </tr>
             </thead>
             <tbody>
+            {loading ? <Spinner /> : <>
               {treatmentHistoryList.map((treatmentHistory) => {
                 return (
                   <tr className="TreatmentHistoryList_table_tr" key={treatmentHistory.treatment_id} onClick={(event) => checkedtreatment(treatmentHistory.treatment_id)}>
@@ -110,12 +116,13 @@ function TreatmentHistoryList(props) {
                       <input type="checkbox" checked={selectedTreatmentId === treatmentHistory.treatment_id ? true : false} readOnly />
                     </td>
                     <th>{treatmentHistory.treatment_id}</th>
-                    <th>{treatmentHistory.treatment_date}</th>
+                    <th>{moment(treatmentHistory.treatment_date).format("yyyy-MM-DD HH:mm")}</th>
                     <th>{treatmentHistory.user_name}</th>
                     <th>{treatmentHistory.treatment_communication}</th>
                   </tr>
                 );
               })}
+               </>}
             </tbody>
           </table>
         </div>

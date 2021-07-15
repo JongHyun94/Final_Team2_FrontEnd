@@ -3,8 +3,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getTreatmentPatientList } from "apis/treatments";
 import moment from "moment";
-
-
+import Spinner from "components/common/Spinner";
+import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 
 function TreatmentPatientList(props) {
   
@@ -26,6 +26,9 @@ function TreatmentPatientList(props) {
   const [ready, setReady] = useState(0);
   const [done, setDone] = useState(0);
 
+  // spinner 
+  const [loading, setLoading] = useState(false);
+
   // 마운트 및 언마운트에 실행할 내용------------------------------------
   // useEffect(() => {
   //   getTreatmentPatientLists(inputdate2);
@@ -36,12 +39,15 @@ function TreatmentPatientList(props) {
   // }, [patientlists]);
   useEffect(() => {
     const work = async () =>{
+      setLoading(true);
       try{
           var list = await getTreatmentPatientList(inputdate2, "");
           setPatientlists(list.data.treatmentlist);
           getState(list.data.treatmentlist);
       }catch(error){
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     work();
@@ -52,24 +58,30 @@ function TreatmentPatientList(props) {
     getList(inputdate2);
   }, [inputdate2]);
 
-  useEffect(() => {
-    console.log(message);
-    getList(inputdate2);
-  },[inputdate2, message, props])
+  // useEffect(() => {
+  //   console.log(message);
+  //   getList(inputdate2);
+  // },[inputdate2, message, props])
 
   useEffect(() => {
     const work = async () =>{
+      setLoading(true);
       try{
           var list = await getTreatmentPatientList(inputdate2, "");
           setPatientlists(list.data.treatmentlist);
           getState(list.data.treatmentlist);
       }catch(error){
         console.log(error);
+      }finally {
+        setLoading(false);
       }
     };
-    if(message.content==="refreshTreatments")
-    work();
-  }, [inputdate2, message, props]);
+    if(message.content==="addTreatments"){
+      ToastsStore.success("접수 완료");
+      work();
+    }
+  
+  }, [message]);
 
 
 
@@ -91,31 +103,40 @@ function TreatmentPatientList(props) {
 
 //필터
 const totalFilter = async () => {
+  setLoading(true);
   try{
     var list = await getTreatmentPatientList(inputdate2,"");
     setPatientlists(list.data.treatmentlist);
   } catch(e) {
     console.log(e);
+  }finally {
+    setLoading(false);
   }
 };
 
 
 const readyFilter = async () => {
+  setLoading(true);
   try{
     var list = await getTreatmentPatientList(inputdate2,"대기");
     setPatientlists(list.data.treatmentlist);
   } catch(e) {
     console.log(e);
+  }finally {
+    setLoading(false);
   }
 };
 
 
 const finishFilter = async () => {
+  setLoading(true);
   try{
     var list = await getTreatmentPatientList(inputdate2,"완료");
     setPatientlists(list.data.treatmentlist);
   } catch(e) {
     console.log(e);
+  }finally {
+    setLoading(false);
   }
 };
 
@@ -123,6 +144,7 @@ const finishFilter = async () => {
   //실행 함수--------------------------------
   //선택 날자에 맞는 리스트 가져오기
   const getList = async (inputdate2) => {
+    setLoading(true);
     try{
       const list = await getTreatmentPatientList(inputdate2,"");
       // console.log(list.data.treatmentlist);
@@ -130,6 +152,8 @@ const finishFilter = async () => {
       getState(list.data.treatmentlist);
     }catch (e){
       console.log(e);
+    }finally {
+      setLoading(false);
     }
 
   };
@@ -152,15 +176,15 @@ const getState = (patientlists) => {
   return (
     <div>
       <div className="TreatmentPatientList_title">진료대기환자</div>
-
+      <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground/> 
       <div className="TreatmentPatientList_border border">
         <div className="TreatmentPatientList_search">
           {/* <input type="date" DatePicker selected={inputdate} onChange={(date) => setInputdate(date)} /> */}
           <DatePicker locale="ko" dateFormat="yyyy.MM.dd" selected={inputdate} onChange={(date) => setInputdate(date)} />
           <button className="button_team2_fill" onClick={() => searchDateBtn(inputdate)}>이동</button>
-          <div onClick={totalFilter}>전체:{ready + done}명</div>
-          <div className="row_1" onClick={readyFilter}>대기:{ready}명</div>
-          <div className="row_2" onClick={finishFilter}>완료:{done}명</div>
+          <div className="row_1" onClick={totalFilter}>전체:{ready + done}명</div>
+          <div className="row_2" onClick={readyFilter}>대기:{ready}명</div>
+          <div className="row_3" onClick={finishFilter}>완료:{done}명</div>
         </div>
         <div className="TreatmentPatientList_Totaltable">
           <table className="table TreatmentPatientList_table">
@@ -179,6 +203,7 @@ const getState = (patientlists) => {
             </thead>
 
             <tbody>
+            {loading ? <Spinner /> : <>
               {patientlists.map((patientlist) => {
                 return (
                   <tr className="TreatmentPatientList_table_tr" key={patientlist.treatment_register_id} onClick={(event) => checkedtreatmentPatient(patientlist.treatment_register_id, patientlist)}>
@@ -192,10 +217,11 @@ const getState = (patientlists) => {
                     <td>{patientlist.treatment_id}</td>
                     <td>{patientlist.register_communication}</td>
                     <td>{moment(patientlist.register_starttime).format("yyyy-MM-DD")}</td>
-                    {patientlist.treatment_state === "대기" ? <td className="row_1">{patientlist.treatment_state}</td> : <td className="row_2">{patientlist.treatment_state}</td>}
+                    {patientlist.treatment_state === "대기" ? <td className="row_2">{patientlist.treatment_state}</td> : <td className="row_3">{patientlist.treatment_state}</td>}
                   </tr>
                 );
               })}
+             </>}
             </tbody>
           </table>
         </div>

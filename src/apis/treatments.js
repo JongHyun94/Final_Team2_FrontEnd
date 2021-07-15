@@ -29,11 +29,14 @@ export function getSearchDurg(keyword="") {
   return promise;
 }
 
-export function getCategoryInspectionList(categoryValue) {
-  const promise = axios.get("/treatment/categoryValue", {params: {categoryValue}});
+// export function getCategoryInspectionList(categoryValue) {
+//   const promise = axios.get("/treatment/categoryValue", {params: {categoryValue}});
+//   return promise;
+// }
+export function getCategoryInspectionList() {
+  const promise = axios.get("/treatment/categoryValue");
   return promise;
 }
-
 // drugsInjections 등록하기
 export function createDruglist(selectedDrug){
   const promise = axios.post("/treatment/drugsInjections", selectedDrug);

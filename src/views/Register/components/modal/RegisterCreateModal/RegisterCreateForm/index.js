@@ -62,7 +62,7 @@ function RegisterCreateForm(props) {
 
   const [startDate, setStartDate] = useState(new Date());
   const [minDate, setMinDate] = useState(new Date());
-  const [minTime, setMinTime] = useState(new Date());
+  const [minTime, setMinTime] = useState(setHours(setMinutes(new Date(), 0), 9));
 
   // 담당의 상태
   const [doctorsList, setDoctorsList] = useState(doctors);
@@ -112,7 +112,9 @@ function RegisterCreateForm(props) {
     setMinTime(() =>
       ((startDate.getFullYear() === new Date().getFullYear())
         && (startDate.getMonth() === new Date().getMonth())
-        && (startDate.getDate() === new Date().getDate()))
+        && (startDate.getDate() === new Date().getDate())
+        && (startDate.getHours() < 8)
+        && (startDate.getHours() > 17))
         ? new Date() : setHours(setMinutes(new Date(), 0), 9)
     );
     setMinDate(() =>

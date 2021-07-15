@@ -5,7 +5,7 @@ import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import { registerLocale } from "react-datepicker";
 import ko from 'date-fns/locale/ko';
-import { updateRegister } from "apis/register";
+import { changeRegisterState, updateRegister } from "apis/register";
 import moment from "moment";
 
 registerLocale("ko", ko);
@@ -154,13 +154,18 @@ function RegisterUpdateForm(props) {
     //     && (startDate.getHours() > 17))
     //     ? startDate.setDate(startDate.getDate() + 1) : new Date()
     // );
+    return()=>{
+      changeRegister();
+    }
   }, [props.selectedPatient]);
 
   useEffect(() => {
     setMinTime(() =>
       ((startDate.getFullYear() === new Date().getFullYear())
         && (startDate.getMonth() === new Date().getMonth())
-        && (startDate.getDate() === new Date().getDate()))
+        && (startDate.getDate() === new Date().getDate())
+        && (startDate.getHours() < 8)
+        && (startDate.getHours() > 17))
         ? new Date() : setHours(setMinutes(new Date(), 0), 9)
     );
     setMinDate(() =>

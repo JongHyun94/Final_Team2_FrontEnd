@@ -70,7 +70,6 @@ function UserCreateForm(props) {
   const handleCreate = async () => {
     try {
       // event.preventDefault();
-      console.log("직원 등록: ", user);
       const response = await createUser(user);
       if (response.data) {
         setUser({
@@ -115,7 +114,6 @@ function UserCreateForm(props) {
   };
   const sendModal = (data) => {
     setAddressModalOpen(false);
-    // console.log("send1 실행", data);
     setUser({
       ...user,
       user_zipcode: data.zonecode,
