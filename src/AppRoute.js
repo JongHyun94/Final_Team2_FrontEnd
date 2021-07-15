@@ -10,8 +10,10 @@ import Page404 from "views/errors/page404";
 import DoctorRoute from "DoctorRoute";
 import InspectorRoute from "InspectorRoute";
 import MasterRoute from "MasterRoute";
+import { useSelector } from "react-redux";
 
 function AppRoute() {
+    const Uauthority = useSelector((state) => state.authReducer.uauthority);
     return (
         <Switch>
             <Route path="/" exact component={Login} />
@@ -21,25 +23,25 @@ function AppRoute() {
             <DoctorRoute
                 path="/Treatment"
                 component={Treatment}
-                role={"ROLE_DOCTOR"}
+                role={Uauthority}
             />
             {/* <Route path="/Inspection" component={Inspection}/>    */}
             <InspectorRoute
                 path="/Inspection"
                 component={Inspection}
-                role={"ROLE_DOCTOR"}
+                role={Uauthority}
             />
             {/* <Route path="/DataAnalysis" component={DataAnalysis}/>  */}
             <MasterRoute
                 path="/DataAnalysis"
                 component={DataAnalysis}
-                role={"ROLE_DOCTOR"}
+                role={Uauthority}
             />
             {/* <Route path="/User" component={User} /> */}
             <MasterRoute
                 path="/User"
                 component={User}
-                role={"ROLE_DOCTOR"}
+                role={Uauthority}
             />
             <Route component={Page404} />
             {/* <Redirect to="/Register"/> */}
