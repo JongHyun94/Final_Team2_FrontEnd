@@ -27,7 +27,7 @@ function Register(props) {
   
 
   //-------------------------------------------------------------  
-  //상태 선언
+  //MQTT상태 선언
   //-------------------------------------------------------------
 
   const [subTopic, setSubTopic] = useState("/138010/nurse");  // 병원코드/간호사
@@ -40,8 +40,9 @@ function Register(props) {
   const [message, setMessage] = useState("");
 
   //-------------------------------------------------------------
-  //버튼 이벤트 처리
+  //MQTT 연결 함수
   //-------------------------------------------------------------
+  
   let client = useRef(null);
   const connectMqttBroker = () => {
     // Paho.Mqtt.Client x
@@ -86,11 +87,6 @@ function Register(props) {
     connectMqttBroker();
   },[]);
 
-  //////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////
-
-
-
   //-------------------------------------------------------------  
   //상태 선언
   //-------------------------------------------------------------
@@ -100,7 +96,7 @@ function Register(props) {
   // REGISTER_REGDATE, REGISTER_DATE, REGISTER_TIME, 
   // REGISTER_MEMO, REGISTER_COMMUNICATION, REGISTER_STATE
 
-  // 위아래 공통 날짜
+  // 공통 날짜
   const [registerDate, setRegisterDate] = useState(new Date());
 
   // 접수 내역 배열 
@@ -151,9 +147,7 @@ function Register(props) {
   useEffect(()=>{
     getDoctorLists();
   },[]);
-  useEffect(() => {
-    
-  },[selectedPatient]);
+
 
   //-------------------------------------------------------------
   //렌더링 내용
@@ -203,10 +197,10 @@ function Register(props) {
         <div className="Register_Components border">
           <div className="RegisterTimeSchedule">
             <RegisterTimeSchedule 
-            registerDate={registerDate}
-            setRegisterDate={setRegisterDate}
-            message={message}
-            publishTopic={publishTopic}
+              registerDate={registerDate}
+              setRegisterDate={setRegisterDate}
+              message={message}
+              publishTopic={publishTopic}
             />
           </div>
         </div>

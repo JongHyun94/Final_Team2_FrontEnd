@@ -64,6 +64,7 @@ function RegisterList(props) {
   // 진료 상태 대기 -> 완료로 
   const changeRegisterStateToFinish = async (register_id) => {
     try {
+      var finishValidation = true;
       let selectRegister = registerList.find(register => {
         if (register.register_id === register_id) {
           if (register.register_state === "대기") {
@@ -71,11 +72,17 @@ function RegisterList(props) {
           }
         }
       });
-      selectRegister.register_state = "완료";
+      if (selectRegister.register_communication === "") {
+        finishValidation = false;
+        ToastsStore.success("의사소통 메모를 입력해 주세요.");
+      }
       if (selectRegister) {
-        var list = await changeRegisterState(selectRegister);
-        publishTopic(0);
-        publishTopic(1);
+        if (finishValidation) {
+          selectRegister.register_state = "완료";
+          var list = await changeRegisterState(selectRegister);
+          publishTopic(0);
+          publishTopic(1);
+        }
       }
     } catch (e) {
       console.log(e);
@@ -231,7 +238,7 @@ function RegisterList(props) {
       work();
     }
   }, [message]);
-  
+
   //-------------------------------------------------------------
   //렌더링 내용
   //-------------------------------------------------------------
@@ -246,7 +253,7 @@ function RegisterList(props) {
           <Link to="/Patient" ><button className="button_team2_fill">신규 환자 등록</button></Link>
         </div>
       </div>
-      <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground/> 
+      <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground />
       {/* 하단 내용 */}
       <div className="RegisterList_content border">
         {/* 달력 , 상태 , 완료 버튼 */}
@@ -297,7 +304,6 @@ function RegisterList(props) {
               </tr>
             </thead>
             <tbody>
-              {/* 임의의 데이터 넣어서 출력 해보기 */}
               {loading ? <Spinner /> : <>
                 {registerList.map((register, index) => {
                   return (

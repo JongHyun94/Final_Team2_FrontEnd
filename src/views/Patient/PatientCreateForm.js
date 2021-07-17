@@ -105,7 +105,7 @@ function PatientCreateForm(props) {
       });
     }
   };
-  
+
    // validation 모달 상태(open일 떄 true로 바뀌어 열림)
    const [validationModalOpen, setValidationModalOpen] = useState(false);
    // 유효성 검사 오류 메시지

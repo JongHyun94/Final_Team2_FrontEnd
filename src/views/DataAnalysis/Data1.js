@@ -10,7 +10,7 @@ function Data1(props) {
       <div className={style.DataAnalysis_col_content}>
         <ResponsiveBar
           data={data1}
-          keys={['treatments']}
+          keys={['진료수']}
           indexBy="month"
           margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
           padding={0.3}
@@ -28,14 +28,6 @@ function Data1(props) {
           borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
           axisTop={null}
           axisRight={null}
-          axisBottom={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: '월별',
-            legendPosition: 'middle',
-            legendOffset: 32
-          }}
           axisLeft={{
             tickSize: 5,
             tickPadding: 5,

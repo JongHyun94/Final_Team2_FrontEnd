@@ -1,36 +1,44 @@
 import { useEffect, useState } from "react";
-import  style from "./InspectionImgFormModal.module.css";
+import style from "./InspectionImgFormModal.module.css";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { readImage, selectImgId, downloadImg } from "apis/inspections";
+import Spinner from "components/common/Spinner";
 
 function InspectionImgFormModal(props) {
   const [inspectionImgResult, setInspectionImgResult] = useState(props.inspection);
 
   const { open, close } = props;
 
+  const [loading, setLoading] = useState(false);
+
   let images = [];
+  // const [images, setImages] = useState([{
+  //   "original" : "",
+  //   "thumbnail" : "",
+  // }]);
 
   const work = async () => {
+    //setLoading(true);
     try {
-      if(props.id === props.inspection.inspection_id){
+      if (props.id === props.inspection.inspection_id) {
         const response = await readImage(props.id);
-        for(var i=0; i<=response.data.inspectionImgList.length-1; i++) {
+        for (var i = 0; i <= response.data.inspectionImgList.length - 1; i++) {
           images.push({
             original: response.data.inspectionImgList[i].inspection_img_path,
             thumbnail: response.data.inspectionImgList[i].inspection_img_path
           });
+          //setImages()
         }
-
         const responseImgId = await selectImgId(props.id);
-
-        for(var i=0; i<=responseImgId.data.inspectionImgList.length-1; i++){
+        for (var i = 0; i <= responseImgId.data.inspectionImgList.length - 1; i++) {
           await downloadImg(responseImgId.data.inspectionImgList[i].inspection_img_id);
         }
-
       }
-    } catch(error) {
+    } catch (error) {
       console.log(error);
+    } finally {
+      //setLoading(false);
     }
   };
 
@@ -40,7 +48,7 @@ function InspectionImgFormModal(props) {
 
   return (
     <div className={style.InspectionImgModal}>
-      <div className={open ? `${style.openModal} ${style.modal}`:`${style.modal}`}>
+      <div className={open ? `${style.openModal} ${style.modal}` : `${style.modal}`}>
         {open ? (
           <section>
             <div className={`${style.InspectionImgForm_title} m-2`}>검사 사진</div>
@@ -65,8 +73,13 @@ function InspectionImgFormModal(props) {
                 </div>
               </div>
               <div className={`${style.InspectionImgForm_1_2} m-3`}>
-                {/* <img src={'resources/img/xray01.jpg'} width="100%" height="100%" alt=""></img> */}
-                <ImageGallery items={images}/>
+                {/* {loading ? <Spinner /> 
+                : 
+                <> */}
+                  {/* <img src={'resources/img/xray01.jpg'} width="100%" height="100%" alt=""></img> */}
+                  <ImageGallery items={images} />
+                {/* </> */}
+                
               </div>
             </div>
             <div className={`${style.InspectionImgForm_2} m-2`}>

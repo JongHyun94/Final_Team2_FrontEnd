@@ -2,7 +2,6 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 
 function RegisterRead(props) {
-
   //-------------------------------------------------------------  
   //상태 선언
   //-------------------------------------------------------------

@@ -11,18 +11,19 @@ import moment from "moment";
 registerLocale("ko", ko);
 
 function RegisterCreateForm(props) {
-  const noneRegister = {
+  //빈 객체
+  let noneRegister = {
     register_id: "",
     register_patient_id: "",
     register_user_id: "",
     register_regdate: "",
-    register_date: moment().format("yyyy-MM-DD HH:mm"),
+    register_date: new Date(),
     register_starttime: "",
     register_memo: "",
     register_communication: "",
     register_state: "",
 
-    // Add Data
+    // 추가된 DTO 
     patient_name: "",
     patient_ssn: "",
     patient_sex: "",
@@ -60,9 +61,13 @@ function RegisterCreateForm(props) {
     doctors = noneDoctor;
   }
 
+  //-------------------------------------------------------------  
+  //상태 선언
+  //-------------------------------------------------------------
   const [startDate, setStartDate] = useState(new Date());
   const [minDate, setMinDate] = useState(new Date());
   const [minTime, setMinTime] = useState(setHours(setMinutes(new Date(), 0), 9));
+  const [maxTime, setMaxTime] = useState(setHours(setMinutes(new Date(), 45), 17));
 
   // 담당의 상태
   const [doctorsList, setDoctorsList] = useState(doctors);
@@ -105,24 +110,56 @@ function RegisterCreateForm(props) {
   }, [doctors, props.register]);
 
   useEffect(() => {
-    //setNewDoctor("doctor");
-  }, [props.register]);
-
-  useEffect(() => {
-    setMinTime(() =>
-      ((startDate.getFullYear() === new Date().getFullYear())
-        && (startDate.getMonth() === new Date().getMonth())
-        && (startDate.getDate() === new Date().getDate())
-        && ((startDate.getHours() > 9)
-        || (startDate.getHours() < 18)))
-        ? new Date() : setHours(setMinutes(new Date(), 0), 9)
-    );
     setMinDate(() =>
       ((startDate.getFullYear() === new Date().getFullYear())
         && (startDate.getMonth() === new Date().getMonth())
         && (startDate.getDate() === new Date().getDate())
-        && (startDate.getHours() > 17))
-        ? startDate.setDate(startDate.getDate() + 1) : new Date()
+        && (startDate.getHours() >= 18))
+        // || (startDate.getHours() <= 18)))
+        ? new Date().setDate(new Date().getDate() + 1) : new Date()
+    );
+    setMinTime(() =>
+      ((startDate.getFullYear() === new Date().getFullYear())
+        && (startDate.getMonth() === new Date().getMonth())
+        && (startDate.getDate() === new Date().getDate())
+        && ((startDate.getHours() >= 9)
+          || (startDate.getHours() <= 18)))
+        ? new Date() : setHours(setMinutes(new Date(), 0), 9)
+    );
+    setMaxTime(() =>
+      ((startDate.getFullYear() === new Date().getFullYear())
+        && (startDate.getMonth() === new Date().getMonth())
+        && (startDate.getDate() === new Date().getDate())
+        && ((startDate.getHours() >= 9)
+          || (startDate.getHours() <= 18)))
+        ? new Date() : setHours(setMinutes(new Date(), 45), 17)
+    );
+  }, []);
+
+  useEffect(() => {
+    setMinDate(() =>
+      ((startDate.getFullYear() === new Date().getFullYear())
+        && (startDate.getMonth() === new Date().getMonth())
+        && (startDate.getDate() === new Date().getDate())
+        && (startDate.getHours() >= 18))
+        // || (startDate.getHours() <= 18)))
+        ? new Date().setDate(new Date().getDate() + 1) : new Date()
+    );
+    setMinTime(() =>
+      ((startDate.getFullYear() === new Date().getFullYear())
+        && (startDate.getMonth() === new Date().getMonth())
+        && (startDate.getDate() === new Date().getDate())
+        && ((startDate.getHours() >= 9)
+          || (startDate.getHours() <= 18)))
+        ? new Date() : setHours(setMinutes(new Date(), 0), 9)
+    );
+    setMaxTime(() =>
+      ((startDate.getFullYear() === new Date().getFullYear())
+        && (startDate.getMonth() === new Date().getMonth())
+        && (startDate.getDate() === new Date().getDate())
+        && ((startDate.getHours() >= 9)
+          || (startDate.getHours() <= 18)))
+        ? setHours(setMinutes(new Date(), 45), 17) : setHours(setMinutes(new Date(), 45), 17)
     );
   }, [startDate]);
 
@@ -146,7 +183,7 @@ function RegisterCreateForm(props) {
           timeCaption="시간"
           minDate={minDate}
           minTime={minTime}
-          maxTime={setHours(setMinutes(new Date(), 45), 17)}
+          maxTime={maxTime}
           dateFormat="yyyy-MM-dd h:mm"
           timeClassName={handleColor}
           inline

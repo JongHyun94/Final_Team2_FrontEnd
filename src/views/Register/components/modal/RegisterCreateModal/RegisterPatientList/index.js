@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import style from "./RegisterPatientList.module.css";
 
 function RegisterPatientList(props) {
+  //빈 객체
   const noneRegister = {
     register_id: "",
     register_patient_id: "",
@@ -14,7 +15,7 @@ function RegisterPatientList(props) {
     register_communication: "",
     register_state: "",
 
-    // Add Data
+    // 추가된 DTO
     patient_name: "",
     patient_ssn: "",
     patient_sex: "",
@@ -28,6 +29,9 @@ function RegisterPatientList(props) {
   } else {
     register = noneRegister;
   }
+  //-------------------------------------------------------------  
+  //상태 선언
+  //-------------------------------------------------------------
   const [patientList, setPatientList] = useState([]);
 
   // 환자 검색창 상태 
@@ -41,7 +45,9 @@ function RegisterPatientList(props) {
 
   // 선택된 환자 상태
   const [selectedPatient, setSelectedPatient] = useState();
-
+  //-------------------------------------------------------------
+  //버튼 이벤트 처리
+  //-------------------------------------------------------------
   const handlePatient = (patient_id) => {
     if(patient_id === selectedPatient){
       setSelectedPatient("");
@@ -85,7 +91,11 @@ function RegisterPatientList(props) {
       <div className={`${style.RegisterPatientList_content} border`}>
         <div className={`${style.RegisterPatientList_search} mt-1`}>
           <div className={style.RegisterPatientList_search_input}>
-            <input type="text" className={style.RegisterPatientList_search_input_1} placeholder="이름/생년월일을 입력해 주세요." value={searchContent} onChange={changeSearchContent} />
+            <input type="text" 
+              className={style.RegisterPatientList_search_input_1} 
+              placeholder="이름/생년월일을 입력해 주세요." 
+              value={searchContent} onChange={changeSearchContent} 
+            />
           </div>
           <div className={style.RegisterPatientList_search_button}>
             <button className="button_team2_fill" onClick={handleSearch}>환자 검색</button>

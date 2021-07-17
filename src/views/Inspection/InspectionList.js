@@ -32,7 +32,7 @@ function InspectionList(props) {
   const [id, setId] = useState("");
 
   // Spinner
-  const [loading, setLoading] = useState(false);
+  //const [loading, setLoading] = useState(false);
 
   function getCompleteCount() {
     let completeCount = 0;
@@ -90,7 +90,7 @@ function InspectionList(props) {
   }, [iStateCount]);
 
   const getInspections2 = async (treatmentId, globalUid) => {
-    setLoading(true);
+    //setLoading(true);
     try {
       const response = await readInspection(treatmentId, globalUid);
       inspectionsList = response.data.inspectionList;
@@ -98,7 +98,7 @@ function InspectionList(props) {
     } catch(error) {
       console.log(error);
     } finally {
-      setLoading(false);
+     // setLoading(false);
     }
 
     checkInspections(inspectionsList);
@@ -258,11 +258,11 @@ function InspectionList(props) {
               </tr>
             </thead>
             <tbody>
-              {loading ? <div className="spinner2">
+              {/* {loading ? <div className="spinner2">
       <div className="spinner-border text-primary" role="status">
         <span className="sr-only">loading...</span>
       </div>
-    </div> : <>
+    </div> : <> */}
               {inspections.map((inspection) => {
                 return (
                   <InspectionListItem
@@ -282,7 +282,7 @@ function InspectionList(props) {
                   />
                 );
               })}
-              </>}
+              {/* </>} */}
             </tbody>
           </table>
         </div>

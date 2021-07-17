@@ -2,25 +2,14 @@ import { ResponsivePie } from "@nivo/pie";
 import style from "./DataAnalysis.module.css";
 
 function Data2(props) {
-  const data = [
-    {
-      id: "완료",
-      label: "완료",
-      value: 432,
-    },
-    {
-      id: "미완료",
-      label: "미완료",
-      value: 180,
-    }
-  ]
+  const {data2} = props;
 
   return (
     <>
       <div className={style.DataAnalysis_col_header}>접수 현황</div>
       <div className={style.DataAnalysis_col_content}>
         <ResponsivePie
-          data={data}
+          data={data2}
           margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
           innerRadius={0.5}
           padAngle={0.7}

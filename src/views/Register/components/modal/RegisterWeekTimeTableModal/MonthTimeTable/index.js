@@ -1,11 +1,26 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import style from "./MonthTimeTable.module.css";
-import { setDate } from "date-fns";
+import { getRegisterByDoctor } from "apis/register";
 
 function MonthTimeTable(props) {
 
+  const { selectedDoctor } = props;
+
+  let selectToday = new Date();
+  let selectTodayYear = selectToday.getFullYear();
+  let selectTodayMonth = selectToday.getMonth() + 1;
+  let selectTodayDate = selectToday.getDate();
+  //-------------------------------------------------------------  
+  //상태 선언
+  //-------------------------------------------------------------
   const [today, setToday] = useState(new Date());
+  const [tMonth, setTMonth] = useState(moment().startOf('month'));
+
+  const [registerListByDoctor, setRegisterListByDoctor] = useState([]);
+  //-------------------------------------------------------------  
+  //달력 렌더 함수
+  //-------------------------------------------------------------
   let todayYear = today.getFullYear();
   let todayMonth = (today.getMonth() + 1);
 
@@ -43,53 +58,57 @@ function MonthTimeTable(props) {
   };
   const [dates, setDates] = useState(calCalender(today));
 
-  // 버튼 이벤트 함수
+  //-------------------------------------------------------------
+  //버튼 이벤트 처리
+  //-------------------------------------------------------------
+
   const prevMonth = () => {
     today.setMonth(today.getMonth() - 1);
     setToday(today);
+    setTMonth(moment(tMonth).subtract("1","M"));
     setDates(calCalender(today));
   };
   const nextMonth = () => {
     today.setMonth(today.getMonth() + 1);
     setToday(today);
+    setTMonth(moment(tMonth).add("1","M"));
     setDates(calCalender(today));
   };
   const goToday = () => {
     setToday(new Date());
+    setTMonth(moment().startOf('month'));
   };
 
   const updateSelectDate = (date) => {
-    //console.log(date);
     today.setDate(date);
     props.setSelectDate(moment(today).format("yyyy-MM-DD"));
     setToday(today);
-    
     //setDate(calCalender(today));
   };
 
-  let selectToday = new Date();
-  let selectTodayYear = selectToday.getFullYear();
-  let selectTodayMonth = selectToday.getMonth() + 1;
-  let selectTodayDate = selectToday.getDate();
-  
+  const getRegisterCount = async (date) => {
+    try {
+      const response = await getRegisterByDoctor(selectedDoctor.user_id, moment(date).format("yyyy-MM-DD H:mm"));
+      setRegisterListByDoctor(response.data.registerList);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   //-------------------------------------------------------------
   //마운트 및 언마운트에 실행할 내용
   //-------------------------------------------------------------
 
   useEffect(() => {
-
-  }, [dates]);
+    getRegisterCount(tMonth);
+  }, []);
 
   useEffect(() => {
-
-  }, [props]);
+    getRegisterCount(tMonth);
+  }, [tMonth]);
 
   useEffect(() => {
     setDates(calCalender(today));
-    
-    return () => {
-
-    };
   }, [today]);
   //-------------------------------------------------------------
   //렌더링 내용
@@ -136,8 +155,12 @@ function MonthTimeTable(props) {
                 <div className={style.thisDate}>
                   {date}
                 </div>
-                <div>
-
+                <div className={style.count}>
+                  {registerListByDoctor.map((Rdate,index) => {
+                    if ((Rdate.date *= 1) === (date *= 1)) {
+                      return (<div key={index}>{Rdate.count}명</div>)
+                    }
+                  })}
                 </div>
               </div>
             )
@@ -171,8 +194,12 @@ function MonthTimeTable(props) {
                   <div className={style.otherDate}>
                     {date}
                   </div>
-                  <div>
-
+                  <div className={style.count}>
+                    {registerListByDoctor.map((Rdate, index) => {
+                      if ((Rdate.date *= 1) === (date *= 1)) {
+                        return (<div key={index}>{Rdate.count}명</div>)
+                      }
+                    })}
                   </div>
                 </div>
               )

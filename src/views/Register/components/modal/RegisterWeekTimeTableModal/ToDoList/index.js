@@ -6,11 +6,17 @@ import { useSelector } from "react-redux";
 
 function ToDoList(props) {
   const { selectedDoctor, selectDate, setSelectDate, publishTopic } = props;
-
+  //-------------------------------------------------------------  
+  //상태 선언
+  //-------------------------------------------------------------
   const globalUid = useSelector((state) => state.authReducer.uid);
 
   const [inputText, setInputText] = useState("");
   const [toDoList, setToDoList] = useState([]);
+  
+  //-------------------------------------------------------------
+  //버튼 이벤트 처리
+  //-------------------------------------------------------------
 
   const inputTextHandler = (event) => {
     setInputText(
@@ -23,7 +29,7 @@ function ToDoList(props) {
       schedule_user_id: selectedDoctor.user_id,
       schedule_content: inputText,
       schedule_state: "대기",
-      schedule_regdate: moment().format("yyyy-MM-DD"),
+      schedule_regdate: moment(selectDate).format("yyyy-MM-DD"),
     };
 
     try {
@@ -118,7 +124,11 @@ function ToDoList(props) {
         </div>
         <div className={style.ToDoList_header_inputLabel}>
           <div className={style.ToDoList_header_inputLabel_input}>
-            <input type="text" value={inputText} onChange={inputTextHandler} placeholder="할 일을 입력해주세요."></input>
+            {globalUid === selectedDoctor.user_id ?
+              <input type="text" value={inputText} onChange={inputTextHandler} placeholder="할 일을 입력해주세요."></input>
+              :
+              false
+            }
           </div>
           <div className={style.ToDoList_header_inputLabel_button}>
             {globalUid === selectedDoctor.user_id ?

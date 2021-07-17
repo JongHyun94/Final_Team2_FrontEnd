@@ -319,9 +319,7 @@ function Auth(props) {
           </section>
         ) : null}
       </div>
-    </div>
-
-    
+    </div>   
   );
 }
 

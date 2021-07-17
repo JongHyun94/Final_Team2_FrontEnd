@@ -1,75 +1,14 @@
 import { ResponsiveBar } from '@nivo/bar';
 import style from "./DataAnalysis.module.css";
-const patient_data = [
-  {
-    "dayOfWeek": "월",
-    "10대": 5,
-    "20대": 1,
-    "30대": 3,
-    "40대": 15,
-    "50대": 8,
-    "60대": 6,
-    "70대": 4,
-    "80대": 3,
-    "90대": 2,
-  },
-  {
-    "dayOfWeek": "화",
-    "10대": 3,
-    "20대": 4,
-    "30대": 6,
-    "40대": 7,
-    "50대": 11,
-    "60대": 10,
-    "70대": 1,
-    "80대": 1,
-    "90대": 1,
-  },
-  {
-    "dayOfWeek": "수",
-    "10대": 18,
-    "20대": 5,
-    "30대": 3,
-    "40대": 20,
-    "50대": 4,
-    "60대": 3,
-    "70대": 0,
-    "80대": 0,
-    "90대": 0,
-  },
-  {
-    "dayOfWeek": "목",
-    "10대": 2,
-    "20대": 1,
-    "30대": 10,
-    "40대": 6,
-    "50대": 6,
-    "60대": 7,
-    "70대": 2,
-    "80대": 2,
-    "90대": 1,
-  },
-  {
-    "dayOfWeek": "금",
-    "10대": 10,
-    "20대": 19,
-    "30대": 16,
-    "40대": 12,
-    "50대": 9,
-    "60대": 8,
-    "70대": 1,
-    "80대": 1,
-    "90대": 1,
-  },
-];
-function Data3(props) {
 
+function Data3(props) {
+  const {data3} = props;
   return (
     <>
       <div className={style.DataAnalysis_col_header}>요일별 나이대별 환자 검사 통계</div>
       <div className={style.DataAnalysis_col_content}>
         <ResponsiveBar
-          data={patient_data}
+          data={data3}
           keys={['10대', '20대', '30대', '40대', '50대', '60대', '70대', '80대', '90대']}
           indexBy="dayOfWeek"
           margin={{ top: 50, right: 130, bottom: 50, left: 60 }}

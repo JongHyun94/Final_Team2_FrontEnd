@@ -615,6 +615,9 @@ th {
 .tip_normal span {
   display: none
 }
+.tip_normal span::after:checked {
+  display: none
+}
 .tip_normal span::selection {
   -ms-user-select: none; 
   -moz-user-select: -moz-none;

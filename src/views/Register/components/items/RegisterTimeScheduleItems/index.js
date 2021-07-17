@@ -1,4 +1,5 @@
 function RegisterTimeScheduleItems(props) {
+  // 상속된 props
   const {patient_name, user_name, register_state} = props;
   return (
     <>

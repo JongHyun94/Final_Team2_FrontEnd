@@ -6,39 +6,70 @@ import { createRegister, updateRegister } from "apis/register";
 import moment from "moment";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 function RegisterCreateModal(props) {
+  // props 상속
   const { open, close, header, doctors, register, publishTopic } = props;
-
+  //-------------------------------------------------------------  
+  //상태 선언
+  //-------------------------------------------------------------
   const [newRegister, setNewRegister] = useState(register);
-
+  //-------------------------------------------------------------
+  //버튼 이벤트 처리
+  //-------------------------------------------------------------
   const createNewRegister = async () => {
-    console.log("등록");
     try {
-      console.log("000접수",newRegister);
-      var list = await createRegister(newRegister);
-      console.log("결과값", list.data.result);
-      if (list.data.result === "중복") {
-        //console.log("이미 예약이 되어있습니다.");
-        ToastsStore.success("이미 예약이 되어있습니다.");
-      } else if (list.data.result === "성공") {
-        publishTopic(0);
-        close();
+      var registerValidation = true;
+
+      if (newRegister.register_patient_id === "") {
+        registerValidation = false;
+        ToastsStore.success("환자를 선택해 주세요.");
+      }
+      else if (newRegister.register_user_id === "") {
+        registerValidation = false;
+        ToastsStore.success("담당의를 선택해 주세요.");
+      }
+      else if (newRegister.register_date < new Date()) {
+        registerValidation = false;
+        ToastsStore.success("예약 시간을 선택해 주세요.");
+      }
+      else if (newRegister.register_memo === "") {
+        registerValidation = false;
+        ToastsStore.success("메모를 입력해 주세요.");
+      }
+      // else if (newRegister.register_communication === "") {
+      //   registerValidation = false;
+      //   ToastsStore.success("의사소통 메모를 입력해 주세요.");
+      // }
+      if (registerValidation) {
+        var list = await createRegister(newRegister);
+        console.log("결과값", list.data.result);
+        if (list.data.result === "중복") {
+          ToastsStore.success("이미 예약이 되어있습니다.");
+        } else if (list.data.result === "성공") {
+          publishTopic(0);
+          close();
+        }
       }
     } catch (e) {
       console.log(e);
     }
   };
   const updateNewRegister = async () => {
-    console.log("수정");
     try {
-      console.log("3333접수",newRegister);
-      var list = await updateRegister(newRegister);
-      console.log("결과값", list.data.result);
-      if (list.data.result === "중복") {
-        //console.log("이미 예약이 되어있습니다.");
-        ToastsStore.success("이미 예약이 되어있습니다.");
-      } else if (list.data.result === "성공") {
-        publishTopic(0);
-        close();
+      console.log("접수", newRegister);
+      var registerValidation = true;
+      if (newRegister.register_date < new Date()) {
+        registerValidation = false;
+        ToastsStore.success("예약시간을 확인해 주세요.");
+      }
+      if (registerValidation) {
+        var list = await updateRegister(newRegister);
+        console.log("결과값", list.data.result);
+        if (list.data.result === "중복") {
+          ToastsStore.success("이미 예약이 되어있습니다.");
+        } else if (list.data.result === "성공") {
+          publishTopic(0);
+          close();
+        }
       }
     } catch (e) {
       console.log(e);
@@ -51,6 +82,10 @@ function RegisterCreateModal(props) {
   useEffect(() => {
     setNewRegister(register);
   }, [props, register]);
+
+  useEffect(() => {
+    setNewRegister({ ...register, register_date: new Date() });
+  }, [open]);
   //-------------------------------------------------------------
   //렌더링 내용
   //-------------------------------------------------------------
@@ -66,9 +101,9 @@ function RegisterCreateModal(props) {
             </header>
             <main>
               <div className={style.RegisterCreateModal_main}>
-                <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground/> 
+                <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground />
                 <RegisterPatientList register={register} newRegister={newRegister} setNewRegister={setNewRegister} />
-                <RegisterCreateForm doctors={doctors} register={register} newRegister={newRegister} setNewRegister={setNewRegister} />
+                <RegisterCreateForm doctors={doctors} register={register} newRegister={newRegister} setNewRegister={setNewRegister} open={open}/>
               </div>
             </main>
             <footer>

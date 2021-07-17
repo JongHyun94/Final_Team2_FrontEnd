@@ -10,11 +10,13 @@ import { getDoctorList, getRegisterList } from "apis/register";
 import RegisterTimeScheduleItems from "views/Register/components/items/RegisterTimeScheduleItems";
 
 registerLocale("ko", ko);
+// 타임테이블 - 진료 시간 
 const hours = ["9", "10", "11", "12", "13", "14", "15", "16", "17"];
 const mins = ["0", "15", "30", "45"];
 
 function RegisterTimeSchedule(props) {
-  const noneRegister = {
+  // 빈 객체
+  let noneRegister = {
     register_id: "",
     register_patient_id: "",
     register_user_id: "",
@@ -25,7 +27,7 @@ function RegisterTimeSchedule(props) {
     register_communication: "",
     register_state: "",
 
-    // Add Data
+    // 추가된 DTO 내용
     patient_name: "",
     patient_ssn: "",
     patient_sex: "",
@@ -55,10 +57,6 @@ function RegisterTimeSchedule(props) {
   //-------------------------------------------------------------
   //버튼 이벤트 처리
   //-------------------------------------------------------------
-
-  // const changeDateToday = () => {
-  //   setRegisterDate(new Date());
-  // }
 
   const openModal = () => {
     setModalOpen(true);
@@ -103,7 +101,6 @@ function RegisterTimeSchedule(props) {
   const getDoctorLists = async () => {
     try {
       var list = await getDoctorList();
-      //console.log(list.data.doctorList);
       setDoctors(list.data.doctorList);
     } catch (e) {
       console.log(e);
@@ -119,12 +116,8 @@ function RegisterTimeSchedule(props) {
   }, []);
 
   useEffect(() => {
-    getRegisterLists(moment(registerDate).format("yyyy-MM-DD H:m"));
+    getRegisterLists(moment(registerDate).format("yyyy-MM-DD HH:mm"));
   }, [registerDate]);
-
-  // useEffect(() => {
-  //   setSelectedRegister(selectedRegister);
-  // },[registerModalOpen]);
 
   useEffect(() => {
     console.log("MESSAGE: ", message);
@@ -249,7 +242,11 @@ function RegisterTimeSchedule(props) {
                                           className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_normal"
                                           onClick={() => { openRegisterModal(register) }} key={index3}
                                         >
-                                          <RegisterTimeScheduleItems patient_name={register.patient_name} register_state={register.register_state} user_name={register.user_name} />
+                                          <RegisterTimeScheduleItems
+                                            patient_name={register.patient_name}
+                                            register_state={register.register_state}
+                                            user_name={register.user_name}
+                                          />
                                         </div>
                                       )
                                     } else {
@@ -259,7 +256,11 @@ function RegisterTimeSchedule(props) {
                                             className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_upside"
                                             onClick={() => { openRegisterModal(register) }} key={index3}
                                           >
-                                            <RegisterTimeScheduleItems patient_name={register.patient_name} register_state={register.register_state} user_name={register.user_name} />
+                                            <RegisterTimeScheduleItems
+                                              patient_name={register.patient_name}
+                                              register_state={register.register_state}
+                                              user_name={register.user_name}
+                                            />
                                           </div>
                                         )
                                       } else if (index < 4 && index1 >= 8) {
@@ -268,7 +269,11 @@ function RegisterTimeSchedule(props) {
                                             className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_rightside"
                                             onClick={() => { openRegisterModal(register) }} key={index3}
                                           >
-                                            <RegisterTimeScheduleItems patient_name={register.patient_name} register_state={register.register_state} user_name={register.user_name} />
+                                            <RegisterTimeScheduleItems
+                                              patient_name={register.patient_name}
+                                              register_state={register.register_state}
+                                              user_name={register.user_name}
+                                            />
                                           </div>
                                         )
                                       } else {
@@ -277,7 +282,11 @@ function RegisterTimeSchedule(props) {
                                             className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_uprightside"
                                             onClick={() => { openRegisterModal(register) }} key={index3}
                                           >
-                                            <RegisterTimeScheduleItems patient_name={register.patient_name} register_state={register.register_state} user_name={register.user_name} />
+                                            <RegisterTimeScheduleItems
+                                              patient_name={register.patient_name}
+                                              register_state={register.register_state}
+                                              user_name={register.user_name}
+                                            />
                                           </div>
                                         )
                                       }
@@ -289,7 +298,11 @@ function RegisterTimeSchedule(props) {
                                           className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_normal"
                                           onClick={() => { openRegisterModal(register) }} key={index3}
                                         >
-                                          <RegisterTimeScheduleItems patient_name={register.patient_name} register_state={register.register_state} user_name={register.user_name} />
+                                          <RegisterTimeScheduleItems
+                                            patient_name={register.patient_name}
+                                            register_state={register.register_state}
+                                            user_name={register.user_name}
+                                          />
                                         </div>
                                       )
                                     } else {
@@ -299,7 +312,11 @@ function RegisterTimeSchedule(props) {
                                             className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_upside"
                                             onClick={() => { openRegisterModal(register) }} key={index3}
                                           >
-                                            <RegisterTimeScheduleItems patient_name={register.patient_name} register_state={register.register_state} user_name={register.user_name} />
+                                            <RegisterTimeScheduleItems
+                                              patient_name={register.patient_name}
+                                              register_state={register.register_state}
+                                              user_name={register.user_name}
+                                            />
                                           </div>
                                         )
                                       } else if (index < 4 && index1 >= 8) {
@@ -308,7 +325,11 @@ function RegisterTimeSchedule(props) {
                                             className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_rightside"
                                             onClick={() => { openRegisterModal(register) }} key={index3}
                                           >
-                                            <RegisterTimeScheduleItems patient_name={register.patient_name} register_state={register.register_state} user_name={register.user_name} />
+                                            <RegisterTimeScheduleItems
+                                              patient_name={register.patient_name}
+                                              register_state={register.register_state}
+                                              user_name={register.user_name}
+                                            />
                                           </div>
                                         )
                                       } else {
@@ -317,51 +338,71 @@ function RegisterTimeSchedule(props) {
                                             className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_uprightside"
                                             onClick={() => { openRegisterModal(register) }} key={index3}
                                           >
-                                            <RegisterTimeScheduleItems patient_name={register.patient_name} register_state={register.register_state} user_name={register.user_name} />
+                                            <RegisterTimeScheduleItems
+                                              patient_name={register.patient_name}
+                                              register_state={register.register_state}
+                                              user_name={register.user_name}
+                                            />
                                           </div>
                                         )
                                       }
                                     }
-                                  } else if (register.register_state === "취소") {
-                                    if (index < 4 && index1 < 8) {
-                                      return (
-                                        <div
-                                          className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_normal"
-                                          onClick={() => { openRegisterModal(register) }} key={index3}
-                                        >
-                                          <RegisterTimeScheduleItems patient_name={register.patient_name} register_state={register.register_state} user_name={register.user_name} />
-                                        </div>
-                                      )
-                                    } else {
-                                      if (index >= 4 && index1 < 8) {
-                                        return (
-                                          <div
-                                            className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_upside"
-                                            onClick={() => { openRegisterModal(register) }} key={index3}
-                                          >
-                                            <RegisterTimeScheduleItems patient_name={register.patient_name} register_state={register.register_state} user_name={register.user_name} />
-                                          </div>
-                                        )
-                                      } else if (index < 4 && index1 >= 8) {
-                                        return (
-                                          <div
-                                            className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_rightside"
-                                            onClick={() => { openRegisterModal(register) }} key={index3}
-                                          >
-                                            <RegisterTimeScheduleItems patient_name={register.patient_name} register_state={register.register_state} user_name={register.user_name} />
-                                          </div>
-                                        )
-                                      } else {
-                                        return (
-                                          <div
-                                            className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_uprightside"
-                                            onClick={() => { openRegisterModal(register) }} key={index3}
-                                          >
-                                            <RegisterTimeScheduleItems patient_name={register.patient_name} register_state={register.register_state} user_name={register.user_name} />
-                                          </div>
-                                        )
-                                      }
-                                    }
+                                  // } else if (register.register_state === "취소") {
+                                  //   if (index < 4 && index1 < 8) {
+                                  //     return (
+                                  //       <div
+                                  //         className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_normal"
+                                  //         onClick={() => { openRegisterModal(register) }} key={index3}
+                                  //       >
+                                  //         <RegisterTimeScheduleItems
+                                  //           patient_name={register.patient_name}
+                                  //           register_state={register.register_state}
+                                  //           user_name={register.user_name}
+                                  //         />
+                                  //       </div>
+                                  //     )
+                                  //   } else {
+                                  //     if (index >= 4 && index1 < 8) {
+                                  //       return (
+                                  //         <div
+                                  //           className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_upside"
+                                  //           onClick={() => { openRegisterModal(register) }} key={index3}
+                                  //         >
+                                  //           <RegisterTimeScheduleItems
+                                  //             patient_name={register.patient_name}
+                                  //             register_state={register.register_state}
+                                  //             user_name={register.user_name}
+                                  //           />
+                                  //         </div>
+                                  //       )
+                                  //     } else if (index < 4 && index1 >= 8) {
+                                  //       return (
+                                  //         <div
+                                  //           className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_rightside"
+                                  //           onClick={() => { openRegisterModal(register) }} key={index3}
+                                  //         >
+                                  //           <RegisterTimeScheduleItems
+                                  //             patient_name={register.patient_name}
+                                  //             register_state={register.register_state}
+                                  //             user_name={register.user_name}
+                                  //           />
+                                  //         </div>
+                                  //       )
+                                  //     } else {
+                                  //       return (
+                                  //         <div
+                                  //           className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_uprightside"
+                                  //           onClick={() => { openRegisterModal(register) }} key={index3}
+                                  //         >
+                                  //           <RegisterTimeScheduleItems
+                                  //             patient_name={register.patient_name}
+                                  //             register_state={register.register_state}
+                                  //             user_name={register.user_name}
+                                  //           />
+                                  //         </div>
+                                  //       )
+                                  //     }
+                                  //   }
                                   }
                                 }
                               })}

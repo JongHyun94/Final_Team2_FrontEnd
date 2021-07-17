@@ -65,3 +65,9 @@ export function deleteToDoLists(id){
   const promise = axios.delete("/register/todolists", {params: {id}});
   return promise;
 }
+
+// ToDoList 캘린더 의사별 월별 환자 예약수 불러오기
+export function getRegisterByDoctor(user_id, date){
+  const promise = axios.get("/register/calendar",{params: {user_id, date}});
+  return promise;
+}
