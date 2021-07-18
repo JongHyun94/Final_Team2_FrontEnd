@@ -24,9 +24,6 @@ function PatientCreateForm(props) {
   // 마스킹 상태
   const [masking, setMasking] = useState("");
 
-  // 유효성 검사를 위한 함수 사용
-  const { handleSubmit, register, errors } = useForm({ mode: "onChange" });
-
   const handleChange = (event) => {
     setPatient({
       ...patient,
@@ -71,11 +68,11 @@ function PatientCreateForm(props) {
     }    
   }; 
 
-  // 모달 상태(open일 떄 true로 바뀌어 열림)
+  //---------------------------------------------------------------------------------------
+  // 주소 모달 상태(open일 떄 true로 바뀌어 열림)
   const [addressModalOpen, setAddressModalOpen] = useState(false);
 
   const openAddressModal = (event) => {
-    event.preventDefault();
     setAddressModalOpen(true);
   };
   const closeAddressModal = () => {
@@ -105,8 +102,11 @@ function PatientCreateForm(props) {
       });
     }
   };
-
-   // validation 모달 상태(open일 떄 true로 바뀌어 열림)
+  
+  //---------------------------------------------------------------------------------------
+  // 유효성 검사를 위한 함수 사용
+  const { handleSubmit, register, errors } = useForm({ mode: "onChange" });
+  // validation 모달 상태(open일 떄 true로 바뀌어 열림)
    const [validationModalOpen, setValidationModalOpen] = useState(false);
    // 유효성 검사 오류 메시지
    const [errorMsg, setErrorMsg] = useState({

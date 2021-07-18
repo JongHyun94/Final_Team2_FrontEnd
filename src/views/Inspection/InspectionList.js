@@ -4,53 +4,38 @@ import ReactExport from "react-export-excel";
 import InspectionListItem from "./InspectionListItem";
 import { readInspection } from "apis/inspections";
 import { useSelector } from "react-redux";
-import Spinner from "components/common/Spinner";
 
 let inspectionsList = [];
 
 function InspectionList(props) {
-  //console.log("검사 상세 내역");
-  //console.log(props.treatmentId);
-  const globalUid = useSelector((state) => state.authReducer.uid);
-  
+  //검사 상세 내역 목록
   const [inspections, setInspections] = useState(inspectionsList);
-
-  //검사상태: 대기~>검사 을 위한 state
-  const [barcodeState, setBarcodeState] = useState(false);
-  //검사상태: 검사~>대기 를 위한 state
-  const [cancelState, setCancelState] = useState(false);
-  //검사상태: ~>완료 를 위한 state
-  const [completeState, setCompleteState] = useState(false);
-
-  //검사상태count 를 위한 state (검사상태가 완료인 것 초기값)
-  const [iStateCount, setIStateCount] = useState(0);
-
-  // 모달 상태(open일 떄 true로 바뀌어 열림)
+  //true 일때, 검사상태: 대기~>검사
+  const [stateInspection, setStateInspection] = useState(false);
+  //true 일때, 검사상태: 검사~>대기
+  const [stateWait, setStateWait] = useState(false);
+  //true 일때, 검사상태: ~>완료
+  const [stateFinish, setStateFinish] = useState(false);
+  //검사상태가 완료인 검사의 갯수
+  const [stateFinishCount, setStateFinishCount] = useState(0);
+  //true 일때, 바코드 모달 열림
   const [modalOpen, setModalOpen] = useState(false);
-
-  //검사번호 비교를 위한 상태
+  //검사번호
   const [id, setId] = useState("");
+  //Spinner
+  const [loading, setLoading] = useState(false);
+  //로그인한 User의 id
+  const globalUid = useSelector((state) => state.authReducer.uid);
 
-  // Spinner
-  //const [loading, setLoading] = useState(false);
-
-  function getCompleteCount() {
-    let completeCount = 0;
-    for (var i = 0; i <= inspections.length - 1; i++) {
-      if (inspections[i].inspection_state === "완료") {
-        completeCount++;
-      }
-    }
-
-    setIStateCount(completeCount);
-  }
-  
+  ////////////////////////////////////////////////////////////
+  //엑셀 저장
+  ////////////////////////////////////////////////////////////
   const ExcelFile = ReactExport.ExcelFile;
   const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
   const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
   let dataSet = [];
   function getDataSet() {
-    for(var i=0; i<= inspections.length-1; i++){
+    for (var i = 0; i <= inspections.length - 1; i++) {
       dataSet.push({
         category: inspections[i].inspection_list_category,
         specimen: inspections[i].inspection_list_specimen,
@@ -67,89 +52,82 @@ function InspectionList(props) {
     return dataSet;
   }
 
-  useEffect(() => {
-    if(props.treatmentId){
-      getInspections2(props.treatmentId, globalUid);
-    }
-    getCompleteCount();
-  }, [props]);
+  ////////////////////////////////////////////////////////////
 
-  useEffect(() => {
-    checkInspections(inspectionsList);
-    // getCompleteCount();
-  }, []);
-
-  useEffect(() => {
-    //여기에 붙임
-    //count 확인 후, 총검사결과: 검사~>완료 바꿀 istate true로 바꿈
-    if(inspections.length === iStateCount) {
-      props.handleFinish();
-    } else {
-      props.handleFinishBack();
-    }
-  }, [iStateCount]);
-
-  const getInspections2 = async (treatmentId, globalUid) => {
-    //setLoading(true);
+  //DB Inspections 에서 해당 진료번호를 가지고, 로그인한 id가 검사자인 검사 목록 가져옴
+  const getInspections = async (treatmentId, globalUid) => {
+    setLoading(true);
     try {
       const response = await readInspection(treatmentId, globalUid);
       inspectionsList = response.data.inspectionList;
       setInspections(inspectionsList);
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     } finally {
      // setLoading(false);
     }
-
-    checkInspections(inspectionsList);
   };
 
-  const checkInspections = (inspectionsList) => {
-    setInspections(inspectionsList);
-  };
-
-  const cancelBtn = () => {
-    //검사결과: 검사 ~> 대기
-    setCancelState(true);
-  };
-
-  const completeBtn = () => {
-    if(window.confirm("검사완료 시, 결과 수정이 불가합니다")){
-      setCompleteState(true);
+  //검사들의 검사상태가 완료인 갯수를 센 후, stateFinishCount상태에 저장
+  function getStateFinishCount() {
+    let finishCount = 0;
+    for (var i = 0; i <= inspections.length - 1; i++) {
+      if (inspections[i].inspection_state === "완료") {
+        finishCount++;
+      }
     }
-    else{
+    setStateFinishCount(finishCount);
+  }
+
+  //검사취소 버튼 클릭 (검사결과: 검사 ~> 대기)
+  const cancelBtn = () => {
+    setStateWait(true);
+  };
+
+  //엑셀저장 버튼 클릭
+  const excelBtn = () => {
+    dataSet = [];
+  };
+
+  //검사완료 버튼 클릭 (검사결과: 검사 ~> 완료)
+  const completeBtn = () => {
+    if (window.confirm("검사완료 시, 결과 수정이 불가합니다")) {
+      setStateFinish(true);
+    } else {
       return;
     }
   };
-  //검사상태count++
-  const countIState = () => {
-    getCompleteCount();
-    setIStateCount(iStateCount + 1);
+
+  //검사상태를 완료로 바꾼 후, stateFinishCount + 1
+  const plusStateFinishCount = () => {
+    getStateFinishCount();
+    setStateFinishCount(stateFinishCount + 1);
   };
 
-  //바코드출력 모달
+  //검사시작 버튼 클릭 시,
+  //혈액검사면 바코드 모달 열림, 영상검사면 검사상태 검사로 바뀜 + 총검사상태 검사로 바뀜
   const openModal = () => {
     inspections.find((ins) => {
-      if(ins.inspection_id === id){
-        if(ins.inspection_list_category === "혈액검사"){
+      if (ins.inspection_id === id) {
+        if (ins.inspection_list_category === "혈액검사") {
           setModalOpen(true);
           return ins;
         } else {
-          setBarcodeState(true);
-          props.handleBarcodeCheck();
+          setStateInspection(true);
+          props.handleIStateInspectionTrue();
           props.publishTopic(0);
           return false;
         }
       }
-    })
+    });
   };
+  //바코드 모달 안에서 확인 버튼 클릭
   const closeCheckModal = () => {
-    //모달 안에서 확인버튼
-    //검사결과: 대기 ~> 검사
     setModalOpen(false);
-    setBarcodeState(true);
-    props.handleBarcodeCheck();
+    setStateInspection(true);
+    props.handleIStateInspectionTrue();
   };
+  //바코드 모달 안에서 취소 버튼 클릭
   const closeCancelModal = () => {
     setModalOpen(false);
   };
@@ -159,39 +137,66 @@ function InspectionList(props) {
     setId(inspectionId);
   };
 
-  //검사상태: 대기~>검사 바꾼 후 state 원래대로
-  const handleBarcode = () => {
-    setBarcodeState(false);
+  //검사시작 후(검사상태: 대기~>검사)
+  const handleStateInspectionFalse = () => {
+    setStateInspection(false);
   };
 
-  //검사상태: 검사~>대기 바꾼 후 state 원래대로
-  const handleCancel = () => {
-    setCancelState(false);
+  //검사취소 후(검사상태: 검사~>대기)
+  const handleStateWaitFalse = () => {
+    setStateWait(false);
   };
 
-  //검사상태: ~>완료 바꾼 후 state 원래대로 + 총검사상태count
-  const handleComplete = () => {
-    setCompleteState(false);
+  //검사완료 후(검사상태: 검사~>완료)
+  const handleStateFinishFalse = () => {
+    setStateFinish(false);
   };
 
-  const handleExcel = () => {
-    dataSet = [];
-  };
+  ////////////////////////////////////////////////////////////
 
+  useEffect(() => {
+    if (props.treatmentId) {
+      getInspections(props.treatmentId, globalUid);
+    }
+    getStateFinishCount();
+  }, [props]);
+
+  //진료번호가 바뀔 때,
+  //stateFinishCount를 0으로 바꿔 누적되지 않고, 다시 세도록 함
+  useEffect(() => {
+    setStateFinishCount(0);
+  }, [props.treatmentId]);
+
+  //stateFinishCount 바뀔 때,
+  //검사목록 갯수와 검사상태가 완료인 갯수가 같으면
+  //총검사결과: 검사~>완료 true
+  useEffect(() => {
+    if (inspections.length !== 0 && inspections.length === stateFinishCount) {
+      props.handleIStateFinishTrue();
+    } else {
+      props.handleIStateFinishFalse();
+    }
+  }, [stateFinishCount]);
+
+  ////////////////////////////////////////////////////////////
+  //바코드 모달에 props으로 전달할 검사 정보
+  ////////////////////////////////////////////////////////////
   var inspection_list_specimen = " ";
   var inspeciton_list_container = " ";
   var inspection_list_name = " ";
   var patient_name = " ";
   var inspection_inspector_name = " ";
   inspections.find((ins) => {
-    if(ins.inspection_id === id){
+    if (ins.inspection_id === id) {
       inspection_list_specimen = ins.inspection_list_specimen;
       inspeciton_list_container = ins.inspeciton_list_container;
       inspection_list_name = ins.inspection_list_name;
       patient_name = ins.patient_name;
       inspection_inspector_name = ins.inspection_inspector_name;
     }
-  })
+  });
+
+  ////////////////////////////////////////////////////////////
 
   return (
     <div className="InspectionList">
@@ -218,8 +223,14 @@ function InspectionList(props) {
           <button className="button_team2_empty InspectionList_1_2" onClick={cancelBtn}>
             검사 취소
           </button>
-          
-          <ExcelFile element={<button className="button_team2_fill InspectionList_1_2" onClick={handleExcel}>엑셀 저장</button>}>
+
+          <ExcelFile
+            element={
+              <button className="button_team2_fill InspectionList_1_2" onClick={excelBtn}>
+                엑셀 저장
+              </button>
+            }
+          >
             <ExcelSheet data={getDataSet} name="inspectionsExcel">
               <ExcelColumn label="진단검사명" value="category" />
               <ExcelColumn label="검체명" value="specimen" />
@@ -233,14 +244,14 @@ function InspectionList(props) {
               <ExcelColumn label="검사실" value="lab" />
             </ExcelSheet>
           </ExcelFile>
-          
+
           <button className="button_team2_empty InspectionList_1_2" onClick={completeBtn}>
             검사 완료
           </button>
         </div>
 
         <div className="InspectionList_list ">
-          <table className="table InspectionList_2_1" style={{height:"10px"}}>
+          <table className="table InspectionList_2_1" style={{ height: "10px" }}>
             <thead className="InspectionList_2_2">
               <tr>
                 <th style={{ width: "1%" }}></th>
@@ -258,31 +269,36 @@ function InspectionList(props) {
               </tr>
             </thead>
             <tbody>
-              {/* {loading ? <div className="spinner2">
-      <div className="spinner-border text-primary" role="status">
-        <span className="sr-only">loading...</span>
-      </div>
-    </div> : <> */}
-              {inspections.map((inspection) => {
-                return (
-                  <InspectionListItem
-                    key={inspection.inspection_id}
-                    inspection={inspection}
-                    id={id}
-                    handleChecked={(inspectionId) => handleChecked(inspectionId)}
-                    barcode={barcodeState}
-                    handleBarcode={handleBarcode}
-                    cancel={cancelState}
-                    handleCancel={handleCancel}
-                    complete={completeState}
-                    handleComplete={handleComplete}
-                    countIState={countIState}
-                    publishTopic={props.publishTopic}
-                    iStateFinish={props.iStateFinish}
-                  />
-                );
-              })}
-              {/* </>} */}
+              {loading ? (
+                <div className="spinner2">
+                  <div className={`spinner-border text-primary`} role="status">
+                    <span className="sr-only">loading...</span>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {inspections.map((inspection) => {
+                    return (
+                      <InspectionListItem
+                        key={inspection.inspection_id}
+                        inspection={inspection}
+                        id={id}
+                        handleChecked={(inspectionId) => handleChecked(inspectionId)}
+                        stateInspection={stateInspection}
+                        handleStateInspectionFalse={handleStateInspectionFalse}
+                        stateWait={stateWait}
+                        handleStateWaitFalse={handleStateWaitFalse}
+                        stateFinish={stateFinish}
+                        handleStateFinishFalse={handleStateFinishFalse}
+                        plusStateFinishCount={plusStateFinishCount}
+                        publishTopic={props.publishTopic}
+                        iStateFinish={props.iStateFinish}
+                        message={props.message}
+                      />
+                    );
+                  })}
+                </>
+              )}
             </tbody>
           </table>
         </div>

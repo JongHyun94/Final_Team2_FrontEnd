@@ -4,12 +4,15 @@ import "react-datepicker/dist/react-datepicker.css";
 import { getTreatmentPatientList } from "apis/treatments";
 import moment from "moment";
 import Spinner from "components/common/Spinner";
+import { useSelector } from "react-redux";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 
 function TreatmentPatientList(props) {
   
+  const globalUid = useSelector((state) => state.authReducer.uid);
+
   //부모에서 생성한 환자 리스트, 체크된환자정보 담을 상태
-  const { setCheckedpatient,publishTopic, message } = props;
+  const { setCheckedpatient,message } = props;
 
   //환자 대기 목록 상태
   const [patientlists, setPatientlists] = useState([]);
@@ -41,9 +44,10 @@ function TreatmentPatientList(props) {
     const work = async () =>{
       setLoading(true);
       try{
-          var list = await getTreatmentPatientList(inputdate2, "");
+          var list = await getTreatmentPatientList(inputdate2, "",globalUid);
           setPatientlists(list.data.treatmentlist);
           getState(list.data.treatmentlist);
+     
       }catch(error){
         console.log(error);
       } finally {
@@ -67,9 +71,10 @@ function TreatmentPatientList(props) {
     const work = async () =>{
       setLoading(true);
       try{
-          var list = await getTreatmentPatientList(inputdate2, "");
+          var list = await getTreatmentPatientList(inputdate2,"",globalUid);
           setPatientlists(list.data.treatmentlist);
           getState(list.data.treatmentlist);
+        
       }catch(error){
         console.log(error);
       }finally {
@@ -81,7 +86,7 @@ function TreatmentPatientList(props) {
       work();
     }
   
-  }, [message]);
+  },[message]);
 
 
 
@@ -105,7 +110,7 @@ function TreatmentPatientList(props) {
 const totalFilter = async () => {
   setLoading(true);
   try{
-    var list = await getTreatmentPatientList(inputdate2,"");
+    var list = await getTreatmentPatientList(inputdate2,"",globalUid);
     setPatientlists(list.data.treatmentlist);
   } catch(e) {
     console.log(e);
@@ -118,7 +123,7 @@ const totalFilter = async () => {
 const readyFilter = async () => {
   setLoading(true);
   try{
-    var list = await getTreatmentPatientList(inputdate2,"대기");
+    var list = await getTreatmentPatientList(inputdate2,"대기",globalUid);
     setPatientlists(list.data.treatmentlist);
   } catch(e) {
     console.log(e);
@@ -131,7 +136,7 @@ const readyFilter = async () => {
 const finishFilter = async () => {
   setLoading(true);
   try{
-    var list = await getTreatmentPatientList(inputdate2,"완료");
+    var list = await getTreatmentPatientList(inputdate2,"완료",globalUid);
     setPatientlists(list.data.treatmentlist);
   } catch(e) {
     console.log(e);
@@ -143,10 +148,10 @@ const finishFilter = async () => {
 
   //실행 함수--------------------------------
   //선택 날자에 맞는 리스트 가져오기
-  const getList = async (inputdate2) => {
+  const getList = async (inputdate2,globalUid) => {
     setLoading(true);
     try{
-      const list = await getTreatmentPatientList(inputdate2,"");
+      const list = await getTreatmentPatientList(inputdate2,"",globalUid);
       // console.log(list.data.treatmentlist);
       setPatientlists(list.data.treatmentlist);
       getState(list.data.treatmentlist);

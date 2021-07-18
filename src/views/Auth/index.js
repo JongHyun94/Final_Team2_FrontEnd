@@ -8,44 +8,38 @@ import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toa
 import { ValidationModal } from "components/common/ValidationModal";
 
 function Auth(props) {
-  const { openModal, closeModal } = props;
+  const { openModal, closeModal, setAuthModalOpen } = props;
+  console.log(openModal);
+  console.log(props);
   const globalUid = useSelector((state) => state.authReducer.uid);
-  
-  // 유효성 검사를 위한 함수 사용
-  const { handleSubmit, register, errors } = useForm({ mode: "onChange" });
 
   // 회원 상태
   const [user, setUser] = useState({});
-
-  useEffect(() => {
-    const work = async () => {
-      try {
-        const response = await getUser(globalUid);
-        setUser(response.data);
-      } catch(error) {
-        console.log(error);
-      }
-    };
-    work()
-  }, []);
   
-  // 이메일 비교 상태
-  const [email, setEmail] = useState(true);
+  //---------------------------------------------------------------------------------------  
+  // 유효성 검사를 위한 함수 사용
+  const { handleSubmit, register, errors } = useForm({ mode: "onChange" });
+  // validation 모달 상태(open일 떄 true로 바뀌어 열림)
+  const [validationModalOpen, setValidationModalOpen] = useState(false);
+  // 유효성 검사 오류 메시지
+  const [errorMsg, setErrorMsg] = useState({
+    title : "회원정보 수정 실패",
+    content: ""
+  });
 
-  useEffect(() => {
-    if (user.user_email2 === "") {
-      setEmail(false);
-    } else if (user.user_email2 === "naver.com" || user.user_email2 === "gmail.com" || user.user_email2 === "daum.net" || user.user_email2 === "nate.com") {
-      setEmail(true);
-    }
-  }, [user.user_email2])
+  const openValidationModal = (event) => {
+    setValidationModalOpen(true);
+  };
+  const closeValidationModal = () => {
+    setValidationModalOpen(false);
+  };
+  
+  //---------------------------------------------------------------------------------------
 
   const handleChange = (event) => {
     setUser({
       ...user,
-      [event.target.name]: event.target.value,
-      user_tel: user.user_tel1 + "-" + user.user_tel2 + "-" + user.user_tel3,
-      user_email: user.user_email1 + "@" + user.user_email2
+      [event.target.name]: event.target.value
     });
   };
 
@@ -53,7 +47,6 @@ function Auth(props) {
   const handleUpdate = async (event) => {
     try {      
       if (user.old_password !== "" && user.old_password === user.new_password) {
-        // alert("이전 비밀번호와 동일합니다.");
         openValidationModal();
         setErrorMsg({
           ...errorMsg,
@@ -62,7 +55,6 @@ function Auth(props) {
       } else if (user.new_password !== "" && user.new_password === user.re_password) {
         const response = await updateUserInfo(user);
         if (response.data === "success") {
-          // alert("회원 정보가 수정되었습니다.");
           ToastsStore.success("회원 정보가 수정되었습니다.");
           setUser({
             ...user,
@@ -71,8 +63,8 @@ function Auth(props) {
             re_password: "",
           });
           closeModal();
+          // setAuthModalOpen(false);
         } else {
-          // alert("기존 비밀번호가 맞지 않습니다.");
           openValidationModal();
           setErrorMsg({
             ...errorMsg,
@@ -80,7 +72,6 @@ function Auth(props) {
           });
         }        
       } else if (user.old_password !== "") {
-        // alert("비밀번호가 동일하지 않습니다.");
         openValidationModal();
         setErrorMsg({
           ...errorMsg,
@@ -92,15 +83,25 @@ function Auth(props) {
     }    
   };
 
+  // 마운트 시 user 설정
+  useEffect(() => {
+    const work = async () => {
+      try {
+        const response = await getUser(globalUid);
+        setUser(response.data);
+      } catch(error) {
+        console.log(error);
+      }
+    };
+    work()
+  }, []);
+
+  //---------------------------------------------------------------------------------------
   // 주소 모달 상태(open일 떄 true로 바뀌어 열림)
   const [addressModalOpen, setAddressModalOpen] = useState(false);
 
-  const openAddressModal = async (event) => {
-    try {
-      setAddressModalOpen(true);
-    } catch(error) {
-      console.log(error);
-    }    
+  const openAddressModal = () => {
+    setAddressModalOpen(true); 
   };
   const closeAddressModal = () => {
     setAddressModalOpen(false);
@@ -127,21 +128,6 @@ function Auth(props) {
         };
       });
     }
-  };
-
-  // validation 모달 상태(open일 떄 true로 바뀌어 열림)
-  const [validationModalOpen, setValidationModalOpen] = useState(false);
-  // 유효성 검사 오류 메시지
-  const [errorMsg, setErrorMsg] = useState({
-    title : "회원정보 수정 실패",
-    content: ""
-  });
-
-  const openValidationModal = (event) => {
-    setValidationModalOpen(true);
-  };
-  const closeValidationModal = () => {
-    setValidationModalOpen(false);
   };
 
   return (
@@ -232,21 +218,21 @@ function Auth(props) {
                           <input type="text" className="col-sm mr-1" name="user_email1" value={user.user_email1} placeholder="ABC1234" onChange={handleChange} 
                                   ref={register({required: true, pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z]).{2,}$/})}></input>
                           <div className="mr-1 d-flex align-items-center">@</div>
-                          <input type="text" className="col-sm mr-1" name="user_email2" value={user.user_email2} onChange={handleChange} 
-                                  ref={register({required: true, pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z].{2,}$/})} disabled={email}></input>
+                          {/* <input type="text" className="col-sm mr-1" name="user_email2" value={user.user_email2} onChange={handleChange} 
+                                  ref={register({required: true, pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z].{2,}$/})} disabled={email}></input> */}
                           <select className="col-sm" name="user_email2" onChange={handleChange} value={user.user_email2}>
                             <option value="naver.com">naver.com</option>
                             <option value="gmail.com">gmail.com</option>
+                            <option value="kakao.com">kakao.com</option>
                             <option value="daum.net">daum.net</option>
                             <option value="nate.com">nate.com</option>
-                            <option value={email === false? user.user_email2: ""}>직접입력</option>
+                            <option value="yahoo.com">yahoo.com</option>
                           </select>    
                         </div>                 
-                        <div className={(errors.user_email1 || errors.user_email2)? `${style.Auth_error}` : `${style.Auth_noterror}`}>
-                          {(errors.user_email2 || errors.user_email1)?.type === "pattern" ? "올바른 형식으로 입력해주세요." 
-                          : 
-                          (errors.user_email2 || errors.user_email1)?.type === "required" ? "이메일를 입력해주세요."
-                          : email === true ? "" : ""
+                        <div className={errors.user_email1? `${style.Auth_error}` : `${style.Auth_noterror}`}>
+                          {(errors.user_email1)?.type === "pattern" ? "올바른 형식으로 입력해주세요." 
+                          :  
+                          "이메일를 입력해주세요."
                           }
                         </div>             
                       </div>

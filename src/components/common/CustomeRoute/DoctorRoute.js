@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import Page403 from "views/errors/page403";
+import Page403 from "views/errors/Page403";
 
 function DoctorRoute({ role, component: Component, render, ...rest }) {
   return (

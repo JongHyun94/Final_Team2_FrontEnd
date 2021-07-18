@@ -6,31 +6,37 @@ import { readImage, selectImgId, downloadImg } from "apis/inspections";
 import Spinner from "components/common/Spinner";
 
 function InspectionImgFormModal(props) {
+  //영상검사 이미지 결과
   const [inspectionImgResult, setInspectionImgResult] = useState(props.inspection);
-
+  //모달 열기, 닫기 props
   const { open, close } = props;
-
-  const [loading, setLoading] = useState(false);
-
+  //ImageGallery에 사용될 이미지 배열
   let images = [];
   // const [images, setImages] = useState([{
   //   "original" : "",
   //   "thumbnail" : "",
   // }]);
 
-  const work = async () => {
-    //setLoading(true);
+  ////////////////////////////////////////////////////////////
+
+  //DB Inspection_Imgs에서 해당 검사번호를 가진 검사이미지 목록 가져옴
+  const getInspectionImgs = async () => {
     try {
       if (props.id === props.inspection.inspection_id) {
+        //해당 검사번호를 가진 검사이미지의 다운로드 url 가져와서 images 배열에 넣음
         const response = await readImage(props.id);
         for (var i = 0; i <= response.data.inspectionImgList.length - 1; i++) {
           images.push({
             original: response.data.inspectionImgList[i].inspection_img_path,
-            thumbnail: response.data.inspectionImgList[i].inspection_img_path
+            thumbnail: response.data.inspectionImgList[i].inspection_img_path,
           });
           //setImages()
         }
+
+        //해당 검사번호를 가진 검사이미지번호 목록 가져옴
         const responseImgId = await selectImgId(props.id);
+
+        //검사이미지번호의 이미지 다운로드
         for (var i = 0; i <= responseImgId.data.inspectionImgList.length - 1; i++) {
           await downloadImg(responseImgId.data.inspectionImgList[i].inspection_img_id);
         }
@@ -42,9 +48,15 @@ function InspectionImgFormModal(props) {
     }
   };
 
+  ////////////////////////////////////////////////////////////
+
   useEffect(() => {
-    work();
+    if(open === true){
+      getInspectionImgs();
+    }
   }, [open]);
+
+  ////////////////////////////////////////////////////////////
 
   return (
     <div className={style.InspectionImgModal}>
@@ -65,7 +77,6 @@ function InspectionImgFormModal(props) {
                 <div className={style.InspectionImgForm_1_1_2}>
                   <div className="mb-1">{inspectionImgResult.inspection_list_category}</div>
                   <div className="mb-1">{inspectionImgResult.inspection_list_name}</div>
-                  {/* <div className="mb-1">{inspectionImgResult.inspectionId}</div> */}
                   <div className="mb-1">{props.id}</div>
                   <div className="mb-1">{inspectionImgResult.inspection_doctor_name}</div>
                   <div className="mb-1">{inspectionImgResult.inspection_inspector_name}</div>
@@ -73,17 +84,13 @@ function InspectionImgFormModal(props) {
                 </div>
               </div>
               <div className={`${style.InspectionImgForm_1_2} m-3`}>
-                {/* {loading ? <Spinner /> 
-                : 
-                <> */}
-                  {/* <img src={'resources/img/xray01.jpg'} width="100%" height="100%" alt=""></img> */}
-                  <ImageGallery items={images} />
-                {/* </> */}
-                
+                <ImageGallery items={images} />
               </div>
             </div>
             <div className={`${style.InspectionImgForm_2} m-2`}>
-              <button className="button_team2_fill" onClick={close}>닫기</button>
+              <button className="button_team2_fill" onClick={close}>
+                닫기
+              </button>
             </div>
           </section>
         ) : null}

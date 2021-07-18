@@ -238,6 +238,8 @@
 }
 .TreatmentCreateForm_checkbox {
   padding: 10px 10px 0 10px;
+  overflow-y: scroll;
+  height: 320px;
   /* display: flex;
   flex-direction: column; */
   border: 1.8px solid lightgray;
@@ -245,7 +247,26 @@
   width: 65%;
   height: 250px;
 }
+
+.TreatmentCreateForm_checkbox::-webkit-scrollbar {
+  width: 10px;
+}
+.TreatmentCreateForm_checkbox::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+.TreatmentCreateForm_checkbox::-webkit-scrollbar-track {
+  background-color: lightgray;
+}
+
+
+
+
+
 .TreatmentCreateForm_checkbox_1{
+ 
   height: 15px;
   font-size: small;
   /* display: flex;

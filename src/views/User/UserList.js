@@ -11,23 +11,6 @@ function UserList(props) {
   // 직원 직책 수 상태
   const [userCount, setUserCount] = useState([]);
 
-  useEffect(() => {
-    const work = async () => {
-      setLoading(true);
-      try {
-        const response = await getAllUserList();
-        // console.log(response.data.userList)
-        setUsers(response.data.userList);
-        setUserCount(() => getUsersCount(response.data.userList));
-      } catch(error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    work();
-  }, []);
-
   // 직원 직책 카운트
   function getUsersCount(userList) {
     const userCount = [];
@@ -94,10 +77,10 @@ function UserList(props) {
     }
   };
 
-  // 직원 선택
+  // 직원 선택 -> updateForm으로 데이터 보내기
   const handleClick = (user) => {
     setId(user.user_id);
-    props.changeUser(user)
+    props.changeUser(user);
   };
 
   // 직책 선택
@@ -124,6 +107,26 @@ function UserList(props) {
     }
   };
 
+  // 마운트 시 직원 목록 불러오기
+  useEffect(() => {
+    const work = async () => {
+      setLoading(true);
+      try {
+        const response = await getAllUserList();
+        // console.log(response.data.userList)
+        setUsers(response.data.userList);
+        setUserCount(() => getUsersCount(response.data.userList));
+      } catch(error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    work();
+  }, []);
+
+  //----------------------------------------------------------------------------------------
+  // MQTT 메시지 받기
   useEffect(() => {
     console.log("받습니다", props.message);
     const work = async () => {      
@@ -142,6 +145,7 @@ function UserList(props) {
     work();
   },[props.message])
 
+  // Autosizer
   const rowRenderer = ({index, key, style}) => {
     return (
       <div className={users[index].user_enabled === 1 ? "UserList_tr" : "UserList_tr_block"} key={key} style={style} onClick={() => handleClick(users[index])}>

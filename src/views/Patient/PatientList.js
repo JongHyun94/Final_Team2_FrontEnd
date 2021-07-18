@@ -9,21 +9,6 @@ function PatientList(props) {
   // 환자 목록 상태
   const [patients, setPatients] = useState([]);
 
-  useEffect(() => {
-    const work = async () => {
-      setLoading(true);
-      try {
-        const response = await getPatientList();
-        setPatients(response.data.patientList);
-      } catch(error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    work();
-  }, []);
-
   // 검색 상태
   const [keyword, setKeyword] = useState("");
 
@@ -56,6 +41,21 @@ function PatientList(props) {
     setId(patient.patient_id);
     props.changePatient(patient);
   };
+
+  useEffect(() => {
+    const work = async () => {
+      setLoading(true);
+      try {
+        const response = await getPatientList();
+        setPatients(response.data.patientList);
+      } catch(error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    work();
+  }, []);
 
   useEffect(() => {
     console.log("받습니다", props.message);

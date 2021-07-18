@@ -22,9 +22,6 @@ function Login(props) {
   // 바인딩할 상태함수
   const dispatch = useDispatch();
 
-  // 유효성 검사를 위한 함수 사용
-  const { handleSubmit, register, errors } = useForm({ mode: "onChange" });
-
   const handleChange = (event) => {
     setUser({
       ...user,
@@ -71,15 +68,7 @@ function Login(props) {
           props.history.push("/Treatment");
         } else if (user.userId.slice(0,1) === "I") {      
           props.history.push("/Inspection");
-        } //else {
-        //   props.history.push("/User");
-        // }
-      // } else if(response.data.result === "notEnabled") {
-        // openModal();
-        // setErrorMsg({
-        //   ...errorMsg,
-        //   content: "비활성화된 계정입니다."
-        // })
+        } 
       } else {
         openModal();
         // alert("로그인 실패 : 아이디 혹은 비밀번호가 맞지 않습니다.");
@@ -100,6 +89,7 @@ function Login(props) {
     }  
   };
   
+  //---------------------------------------------------------------------------------------
   // 공지사항
   const [bid, setBid] = useState("0");
 
@@ -111,6 +101,10 @@ function Login(props) {
     }
   };
 
+  
+  //---------------------------------------------------------------------------------------
+  // 유효성 검사를 위한 함수 사용
+  const { handleSubmit, register, errors } = useForm({ mode: "onChange" });
   // 모달 상태(open일 떄 true로 바뀌어 열림)
   const [modalOpen, setModalOpen] = useState(false);
   // 유효성 검사 오류 메시지
