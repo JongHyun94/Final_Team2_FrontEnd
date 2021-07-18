@@ -1,56 +1,58 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { AutoSizer, List, Table } from "react-virtualized";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import InspectionPatientListItem from "./InspectionPatientListItem";
 import { readPatient } from "apis/inspections";
-// import Spinner from "components/common/Spinner";
+import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 
 let patientsList = [];
 
 function InspectionPatientList(props) {
-  
-
-  //DatePicker 상태
+  //DatePicker 날짜
   const [treatmentDate, setTreatmentDate] = useState(new Date());
-  //날짜 이동 상태
+  //이동 버튼 누를 때의 날짜
   const [treatmentDate2, setTreatmentDate2] = useState(new Date());
+  //검사 대기 환자 목록
   const [patients, setPatients] = useState(patientsList);
+  //총검사상태 대기 명 수
   const [istateWaiting, setIstateWaiting] = useState(getIstateWaiting(patients));
+  //총검사상태 검사 명 수
   const [istateInspection, setIstateInspection] = useState(getIstateInspection(patients));
+  //총검사상태 완료 명 수
   const [istateCompletion, setIstateCompletion] = useState(getIstateCompletion(patients));
-
   // 진료번호 비교를 위한 상태
   const [id, setId] = useState("");
 
-  // Spinner
-  // const [loading, setLoading] = useState(false);
+  ////////////////////////////////////////////////////////////
 
-  useEffect(() => {
-    getPatient2(treatmentDate2);
-  }, [props]);
-
-  useEffect(() => {
-    getPatient2(treatmentDate2);
-  },[treatmentDate2]);
-
-  // useEffect(() => {
-  //   checkIState(patients);
-  // })
-
-  const getPatient2 = async (treatmentDate2) => {
-    // setLoading(true);
+  //DB Treatments 에서 해당 진료날짜에 진료완료된 환자 목록 가져옴
+  const getPatient = async (treatmentDate2) => {
     try {
       const response = await readPatient(moment(treatmentDate2).format("yyyy-MM-DD HH:mm"), "");
       patientsList = response.data.treatmentList;
       setPatients(patientsList);
       checkIState(patientsList);
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
-    //  finally {
-    //   setLoading(false);
-    // }
+  };
+
+  //날짜 이동 버튼
+  const searchDateBtn = (treatmentDate) => {
+    setTreatmentDate2(treatmentDate);
+  };
+
+  //진료완료된 환자 체크(선택)
+  const handleChecked = (treatmentId) => {
+    setId(treatmentId);
+    props.checkedtId(treatmentId);
+  };
+
+  //총검사상태 (대기, 검사, 완료) 명 수 세기
+  const checkIState = (patients) => {
+    setIstateWaiting(getIstateWaiting(patients));
+    setIstateInspection(getIstateInspection(patients));
+    setIstateCompletion(getIstateCompletion(patients));
   };
 
   function getIstateWaiting(patients) {
@@ -62,7 +64,7 @@ function InspectionPatientList(props) {
     }
     return countWaiting;
   }
-  
+
   function getIstateInspection(patients) {
     let countInspection = 0;
     for (var i = 0; i < patients.length; i++) {
@@ -72,7 +74,7 @@ function InspectionPatientList(props) {
     }
     return countInspection;
   }
-  
+
   function getIstateCompletion(patients) {
     let countCompletion = 0;
     for (var i = 0; i < patients.length; i++) {
@@ -83,87 +85,82 @@ function InspectionPatientList(props) {
     return countCompletion;
   }
 
-  //날짜 이동 버튼
-  const searchDateBtn = (treatmentDate) => {
-      setTreatmentDate2(treatmentDate);
-      // getPatient2(treatmentDate2);
-  };
-
-  //진료 완료 환자 체크(선택)
-  const handleChecked = (treatmentId) => {
-    setId(treatmentId);
-    props.checkedtId(treatmentId);
-  };
-
-  const checkIState = (patients) => {
-    setIstateWaiting(getIstateWaiting(patients));
-    setIstateInspection(getIstateInspection(patients));
-    setIstateCompletion(getIstateCompletion(patients));
-  };
-
+  //전체 명수 클릭 시, 해당 진료날짜에 진료완료된 모든 환자 목록 가져옴
   const showTotal = async (treatmentDate2) => {
     try {
       const response = await readPatient(moment(treatmentDate2).format("yyyy-MM-DD HH:mm"), "");
       patientsList = response.data.treatmentList;
       setPatients(patientsList);
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   };
 
+  //대기 명수 클릭 시, 해당 진료날짜에 진료완료된 환자들 중 총검사상태가 대기인 환자 목록 가져옴
   const showReady = async (treatmentDate2) => {
     try {
       const response = await readPatient(moment(treatmentDate2).format("yyyy-MM-DD HH:mm"), "대기");
       patientsList = response.data.treatmentList;
       setPatients(patientsList);
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   };
 
+  //검사 명수 클릭 시, 해당 진료날짜에 진료완료된 환자들 중 총검사상태가 검사인 환자 목록 가져옴
   const showInspection = async (treatmentDate2) => {
     try {
       const response = await readPatient(moment(treatmentDate2).format("yyyy-MM-DD HH:mm"), "검사");
       patientsList = response.data.treatmentList;
       setPatients(patientsList);
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   };
 
+  //완료 명수 클릭 시, 해당 진료날짜에 진료완료된 환자들 중 총검사상태가 대기인 완료 목록 가져옴
   const showFinish = async (treatmentDate2) => {
     try {
       const response = await readPatient(moment(treatmentDate2).format("yyyy-MM-DD HH:mm"), "완료");
       patientsList = response.data.treatmentList;
       setPatients(patientsList);
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   };
 
-  // const rowRenderer = ({index, key, style}) => {
-  //   return (
-  //       <tr key={key}>
-  //             <td key={patient.treatment_id}>
-  //               <input type="checkbox" />
-  //             </td>
-  //             <td style={{width:"10%"}}>{patient[index].treatment_id}</td>
-  //             <td>{patient[index].patient_name}</td>
-  //             <td>{patient[index].patient_birth}</td>
-  //             <td>{patient[index].patient_sex}</td>
-  //             <td>{patient[index].treatment_istate}</td>
-  //             <td>{patient[index].treatment_communication}</td>
-  //       </tr>
-  //   );
-  // };
+  ////////////////////////////////////////////////////////////
+
+  useEffect(() => {
+    getPatient(treatmentDate2);
+  }, [props]);
+
+  useEffect(() => {
+    getPatient(treatmentDate2);
+  }, [treatmentDate2]);
+
+  useEffect(() => {
+    if (props.message.content === "iStateInspections") {
+      ToastsStore.success("검사가 완료 되었습니다.");
+      getPatient(treatmentDate2);
+    }
+
+    if (props.message.content === "addInspections") {
+      ToastsStore.success("검사 대기 환자가 추가 되었습니다.");
+      getPatient(treatmentDate2);
+    }
+  }, [props.message]);
+
+  ////////////////////////////////////////////////////////////
+
   return (
     <div className="InspectionPatientList">
       <div className="InspectionPatientList_title">검사 대기 환자</div>
       <div className="InspectionPatientList_1 border">
         <div className="InspectionPatientList_1_1 mb-2">
+          <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground />
           <div className="InspectionPatientList_1_2_1 p-0">
-            {/* <input type="date" value={date} onChange={handleChange}/> */}
-            <DatePicker locale="ko" dateFormat="yyyy.MM.dd" selected={treatmentDate} onChange={(date) => setTreatmentDate(date)}/>
+            <DatePicker locale="ko" dateFormat="yyyy.MM.dd" selected={treatmentDate} onChange={(date) => setTreatmentDate(date)} />
           </div>
           <div className="InspectionPatientList_1_2_2">
             <button className="button_team2_fill" onClick={() => searchDateBtn(treatmentDate)}>
@@ -171,15 +168,23 @@ function InspectionPatientList(props) {
             </button>
           </div>
           <div className="InspectionPatientList_1_2_3 p-0">
-            <div className="InspectionPatientList_1_3_0" onClick={() => showTotal(treatmentDate2)}>전체:{istateWaiting+istateInspection+istateCompletion}명</div>
-            <div className="InspectionPatientList_1_3_1" onClick={() => showReady(treatmentDate2)}>대기:{istateWaiting}명</div>
-            <div className="InspectionPatientList_1_3_2" onClick={() => showInspection(treatmentDate2)}>검사:{istateInspection}명</div>
-            <div className="InspectionPatientList_1_3_3" onClick={() => showFinish(treatmentDate2)}>완료:{istateCompletion}명</div>
+            <div className="InspectionPatientList_1_3_0" onClick={() => showTotal(treatmentDate2)}>
+              전체:{istateWaiting + istateInspection + istateCompletion}명
+            </div>
+            <div className="InspectionPatientList_1_3_1" onClick={() => showReady(treatmentDate2)}>
+              대기:{istateWaiting}명
+            </div>
+            <div className="InspectionPatientList_1_3_2" onClick={() => showInspection(treatmentDate2)}>
+              검사:{istateInspection}명
+            </div>
+            <div className="InspectionPatientList_1_3_3" onClick={() => showFinish(treatmentDate2)}>
+              완료:{istateCompletion}명
+            </div>
           </div>
         </div>
 
         <div className="InspectionPatientList_list">
-          <table className="table InspectionPatientList_2_1" style={{height:"10px"}}>
+          <table className="table InspectionPatientList_2_1" style={{ height: "10px" }}>
             <thead className="InspectionPatientList_2_2">
               <tr>
                 <th></th>
@@ -192,21 +197,22 @@ function InspectionPatientList(props) {
               </tr>
             </thead>
             <tbody>
-              {/* <AutoSizer disableHeight>
-              {({ width, height }) => {
-                return <List width={width} height={500} list={patient} rowCount={patient.length} rowHeight={44} rowRenderer={rowRenderer} overscanRowCount={11} />;
-              }}
-            </AutoSizer> */}
-            {/* {loading ? <Spinner /> : <> */}
               {patients.map((patient) => {
                 return (
-                  <InspectionPatientListItem key={patient.treatment_id} patient={patient} id={id} handleChecked={(treatmentId) => handleChecked(treatmentId)} 
-                                              iState={props.iState} handleBarcodeBack={props.handleBarcodeBack}
-                                              iStateFinish={props.iStateFinish} handleFinishBack={props.handleFinishBack}
-                                              publishTopic={props.publishTopic}/>
+                  <InspectionPatientListItem
+                    key={patient.treatment_id}
+                    patient={patient}
+                    id={id}
+                    handleChecked={(treatmentId) => handleChecked(treatmentId)}
+                    iStateInspection={props.iStateInspection}
+                    handleIStateInspectionFalse={props.handleIStateInspectionFalse}
+                    iStateFinish={props.iStateFinish}
+                    handleIStateFinishFalse={props.handleIStateFinishFalse}
+                    message={props.message}
+                    publishTopic={props.publishTopic}
+                  />
                 );
               })}
-              {/* </>} */}
             </tbody>
           </table>
         </div>

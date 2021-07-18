@@ -3,12 +3,17 @@ import style from "./InspectionImgModifyModal.module.css";
 import { createImage, deleteImage } from "apis/inspections";
 
 function InspectionImgCreateFormModal(props) {
+  //영상검사 이미지 결과
   const [inspectionImgResult, setInspecctionImgResult] = useState(props.inspection);
-
+  //모달 열기, 수정, 닫기 props
   const { open, closeM, close } = props;
-
+  //첨부파일
   const inputFile = useRef();
 
+  ////////////////////////////////////////////////////////////
+
+  //수정 버튼
+  //유효성검사 후, DB Inspection_Imgs 에서 해당 검사번호를 가진 검사이미지 삭제 + 새로운 검사이미지 생성
   const inspectionImgResultBtn = async (event) => {
     event.preventDefault();
 
@@ -19,6 +24,7 @@ function InspectionImgCreateFormModal(props) {
     var typeIndex = 0;
     var type = true;
 
+    //첨부파일들이 이미지파일인지, 파일사이즈가 1MB를 넘지 않는지 체크
     for (var i = 0; i <= inputFile.current.files.length - 1; i++) {
       if (inputFile.current.files[i].type.substring(0, inputFile.current.files[i].type.lastIndexOf("/")) !== "image") {
         type = false;
@@ -35,7 +41,7 @@ function InspectionImgCreateFormModal(props) {
 
     if (inputFile.current.files.length === 0) {
       alert("첨부파일이 없습니다.");
-    } else if(!type) {
+    } else if (!type) {
       alert(typeIndex + 1 + "번째 첨부파일이 이미지파일이 아닙니다.");
     } else if (inputFile.current.files.length >= 5) {
       alert("첨부파일은 최대 4개까지 선택할 수 있습니다.");
@@ -43,14 +49,15 @@ function InspectionImgCreateFormModal(props) {
       alert(sizeIndex + 1 + "번째 첨부파일의 크기가 1MB를 초과했습니다.");
     } else {
       try {
+        //삭제
         await deleteImage(inspectionImgResult.inspection_id);
         const formData = new FormData();
         formData.append("inspection_img_inspection_id", inspectionImgResult.inspection_id);
         for (var i = 0; i <= inputFile.current.files.length - 1; i++) {
           formData.append("inspection_img_attach", inputFile.current.files[i]);
         }
+        //생성
         await createImage(formData);
-
         // formData 콘솔 찍는 법
         // for (let value of formData.values()) {
         //   console.log(value);
@@ -62,6 +69,8 @@ function InspectionImgCreateFormModal(props) {
       closeM();
     }
   };
+
+  ////////////////////////////////////////////////////////////
 
   return (
     <div className={style.InspectionImgModifyModal}>
@@ -87,7 +96,6 @@ function InspectionImgCreateFormModal(props) {
                     <div className={style.InspectionImgCreateForm_1_1_2}>
                       <div className="mb-1">{inspectionImgResult.inspection_list_category}</div>
                       <div className="mb-1">{inspectionImgResult.inspection_list_name}</div>
-                      {/* <div className="mb-1">{inspectionImgResult.inspectionId}</div> */}
                       <div className="mb-1">{props.id}</div>
                       <div className="mb-1">{inspectionImgResult.inspection_doctor_name}</div>
                       <div className="mb-1">{inspectionImgResult.inspection_inspector_name}</div>

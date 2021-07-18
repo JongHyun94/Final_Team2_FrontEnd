@@ -1,68 +1,81 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { updateIstateI, updateIstateC } from "apis/inspections";
+import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 
 function InspectionPatientListItem(props) {
-  useEffect(() => {
-    if(props.iState === true){
-      iStateChange1();
-    }
-    if(props.iStateFinish === true){
-      iStateFinishChange();
-    }
-  });
+  
+  ////////////////////////////////////////////////////////////
 
-  // //총검사상태: 대기~>검사 변경
-  const iStateChange1 = async () => {
+  //총검사상태: 대기~>검사 변경
+  const changeIStateInspection = async () => {
     try {
-      if(props.patient.treatment_id === props.id){
-        if(props.patient.treatment_istate === "대기"){
+      if (props.patient.treatment_id === props.id) {
+        if (props.patient.treatment_istate === "대기") {
           //props.patient.treatment_istate = "검사";
-            await updateIstateI(props.id);
+          await updateIstateI(props.id);
         }
       }
-      props.handleBarcodeBack();
-    } catch(error) {
+      props.handleIStateInspectionFalse();
+    } catch (error) {
       console.log(error);
     }
-    
   };
 
   //총검사상태: 검사~>완료 변경
-  const iStateFinishChange = async () => {
+  const changeIStateFinish = async () => {
     try {
-      if(props.patient.treatment_id === props.id){
-        if(props.patient.treatment_istate === "검사"){
+      if (props.patient.treatment_id === props.id) {
+        if (props.patient.treatment_istate === "검사") {
           //props.patient.treatment_istate = "완료";
-            await updateIstateC(props.id);
-            props.publishTopic(1);
+          await updateIstateC(props.id);
+          props.handleIStateFinishFalse();
+          props.publishTopic(1);
         }
       }
-      props.handleFinishBack();
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
-    
   };
+
+  ////////////////////////////////////////////////////////////
+
+  useEffect(() => {
+    if (props.iStateInspection === true) {
+      changeIStateInspection();
+    }
+  }, [props.iStateInspection]);
+
+  useEffect(() => {
+    if (props.iStateFinish === true && props.message.content === "updateInspects") {
+      changeIStateFinish();
+    }
+  }, [props.iStateFinish]);
+
+  ////////////////////////////////////////////////////////////
 
   return (
     <>
-      <tr className="InspectionPatientListItem" key={props.patient.treatment_id} onClick={() => {props.handleChecked(props.patient.treatment_id)}}>
+      <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground />
+      <tr
+        className="InspectionPatientListItem"
+        key={props.patient.treatment_id}
+        onClick={() => {props.handleChecked(props.patient.treatment_id);}}
+      >
         <td>
-          <input type="checkbox" name="treatmentCheck" checked={props.id === props.patient.treatment_id ? true : false} readOnly/>
+          <input type="checkbox" name="treatmentCheck" checked={props.id === props.patient.treatment_id ? true : false} readOnly />
         </td>
         <td>{props.patient.treatment_id}</td>
         <td>{props.patient.patient_name}</td>
         <td>{props.patient.patient_ssn.split("-")[0]}</td>
         <td>{props.patient.patient_sex}</td>
-        {props.patient.treatment_istate === "대기" ?
-          <td style={{color:"#009900"}}>{props.patient.treatment_istate}</td>
-        :
-          props.patient.treatment_istate === "검사" ?
-            <td style={{color:"#ff6600"}}>{props.patient.treatment_istate}</td>
-          :
-            <td style={{color:"#00AAF0"}}>{props.patient.treatment_istate}</td>
-        }
-        
+        {props.patient.treatment_istate === "대기" ? (
+          <td style={{ color: "#009900" }}>{props.patient.treatment_istate}</td>
+        ) : props.patient.treatment_istate === "검사" ? (
+          <td style={{ color: "#ff6600" }}>{props.patient.treatment_istate}</td>
+        ) : (
+          <td style={{ color: "#00AAF0" }}>{props.patient.treatment_istate}</td>
+        )}
+
         <td>{props.patient.treatment_communication}</td>
       </tr>
     </>

@@ -3,14 +3,18 @@ import style from "./InspectionImgCreateFormModal.module.css";
 import { createImage } from "apis/inspections";
 
 function InspectionImgCreateFormModal(props) {
+  //영상검사 이미지 결과
   const [inspectionImgResult, setInspecctionImgResult] = useState(props.inspection);
-
+  //모달 열기, 등록, 닫기 props
   const { open, closeR, close } = props;
-
+  //첨부파일
   const inputFile = useRef();
 
+  ////////////////////////////////////////////////////////////
+
+  //등록 버튼
+  //유효성검사 후, DB Inspection_Imgs 에서 해당 검사번호를 가진 검사이미지 생성
   const inspectionImgResultBtn = async (event) => {
-    console.log("타입", inputFile.current.files[0].type);
     event.preventDefault();
 
     var maxSize = 1 * 1024 * 1024;
@@ -20,6 +24,7 @@ function InspectionImgCreateFormModal(props) {
     var typeIndex = 0;
     var type = true;
 
+    //첨부파일들이 이미지파일인지, 파일사이즈가 1MB를 넘지 않는지 체크 
     for (var i = 0; i <= inputFile.current.files.length - 1; i++) {
       if (inputFile.current.files[i].type.substring(0, inputFile.current.files[i].type.lastIndexOf("/")) !== "image") {
         type = false;
@@ -36,7 +41,7 @@ function InspectionImgCreateFormModal(props) {
 
     if (inputFile.current.files.length === 0) {
       alert("첨부파일이 없습니다.");
-    } else if(!type) {
+    } else if (!type) {
       alert(typeIndex + 1 + "번째 첨부파일이 이미지파일이 아닙니다.");
     } else if (inputFile.current.files.length >= 5) {
       alert("첨부파일은 최대 4개까지 선택할 수 있습니다.");
@@ -49,8 +54,8 @@ function InspectionImgCreateFormModal(props) {
         for (var i = 0; i <= inputFile.current.files.length - 1; i++) {
           formData.append("inspection_img_attach", inputFile.current.files[i]);
         }
+        //생성
         await createImage(formData);
-
         // formData 콘솔 찍는 법
         // for (let value of formData.values()) {
         //   console.log(value);
@@ -63,9 +68,11 @@ function InspectionImgCreateFormModal(props) {
     }
   };
 
+  ////////////////////////////////////////////////////////////
+
   return (
     <div className={style.InspectionImgCreateModal}>
-      <div className={open ? `${style.openModal} ${style.modal}`:`${style.modal}`}>
+      <div className={open ? `${style.openModal} ${style.modal}` : `${style.modal}`}>
         {open ? (
           <section>
             <div className={style.InspectionImgCreateForm}>
@@ -87,7 +94,6 @@ function InspectionImgCreateFormModal(props) {
                     <div className={style.InspectionImgCreateForm_1_1_2}>
                       <div className="mb-1">{inspectionImgResult.inspection_list_category}</div>
                       <div className="mb-1">{inspectionImgResult.inspection_list_name}</div>
-                      {/* <div className="mb-1">{inspectionImgResult.inspectionId}</div> */}
                       <div className="mb-1">{props.id}</div>
                       <div className="mb-1">{inspectionImgResult.inspection_doctor_name}</div>
                       <div className="mb-1">{inspectionImgResult.inspection_inspector_name}</div>
@@ -104,8 +110,12 @@ function InspectionImgCreateFormModal(props) {
                     </div>
                   </div>
                   <div className={`${style.InspectionImgCreateForm_1_2} mb-3`}>
-                    <button type="submit" className="button_team2_fill m-0" onClick={inspectionImgResultBtn}>등록</button>
-                    <button className="button_team2_empty" onClick={close}>닫기</button>
+                    <button type="submit" className="button_team2_fill m-0" onClick={inspectionImgResultBtn}>
+                      등록
+                    </button>
+                    <button className="button_team2_empty" onClick={close}>
+                      닫기
+                    </button>
                   </div>
                 </form>
               </div>
