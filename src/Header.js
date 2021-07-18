@@ -72,9 +72,11 @@ function Header(props) {
               <div>
                 <a className="header_url" href={hospital_url} target="_blank" rel="noreferrer">{hname}</a>
               </div>
-              <div className="header_auth" onClick={()=>setAuthModalOpen(true)}>         
+              <div className="header_auth" >         
                 <React.Fragment>
+                  <span onClick={openAuthModal}>
                   {globalUid} 님
+                  </span>
                   <Auth openModal={authModalOpen} closeModal={closeAuthModal} setAuthModalOpen={setAuthModalOpen}></Auth>
                 </React.Fragment>
               </div>
