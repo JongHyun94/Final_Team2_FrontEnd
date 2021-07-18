@@ -6,7 +6,7 @@ import Inspection from "views/Inspection";
 import Login from "views/Login";
 import DataAnalysis from "views/DataAnalysis";
 import User from "views/User";
-import Page404 from "views/errors/page404";
+import Page404 from "views/errors/Page404";
 import NurseRoute from "components/common/CustomeRoute/NurseRoute";
 import DoctorRoute from "components/common/CustomeRoute/DoctorRoute";
 import InspectorRoute from "components/common/CustomeRoute/InspectorRoute";

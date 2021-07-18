@@ -4,32 +4,33 @@ import InspectionList from "./InspectionList";
 import { useEffect, useRef, useState } from "react";
 import Paho from "paho-mqtt";
 import { sendMqttMessage } from "apis/mqtt";
-import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 
 function Inspection(props) {
-  //-------------------------------------------------------------
-  //상태 선언
-  //-------------------------------------------------------------
+  ////////////////////////////////////////////////////////////
+  //MQTT
+  // 1. 검사 대기 추가   - doctor -> inspector
+  // { topic: "/138010/nurse/doctor/inspector", content: "addInspections"}
+  // 2. 검사 수정   - inspector -> inspector
+  // { topic: "/138010/nurse/doctor/inspector", content: "updateInspects"}
+  // 3. 총검사 상태 완료   - inspector -> inspector
+  // { topic: "/138010/nurse/doctor/inspector", content: "iStateInspections"}
+  ////////////////////////////////////////////////////////////
   const [subTopic, setSubTopic] = useState("/138010/nurse/doctor/inspector"); // 병원코드/검사자
-  const [pubMessage, setPubMessage] = useState(
-    [
-      {
-        topic: "/138010/nurse/doctor/inspector",
-        content: "updateInspects" 
-      },
-      {
-        topic: "/138010/nurse/doctor/inspector",
-        content: "iStateInspections"
-      }
-    ]
-    );
+  const [pubMessage, setPubMessage] = useState([
+    {
+      topic: "/138010/nurse/doctor/inspector",
+      content: "updateInspects",
+    },
+    {
+      topic: "/138010/nurse/doctor/inspector",
+      content: "iStateInspections",
+    },
+  ]);
   const [message, setMessage] = useState("");
-  //-------------------------------------------------------------
-  //버튼 이벤트 처리
-  //-------------------------------------------------------------
+
   let client = useRef(null);
+
   const connectMqttBroker = () => {
-    // Paho.Mqtt.Client x
     client.current = new Paho.Client("localhost", 61614, "client-" + new Date().getTime());
 
     client.current.onConnectionLost = () => {
@@ -37,7 +38,7 @@ function Inspection(props) {
     };
 
     client.current.onMessageArrived = (msg) => {
-      console.log("메시지 수신1");
+      //console.log("메시지 수신");
       var Jmessage = JSON.parse(msg.payloadString);
       setMessage(() => {
         return Jmessage;
@@ -67,78 +68,68 @@ function Inspection(props) {
   ////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////
 
-  //진료번호 상태
+  //진료번호
   const [treatmentId, setTreatmentId] = useState("");
-
-  //총검사상태: 대기~>검사 를 위한 state
-  const [iState, setIState] = useState(false);
-  //총검사상태: 검사~>완료 를 위한 state
+  //true 일때, 총검사상태: 대기~>검사
+  const [iStateInspection, setIStateInspection] = useState(false);
+  //true 일때, 총검사상태: 검사~>완료
   const [iStateFinish, setIStateFinish] = useState(false);
 
-  useEffect(() => {
-    if (message.content === "iStateInspections") {
-      console.log("총검사 토스트");
-      ToastsStore.success("검사가 완료 되었습니다.");
-    }
-
-    if(message.content === "addInspections") {
-      console.log("검사추가 토스트");
-      ToastsStore.success("검사 대기 환자가 추가 되었습니다.");
-    }
-  }, [message]);
-
+  //검사대기 목록에서 체크된 진료번호
   const checkedtId = (id) => {
     setTreatmentId(id);
   };
 
-  //바코드모달 확인 시, 총검사상태: 대기~>검사
-  const handleBarcodeCheck = () => {
-    setIState(true);
+  //검사시작 시(총검사상태: 대기~>검사)
+  const handleIStateInspectionTrue = () => {
+    setIStateInspection(true);
   };
 
-  //총검사상태: 대기~>검사 바꾼 후 state 원래대로
-  const handleBarcodeBack = () => {
-    setIState(false);
+  //검사시작 후(총검사상태: 대기~>검사)
+  const handleIStateInspectionFalse = () => {
+    setIStateInspection(false);
   };
 
-  //모든 검사상태가 완료 시, 총검사상태: 검사~>완료
-  const handleFinish = () => {
+  //모든 검사상태가 완료 시(총검사상태: 검사~>완료)
+  const handleIStateFinishTrue = () => {
     setIStateFinish(true);
   };
 
-  //총검사상태: 검사~>완료 바꾼 후 state 원래대로
-  const handleFinishBack = () => {
+  //모든 검사상태가 완료 후(총검사상태: 검사~>완료)
+  const handleIStateFinishFalse = () => {
     setIStateFinish(false);
   };
 
+  ////////////////////////////////////////////////////////////
+
   return (
     <>
-    <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground />
-    <div className="Inspection">
-      <div className="Inspection_1">
-        {/* 검사대기환자 */}
-        <InspectionPatientList
-          treatmentId={treatmentId}
-          checkedtId={(id) => checkedtId(id)}
-          iState={iState}
-          handleBarcodeBack={handleBarcodeBack}
-          iStateFinish={iStateFinish}
-          handleFinishBack={handleFinishBack}
-          publishTopic={publishTopic}
-        />
+      <div className="Inspection">
+        <div className="Inspection_1">
+          {/* 검사대기환자 */}
+          <InspectionPatientList
+            treatmentId={treatmentId}
+            checkedtId={(id) => checkedtId(id)}
+            iStateInspection={iStateInspection}
+            handleIStateInspectionFalse={handleIStateInspectionFalse}
+            iStateFinish={iStateFinish}
+            handleIStateFinishFalse={handleIStateFinishFalse}
+            message={message}
+            publishTopic={publishTopic}
+          />
+        </div>
+        <div className="Inspection_2">
+          {/* 검사상세내역 */}
+          <InspectionList
+            treatmentId={treatmentId}
+            handleIStateInspectionTrue={handleIStateInspectionTrue}
+            iStateFinish={iStateFinish}
+            handleIStateFinishTrue={handleIStateFinishTrue}
+            handleIStateFinishFalse={handleIStateFinishFalse}
+            publishTopic={publishTopic}
+          />
+        </div>
       </div>
-      <div className="Inspection_2">
-        {/* 검사상세내역 */}
-        <InspectionList
-          treatmentId={treatmentId}
-          handleBarcodeCheck={handleBarcodeCheck}
-          iStateFinish={iStateFinish}
-          handleFinish={handleFinish}
-          handleFinishBack={handleFinishBack}
-          publishTopic={publishTopic}
-        />
-      </div>
-    </div>
     </>
   );
 }
