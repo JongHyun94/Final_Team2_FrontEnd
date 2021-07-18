@@ -44,6 +44,8 @@ function TreatmentCreateForm(props) {
   const [drugForm, setDrugForm] = useState({
     selectedDrug: []
   });
+  const [selectDrugId, setSelectDrugId] = useState("");
+
 
   const [druglists, setDrugLists] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState();
@@ -60,7 +62,7 @@ function TreatmentCreateForm(props) {
   };
   useEffect(() => {
     getCategoryInspectionLists(inspectionOption);
-  }, [inspectionOption]);
+  }, []);
 
   const getSearchDurgs = async () => {
     setLoading(true);
@@ -224,6 +226,9 @@ function TreatmentCreateForm(props) {
     }
 
   };
+  const checkedDrugId = (drug_injection_list_id) => {
+    setSelectDrugId(drug_injection_list_id);
+  }
 
   const checkChange = (event) => {
     if (event.target.checked) {//체크되었는지 유무
@@ -233,8 +238,9 @@ function TreatmentCreateForm(props) {
           ...prevDrugForm,
           selectedDrug: prevDrugForm.selectedDrug.concat(event.target.value)
         };
+        
       })
-
+    
     } else {
 
       setDrugForm(prevDrugForm => {
@@ -400,9 +406,10 @@ function TreatmentCreateForm(props) {
                   {loading ? <Spinner /> : <>
                     {druglists.map((druglist) => {
                       return (
-                        <tr className="TreatmentSearch_2_2_tr" key={druglist.drug_injection_list_id}>
+                        <tr className="TreatmentSearch_2_2_tr" key={druglist.drug_injection_list_id}  onClick={(event) => checkedDrugId(druglist.drug_injection_list_id)}>
                           <td>
-                            <input type="checkbox" name="selectedDrug" value={druglist.drug_injection_list_id} onChange={checkChange} />
+                            <input type="checkbox" name="selectedDrug" value={druglist.drug_injection_list_id} onChange={checkChange}
+                            checked={selectDrugId === druglist.drug_injection_list_id ? true : false} readOnly />
                           </td>
                           <th>{druglist.drug_injection_list_id}</th>
                           <th>{druglist.drug_injection_list_name}</th>
