@@ -7,9 +7,6 @@ function App() {
     <>
     <Header />
     <div>
-
-    </div>
-    <div>
       <AppRoute/>
     </div>
     </>

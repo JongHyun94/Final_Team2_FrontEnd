@@ -17,7 +17,7 @@ function RegisterCreateModal(props) {
       var list = await createRegister(newRegister);
       console.log("결과값", list.data.result);
       if (list.data.result === "중복") {
-        console.log("이미 예약이 되어있습니다.");
+        //console.log("이미 예약이 되어있습니다.");
         ToastsStore.success("이미 예약이 되어있습니다.");
       } else if (list.data.result === "성공") {
         publishTopic(0);
@@ -34,7 +34,7 @@ function RegisterCreateModal(props) {
       var list = await updateRegister(newRegister);
       console.log("결과값", list.data.result);
       if (list.data.result === "중복") {
-        console.log("이미 예약이 되어있습니다.");
+        //console.log("이미 예약이 되어있습니다.");
         ToastsStore.success("이미 예약이 되어있습니다.");
       } else if (list.data.result === "성공") {
         publishTopic(0);

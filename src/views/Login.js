@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createSetAuthTokenAction, createSetUidAction } from "redux/auth-reducer";
+import { createSetAuthTokenAction, createSetUidAction, cresteSetUauthorityAction } from "redux/auth-reducer";
 import { useForm } from "react-hook-form";
 import Help from "./Help";
 import "./Login.css";
@@ -22,9 +22,6 @@ function Login(props) {
   // 바인딩할 상태함수
   const dispatch = useDispatch();
 
-  // 유효성 검사를 위한 함수 사용
-  const { handleSubmit, register, errors } = useForm({ mode: "onChange" });
-
   const handleChange = (event) => {
     setUser({
       ...user,
@@ -38,6 +35,7 @@ function Login(props) {
     try{
       // 로그인 요청
       const response = await login(user);
+      console.log(response.data);
 
       // 로그인 성공 시 JWT 저장 및 경로 이동
       if (response.data.result === "success") {
@@ -48,6 +46,7 @@ function Login(props) {
         // // Redux에 인증 내용 저장      
         dispatch(createSetUidAction(response.data.uid));
         dispatch(createSetAuthTokenAction(response.data.authToken));
+        dispatch(cresteSetUauthorityAction(response.data.uauthority));
         dispatch(createSetHnameAction(response.data.hname));
         dispatch(createSetHidAction(response.data.hid));
         dispatch(createSetHaddressAction(response.data.haddress));
@@ -56,6 +55,7 @@ function Login(props) {
         // sessionStorage에 인증 내용 저장
         sessionStorage.setItem("uid", response.data.uid);
         sessionStorage.setItem("authToken", response.data.authToken);
+        sessionStorage.setItem("uauthority", response.data.uauthority);
         sessionStorage.setItem("hname", response.data.hname);
         sessionStorage.setItem("hid", response.data.hid);
         sessionStorage.setItem("haddress", response.data.haddress);
@@ -68,15 +68,7 @@ function Login(props) {
           props.history.push("/Treatment");
         } else if (user.userId.slice(0,1) === "I") {      
           props.history.push("/Inspection");
-        } //else {
-        //   props.history.push("/User");
-        // }
-      // } else if(response.data.result === "notEnabled") {
-        // openModal();
-        // setErrorMsg({
-        //   ...errorMsg,
-        //   content: "비활성화된 계정입니다."
-        // })
+        } 
       } else {
         openModal();
         // alert("로그인 실패 : 아이디 혹은 비밀번호가 맞지 않습니다.");
@@ -97,6 +89,7 @@ function Login(props) {
     }  
   };
   
+  //---------------------------------------------------------------------------------------
   // 공지사항
   const [bid, setBid] = useState("0");
 
@@ -108,6 +101,10 @@ function Login(props) {
     }
   };
 
+  
+  //---------------------------------------------------------------------------------------
+  // 유효성 검사를 위한 함수 사용
+  const { handleSubmit, register, errors } = useForm({ mode: "onChange" });
   // 모달 상태(open일 떄 true로 바뀌어 열림)
   const [modalOpen, setModalOpen] = useState(false);
   // 유효성 검사 오류 메시지

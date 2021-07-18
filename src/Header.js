@@ -1,7 +1,7 @@
 import { removeAuthHeader } from "apis/axiosConfig";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { createSetAuthTokenAction, createSetUidAction } from "redux/auth-reducer";
+import { createSetAuthTokenAction, createSetUidAction, cresteSetUauthorityAction } from "redux/auth-reducer";
 import React, { useState } from "react";
 import Auth from "./views/Auth";
 import { RiCalendarCheckLine, RiStethoscopeFill, RiTestTubeFill } from "react-icons/ri";
@@ -14,7 +14,6 @@ function Header(props) {
   const hname = useSelector((state) => state.hospitalReducer.hname);
   const hlat = useSelector((state) => state.hospitalReducer.hlat);
   const hlong = useSelector((state) => state.hospitalReducer.hlong);
-
   const hospital_url = useSelector((state) => state.hospitalReducer.hurl);
   
   const dispatch = useDispatch();
@@ -22,6 +21,7 @@ function Header(props) {
   const logout = (event) => {
     dispatch(createSetUidAction(""));
     dispatch(createSetAuthTokenAction(""));
+    dispatch(cresteSetUauthorityAction(""));
     dispatch(createSetHnameAction(""));
     dispatch(createSetHidAction(""));
     dispatch(createSetHaddressAction(""));
@@ -33,6 +33,7 @@ function Header(props) {
     // SessionStorage에 인증 내용 제거
     sessionStorage.removeItem("uid");
     sessionStorage.removeItem("authToken");
+    sessionStorage.removeItem("uauthority");
     sessionStorage.removeItem("hname");
     sessionStorage.removeItem("hid");
     sessionStorage.removeItem("haddress");
@@ -41,18 +42,17 @@ function Header(props) {
     sessionStorage.removeItem("hlong");
   };
 
+  //---------------------------------------------------------------------------------------
   // 모달 상태(open일 떄 true로 바뀌어 열림)
   const [authModalOpen, setAuthModalOpen] = useState(false);
 
   const openAuthModal = () => {
-    console.log("**", authModalOpen);
-    setAuthModalOpen(true);
-    console.log("열기");
+    // setAuthModalOpen(true);
+    console.log("열기", authModalOpen);
   };
   const closeAuthModal = () => {
-    console.log("**", authModalOpen);
     setAuthModalOpen(false);
-    console.log("닫기");
+    console.log("닫기", authModalOpen);
   };
   console.log("$$ ",authModalOpen);
 
@@ -71,10 +71,10 @@ function Header(props) {
               <div>
                 <a className="header_url" href={hospital_url} target="_blank" rel="noreferrer">{hname}</a>
               </div>
-              <div className="header_auth" onClick={openAuthModal}>         
+              <div className="header_auth" onClick={()=>setAuthModalOpen(true)}>         
                 <React.Fragment>
                   {globalUid} 님
-                  <Auth openModal={authModalOpen} closeModal={closeAuthModal}></Auth>
+                  <Auth openModal={authModalOpen} closeModal={closeAuthModal} setAuthModalOpen={setAuthModalOpen}></Auth>
                 </React.Fragment>
               </div>
               <div><Link to="/"><button className="button_team2_empty" onClick={logout}>LOGOUT</button></Link></div>

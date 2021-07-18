@@ -30,8 +30,8 @@ function Register(props) {
   //상태 선언
   //-------------------------------------------------------------
 
-  const [subTopic, setSubTopic] = useState(["/138010/nurse", "/138010/nurse/doctor"]);  // 병원코드/간호사
-  const [prevSubTopic, setPrevSubTopic] = useState("/138010/#"); // 병원코드/간호사
+  const [subTopic, setSubTopic] = useState("/138010/nurse");  // 병원코드/간호사
+  const [prevSubTopic, setPrevSubTopic] = useState("/138010/nurse"); // 병원코드/간호사
   const [pubMessage, setPubMessage] = useState([
     { topic: "/138010/nurse", content: "refreshRegisters"}, 
     { topic: "/138010/nurse/doctor", content: "addTreatments"},
@@ -62,7 +62,7 @@ function Register(props) {
 
     client.current.connect({
       onSuccess: () => {
-        client.current.subscribe(subTopic[0]);
+        client.current.subscribe(subTopic);
         console.log("Mqtt 접속 성공");
       }
     });
@@ -73,8 +73,8 @@ function Register(props) {
   };
   const sendSubTopic = () => {
     client.current.unsubscribe(prevSubTopic);
-    client.current.subscribe(subTopic[0]);
-    setPrevSubTopic(subTopic[0]);
+    client.current.subscribe(subTopic);
+    setPrevSubTopic(subTopic);
   };
 
   const publishTopic = async (num) => {
@@ -207,7 +207,6 @@ function Register(props) {
             setRegisterDate={setRegisterDate}
             message={message}
             publishTopic={publishTopic}
-            setSubTopic={setSubTopic}
             />
           </div>
         </div>
