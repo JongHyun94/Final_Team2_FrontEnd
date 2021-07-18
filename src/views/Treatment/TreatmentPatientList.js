@@ -33,13 +33,7 @@ function TreatmentPatientList(props) {
   const [loading, setLoading] = useState(false);
 
   // 마운트 및 언마운트에 실행할 내용------------------------------------
-  // useEffect(() => {
-  //   getTreatmentPatientLists(inputdate2);
-  // }, [inputdate2]);
 
-  // useEffect(() => {
-  //   getState(patientlists);
-  // }, [patientlists]);
   useEffect(() => {
     const work = async () =>{
       setLoading(true);
@@ -62,11 +56,6 @@ function TreatmentPatientList(props) {
     getList(inputdate2);
   }, [inputdate2]);
 
-  // useEffect(() => {
-  //   console.log(message);
-  //   getList(inputdate2);
-  // },[inputdate2, message, props])
-
   useEffect(() => {
     const work = async () =>{
       setLoading(true);
@@ -84,11 +73,14 @@ function TreatmentPatientList(props) {
     if(message.content==="addTreatments"){
       ToastsStore.success("접수 완료");
       work();
+    }else if(message.content==="refreshTreatments"){
+      // ToastsStore.success("업데이트 완료");
+      work();
+    }else{
+
     }
   
   },[message]);
-
-
 
   //버튼 이벤트 처리---------------------------------------------------
 
@@ -147,6 +139,7 @@ const finishFilter = async () => {
 
 
   //실행 함수--------------------------------
+  
   //선택 날자에 맞는 리스트 가져오기
   const getList = async (inputdate2,globalUid) => {
     setLoading(true);

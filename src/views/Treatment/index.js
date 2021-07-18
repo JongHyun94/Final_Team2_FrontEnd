@@ -8,12 +8,8 @@ import { sendMqttMessage } from "apis/mqtt";
 
 function Treatment(props) {
 
-  ///////////////////////////////////////////////////////////////
-  // MQTT 설정 
-  ///////////////////////////////////////////////////////////////
-
   //-------------------------------------------------------------  
-  //메시지 종류
+  //MQTT 설정 : 메시지 종류
   //-------------------------------------------------------------
 
   // 1. 리스트 호출 - nurse -> docter
@@ -24,15 +20,9 @@ function Treatment(props) {
   // { topic: "/138010/doctor", content: "refreshToDoList"}
   
   //-------------------------------------------------------------  
-  //상태 선언
+  //MQTT 설정 : 상태 선언
   //-------------------------------------------------------------
 
-  // const [subTopic, setSubTopic] = useState("/138010/doctor");  // 병원코드/간호사
-  // const [prevSubTopic, setPrevSubTopic] = useState("/138010/nurse"); // 병원코드/간호사
-  // const [pubMessage, setPubMessage] = useState({
-  //   topic: "/138010/inspector",
-  //   content: "addInspects",  //검사추가
-  // });
   const [subTopic, setSubTopic] = useState(["/138010/nurse/doctor"]);  // 병원코드/간호사
   const [prevSubTopic, setPrevSubTopic] = useState("/138010/nurse"); // 병원코드/간호사
   const [pubMessage, setPubMessage] = useState([
@@ -90,24 +80,13 @@ function Treatment(props) {
   const publishTopic = async (num) => {
     await sendMqttMessage(pubMessage[num]);
   };
-
-
-  // const publishTopic = async () => {
-  //   await sendMqttMessage(pubMessage);
-  // };
-
+  
   useEffect(() => {
     connectMqttBroker();
     // console.log("MESSAGE",message);
   },[]);
 
-  //////////////////////////////////////////////////////////
 
-  // 위에 생성한 환자 리스트
-  // const [patientlists, setPatientlists] = useState([]);
-
- 
-  
   //진료 대기리스트에서 체크된 환자 정보
   const [checkedpatient, setCheckedpatient] = useState("");
 
