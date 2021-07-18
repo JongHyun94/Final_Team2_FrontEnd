@@ -14,15 +14,15 @@ function UserCreateForm(props) {
     user_name: "",
     user_authority: "ROLE_DOCTOR",
     user_hospital_id: hospital_id,
-    user_ssn: "",
+    // user_ssn: "",
     user_ssn1: "",
     user_ssn2: "",
     user_sex: "M",
-    user_tel: "",
+    // user_tel: "",
     user_tel1: "010",
     user_tel2: "",
     user_tel3: "",
-    user_email: "",
+    // user_email: "",
     user_email1: "",
     user_email2: "naver.com",
     user_zipcode: "",
@@ -31,34 +31,20 @@ function UserCreateForm(props) {
     user_detailaddress2: "",
   });
 
-  // 이메일 비교 상태
-  const [email, setEmail] = useState(true);
-
-  // 마스킹 상태
+  // 주민번호 뒷자리 마스킹 상태
   const [masking, setMasking] = useState("");
-
-  // 유효성 검사를 위한 함수 사용
-  const { handleSubmit, register, errors } = useForm({ mode: "onChange" });
-
-  useEffect(() => {
-    if (user.user_email2 === "") {
-      setEmail(false);
-    } else if (user.user_email2 === "naver.com" || user.user_email2 === "gmail.com" || user.user_email2 === "daum.net" || user.user_email2 === "nate.com") {
-      setEmail(true);
-    }
-  }, [user.user_email2])
 
   const handleChange = (event) => {
     setUser({
       ...user,
       [event.target.name]: event.target.value,
-      user_ssn: user.user_ssn1 + "-" + user.user_ssn2,
-      user_tel: user.user_tel1 + "-" + user.user_tel2 + "-" + user.user_tel3,
-      user_email: user.user_email1 + "@" + user.user_email2
+      // user_ssn: user.user_ssn1 + "-" + user.user_ssn2,
+      // user_tel: user.user_tel1 + "-" + user.user_tel2 + "-" + user.user_tel3,
+      // user_email: user.user_email1 + "@" + user.user_email2
     });
   };
 
-  const handleChangeSSn = (event) => {
+  const handleChangeSsn = (event) => {
     setUser({
       ...user,
       user_ssn2 : event.target.value
@@ -69,22 +55,21 @@ function UserCreateForm(props) {
   // 직원 등록
   const handleCreate = async () => {
     try {
-      // event.preventDefault();
       const response = await createUser(user);
       if (response.data) {
         setUser({
           user_name: "",
           user_authority: "ROLE_DOCTOR",
           user_hospital_id: hospital_id,
-          user_ssn: "",
+          // user_ssn: "",
           user_ssn1: "",
           user_ssn2: "",
           user_sex: "M",
-          user_tel: "",
+          // user_tel: "",
           user_tel1: "010",
           user_tel2: "",
           user_tel3: "",
-          user_email: "",
+          // user_email: "",
           user_email1: "",
           user_email2: "naver.com",
           user_zipcode: "",
@@ -102,7 +87,8 @@ function UserCreateForm(props) {
     }
   };
 
-  // 모달 상태(open일 떄 true로 바뀌어 열림)
+  //---------------------------------------------------------------------------------------
+  // 주소 모달 상태(open일 떄 true로 바뀌어 열림)
   const [addressModalOpen, setAddressModalOpen] = useState(false);
 
   const openAddressModal = (event) => {
@@ -136,6 +122,7 @@ function UserCreateForm(props) {
     }
   };
 
+  //----------------------------------------------------------------------------------------
   // validation 모달 상태(open일 떄 true로 바뀌어 열림)
   const [validationModalOpen, setValidationModalOpen] = useState(false);
   // 유효성 검사 오류 메시지
@@ -151,6 +138,10 @@ function UserCreateForm(props) {
   const closeValidationModal = () => {
     setValidationModalOpen(false);
   };
+
+  //----------------------------------------------------------------------------------------
+  // 유효성 검사를 위한 함수 사용
+  const { handleSubmit, register, errors } = useForm({ mode: "onChange" });
 
   useEffect(() => {
     if (get(errors, 'user_name') !== undefined) {
@@ -276,7 +267,7 @@ function UserCreateForm(props) {
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
               {/* <input type="text" className="col-sm-4" name="userSsn2" placeholder="1234567" onChange={handleChange}></input> */}
               <input type="text" className="col-sm" name="user_ssn2" value={masking} placeholder="1234567" 
-              onChange={handleChangeSSn} onBlur={() => {setMasking(masking?.replace(/(?<=.{1})./gi, '*'));}}
+              onChange={handleChangeSsn} onBlur={() => {setMasking(masking?.replace(/(?<=.{1})./gi, '*'));}}
               ref={register({required: true, minLength: 7, maxLength: 7})}></input>
             </div>
           </div>
@@ -341,17 +332,18 @@ function UserCreateForm(props) {
           <div className="User_item">
             <label className="col-sm-3 m-0">이메일: </label>
             <div className="row ml-3 mr-0">
-              <input type="text" className="col-sm-3 mr-1" name="user_email1" value={user.user_email1} placeholder="ABC1234" onChange={handleChange}
+              <input type="text" className="col-sm mr-1" name="user_email1" value={user.user_email1} placeholder="ABC1234" onChange={handleChange}
                      ref={register({required: true, pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z]).{2,}$/})}></input>
               <div className="mr-1 d-flex align-items-center">@</div>
-              <input type="text" className="col-sm-4 mr-1" name="user_email2" value={user.user_email2} placeholder="naver.com" onChange={handleChange}
-                     ref={register({required: true, pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z].{2,}$/})} disabled={email}></input>
-              <select className="col-sm-4" name="user_email2" onChange={handleChange} value={user.user_email2}>
+              {/* <input type="text" className="col-sm-4 mr-1" name="user_email2" value={user.user_email2} placeholder="naver.com" onChange={handleChange}
+                     ref={register({required: true, pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z].{2,}$/})} disabled={email}></input> */}
+              <select className="col-sm" name="user_email2" onChange={handleChange} value={user.user_email2}>
                 <option value="naver.com">naver.com</option>
                 <option value="gmail.com">gmail.com</option>
+                <option value="kakao.com">kakao.com</option>
                 <option value="daum.net">daum.net</option>
                 <option value="nate.com">nate.com</option>
-                <option value={email === false? user.user_email2: ""}>직접입력</option>
+                <option value="yahoo.com">yahoo.com</option>
               </select>
             </div>
           </div>

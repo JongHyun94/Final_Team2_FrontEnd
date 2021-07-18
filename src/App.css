@@ -19,6 +19,11 @@
 .header1_1{
   width: 10%;
   padding-left: 30px;
+  -ms-user-select: none; 
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .header1_2{
   width: 70%;

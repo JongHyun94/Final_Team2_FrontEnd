@@ -42,18 +42,17 @@ function Header(props) {
     sessionStorage.removeItem("hlong");
   };
 
+  //---------------------------------------------------------------------------------------
   // 모달 상태(open일 떄 true로 바뀌어 열림)
   const [authModalOpen, setAuthModalOpen] = useState(false);
 
   const openAuthModal = () => {
-    console.log("**", authModalOpen);
-    setAuthModalOpen(true);
-    console.log("열기");
+    // setAuthModalOpen(true);
+    console.log("열기", authModalOpen);
   };
   const closeAuthModal = () => {
-    console.log("**", authModalOpen);
     setAuthModalOpen(false);
-    console.log("닫기");
+    console.log("닫기", authModalOpen);
   };
   console.log("$$ ",authModalOpen);
 
@@ -72,10 +71,10 @@ function Header(props) {
               <div>
                 <a className="header_url" href={hospital_url} target="_blank" rel="noreferrer">{hname}</a>
               </div>
-              <div className="header_auth" onClick={openAuthModal}>         
+              <div className="header_auth" onClick={()=>setAuthModalOpen(true)}>         
                 <React.Fragment>
                   {globalUid} 님
-                  <Auth openModal={authModalOpen} closeModal={closeAuthModal}></Auth>
+                  <Auth openModal={authModalOpen} closeModal={closeAuthModal} setAuthModalOpen={setAuthModalOpen}></Auth>
                 </React.Fragment>
               </div>
               <div><Link to="/"><button className="button_team2_empty" onClick={logout}>LOGOUT</button></Link></div>
