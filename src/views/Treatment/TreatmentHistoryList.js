@@ -3,20 +3,6 @@ import TreatmentHistoryRead from "./components/modal/TreatmentHistoryReadModal";
 import { getTreatmentHistoryList } from "apis/treatments";
 import moment from "moment";
 import Spinner from "components/common/Spinner";
-//진료 기록 생성 하기
-// function getTreatmentHistory() {
-//   const createTreatmentHistoryList = [];
-//   for (var i = 10; i >= 1; i--) {
-//     createTreatmentHistoryList.push({ treatment_patient_id: 1, treatment_id: "tt1" + i, treatment_date: "2021-06-01", user_name: "나의사" + i, treatment_communication: "메모" + i });
-//   }
-//   for (var i = 10; i >= 1; i--) {
-//     createTreatmentHistoryList.push({ treatment_patient_id: 2, treatment_id: "tt2" + i, treatment_date: "2021-06-01", user_name: "나의사" + i, treatment_communication: "메모" + i });
-//   }
-//   for (var i = 10; i >= 1; i--) {
-//     createTreatmentHistoryList.push({ treatment_patient_id: 3, treatment_id: "tt3" + i, treatment_date: "2021-06-01", user_name: "나의사" + i, treatment_communication: "메모" + i });
-//   }
-//   return createTreatmentHistoryList;
-// }
 
 function TreatmentHistoryList(props) {
   //진료 기록 생성 상태로
@@ -44,13 +30,6 @@ function TreatmentHistoryList(props) {
     checkedPatientlist = tempPatientlist;
   }
 
-  //가져온 환자 리스트와, 환자 코드가 같은 진료 기록정보리스트 가져오기 (기존 진료 기록 보기) => historyPatient
-  // const historyPatient = treatmentHistoryList.filter((treatmentHistoryList) => {
-  //   if (treatmentHistoryList.treatment_patient_id === checkedPatientlist.treatment_patient_id) {
-  //     return treatmentHistoryList;
-  //   }
-  // });
-
   //선택된 진료 번호
   const [selectedTreatmentId, setSelectedTreatmentId] = useState("");
 
@@ -60,7 +39,6 @@ function TreatmentHistoryList(props) {
     setSelectedTreatmentId(treatment_id);
     setModalOpen(true);
   };
-
   const openModal = () => {
     setModalOpen(true);
   };
@@ -82,8 +60,8 @@ function TreatmentHistoryList(props) {
     }
 
   };
+  
   useEffect(() => {
-    //console.log("asasasas",checkedPatientlist.treatment_patient_id);
     getTreatmentHistoryLists(checkedPatientlist.treatment_patient_id);
   }, [checkedPatientlist.treatment_patient_id, props]);
   return (

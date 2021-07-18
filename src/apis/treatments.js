@@ -30,8 +30,8 @@ export function updateTreatment(treatment) {
   
 }
 
-export function getSearchDurg(keyword="") {
-  const promise = axios.get("/treatment/keyword", {params: {keyword}});
+export function getSearchDurg(keyword="", condition="") {
+  const promise = axios.get("/treatment/keyword", {params: {keyword, condition}});
   return promise;
 }
 
