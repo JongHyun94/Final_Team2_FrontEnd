@@ -2,7 +2,7 @@ import { removeAuthHeader } from "apis/axiosConfig";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { createSetAuthTokenAction, createSetUidAction, cresteSetUauthorityAction } from "redux/auth-reducer";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Auth from "./views/Auth";
 import { RiCalendarCheckLine, RiStethoscopeFill, RiTestTubeFill } from "react-icons/ri";
 import { IoBarChart } from "react-icons/io5";
@@ -47,13 +47,14 @@ function Header(props) {
   const [authModalOpen, setAuthModalOpen] = useState(false);
 
   const openAuthModal = () => {
-    // setAuthModalOpen(true);
+    setAuthModalOpen(true);
     console.log("열기", authModalOpen);
   };
   const closeAuthModal = () => {
     setAuthModalOpen(false);
     console.log("닫기", authModalOpen);
   };
+  
   console.log("$$ ",authModalOpen);
 
   return (

@@ -9,8 +9,12 @@ import { ValidationModal } from "components/common/ValidationModal";
 
 function Auth(props) {
   const { openModal, closeModal, setAuthModalOpen } = props;
+
+  useEffect(() => {
+    
   console.log(openModal);
-  console.log(props);
+  }, [openModal]);
+  // console.log(props);
   const globalUid = useSelector((state) => state.authReducer.uid);
 
   // 회원 상태
@@ -62,8 +66,8 @@ function Auth(props) {
             new_password: "",
             re_password: "",
           });
-          closeModal();
-          // setAuthModalOpen(false);
+          // closeModal();
+          setAuthModalOpen(false);
         } else {
           openValidationModal();
           setErrorMsg({
@@ -82,6 +86,10 @@ function Auth(props) {
       console.log(error);
     }    
   };
+
+  const handleCancle = () => {
+    setAuthModalOpen(false);
+  }
 
   // 마운트 시 user 설정
   useEffect(() => {
@@ -137,7 +145,7 @@ function Auth(props) {
           <section>
             <div className={`${style.Auth_header}`}>
               <div>회원정보 수정</div>
-              <button className="close" onClick={closeModal}>
+              <button className="close" onClick={}>
                 {" "}
                 &times;{" "}
               </button>
