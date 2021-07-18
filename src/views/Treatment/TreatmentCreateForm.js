@@ -3,6 +3,7 @@ import { updateTreatment, getSearchDurg, getCategoryInspectionList, createDrugli
 import Spinner from "components/common/Spinner";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 import TreatmentHistoryRead from "./components/modal/TreatmentHistoryReadModal";
+import { IoGitMerge } from "react-icons/io5";
 function TreatmentCreateForm(props) {
 
   const { publishTopic } = props;
@@ -56,6 +57,12 @@ function TreatmentCreateForm(props) {
       var list = await getCategoryInspectionList(categoryValue);
       console.log("hi",list.data.inspectionList);
       setInspectionlist(list.data.inspectionList);
+      let cList = [];
+      for(var iList of list.data.inspectionList){
+        cList.push({id:iList.inspection_list_id,checked:false,name:iList.inspection_list_name});
+      }
+      console.log("clist",cList);
+      setCheckList(cList);
     } catch (e) {
       console.log(e);
     }
@@ -193,11 +200,11 @@ function TreatmentCreateForm(props) {
       console.log("newTreatment:", newTreatment);
       if(newTreatment.treatment_id === "" || newTreatment.treatment_patient_id === ""){
         // alert("진료 아이디를 입력해주세요.");
-        ToastsStore.success("진료 아이디를 입력해주세요.");
+        ToastsStore.success("환자를 클릭해주세요.");
       }else if(newTreatment.treatment_smemo === "" || newTreatment.treatment_omemo === ""
       || newTreatment.treatment_amemo === "" || newTreatment.treatment_pmemo === "" ){
         // alert("soap를 입력해주세요.");
-        ToastsStore.success("진료 soap를 입력해주세요.");
+        ToastsStore.success("필수 정보를 입력해주세요.");
       }else{
         var list = await updateTreatment(newTreatment);
         if(list.data){
@@ -210,13 +217,12 @@ function TreatmentCreateForm(props) {
           setAmemo("");
           setPmemo("");
           setCmemo("");
-       
-          setCheckList(
-            [false, false, false, false, 
-             false, false, false, false, 
-             false, false, false, false,
-             false, false, false, false ]
-             );
+
+          let cList = [];
+          for(var iList of inspectionlist){
+            cList.push({id:iList.inspection_list_id,checked:false,name:iList.inspection_list_name});
+          }
+          setCheckList(cList);      
           setSelectedTreatmentId(newTreatment.treatment_id);
           setModalOpen(true);
       }
@@ -289,13 +295,17 @@ function TreatmentCreateForm(props) {
       })
     }
   };
-  const [checkList, setCheckList] = useState(
-    [false, false, false, false,
-     false, false, false, false,
-     false, false, false, false,
-     false, false, false, false]);
-  const handleCheckClick = (index) => {
-    setCheckList((checks) => checks.map((c, i) => (i === index ? !c : c)))
+  const [checkList, setCheckList] = useState([{id:"",checked:false,name:""}]);
+  const handleCheckClick = (id) => {
+    let newChecklist = checkList.map((item) => {
+      if(item.id === id){
+        return {...item, checked : !item.checked}
+      } else {
+        return item;
+      }
+    });
+    setCheckList(newChecklist);
+    // setCheckList((checks) => checks.map((c, i) => (i === index ? !c.checked : c.checked)))
   };
 
   return (
@@ -359,13 +369,13 @@ function TreatmentCreateForm(props) {
                       {inspection.inspection_list_category === inspectionOption ? (
                         inspection.inspection_list_category ==="혈액검사"?
                         <div className="TreatmentCreateForm_checkbox_1" >
-                          <input type="checkbox" checked={checkList[index]} name="selectedInspection" value={inspection.inspection_list_id}
-                            onClick={() => handleCheckClick(index)} onChange={checkChange2}/> {inspection.inspection_list_name}
+                          <input type="checkbox" checked={checkList[inspection.inspection_list_id-1].checked} name="selectedInspection" value={inspection.inspection_list_id}
+                            onClick={() => handleCheckClick(inspection.inspection_list_id)} onChange={checkChange2}/> {inspection.inspection_list_name}
                         </div>
                         :
                         <div className="TreatmentCreateForm_checkbox_1" >
-                          <input type="checkbox" checked={checkList[index]} name="selectedInspection2" value={inspection.inspection_list_id}  
-                          onClick={() => handleCheckClick(index)} onChange={checkChange3}/> {inspection.inspection_list_name}
+                          <input type="checkbox" checked={checkList[inspection.inspection_list_id-1].checked} name="selectedInspection2" value={inspection.inspection_list_id}  
+                          onClick={() => handleCheckClick(inspection.inspection_list_id)} onChange={checkChange3}/> {inspection.inspection_list_name}
                         </div>
                       ) : (
                         false
