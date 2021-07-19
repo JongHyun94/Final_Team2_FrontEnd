@@ -31,6 +31,8 @@ function InspectionList(props) {
   const [loading, setLoading] = useState(false);
   //로그인한 User의 id
   const globalUid = useSelector((state) => state.authReducer.uid);
+  //로그인한 User의 권한
+  const authorityRole = useSelector((state) => state.authReducer.uauthority);
 
   ////////////////////////////////////////////////////////////
   //엑셀 저장
@@ -85,12 +87,16 @@ function InspectionList(props) {
     try {
       const response = await readInspection(treatmentId, globalUid);
       inspectionsList = response.data.inspectionList;
+      if(authorityRole !== "ROLE_MASTER"){
       const iList = inspectionsList.filter((inspection) => {
         if(inspection.inspection_inspector_id === globalUid){
           return inspection;
         }
       });
       setFilterInspections(iList);
+      } else {
+        setFilterInspections(inspectionsList);
+      }
       setInspections(inspectionsList);
     } catch (error) {
       console.log(error);
