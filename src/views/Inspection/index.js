@@ -31,8 +31,8 @@ function Inspection(props) {
   let client = useRef(null);
 
   const connectMqttBroker = () => {
-    //client.current = new Paho.Client("kosa3.iptime.org", 61614, "client-" + new Date().getTime());
-    client.current = new Paho.Client("localhost", 61614, "client-" + new Date().getTime());
+    client.current = new Paho.Client("kosa3.iptime.org", 61614, "client-" + new Date().getTime());
+    // client.current = new Paho.Client("localhost", 61614, "client-" + new Date().getTime());
 
     client.current.onConnectionLost = () => {
       console.log("Mqtt 접속 끊김");
