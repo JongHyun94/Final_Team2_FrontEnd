@@ -1,6 +1,6 @@
 .ValidationModal_header {
   display: flex;
-  font-size: larger;
+  font-size: 20px;
   justify-content: space-between;
   padding: 1rem;
   font-weight: bold;
@@ -35,7 +35,8 @@
   /* border-bottom: 1px solid #dee2e6; */
   border-top: 1px solid #dee2e6;
   /* height: 100%; */
-
+  font-size: 15px;
+  font-weight: normal;
   align-items: center;
 }
 .ValidationModal > .modal.openModal {

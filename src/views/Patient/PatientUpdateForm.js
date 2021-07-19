@@ -49,6 +49,11 @@ function PatientUpdateForm(props) {
       patient_regdate: props.patient.patient_regdate
     });
     setPatientId(props.patient.patient_id);
+
+    if (props.patient.patient_ssn2) {
+      let ssn2Masking = props.patient.patient_ssn2.slice(0, 1) + "******";
+      setMasking(ssn2Masking);
+    }
   }, [props]);
 
   // 환자 정보 수정
@@ -201,30 +206,29 @@ function PatientUpdateForm(props) {
       <div className={`border p-3`}>
         <form onSubmit={handleSubmit(handleUpdate)}>
           <div className="Patient_item">
-            <label className="col-sm-3 pl-3 p-0 m-0">환자 코드: </label>
+            <label className="col-sm-3 pl-3 p-0 m-0">환자 코드 : </label>
             <div className="col-sm d-flex ">{patient.patient_id}</div>
             <React.Fragment>
               <ValidationModal open={validationModalOpen} close={closeValidationModal} errorMsg={errorMsg}></ValidationModal>
             </React.Fragment>
           </div>
           <div className="Patient_item">
-            <label className="col-sm-3 pl-3 p-0 m-0">환자명: </label>
+            <label className="col-sm-3 pl-3 p-0 m-0">환자명 * : </label>
             <div className="col-sm">
               <input type="text" name="patient_name" value={patient.patient_name} placeholder="환자명" onChange={handleChange} ref={register({required: true, minLength: 2})}></input>
             </div>
           </div>
           <div className="Patient_item">
-            <label className="col-sm-3 m-0">주민등록번호: </label>
+            <label className="col-sm-3 m-0">주민등록번호 * : </label>
             <div className="row ml-3">
-              <input type="text" className="col-sm" name="patient_ssn1" value={patient.patient_ssn1} placeholder="999999" onChange={handleChange} ref={register({required: true, minLength: 6, maxLength: 6})}></input>
+              <input type="text" className="col-sm" name="patient_ssn1" value={patient.patient_ssn1} placeholder="앞자리" onChange={handleChange} ref={register({required: true, minLength: 6, maxLength: 6})}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              {/* <input type="text" className="col-sm" name="patientSsn2" value={patient.patientSsn2} placeholder="1234567" onChange={handleChange}></input> */}
-              <input type="text" className="col-sm" name="patient_ssn2" value={masking} placeholder="1234567" 
+              <input type="text" className="col-sm" name="patient_ssn2" value={masking} placeholder="뒷자리" 
                      onChange={handleChangeSSn} onBlur={() => {setMasking(masking?.replace(/(?<=.{1})./gi, '*'));}}></input>
             </div>
           </div>
           <div className="Patient_item">
-            <label className="col-sm-3 pl-3 p-0 m-0">성별: </label>
+            <label className="col-sm-3 pl-3 p-0 m-0">성별 * : </label>
             <div className="col-sm d-flex align-items-center">
               <input type="radio" name="patient_sex" value="M" checked={patient.patient_sex === "M"? true : false} onChange={handleChange}></input>
               <label className="ml-3 mb-0">남</label>
@@ -235,7 +239,7 @@ function PatientUpdateForm(props) {
             </div>
           </div>
           <div className="Patient_item">
-            <label className="col-sm-3 m-0">전화 번호: </label>
+            <label className="col-sm-3 m-0">전화 번호 * : </label>
             <div className="row col-sm">
               <select className="col-sm-2 ml-3" name="patient_tel1" value={patient.patient_tel1} onChange={handleChange}>
                 <option value="010">010</option>
@@ -267,7 +271,7 @@ function PatientUpdateForm(props) {
             </div>
           </div>
           <div className="Patient_item">
-            <label className="col-sm-3 m-0">주소: </label>
+            <label className="col-sm-3 m-0">주소 : </label>
             <div className="col-sm">
               <div className="row mb-2"> 
                 <input type="text" className="col-sm-3 ml-3" name="patient_zipcode" value={patient.patient_zipcode} placeholder="우편번호" readOnly></input>
@@ -284,7 +288,7 @@ function PatientUpdateForm(props) {
             </div>
           </div>
           <div className="Patient_item">
-            <label className="col-sm-3 col-form-label pl-3 p-0">등록 날짜: </label>
+            <label className="col-sm-3 col-form-label pl-3 p-0">등록 날짜 : </label>
             <div className="col-sm d-flex align-items-center">{patientId !== undefined? moment(patient.patient_regdate).format("yyyy-MM-DD") : ""}</div>
           </div>
           {patientId !== undefined?

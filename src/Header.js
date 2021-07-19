@@ -2,7 +2,7 @@ import { removeAuthHeader } from "apis/axiosConfig";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { createSetAuthTokenAction, createSetUidAction, cresteSetUauthorityAction } from "redux/auth-reducer";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Auth from "./views/Auth";
 import { RiCalendarCheckLine, RiStethoscopeFill, RiTestTubeFill } from "react-icons/ri";
 import { IoBarChart } from "react-icons/io5";
@@ -48,14 +48,10 @@ function Header(props) {
 
   const openAuthModal = () => {
     setAuthModalOpen(true);
-    console.log("열기", authModalOpen);
   };
   const closeAuthModal = () => {
     setAuthModalOpen(false);
-    console.log("닫기", authModalOpen);
   };
-  
-  console.log("$$ ",authModalOpen);
 
   return (
     <div className="header">
@@ -77,7 +73,7 @@ function Header(props) {
                   <span onClick={openAuthModal}>
                   {globalUid} 님
                   </span>
-                  <Auth openModal={authModalOpen} closeModal={closeAuthModal} setAuthModalOpen={setAuthModalOpen}></Auth>
+                  <Auth openModal={authModalOpen} closeModal={closeAuthModal}></Auth>
                 </React.Fragment>
               </div>
               <div><Link to="/"><button className="button_team2_empty" onClick={logout}>LOGOUT</button></Link></div>
