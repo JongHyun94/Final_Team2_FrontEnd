@@ -47,14 +47,11 @@ function Header(props) {
   const [authModalOpen, setAuthModalOpen] = useState(false);
 
   const openAuthModal = () => {
-    // setAuthModalOpen(true);
-    console.log("열기", authModalOpen);
+    setAuthModalOpen(true);
   };
   const closeAuthModal = () => {
     setAuthModalOpen(false);
-    console.log("닫기", authModalOpen);
   };
-  console.log("$$ ",authModalOpen);
 
   return (
     <div className="header">
@@ -71,10 +68,12 @@ function Header(props) {
               <div>
                 <a className="header_url" href={hospital_url} target="_blank" rel="noreferrer">{hname}</a>
               </div>
-              <div className="header_auth" onClick={()=>setAuthModalOpen(true)}>         
+              <div className="header_auth" >         
                 <React.Fragment>
+                  <span onClick={openAuthModal}>
                   {globalUid} 님
-                  <Auth openModal={authModalOpen} closeModal={closeAuthModal} setAuthModalOpen={setAuthModalOpen}></Auth>
+                  </span>
+                  <Auth openModal={authModalOpen} closeModal={closeAuthModal}></Auth>
                 </React.Fragment>
               </div>
               <div><Link to="/"><button className="button_team2_empty" onClick={logout}>LOGOUT</button></Link></div>

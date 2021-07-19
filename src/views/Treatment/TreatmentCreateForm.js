@@ -3,6 +3,7 @@ import { updateTreatment, getSearchDurg, getCategoryInspectionList, createDrugli
 import Spinner from "components/common/Spinner";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 import TreatmentHistoryRead from "./components/modal/TreatmentHistoryReadModal";
+import { IoGitMerge } from "react-icons/io5";
 function TreatmentCreateForm(props) {
 
   const { publishTopic } = props;
@@ -44,6 +45,8 @@ function TreatmentCreateForm(props) {
   const [drugForm, setDrugForm] = useState({
     selectedDrug: []
   });
+  const [selectDrugId, setSelectDrugId] = useState("");
+
 
   const [druglists, setDrugLists] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState();
@@ -54,23 +57,38 @@ function TreatmentCreateForm(props) {
       var list = await getCategoryInspectionList(categoryValue);
       console.log("hi",list.data.inspectionList);
       setInspectionlist(list.data.inspectionList);
+      let cList = [];
+      for(var iList of list.data.inspectionList){
+        cList.push({id:iList.inspection_list_id,checked:false,name:iList.inspection_list_name});
+      }
+      console.log("clist",cList);
+      setCheckList(cList);
     } catch (e) {
       console.log(e);
     }
   };
   useEffect(() => {
     getCategoryInspectionLists(inspectionOption);
-  }, [inspectionOption]);
+  }, []);
 
   const getSearchDurgs = async () => {
-    setLoading(true);
+    // setLoading(true);
     try {
       var list = await getSearchDurg();
+      console.log("dddddi",list.data.druglist);
       setDrugLists(list.data.druglist);
+      // let nList = [];
+      // var index3=0;
+      // for(var dlist of list.data.druglist){
+      //   nList.push({id:index3, checked:false, name:dlist.drug_injection_list_name});
+      //   index3++;
+      // }
+      // console.log("nList 확인 : ",nList);
+      // setCheckDrugList(nList);
     } catch (e) {
       console.log(e);
     }finally {
-      setLoading(false);
+      // setLoading(false);
     }
   }
   // 마운트될때 전체 출력이 된다
@@ -88,14 +106,14 @@ function TreatmentCreateForm(props) {
   };
 
   const searchClick = async () => {
-    setLoading(true);
+    // setLoading(true);
     try {
       var list = await getSearchDurg(searchKeyword,"");
       setDrugLists(list.data.druglist);
     } catch (error) {
       console.log(error);
     }finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
@@ -191,11 +209,11 @@ function TreatmentCreateForm(props) {
       console.log("newTreatment:", newTreatment);
       if(newTreatment.treatment_id === "" || newTreatment.treatment_patient_id === ""){
         // alert("진료 아이디를 입력해주세요.");
-        ToastsStore.success("진료 아이디를 입력해주세요.");
+        ToastsStore.success("환자를 클릭해주세요.");
       }else if(newTreatment.treatment_smemo === "" || newTreatment.treatment_omemo === ""
       || newTreatment.treatment_amemo === "" || newTreatment.treatment_pmemo === "" ){
         // alert("soap를 입력해주세요.");
-        ToastsStore.success("진료 soap를 입력해주세요.");
+        ToastsStore.success("필수 정보를 입력해주세요.");
       }else{
         var list = await updateTreatment(newTreatment);
         if(list.data){
@@ -208,15 +226,21 @@ function TreatmentCreateForm(props) {
           setAmemo("");
           setPmemo("");
           setCmemo("");
-       
-          setCheckList(
-            [false, false, false, false, 
-             false, false, false, false, 
-             false, false, false, false,
-             false, false, false, false ]
-             );
+
+          let cList = [];
+          for(var iList of inspectionlist){
+            cList.push({id:iList.inspection_list_id,checked:false,name:iList.inspection_list_name});
+          }
+          setCheckList(cList);      
           setSelectedTreatmentId(newTreatment.treatment_id);
           setModalOpen(true);
+
+          // let nList = [];
+          // for(var dlist of druglists){
+          //   nList.push({id:dlist.drug_injection_list_id, checked:false, name:dlist.drug_injection_list_name});
+          // }
+          // setCheckDrugList(nList);
+          
       }
       }
     } catch (e) {
@@ -224,6 +248,9 @@ function TreatmentCreateForm(props) {
     }
 
   };
+  const checkedDrugId = (drug_injection_list_id) => {
+    setSelectDrugId(drug_injection_list_id);
+  }
 
   const checkChange = (event) => {
     if (event.target.checked) {//체크되었는지 유무
@@ -233,8 +260,9 @@ function TreatmentCreateForm(props) {
           ...prevDrugForm,
           selectedDrug: prevDrugForm.selectedDrug.concat(event.target.value)
         };
+        
       })
-
+    
     } else {
 
       setDrugForm(prevDrugForm => {
@@ -283,14 +311,30 @@ function TreatmentCreateForm(props) {
       })
     }
   };
-  const [checkList, setCheckList] = useState(
-    [false, false, false, false,
-     false, false, false, false,
-     false, false, false, false,
-     false, false, false, false]);
-  const handleCheckClick = (index) => {
-    setCheckList((checks) => checks.map((c, i) => (i === index ? !c : c)))
+  const [checkList, setCheckList] = useState([{id:"",checked:false,name:""}]);
+  const handleCheckClick = (id) => {
+    let newChecklist = checkList.map((item) => {
+      if(item.id === id){
+        return {...item, checked : !item.checked}
+      } else {
+        return item;
+      }
+    });
+    setCheckList(newChecklist);
+    // setCheckList((checks) => checks.map((c, i) => (i === index ? !c.checked : c.checked)))
   };
+
+  // const [checkDrugList, setCheckDrugList] = useState([{id:0, checked:false, name:""}]);
+  // const handleCheckDrugClick = (id) => {
+  //   let newCheckDruglist = checkDrugList.map((item) => {
+  //     if(item.id === id){
+  //       return {...item, checked: !item.checked}
+  //     }else{
+  //       return item;
+  //     }
+  //   });
+  //   setCheckDrugList(newCheckDruglist);
+  // };
 
   return (
     <div>
@@ -347,19 +391,19 @@ function TreatmentCreateForm(props) {
               {/* 검사별 상태 만들어서 전달, 조건문으로 맵 돌리기 */}
 
               <div className="TreatmentCreateForm_checkbox">
-                {inspectionlist.map((inspection, index) => {
+                {inspectionlist.map((inspection) => {
                   return (
                     <div key={inspection.inspection_list_id}  >
                       {inspection.inspection_list_category === inspectionOption ? (
                         inspection.inspection_list_category ==="혈액검사"?
                         <div className="TreatmentCreateForm_checkbox_1" >
-                          <input type="checkbox" checked={checkList[index]} name="selectedInspection" value={inspection.inspection_list_id}
-                            onClick={() => handleCheckClick(index)} onChange={checkChange2}/> {inspection.inspection_list_name}
+                          <input type="checkbox" checked={checkList[inspection.inspection_list_id-1].checked} name="selectedInspection" value={inspection.inspection_list_id}
+                            onClick={() => handleCheckClick(inspection.inspection_list_id)} onChange={checkChange2}/> {inspection.inspection_list_name}
                         </div>
                         :
                         <div className="TreatmentCreateForm_checkbox_1" >
-                          <input type="checkbox" checked={checkList[index]} name="selectedInspection2" value={inspection.inspection_list_id}  
-                          onClick={() => handleCheckClick(index)} onChange={checkChange3}/> {inspection.inspection_list_name}
+                          <input type="checkbox" checked={checkList[inspection.inspection_list_id-1].checked} name="selectedInspection2" value={inspection.inspection_list_id}  
+                          onClick={() => handleCheckClick(inspection.inspection_list_id)} onChange={checkChange3}/> {inspection.inspection_list_name}
                         </div>
                       ) : (
                         false
@@ -397,12 +441,15 @@ function TreatmentCreateForm(props) {
                     </tr>
                   </thead>
                   <tbody>
-                  {loading ? <Spinner /> : <>
-                    {druglists.map((druglist) => {
+ 
+                    {druglists.map((druglist, index) => {
                       return (
                         <tr className="TreatmentSearch_2_2_tr" key={druglist.drug_injection_list_id}>
+                          {/* // onClick={(event) => checkedDrugId(druglist.drug_injection_list_id)}> */}
                           <td>
-                            <input type="checkbox" name="selectedDrug" value={druglist.drug_injection_list_id} onChange={checkChange} />
+                            <input type="checkbox"  name="selectedDrug" value={druglist.drug_injection_list_id} onChange={checkChange} />
+                              {/* <input type="checkbox" checked={checkDrugList[index].checked} name="selectedDrug" value={druglist.drug_injection_list_id} 
+                            onClick={() => handleCheckDrugClick(index)} onChange={checkChange} /> */}
                           </td>
                           <th>{druglist.drug_injection_list_id}</th>
                           <th>{druglist.drug_injection_list_name}</th>
@@ -410,7 +457,7 @@ function TreatmentCreateForm(props) {
                         </tr>
                       );
                     })}
-                     </>}
+                     
                   </tbody>
                 </table>
               </div>
