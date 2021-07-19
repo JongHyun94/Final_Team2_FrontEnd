@@ -36,6 +36,7 @@ function PatientCreateForm(props) {
   });
 
   const handleChange = (event) => {
+    console.log(event.target.value);
     setPatient({
       ...patient,
       [event.target.name]: event.target.value,
@@ -217,7 +218,8 @@ function PatientCreateForm(props) {
           <div className="Patient_item">
             <label className="col-sm-3 m-0">환자명 * : </label>
             <div className="col-sm">
-              <input type="text" name="patient_name" placeholder="환자명" value={patient.patient_name} onChange={handleChange} ref={register({ required: true, minLength: 2 })}></input>
+              {/* <input type="text" name="patient_name" placeholder="환자명" value={patient.patient_name} onChange={handleChange} ref={register({ required: true, minLength: 2 })}></input> */}
+              <input type="text" name="patient_name" value={patient.patient_name} onChange={handleChange} ref={register({ required: true, minLength: 2 })}></input>
             </div>
           </div>
           <div className="Patient_item">
@@ -291,7 +293,7 @@ function PatientCreateForm(props) {
             </div>
           </div>
           <div className="Patient_item">
-            <label className="col-sm-3 m-0">주소 * : </label>
+            <label className="col-sm-3 m-0">주소 : </label>
             <div className="col-sm">
               <div className="row mb-2">
                 <input type="text" className="col-sm-3 ml-3" name="patient_zipcode" value={patient.patient_zipcode} placeholder="우편번호" onChange={handleChange} readOnly></input>
