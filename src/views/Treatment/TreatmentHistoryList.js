@@ -104,7 +104,7 @@ function TreatmentHistoryList(props) {
                       <input type="checkbox" checked={selectedTreatmentId === treatmentHistory.treatment_id ? true : false} readOnly />
                     </td>
                     <th>{treatmentHistory.treatment_id}</th>
-                    <th>{moment(treatmentHistory.treatment_date).format("yyyy-MM-DD HH:mm")}</th>
+                    <th>{treatmentHistory.treatment_date}</th>
                     <th>{treatmentHistory.user_name}</th>
                     <th>{treatmentHistory.treatment_communication}</th>
                   </tr>
