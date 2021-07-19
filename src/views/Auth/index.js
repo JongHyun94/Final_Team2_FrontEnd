@@ -8,9 +8,7 @@ import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toa
 import { ValidationModal } from "components/common/ValidationModal";
 
 function Auth(props) {
-  const { openModal, closeModal, setAuthModalOpen } = props;
-  console.log(openModal);
-  console.log(props);
+  const { openModal, closeModal } = props;
   const globalUid = useSelector((state) => state.authReducer.uid);
 
   // 회원 상태
@@ -63,7 +61,6 @@ function Auth(props) {
             re_password: "",
           });
           closeModal();
-          // setAuthModalOpen(false);
         } else {
           openValidationModal();
           setErrorMsg({
