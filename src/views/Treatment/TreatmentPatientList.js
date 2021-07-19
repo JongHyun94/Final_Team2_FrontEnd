@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getTreatmentPatientList } from "apis/treatments";
@@ -6,6 +6,7 @@ import moment from "moment";
 import Spinner from "components/common/Spinner";
 import { useSelector } from "react-redux";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
+import Nodata from "components/common/NoData";
 
 function TreatmentPatientList(props) {
   
@@ -192,7 +193,7 @@ const getState = (patientlists) => {
                 <th width="5%">번호</th>
                 <th width="10%">환자명</th>
                 <th width="10%">생년월일</th>
-                <th width="4%">성별</th>
+                <th width="6%">성별</th>
                 <th width="10%">진료번호</th>
                 <th width="15%">의사소통 메모</th>
                 <th width="15%">접수 날짜</th>
@@ -201,7 +202,16 @@ const getState = (patientlists) => {
             </thead>
 
             <tbody>
-            {loading ? <Spinner /> : <>
+            {loading ? <Spinner /> 
+            :
+              patientlists.length === 0 ?
+              <td colSpan="9">
+              <React.Fragment>
+                <Nodata />
+             </React.Fragment>
+             </td>
+            :
+            <>
               {patientlists.map((patientlist) => {
                 return (
                   <tr className="TreatmentPatientList_table_tr" key={patientlist.treatment_register_id} onClick={(event) => checkedtreatmentPatient(patientlist.treatment_register_id, patientlist)}>

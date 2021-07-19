@@ -4,6 +4,8 @@ import Spinner from "components/common/Spinner";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 import TreatmentHistoryRead from "./components/modal/TreatmentHistoryReadModal";
 import { IoGitMerge } from "react-icons/io5";
+import Nodata from "components/common/NoData";
+
 function TreatmentCreateForm(props) {
 
   const { publishTopic } = props;
@@ -34,8 +36,8 @@ function TreatmentCreateForm(props) {
   } else {
     checkedPatientlist = tempPatientlist;
   }
-  console.log("개짜증나나나나나ㅏ나ㅏㅏㄴ",checkedPatientlist);
-  console.log("개빡쳐ㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕ",checkedPatientlist.treatment_state);
+  console.log("^_*",checkedPatientlist);
+  console.log("^_^",checkedPatientlist.treatment_state);
   //검사 checkbox
   const [inspectionlist, setInspectionlist] = useState([]);
   const [inspectionOption, setInspectionOption] = useState("진단 검사 선택");
@@ -461,7 +463,16 @@ function TreatmentCreateForm(props) {
                     </tr>
                   </thead>
                   <tbody>
- 
+                  {loading ? <Spinner /> 
+                    :
+                    druglists.length === 0 ?
+                      <td colSpan="4">
+                      <React.Fragment>
+                        <Nodata />
+                      </React.Fragment>
+                      </td>
+                    :
+                    <>
                     {druglists.map((druglist, index) => {
                       return (
                         <tr className="TreatmentSearch_2_2_tr" key={druglist.drug_injection_list_id}>
@@ -477,7 +488,7 @@ function TreatmentCreateForm(props) {
                         </tr>
                       );
                     })}
-                     
+                    </>}
                   </tbody>
                 </table>
               </div>

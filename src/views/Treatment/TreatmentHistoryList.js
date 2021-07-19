@@ -3,6 +3,7 @@ import TreatmentHistoryRead from "./components/modal/TreatmentHistoryReadModal";
 import { getTreatmentHistoryList } from "apis/treatments";
 import moment from "moment";
 import Spinner from "components/common/Spinner";
+import Nodata from "components/common/NoData";
 
 function TreatmentHistoryList(props) {
   //진료 기록 생성 상태로
@@ -86,7 +87,16 @@ function TreatmentHistoryList(props) {
               </tr>
             </thead>
             <tbody>
-            {loading ? <Spinner /> : <>
+            {loading ? <Spinner /> 
+            :
+              treatmentHistoryList.length === 0 ?
+              <td colSpan="5">
+              <React.Fragment>
+                <Nodata />
+              </React.Fragment>
+              </td>
+            :
+            <>
               {treatmentHistoryList.map((treatmentHistory) => {
                 return (
                   <tr className="TreatmentHistoryList_table_tr" key={treatmentHistory.treatment_id} onClick={(event) => checkedtreatment(treatmentHistory.treatment_id)}>
