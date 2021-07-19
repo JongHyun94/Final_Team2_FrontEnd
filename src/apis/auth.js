@@ -6,11 +6,6 @@ export function login(user){
   return promise;
 }
 
-export function downloadFile() {
-  return axios.get("/download", {responseType: "blob"});
-}
-
-
 export function getUser(user_id) {
   const promise = axios.get("/auth/read", {params: {user_id}});
   return promise;

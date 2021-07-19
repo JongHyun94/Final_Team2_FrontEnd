@@ -12,10 +12,10 @@ import { createSetHaddressAction, createSetHidAction, createSetHLATAction, creat
 function Header(props) {  
   const globalUid = useSelector((state) => state.authReducer.uid);
   const hname = useSelector((state) => state.hospitalReducer.hname);
+  const hospital_url = useSelector((state) => state.hospitalReducer.hurl);
   const hlat = useSelector((state) => state.hospitalReducer.hlat);
   const hlong = useSelector((state) => state.hospitalReducer.hlong);
-  const hospital_url = useSelector((state) => state.hospitalReducer.hurl);
-  
+
   const dispatch = useDispatch();
 
   const logout = (event) => {
@@ -60,7 +60,7 @@ function Header(props) {
           <span className="logo">TEAM2<img className="ml-1" src="/resources/img/logo_white_bold.png" alt="" width={30}></img></span>
         </div>
         <div className="header1_2">
-          <WeatherAPI hlat={hlat} hlong={hlong} />
+          <WeatherAPI hlat={hlat} hlong={hlong}/>
         </div>
         <div className="header1_3">
           {globalUid !== ""?

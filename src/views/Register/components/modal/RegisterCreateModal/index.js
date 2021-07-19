@@ -5,6 +5,7 @@ import RegisterPatientList from "./RegisterPatientList";
 import { createRegister, updateRegister } from "apis/register";
 import moment from "moment";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
+import RegisterStateChange from "./RegisterStateChange";
 function RegisterCreateModal(props) {
   // props 상속
   const { open, close, header, doctors, register, publishTopic } = props;
@@ -28,6 +29,11 @@ function RegisterCreateModal(props) {
         ToastsStore.success("담당의를 선택해 주세요.");
       }
       else if (newRegister.register_date < new Date()) {
+        registerValidation = false;
+        ToastsStore.success("예약 시간을 선택해 주세요.");
+      }
+      else if (new Date(newRegister.register_date).getHours() >= 18 
+      || new Date(newRegister.register_date).getHours() <= 9 ) {
         registerValidation = false;
         ToastsStore.success("예약 시간을 선택해 주세요.");
       }
@@ -60,6 +66,10 @@ function RegisterCreateModal(props) {
       if (newRegister.register_date < new Date()) {
         registerValidation = false;
         ToastsStore.success("예약시간을 확인해 주세요.");
+      } else if (new Date(newRegister.register_date).getHours() >= 18 
+      || new Date(newRegister.register_date).getHours() <= 9 ) {
+        registerValidation = false;
+        ToastsStore.success("예약 시간을 선택해 주세요.");
       }
       if (registerValidation) {
         var list = await updateRegister(newRegister);
@@ -102,8 +112,12 @@ function RegisterCreateModal(props) {
             <main>
               <div className={style.RegisterCreateModal_main}>
                 <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground />
-                <RegisterPatientList register={register} newRegister={newRegister} setNewRegister={setNewRegister} />
-                <RegisterCreateForm doctors={doctors} register={register} newRegister={newRegister} setNewRegister={setNewRegister} open={open}/>
+                {register.register_state === "" ? 
+                <RegisterPatientList register={register} newRegister={newRegister} setNewRegister={setNewRegister} /> 
+                : 
+                <RegisterStateChange register={register} publishTopic={publishTopic} close={close}/>
+                }
+                <RegisterCreateForm doctors={doctors} register={register} newRegister={newRegister} setNewRegister={setNewRegister} open={open} />
               </div>
             </main>
             <footer>

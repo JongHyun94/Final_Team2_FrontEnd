@@ -7,7 +7,7 @@ import "./Login.css";
 import { addAuthHeader } from "apis/axiosConfig";
 import { login } from "apis/auth";
 import { ValidationModal } from "../components/common/ValidationModal";
-import { createSetHaddressAction, createSetHidAction, createSetHnameAction, createSetHurlAction } from "redux/hospital-reducer";
+import { createSetHaddressAction, createSetHidAction, createSetHLATAction, createSetHLONGAction, createSetHnameAction, createSetHurlAction } from "redux/hospital-reducer";
 
 function Login(props) {
   // 유저 상태
@@ -50,6 +50,8 @@ function Login(props) {
         dispatch(createSetHnameAction(response.data.hname));
         dispatch(createSetHidAction(response.data.hid));
         dispatch(createSetHaddressAction(response.data.haddress));
+        dispatch(createSetHLATAction(response.data.hlat));
+        dispatch(createSetHLONGAction(response.data.hlong));
         dispatch(createSetHurlAction(response.data.hurl));
 
         // sessionStorage에 인증 내용 저장
@@ -59,6 +61,8 @@ function Login(props) {
         sessionStorage.setItem("hname", response.data.hname);
         sessionStorage.setItem("hid", response.data.hid);
         sessionStorage.setItem("haddress", response.data.haddress);
+        sessionStorage.setItem("hlat", response.data.hlat);
+        sessionStorage.setItem("hlong", response.data.hlong);
         sessionStorage.setItem("hurl", response.data.hurl);
         
         // 로그인 아이디에 따른 경로 지정
