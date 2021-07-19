@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import style from "./MonthTimeTable.module.css";
 import { getRegisterByDoctor } from "apis/register";
+import Spinner from "components/common/Spinner";
 
 function MonthTimeTable(props) {
 
@@ -18,6 +19,9 @@ function MonthTimeTable(props) {
   const [tMonth, setTMonth] = useState(moment().startOf('month'));
 
   const [registerListByDoctor, setRegisterListByDoctor] = useState([]);
+  
+  // spinner 
+  const [loading, setLoading] = useState(false);
   //-------------------------------------------------------------  
   //달력 렌더 함수
   //-------------------------------------------------------------
@@ -87,11 +91,14 @@ function MonthTimeTable(props) {
   };
 
   const getRegisterCount = async (date) => {
+    setLoading(true);
     try {
       const response = await getRegisterByDoctor(selectedDoctor.user_id, moment(date).format("yyyy-MM-DD H:mm"));
       setRegisterListByDoctor(response.data.registerList);
     } catch (e) {
       console.log(e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -145,6 +152,7 @@ function MonthTimeTable(props) {
         <div className={style.day}>토</div>
       </div>
       <div className={style.dates}>
+      {loading ? <Spinner /> : <>
         {dates.map((date, index) => {
           if (todayYear === selectTodayYear
             && todayMonth === selectTodayMonth
@@ -206,6 +214,7 @@ function MonthTimeTable(props) {
             }
           }
         })}
+        </>}
       </div>
     </div>
   );

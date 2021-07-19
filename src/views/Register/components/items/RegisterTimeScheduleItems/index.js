@@ -1,3 +1,5 @@
+import React from "react";
+
 function RegisterTimeScheduleItems(props) {
   // 상속된 props
   const {patient_name, user_name, register_state} = props;
@@ -18,4 +20,4 @@ function RegisterTimeScheduleItems(props) {
     </>
   );
 }
-export default RegisterTimeScheduleItems;
+export default React.memo(RegisterTimeScheduleItems);

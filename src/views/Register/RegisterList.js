@@ -1,6 +1,6 @@
 import "./Register.css";
 import DatePicker from "react-datepicker";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback} from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 import ko from 'date-fns/locale/ko';
@@ -9,6 +9,9 @@ import { registerLocale } from "react-datepicker";
 import { changeRegisterState, getRegisterList } from "apis/register";
 import Spinner from "components/common/Spinner";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
+import Nodata from "components/common/NoData";
+import React from "react";
+import RegisterListItem from "./components/items/RegisterListItem";
 registerLocale("ko", ko);
 
 function RegisterList(props) {
@@ -72,10 +75,6 @@ function RegisterList(props) {
           }
         }
       });
-      if (selectRegister.register_communication === "") {
-        finishValidation = false;
-        ToastsStore.success("의사소통 메모를 입력해 주세요.");
-      }
       if (selectRegister) {
         if (finishValidation) {
           selectRegister.register_state = "완료";
@@ -83,6 +82,8 @@ function RegisterList(props) {
           publishTopic(0);
           publishTopic(1);
         }
+      } else {
+        ToastsStore.success("대기 환자를 체크해 주세요.");
       }
     } catch (e) {
       console.log(e);
@@ -99,10 +100,12 @@ function RegisterList(props) {
           }
         }
       });
-      selectRegister.register_state = "취소";
       if (selectRegister) {
+        selectRegister.register_state = "취소";
         var list = await changeRegisterState(selectRegister);
         publishTopic(0);
+      } else {
+        ToastsStore.success("대기 환자를 체크해 주세요.");
       }
     } catch (e) {
       console.log(e);
@@ -304,30 +307,22 @@ function RegisterList(props) {
               </tr>
             </thead>
             <tbody>
-              {loading ? <Spinner /> : <>
-                {registerList.map((register, index) => {
-                  return (
-                    <tr key={index} className="RegisterList_content_2_tr" onClick={(event) => checkboxHandler(register.register_id)}>
-                      <td><input type="checkbox" name="chk" checked={selectedRegister === register.register_id ? true : false} readOnly /></td>
-                      <td>{index + 1}</td>
-                      <td>{moment(register.register_date).format("yyyy-MM-DD HH:mm")}</td>
-                      <td>{register.register_id}</td>
-                      <td>{register.patient_name}</td>
-                      <td>{(register.patient_ssn).substring(0, 6)}</td>
-                      <td>{register.patient_sex}</td>
-                      <td>{register.user_name}</td>
-                      <td>{register.register_memo}</td>
-                      <td>{register.register_communication}</td>
-                      <td className={
-                        register.register_state === "완료" ? "RegisterList_content_2_tr_td_finish" : "" ||
-                          register.register_state === "취소" ? "RegisterList_content_2_tr_td_cancel" : "" ||
-                            register.register_state === "대기" ? "RegisterList_content_2_tr_td_ready" : ""
-                      }>
-                        {register.register_state}
-                      </td>
-                    </tr>
-                  );
-                })} </>}
+              {loading ? <Spinner />
+                : registerList.length === 0 ?
+                  <React.Fragment>
+                    <Nodata />
+                  </React.Fragment> : <>
+                    {registerList.map((register, index) => {
+                      return (
+                        <RegisterListItem
+                          key={index}
+                          index={index}
+                          register={register}
+                          selectedRegister={selectedRegister}
+                          checkboxHandler={checkboxHandler}
+                        />
+                      );
+                    })} </>}
             </tbody>
           </table>
         </div>
