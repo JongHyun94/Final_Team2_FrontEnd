@@ -34,6 +34,8 @@ function TreatmentCreateForm(props) {
   } else {
     checkedPatientlist = tempPatientlist;
   }
+  console.log("개짜증나나나나나ㅏ나ㅏㅏㄴ",checkedPatientlist);
+  console.log("개빡쳐ㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕ",checkedPatientlist.treatment_state);
   //검사 checkbox
   const [inspectionlist, setInspectionlist] = useState([]);
   const [inspectionOption, setInspectionOption] = useState("진단 검사 선택");
@@ -204,45 +206,63 @@ function TreatmentCreateForm(props) {
         selectedInspection2 : inspectionForm.selectedInspection2,
         selectedDrug : drugForm.selectedDrug
       };
+      
       console.log("selectedInspection: ",newTreatment.selectedInspection);
       console.log("selectedInspection2: ",newTreatment.selectedInspection2);
       console.log("newTreatment:", newTreatment);
-      if(newTreatment.treatment_id === "" || newTreatment.treatment_patient_id === ""){
-        // alert("진료 아이디를 입력해주세요.");
-        ToastsStore.success("환자를 클릭해주세요.");
-      }else if(newTreatment.treatment_smemo === "" || newTreatment.treatment_omemo === ""
-      || newTreatment.treatment_amemo === "" || newTreatment.treatment_pmemo === "" ){
-        // alert("soap를 입력해주세요.");
-        ToastsStore.success("필수 정보를 입력해주세요.");
-      }else{
-        var list = await updateTreatment(newTreatment);
-        if(list.data){
-          ToastsStore.success("진료 등록 완료");
-          publishTopic(0);
-          publishTopic(1);
-          console.log("list", list);
-          setSmemo("");
-          setOmemo("");
-          setAmemo("");
-          setPmemo("");
-          setCmemo("");
 
-          let cList = [];
-          for(var iList of inspectionlist){
-            cList.push({id:iList.inspection_list_id,checked:false,name:iList.inspection_list_name});
+      if(checkedPatientlist.treatment_state === "대기"){
+        if(newTreatment.treatment_id === "" || newTreatment.treatment_patient_id === ""){
+          // alert("진료 아이디를 입력해주세요.");
+          ToastsStore.success("환자를 클릭해주세요.");
+        }else if(newTreatment.treatment_smemo === "" || newTreatment.treatment_omemo === ""
+        || newTreatment.treatment_amemo === "" || newTreatment.treatment_pmemo === "" ){
+          // alert("soap를 입력해주세요.");
+          ToastsStore.success("필수 정보를 입력해주세요.");
+        }else{
+          var list = await updateTreatment(newTreatment);
+            if(list.data){
+              ToastsStore.success("진료 등록 완료");
+              publishTopic(0);
+              publishTopic(1);
+              console.log("list", list);
+              setSmemo("");
+              setOmemo("");
+              setAmemo("");
+              setPmemo("");
+              setCmemo("");
+  
+              let cList = [];
+              for(var iList of inspectionlist){
+                cList.push({id:iList.inspection_list_id,checked:false,name:iList.inspection_list_name});
+              }
+              setCheckList(cList);      
+              setSelectedTreatmentId(newTreatment.treatment_id);
+              setModalOpen(true);
+  
+              // let nList = [];
+              // for(var dlist of druglists){
+              //   nList.push({id:dlist.drug_injection_list_id, checked:false, name:dlist.drug_injection_list_name});
+              // }
+              // setCheckDrugList(nList);
+              
           }
-          setCheckList(cList);      
-          setSelectedTreatmentId(newTreatment.treatment_id);
-          setModalOpen(true);
+        }
+      }else{
+        setSmemo("");
+        setOmemo("");
+        setAmemo("");
+        setPmemo("");
+        setCmemo("");
 
-          // let nList = [];
-          // for(var dlist of druglists){
-          //   nList.push({id:dlist.drug_injection_list_id, checked:false, name:dlist.drug_injection_list_name});
-          // }
-          // setCheckDrugList(nList);
-          
+        let cList = [];
+        for(var iList of inspectionlist){
+          cList.push({id:iList.inspection_list_id,checked:false,name:iList.inspection_list_name});
+        }
+        setCheckList(cList);   
+        ToastsStore.success("이미 완료된 진료입니다.");
       }
-      }
+  
     } catch (e) {
       console.log(e);
     }
