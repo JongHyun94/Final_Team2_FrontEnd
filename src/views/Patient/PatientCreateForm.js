@@ -220,6 +220,7 @@ function PatientCreateForm(props) {
             <div className="col-sm">
               {/* <input type="text" name="patient_name" placeholder="환자명" value={patient.patient_name} onChange={handleChange} ref={register({ required: true, minLength: 2 })}></input> */}
               <input type="text" name="patient_name" value={patient.patient_name} onChange={handleChange} ref={register({ required: true, minLength: 2 })}></input>
+              <imput type="text"></imput>
             </div>
           </div>
           <div className="Patient_item">
