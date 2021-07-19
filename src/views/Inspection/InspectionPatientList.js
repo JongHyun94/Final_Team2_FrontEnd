@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import InspectionPatientListItem from "./InspectionPatientListItem";
 import { readPatient } from "apis/inspections";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
+import Nodata from "components/common/NoData";
 
 let patientsList = [];
 
@@ -155,10 +156,10 @@ function InspectionPatientList(props) {
 
   return (
     <div className="InspectionPatientList">
+      <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground />
       <div className="InspectionPatientList_title">검사 대기 환자</div>
       <div className="InspectionPatientList_1 border">
         <div className="InspectionPatientList_1_1 mb-2">
-          <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground />
           <div className="InspectionPatientList_1_2_1 p-0">
             <DatePicker locale="ko" dateFormat="yyyy.MM.dd" selected={treatmentDate} onChange={(date) => setTreatmentDate(date)} />
           </div>
@@ -197,22 +198,34 @@ function InspectionPatientList(props) {
               </tr>
             </thead>
             <tbody>
-              {patients.map((patient) => {
-                return (
-                  <InspectionPatientListItem
-                    key={patient.treatment_id}
-                    patient={patient}
-                    id={id}
-                    handleChecked={(treatmentId) => handleChecked(treatmentId)}
-                    iStateInspection={props.iStateInspection}
-                    handleIStateInspectionFalse={props.handleIStateInspectionFalse}
-                    iStateFinish={props.iStateFinish}
-                    handleIStateFinishFalse={props.handleIStateFinishFalse}
-                    message={props.message}
-                    publishTopic={props.publishTopic}
-                  />
-                );
-              })}
+              {patients.length === 0 ? (
+                <td colSpan="7">
+                  <React.Fragment>
+                    <Nodata />
+                  </React.Fragment>
+                </td>
+              ) : (
+                <>
+                  {patients.map((patient) => {
+                    return (
+                      <InspectionPatientListItem
+                        key={patient.treatment_id}
+                        patient={patient}
+                        id={id}
+                        handleChecked={(treatmentId) => handleChecked(treatmentId)}
+                        iStateInspection={props.iStateInspection}
+                        handleIStateInspectionFalse={props.handleIStateInspectionFalse}
+                        iStateFinish={props.iStateFinish}
+                        handleIStateFinishFalse={props.handleIStateFinishFalse}
+                        iStateWait={props.iStateWait}
+                        handleIStateWaitFalse={props.handleIStateWaitFalse}
+                        message={props.message}
+                        publishTopic={props.publishTopic}
+                      />
+                    );
+                  })}
+                </>
+              )}
             </tbody>
           </table>
         </div>

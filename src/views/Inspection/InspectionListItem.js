@@ -88,6 +88,7 @@ function InspectionListItem(props) {
       props.inspection.inspection_result = "img";
       await updateResult(props.id, "img");
       setInspectionR();
+      props.publishTopic(0);
     } catch (error) {
       console.log(error);
     }
@@ -122,9 +123,14 @@ function InspectionListItem(props) {
       if (props.inspection.inspection_id === props.id) {
         if (props.inspection.inspection_state === "검사") {
           //props.inspection.inspection_state = "대기";
+          props.inspection.inspection_result = "";
+          props.inspection.inspection_state = "대기";
+          await updateResult(props.id, "");
           await updateState(props.id, "대기");
+          setInspectionR();
           props.handleStateWaitFalse();
           props.publishTopic(0);
+          props.plusStateWaitCount();
         }
       }
     } catch (error) {

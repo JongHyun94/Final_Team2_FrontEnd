@@ -3,7 +3,6 @@ import style from "./InspectionImgFormModal.module.css";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { readImage, selectImgId, downloadImg } from "apis/inspections";
-import Spinner from "components/common/Spinner";
 
 function InspectionImgFormModal(props) {
   //영상검사 이미지 결과
@@ -12,10 +11,6 @@ function InspectionImgFormModal(props) {
   const { open, close } = props;
   //ImageGallery에 사용될 이미지 배열
   let images = [];
-  // const [images, setImages] = useState([{
-  //   "original" : "",
-  //   "thumbnail" : "",
-  // }]);
 
   ////////////////////////////////////////////////////////////
 
@@ -30,7 +25,6 @@ function InspectionImgFormModal(props) {
             original: response.data.inspectionImgList[i].inspection_img_path,
             thumbnail: response.data.inspectionImgList[i].inspection_img_path,
           });
-          //setImages()
         }
 
         //해당 검사번호를 가진 검사이미지번호 목록 가져옴
@@ -43,8 +37,6 @@ function InspectionImgFormModal(props) {
       }
     } catch (error) {
       console.log(error);
-    } finally {
-      //setLoading(false);
     }
   };
 

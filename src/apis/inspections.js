@@ -5,6 +5,11 @@ export function readPatient(treatmentDate, state="") {
   return promise;
 }
 
+export function updateIstateW(treatmentId) {
+  const promise = axios.put("/inspection/istateW", null, {params:{treatmentId}});
+  return promise;
+}
+
 export function updateIstateI(treatmentId) {
   const promise = axios.put("/inspection/istateI", null, {params:{treatmentId}});
   return promise;
@@ -30,7 +35,6 @@ export function updateResult(inspectionId, inspectionResult) {
   return promise;
 }
 
-//수정 필요
 export function selectImgId(inspectionId) {
   const promise = axios.get("/inspection/imgId", {params:{inspectionId}});
   return promise;

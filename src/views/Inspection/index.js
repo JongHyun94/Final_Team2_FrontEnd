@@ -72,6 +72,8 @@ function Inspection(props) {
   const [treatmentId, setTreatmentId] = useState("");
   //true 일때, 총검사상태: 대기~>검사
   const [iStateInspection, setIStateInspection] = useState(false);
+  //true 일때, 총검사상태: 검사~>대기
+  const [iStateWait, setIStateWait] = useState(false);
   //true 일때, 총검사상태: 검사~>완료
   const [iStateFinish, setIStateFinish] = useState(false);
 
@@ -88,6 +90,16 @@ function Inspection(props) {
   //검사시작 후(총검사상태: 대기~>검사)
   const handleIStateInspectionFalse = () => {
     setIStateInspection(false);
+  };
+
+  //모든 검사상태가 대기 시(총검사상태: 검사~>완료)
+  const handleIStateWaitTrue = () => {
+    setIStateWait(true);
+  };
+
+  //모든 검사상태가 대기 후(총검사상태: 검사~>완료)
+  const handleIStateWaitFalse = () => {
+    setIStateWait(false);
   };
 
   //모든 검사상태가 완료 시(총검사상태: 검사~>완료)
@@ -114,6 +126,8 @@ function Inspection(props) {
             handleIStateInspectionFalse={handleIStateInspectionFalse}
             iStateFinish={iStateFinish}
             handleIStateFinishFalse={handleIStateFinishFalse}
+            iStateWait={iStateWait}
+            handleIStateWaitFalse={handleIStateWaitFalse}
             message={message}
             publishTopic={publishTopic}
           />
@@ -126,6 +140,9 @@ function Inspection(props) {
             iStateFinish={iStateFinish}
             handleIStateFinishTrue={handleIStateFinishTrue}
             handleIStateFinishFalse={handleIStateFinishFalse}
+            iStateWait={iStateWait}
+            handleIStateWaitTrue={handleIStateWaitTrue}
+            handleIStateWaitFalse={handleIStateWaitFalse}
             publishTopic={publishTopic}
           />
         </div>
