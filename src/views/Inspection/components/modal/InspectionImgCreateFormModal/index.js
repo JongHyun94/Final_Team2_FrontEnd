@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import style from "./InspectionImgCreateFormModal.module.css";
-import { createImage } from "apis/inspections";
+import { deleteImage, createImage } from "apis/inspections";
 
 function InspectionImgCreateFormModal(props) {
   //영상검사 이미지 결과
@@ -49,6 +49,8 @@ function InspectionImgCreateFormModal(props) {
       alert(sizeIndex + 1 + "번째 첨부파일의 크기가 1MB를 초과했습니다.");
     } else {
       try {
+        //삭제
+        await deleteImage(inspectionImgResult.inspection_id);
         const formData = new FormData();
         formData.append("inspection_img_inspection_id", inspectionImgResult.inspection_id);
         for (var i = 0; i <= inputFile.current.files.length - 1; i++) {

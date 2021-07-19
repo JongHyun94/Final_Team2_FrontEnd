@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { updateIstateI, updateIstateC } from "apis/inspections";
+import { updateIstateI, updateIstateC, updateIstateW } from "apis/inspections";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 
 function InspectionPatientListItem(props) {
@@ -37,6 +37,21 @@ function InspectionPatientListItem(props) {
     }
   };
 
+  //총검사상태: 검사~>대기 변경
+  const changeIStateWait = async () => {
+    try {
+      if (props.patient.treatment_id === props.id) {
+        if (props.patient.treatment_istate === "검사") {
+          //props.patient.treatment_istate = "대기";
+          await updateIstateW(props.id);
+        }
+      }
+      props.handleIStateWaitFalse();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   ////////////////////////////////////////////////////////////
 
   useEffect(() => {
@@ -50,6 +65,12 @@ function InspectionPatientListItem(props) {
       changeIStateFinish();
     }
   }, [props.iStateFinish]);
+
+  useEffect(() => {
+    if (props.iStateWait === true) {
+      changeIStateWait();
+    }
+  }, [props.iStateWait]);
 
   ////////////////////////////////////////////////////////////
 

@@ -48,13 +48,10 @@ function Header(props) {
 
   const openAuthModal = () => {
     setAuthModalOpen(true);
-    console.log("열기", authModalOpen);
   };
   const closeAuthModal = () => {
     setAuthModalOpen(false);
-    console.log("닫기", authModalOpen);
   };
-  console.log("$$ ",authModalOpen);
 
   return (
     <div className="header">
@@ -76,7 +73,7 @@ function Header(props) {
                   <span onClick={openAuthModal}>
                   {globalUid} 님
                   </span>
-                  <Auth openModal={authModalOpen} closeModal={closeAuthModal} setAuthModalOpen={setAuthModalOpen}></Auth>
+                  <Auth openModal={authModalOpen} closeModal={closeAuthModal}></Auth>
                 </React.Fragment>
               </div>
               <div><Link to="/"><button className="button_team2_empty" onClick={logout}>LOGOUT</button></Link></div>

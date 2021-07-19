@@ -4,6 +4,7 @@ import ReactExport from "react-export-excel";
 import InspectionListItem from "./InspectionListItem";
 import { readInspection } from "apis/inspections";
 import { useSelector } from "react-redux";
+import Nodata from "components/common/NoData";
 
 let inspectionsList = [];
 
@@ -18,6 +19,8 @@ function InspectionList(props) {
   const [stateFinish, setStateFinish] = useState(false);
   //검사상태가 완료인 검사의 갯수
   const [stateFinishCount, setStateFinishCount] = useState(0);
+  //검사상태가 대기인 검사의 갯수
+  const [stateWaitCount, setStateWaitCount] = useState(0);
   //true 일때, 바코드 모달 열림
   const [modalOpen, setModalOpen] = useState(false);
   //검사번호
@@ -64,7 +67,19 @@ function InspectionList(props) {
     } catch (error) {
       console.log(error);
     } finally {
-     setLoading(false);
+      setLoading(false);
+    }
+  };
+
+  //검사상태가 바뀔 때(검사시작, 검사취소, 검사완료)
+  //DB Inspections 에서 해당 진료번호를 가지고, 로그인한 id가 검사자인 검사 목록 가져옴
+  const getInspectionsWhenStateChange = async (treatmentId, globalUid) => {
+    try {
+      const response = await readInspection(treatmentId, globalUid);
+      inspectionsList = response.data.inspectionList;
+      setInspections(inspectionsList);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -79,9 +94,20 @@ function InspectionList(props) {
     setStateFinishCount(finishCount);
   }
 
+  function getStateWaitCount() {
+    let waitCount = 0;
+    for (var i = 0; i <= inspections.length - 1; i++) {
+      if (inspections[i].inspection_state === "대기") {
+        waitCount++;
+      }
+    }
+    setStateWaitCount(waitCount);
+  }
+
   //검사취소 버튼 클릭 (검사결과: 검사 ~> 대기)
   const cancelBtn = () => {
     setStateWait(true);
+    getStateWaitCount();
   };
 
   //엑셀저장 버튼 클릭
@@ -93,6 +119,7 @@ function InspectionList(props) {
   const completeBtn = () => {
     if (window.confirm("검사완료 시, 결과 수정이 불가합니다")) {
       setStateFinish(true);
+      getStateFinishCount();
     } else {
       return;
     }
@@ -102,6 +129,13 @@ function InspectionList(props) {
   const plusStateFinishCount = () => {
     getStateFinishCount();
     setStateFinishCount(stateFinishCount + 1);
+  };
+
+  //검사상태를 대기로 바꾼 후, stateWaitCount + 1
+  const plusStateWaitCount = () => {
+    getStateWaitCount();
+    setStateWaitCount(stateWaitCount + 1);
+    setStateWaitCount(stateWaitCount - 1);
   };
 
   //검사시작 버튼 클릭 시,
@@ -159,12 +193,22 @@ function InspectionList(props) {
       getInspections(props.treatmentId, globalUid);
     }
     getStateFinishCount();
+    getStateWaitCount();
+  }, [props.treatmentId]);
+
+  useEffect(() => {
+    if (props.treatmentId) {
+      getInspectionsWhenStateChange(props.treatmentId, globalUid);
+    }
+    getStateFinishCount();
+    getStateWaitCount();
   }, [props]);
 
   //진료번호가 바뀔 때,
   //stateFinishCount를 0으로 바꿔 누적되지 않고, 다시 세도록 함
   useEffect(() => {
     setStateFinishCount(0);
+    setStateWaitCount(0);
   }, [props.treatmentId]);
 
   //stateFinishCount 바뀔 때,
@@ -177,6 +221,17 @@ function InspectionList(props) {
       props.handleIStateFinishFalse();
     }
   }, [stateFinishCount]);
+
+  //stateWaitCount 바뀔 때,
+  //검사목록 갯수와 검사상태가 대기인 갯수가 같으면
+  //총검사결과: 검사~>대기 true
+  useEffect(() => {
+    if (inspections.length !== 0 && inspections.length === stateWaitCount) {
+      props.handleIStateWaitTrue();
+    } else {
+      props.handleIStateWaitFalse();
+    }
+  }, [stateWaitCount]);
 
   ////////////////////////////////////////////////////////////
   //바코드 모달에 props으로 전달할 검사 정보
@@ -275,6 +330,12 @@ function InspectionList(props) {
                     <span className="sr-only">loading...</span>
                   </div>
                 </div>
+              ) : inspections.length === 0 ? (
+                <td colSpan="12">
+                  <React.Fragment>
+                    <Nodata />
+                  </React.Fragment>
+                </td>
               ) : (
                 <>
                   {inspections.map((inspection) => {
@@ -291,8 +352,10 @@ function InspectionList(props) {
                         stateFinish={stateFinish}
                         handleStateFinishFalse={handleStateFinishFalse}
                         plusStateFinishCount={plusStateFinishCount}
+                        plusStateWaitCount={plusStateWaitCount}
                         publishTopic={props.publishTopic}
                         iStateFinish={props.iStateFinish}
+                        iStateWait={props.iStateWait}
                         message={props.message}
                       />
                     );

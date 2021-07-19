@@ -13,16 +13,13 @@ function UserUpdateForm(props) {
   const [userId, setUserId] = useState("");
   
   // 마스킹 상태
-  const [masking, setMasking] = useState("");  
+  const [masking, setMasking] = useState("");
 
   const handleChange = (event) => {
     setUser({
       ...user,
       user_id: props.user.user_id,
-      [event.target.name]: event.target.value,
-      // user_ssn: user.user_ssn1 + "-" + user.user_ssn2,
-      // user_tel: user.user_tel1 + "-" + user.user_tel2 + "-" + user.user_tel3,
-      // user_email: user.user_email1 + "@" + user.user_email2
+      [event.target.name]: event.target.value
     });
     if (event.target.name === "user_ssn2") {
       setMasking(event.target.value);
@@ -35,12 +32,13 @@ function UserUpdateForm(props) {
       user_ssn2 : event.target.value
     });
     setMasking(event.target.value);
+    console.log("00", event.target.value);
   };
 
   // 직원 정보 수정
   const handleUpdate = async (event) => {
+    console.log(user);
     try {
-      // event.preventDefault();
       const response = await updateUser(user);
       if(response.data) {
         // alert("직원 정보를 수정 했습니다.");
@@ -92,6 +90,11 @@ function UserUpdateForm(props) {
       user_enabled: props.user.user_enabled
     });    
     setUserId(props.user.user_id);
+
+    if (props.user.user_ssn2) {        
+      let ssn2Masking = props.user.user_ssn2.slice(0, 1) + "******";
+      setMasking(ssn2Masking);
+    } 
   }, [props.user]);
 
   useEffect(() => {
@@ -276,23 +279,22 @@ function UserUpdateForm(props) {
             <div className="col-sm d-flex ">{user.user_id}</div>
           </div>
           <div className="User_item">
-            <label className="col-sm-3 pl-3 p-0 m-0">직원명: </label>
+            <label className="col-sm-3 pl-3 p-0 m-0">직원명 * : </label>
             <div className="col-sm">
               <input type="text" name="user_name" value={user.user_name} placeholder="직원명" onChange={handleChange} ref={register({required: true, minLength: 2})}></input>
             </div>
           </div>
           <div className="User_item">
-            <label className="col-sm-3 m-0">주민등록번호: </label>
+            <label className="col-sm-3 m-0">주민등록번호 * : </label>
             <div className="row ml-3 mr-0">
-              <input type="text" className="col-sm" name="user_ssn1" value={user.user_ssn1} placeholder="999999" onChange={handleChange} ref={register({required: true, minLength: 6, maxLength: 6})}></input>
+              <input type="text" className="col-sm" name="user_ssn1" value={user.user_ssn1} placeholder="앞자리" onChange={handleChange} ref={register({required: true, minLength: 6, maxLength: 6})}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              {/* <input type="text" className="col-sm" name="user_ssn2" value={user.user_ssn2} placeholder="1234567" onChange={handleChange}></input> */}
-              <input type="text" className="col-sm" name="user_ssn2" value={masking} placeholder="1234567" 
+              <input type="text" className="col-sm" name="user_ssn2" value={masking} placeholder="뒷자리" 
                      onChange={handleChangeSsn} onBlur={() => {setMasking(masking?.replace(/(?<=.{1})./gi, '*'));}}></input>
             </div>
           </div>
           <div className="User_item">
-            <label className="col-sm-3 pl-3 p-0 m-0">성별: </label>
+            <label className="col-sm-3 pl-3 p-0 m-0">성별 * : </label>
             <div className="col-sm d-flex align-items-center">
               <input type="radio" name="user_sex" value="M" checked={user.user_sex === "M"? true : false} onChange={handleChange}></input>
               <label className="ml-3 mb-0">남</label>
@@ -303,7 +305,7 @@ function UserUpdateForm(props) {
             </div>
           </div>
           <div className="User_item">
-            <label className="col-sm-3 pl-3 p-0 m-0">직책: </label>
+            <label className="col-sm-3 pl-3 p-0 m-0">직책 * : </label>
             <div className="col-sm d-flex align-items-center">
               <input type="radio" name="user_authority" value="ROLE_DOCTOR" checked={user.user_authority === "ROLE_DOCTOR"? true : false} onChange={handleChange}></input>
               <label className="ml-3 mb-0">의사</label>
@@ -318,7 +320,7 @@ function UserUpdateForm(props) {
             </div>
           </div>
           <div className="User_item">
-            <label className="col-sm-3 m-0">전화 번호: </label>
+            <label className="col-sm-3 m-0">전화 번호 * : </label>
             <div className="row col-sm mr-0">
               <select className="col-sm ml-3" name="user_tel1" value={user.user_tel1} onChange={handleChange}>
                 <option value="010">010</option>
@@ -350,7 +352,7 @@ function UserUpdateForm(props) {
             </div>
           </div>
           <div className="User_item">
-            <label className="col-sm-3 m-0">이메일: </label>
+            <label className="col-sm-3 m-0">이메일 * : </label>
             <div className="row ml-3 mr-0">
               <input type="text" className="col-sm mr-1" name="user_email1" value={user.user_email1} placeholder="ABC1234" onChange={handleChange}
                      ref={register({required: true, pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z]).{2,}$/})}></input>
@@ -368,7 +370,7 @@ function UserUpdateForm(props) {
             </div>
           </div>
           <div className="User_item">
-            <label className="col-sm-3 m-0">주소: </label>
+            <label className="col-sm-3 m-0">주소 : </label>
             <div className="col-sm">
               <div className="row mb-2"> 
                 <input type="text" className="col-sm-5 ml-3" name="user_zipcode" value={user.user_zipcode} placeholder="우편번호" readOnly></input>
