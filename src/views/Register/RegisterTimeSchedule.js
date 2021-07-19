@@ -156,7 +156,7 @@ function RegisterTimeSchedule(props) {
           <RegisterCreateModal
             open={registerModalOpen}
             close={closeRegisterModal}
-            header={headerContent + " 수정"}
+            header={headerContent + " 내역"}
             doctors={doctors}
             register={selectedRegister}
             setPubMessage={setPubMessage}

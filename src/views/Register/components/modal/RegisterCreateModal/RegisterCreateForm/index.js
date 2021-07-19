@@ -68,6 +68,7 @@ function RegisterCreateForm(props) {
   const [minDate, setMinDate] = useState(new Date());
   const [minTime, setMinTime] = useState(setHours(setMinutes(new Date(), 0), 9));
   const [maxTime, setMaxTime] = useState(setHours(setMinutes(new Date(), 45), 17));
+  const [showTimeSelect, setShowTimeSelect] = useState(true);
 
   // 담당의 상태
   const [doctorsList, setDoctorsList] = useState(doctors);
@@ -110,41 +111,59 @@ function RegisterCreateForm(props) {
   }, [doctors, props.register]);
 
   useEffect(() => {
+    setShowTimeSelect(() =>
+    ((startDate.getFullYear() === new Date().getFullYear())
+      && (startDate.getMonth() === new Date().getMonth())
+      && (startDate.getDate() === new Date().getDate())
+      && (startDate.getHours() >= 18))
+      ? false : true
+  );
     setMinDate(() =>
       ((startDate.getFullYear() === new Date().getFullYear())
         && (startDate.getMonth() === new Date().getMonth())
         && (startDate.getDate() === new Date().getDate())
         && (startDate.getHours() >= 18))
-        // || (startDate.getHours() <= 18)))
-        ? new Date().setDate(new Date().getDate() + 1) : new Date()
+        ? startDate.setDate(new Date().getDate() + 1) : new Date()
     );
-    setMinTime(() =>
-      ((startDate.getFullYear() === new Date().getFullYear())
-        && (startDate.getMonth() === new Date().getMonth())
-        && (startDate.getDate() === new Date().getDate())
-        && ((startDate.getHours() >= 9)
-          || (startDate.getHours() <= 18)))
-        ? new Date() : setHours(setMinutes(new Date(), 0), 9)
-    );
-    setMaxTime(() =>
-      ((startDate.getFullYear() === new Date().getFullYear())
-        && (startDate.getMonth() === new Date().getMonth())
-        && (startDate.getDate() === new Date().getDate())
-        && ((startDate.getHours() >= 9)
-          || (startDate.getHours() <= 18)))
-        ? new Date() : setHours(setMinutes(new Date(), 45), 17)
-    );
+    if (new Date().getHours() >= 18) {
+      setMinTime(new Date());
+      setMaxTime(new Date());
+    } else {
+      setMinTime(() =>
+        ((startDate.getFullYear() === new Date().getFullYear())
+          && (startDate.getMonth() === new Date().getMonth())
+          && (startDate.getDate() === new Date().getDate())
+          && ((startDate.getHours() >= 9)
+            || (startDate.getHours() <= 18)))
+          ? new Date() : setHours(setMinutes(new Date(), 0), 9)
+      );
+      setMaxTime(() =>
+        ((startDate.getFullYear() === new Date().getFullYear())
+          && (startDate.getMonth() === new Date().getMonth())
+          && (startDate.getDate() === new Date().getDate())
+          && ((startDate.getHours() >= 9)
+            || (startDate.getHours() <= 18)))
+          ? new Date() : setHours(setMinutes(new Date(), 45), 17)
+      );
+    }
   }, []);
 
   useEffect(() => {
-    setMinDate(() =>
-      ((startDate.getFullYear() === new Date().getFullYear())
-        && (startDate.getMonth() === new Date().getMonth())
-        && (startDate.getDate() === new Date().getDate())
-        && (startDate.getHours() >= 18))
-        // || (startDate.getHours() <= 18)))
-        ? new Date().setDate(new Date().getDate() + 1) : new Date()
-    );
+    setShowTimeSelect(() =>
+    ((startDate.getFullYear() === new Date().getFullYear())
+      && (startDate.getMonth() === new Date().getMonth())
+      && (startDate.getDate() === new Date().getDate())
+      && (startDate.getHours() >= 18))
+      ? false : true
+  );
+    // setMinDate(() =>
+    //   ((startDate.getFullYear() === new Date().getFullYear())
+    //     && (startDate.getMonth() === new Date().getMonth())
+    //     && (startDate.getDate() === new Date().getDate())
+    //     && (startDate.getHours() >= 18))
+    //     // || (startDate.getHours() <= 18)))
+    //     ? new Date().setDate(new Date().getDate() + 1) : new Date()
+    // );
     setMinTime(() =>
       ((startDate.getFullYear() === new Date().getFullYear())
         && (startDate.getMonth() === new Date().getMonth())
@@ -161,6 +180,7 @@ function RegisterCreateForm(props) {
           || (startDate.getHours() <= 18)))
         ? setHours(setMinutes(new Date(), 45), 17) : setHours(setMinutes(new Date(), 45), 17)
     );
+
   }, [startDate]);
 
   //-------------------------------------------------------------
@@ -172,7 +192,7 @@ function RegisterCreateForm(props) {
       <div className={style.RegisterCreateForm_cal}>
         <DatePicker
           locale="ko"
-          showTimeSelect
+          showTimeSelect={showTimeSelect}
           selected={startDate}
           onChange={(date) => {
             setStartDate(date);

@@ -1,5 +1,5 @@
 import DatePicker from "react-datepicker";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
@@ -74,6 +74,7 @@ function RegisterUpdateForm(props) {
   const [minDate, setMinDate] = useState(new Date());
   const [minTime, setMinTime] = useState(setHours(setMinutes(new Date(), 0), 9));
   const [maxTime, setMaxTime] = useState(setHours(setMinutes(new Date(), 45), 17));
+  const [showTimeSelect, setShowTimeSelect] = useState(true);
 
 
   // 담당의 상태
@@ -82,21 +83,21 @@ function RegisterUpdateForm(props) {
   const [doctorsList, setDoctorsList] = useState(doctorlist);
   // 선택된 의사
   const [newDoctor, setNewDoctor] = useState(selectPatient.register_user_id);
-  const changeNewDoctor = (event) => {
+  const changeNewDoctor = useCallback((event) => {
     setNewDoctor(event.target.value);
-  };
+  },[]);
 
   // 접수 메모 상태
   const [newMemo, setNewMemo] = useState(selectPatient.register_memo);
-  const changeNewMemo = (event) => {
+  const changeNewMemo = useCallback((event) => {
     setNewMemo(event.target.value);
-  };
+  },[]);
 
   // 의사소통 메모 상태
   const [newCommunication, setNewCommunication] = useState(selectPatient.register_communication);
-  const changeNewCommunication = (event) => {
+  const changeNewCommunication = useCallback((event) => {
     setNewCommunication(event.target.value);
-  };
+  },[]);
   //-------------------------------------------------------------
   //버튼 이벤트 처리
   //-------------------------------------------------------------
@@ -150,11 +151,10 @@ function RegisterUpdateForm(props) {
   //-------------------------------------------------------------
   useEffect(() => {
     setStartDate(props.selectedPatient ? new Date(props.selectedPatient.register_date) : new Date());
-    return()=>{
+    return () => {
       changeRegister();
     }
   }, [props.selectedPatient]);
-
   useEffect(() => {
     setMinDate(() =>
       ((startDate.getFullYear() === new Date().getFullYear())
@@ -164,6 +164,16 @@ function RegisterUpdateForm(props) {
         // || (startDate.getHours() <= 18)))
         ? new Date().setDate(new Date().getDate() + 1) : new Date()
     );
+  }, []);
+  useEffect(() => {
+    setShowTimeSelect(() =>
+      ((startDate.getFullYear() === new Date().getFullYear())
+        && (startDate.getMonth() === new Date().getMonth())
+        && (startDate.getDate() === new Date().getDate())
+        && (startDate.getHours() >= 18))
+        ? false : true
+    );
+
     setMinTime(() =>
       ((startDate.getFullYear() === new Date().getFullYear())
         && (startDate.getMonth() === new Date().getMonth())
@@ -192,7 +202,7 @@ function RegisterUpdateForm(props) {
       </div>
       {/* 하단 내용 */}
       <div className="RegisterUpdateForm_content border">
-      <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground />
+        <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground />
         {/* 접수 상세 내역 내용 */}
         <div className="RegisterUpdateForm_content_form">
           <form>
@@ -251,7 +261,7 @@ function RegisterUpdateForm(props) {
               <div className="RegisterUpdateForm_content_list_input">
                 <DatePicker
                   locale="ko"
-                  showTimeSelect
+                  showTimeSelect={showTimeSelect}
                   selected={startDate}
                   onChange={(date) => { setStartDate(date); }}
                   timeIntervals={15}
@@ -260,7 +270,7 @@ function RegisterUpdateForm(props) {
                   minTime={minTime}
                   maxTime={maxTime}
                   timeClassName={handleColor}
-                  dateFormat="yyyy-MM-dd h:mm"
+                  dateFormat="yyyy-MM-dd H:mm"
                 />
               </div>
             </div>
