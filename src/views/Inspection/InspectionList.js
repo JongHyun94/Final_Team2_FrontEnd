@@ -9,8 +9,10 @@ import Nodata from "components/common/NoData";
 let inspectionsList = [];
 
 function InspectionList(props) {
-  //검사 상세 내역 목록
+  //검사 상세 내역 전체 목록
   const [inspections, setInspections] = useState(inspectionsList);
+  //검사 상세 내역 필터된(로그인한 검사자만) 목록
+  const [filterInspections, setFilterInspections] = useState([]);
   //true 일때, 검사상태: 대기~>검사
   const [stateInspection, setStateInspection] = useState(false);
   //true 일때, 검사상태: 검사~>대기
@@ -63,6 +65,12 @@ function InspectionList(props) {
     try {
       const response = await readInspection(treatmentId, globalUid);
       inspectionsList = response.data.inspectionList;
+      const iList = inspectionsList.filter((inspection) => {
+        if(inspection.inspection_inspector_id === globalUid){
+          return true;
+        }
+      });
+      setFilterInspections(iList);
       setInspections(inspectionsList);
     } catch (error) {
       console.log(error);
@@ -77,6 +85,12 @@ function InspectionList(props) {
     try {
       const response = await readInspection(treatmentId, globalUid);
       inspectionsList = response.data.inspectionList;
+      const iList = inspectionsList.filter((inspection) => {
+        if(inspection.inspection_inspector_id === globalUid){
+          return inspection;
+        }
+      });
+      setFilterInspections(iList);
       setInspections(inspectionsList);
     } catch (error) {
       console.log(error);
@@ -340,7 +354,7 @@ function InspectionList(props) {
                 </td>
               ) : (
                 <>
-                  {inspections.map((inspection) => {
+                  {filterInspections.map((inspection) => {
                     return (
                       <InspectionListItem
                         key={inspection.inspection_id}
