@@ -191,6 +191,8 @@ function InspectionList(props) {
   useEffect(() => {
     if (props.treatmentId) {
       getInspections(props.treatmentId, globalUid);
+    } else {
+      setInspections([]);
     }
     getStateFinishCount();
     getStateWaitCount();

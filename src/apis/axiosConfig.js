@@ -1,5 +1,6 @@
 import axios from "axios";
 
+//http://kosa3.iptime.org:50002
 axios.defaults.baseURL = "http://localhost:8080";
 
 export function addAuthHeader(authToken){
