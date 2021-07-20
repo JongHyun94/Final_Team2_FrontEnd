@@ -1,6 +1,6 @@
 import "./Register.css";
 import DatePicker from "react-datepicker";
-import { useEffect, useState, useCallback} from "react";
+import { useEffect, useState, useCallback } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 import ko from 'date-fns/locale/ko';
@@ -309,9 +309,11 @@ function RegisterList(props) {
             <tbody>
               {loading ? <Spinner />
                 : registerList.length === 0 ?
-                  <React.Fragment>
-                    <Nodata />
-                  </React.Fragment> : <>
+                  <td colSpan="12">
+                    <React.Fragment>
+                      <Nodata />
+                    </React.Fragment>
+                  </td> : <>
                     {registerList.map((register, index) => {
                       return (
                         <RegisterListItem

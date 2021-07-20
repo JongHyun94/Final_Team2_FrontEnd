@@ -1,8 +1,7 @@
 import { Modal } from "../../components/common/Address";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { createUser } from "apis/users";
 import { useSelector } from "react-redux";
-import { get, useForm } from "react-hook-form";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 import { ValidationModal } from "components/common/ValidationModal";
 
@@ -49,6 +48,8 @@ function UserCreateForm(props) {
   // 주민번호 뒷자리 마스킹 상태
   const [masking, setMasking] = useState("");
 
+  //----------------------------------------------------------------------------------------
+  // 실행 함수
   const handleChange = (event) => {
     setUser({
       ...user,
@@ -65,38 +66,101 @@ function UserCreateForm(props) {
   };
 
   // 직원 등록
-  const handleCreate = async () => {
+  const handleCreate = async (event) => {
+    event.preventDefault();
     try {
-      const response = await createUser(user);
-      console.log(response.data);
-      if (response.data.result === "notUnique") {
+      var userValidation = true;
+      var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z]).{2,}$/;
+
+      if(user.user_name === "") {
+        userValidation = false;
         setErrorMsg({
           ...errorMsg,
-          content: "이미 등록된 직원입니다.",
+          content: "직원명을 입력해주세요."
         });
         return openvalidationModal();
-      } else {
-        setUser({
-          user_name: "",
-          user_authority: "ROLE_DOCTOR",
-          user_hospital_id: hospital_id,
-          user_ssn1: "",
-          user_ssn2: "",
-          user_sex: "M",
-          user_tel1: "010",
-          user_tel2: "",
-          user_tel3: "",
-          user_email1: "",
-          user_email2: "naver.com",
-          user_zipcode: "",
-          user_address: "",
-          user_detailaddress1: "",
-          user_detailaddress2: "",
+      } else if (user.user_name.length < 2) {
+        userValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 직원명을 입력해주세요."
         });
-        setMasking("");
-        // alert("직원을 등록했습니다.");
-        ToastsStore.success("직원을 등록했습니다.");
-        props.publishTopic(1);
+        return openvalidationModal();
+      } else if (user.user_ssn1 === "" || user.user_ssn2 === "") {
+        userValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "주민등록번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else if (user.user_ssn1.length !== 6 || user.user_ssn2.length !== 7) {
+        userValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 주민등록번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else if (user.user_tel2 === "" || user.user_tel3 === "") {
+        userValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "전화번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else if (user.user_tel2.length < 3 || user.user_tel2.length > 4 || user.user_tel3.length < 3 || user.user_tel3.length > 4) {
+        userValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 전화번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else if (user.user_email1 === "") {
+        userValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "이메일을 입력해주세요."
+        });
+        return openvalidationModal();
+      } else if (!regex.test(user.user_email1)) {
+        userValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 이메일을 입력해주세요."
+        });
+        return openvalidationModal();
+      }
+
+      if (userValidation) {          
+        const response = await createUser(user);
+        console.log(response.data);
+        if (response.data.result === "notUnique") {
+          setErrorMsg({
+            ...errorMsg,
+            content: "이미 등록된 직원입니다.",
+          });
+          return openvalidationModal();
+        } else {
+          setUser({
+            user_name: "",
+            user_authority: "ROLE_DOCTOR",
+            user_hospital_id: hospital_id,
+            user_ssn1: "",
+            user_ssn2: "",
+            user_sex: "M",
+            user_tel1: "010",
+            user_tel2: "",
+            user_tel3: "",
+            user_email1: "",
+            user_email2: "naver.com",
+            user_zipcode: "",
+            user_address: "",
+            user_detailaddress1: "",
+            user_detailaddress2: "",
+          });
+          setMasking("");
+          ToastsStore.success("직원을 등록했습니다.");
+          props.publishTopic(1);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -138,124 +202,18 @@ function UserCreateForm(props) {
     }
   };
 
-  //----------------------------------------------------------------------------------------
-  // 유효성 검사를 위한 함수 사용
-  const { handleSubmit, register, errors } = useForm({ mode: "onChange" });
-
-  useEffect(() => {
-    if (get(errors, "user_name") !== undefined) {
-      if (get(errors, "user_name").type === "required") {
-        setErrorMsg({
-          ...errorMsg,
-          content: "직원명을 입력해주세요.",
-        });
-        return openvalidationModal();
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "직원명을 2자 이상 작성해주세요.",
-        });
-        return openvalidationModal();
-      }
-    } else if (get(errors, "user_ssn1") !== undefined) {
-      if (get(errors, "user_ssn1").type === "required") {
-        setErrorMsg({
-          ...errorMsg,
-          content: "주민등록번호 앞자리를 입력해주세요.",
-        });
-        return openvalidationModal();
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "올바른 주민등록번호를 입력해주세요.",
-        });
-        return openvalidationModal();
-      }
-    } else if (get(errors, "user_ssn2") !== undefined) {
-      if (get(errors, "user_ssn2").type === "required") {
-        setErrorMsg({
-          ...errorMsg,
-          content: "주민등록번호 뒷자리를 입력해주세요.",
-        });
-        return openvalidationModal();
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "올바른 주민등록번호를 입력해주세요.",
-        });
-        return openvalidationModal();
-      }
-    } else if (get(errors, "user_tel2") !== undefined) {
-      if (get(errors, "user_tel2").type === "required") {
-        setErrorMsg({
-          ...errorMsg,
-          content: "전화번호를 입력해주세요.",
-        });
-        return openvalidationModal();
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "올바른 전화번호를 입력해주세요.",
-        });
-        return openvalidationModal();
-      }
-    } else if (get(errors, "user_tel3") !== undefined) {
-      if (get(errors, "user_tel3").type === "required") {
-        setErrorMsg({
-          ...errorMsg,
-          content: "전화번호를 입력해주세요.",
-        });
-        return openvalidationModal();
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "올바른 전화번호를 입력해주세요.",
-        });
-        return openvalidationModal();
-      }
-    } else if (get(errors, "user_email1") !== undefined) {
-      if (get(errors, "user_email1").type === "required") {
-        setErrorMsg({
-          ...errorMsg,
-          content: "이메일을 입력해주세요.",
-        });
-        return openvalidationModal();
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "올바른 이메일 형식으로 입력해주세요.",
-        });
-        return openvalidationModal();
-      }
-    } else if (get(errors, "user_email2") !== undefined) {
-      if (get(errors, "user_email2").type === "required") {
-        setErrorMsg({
-          ...errorMsg,
-          content: "이메일을 입력해주세요.",
-        });
-        return openvalidationModal();
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "올바른 이메일 형식으로 입력해주세요.",
-        });
-        return openvalidationModal();
-      }
-    }
-  }, [errors]);
-
   return (
     <div className="mt-2">
       <div className="User_title">
         직원 등록
-      
       </div>
       <div className="border p-2">
-        <form onSubmit={handleSubmit(handleCreate)}>
+        <form onSubmit={handleCreate}>
           <div className="User_item">
             <label className="col-sm-3 m-0">직원명 * : </label>
             <div className="col-sm">
-              <input type="text" name="user_name" placeholder="직원명" value={user.user_name} onChange={handleChange} ref={register({ required: true, minLength: 2 })}></input>
+              {/* <input type="text" name="user_name" placeholder="직원명" value={user.user_name} onChange={handleChange} ref={register({ required: true, minLength: 2 })}></input> */}
+              <input type="text" name="user_name" placeholder="직원명" value={user.user_name} onChange={handleChange}></input>
               <React.Fragment>
                 <ValidationModal open={validationModalOpen} close={closeValidationModal} errorMsg={errorMsg}></ValidationModal>
               </React.Fragment>
@@ -264,28 +222,11 @@ function UserCreateForm(props) {
           <div className="User_item">
             <label className="col-sm-3 m-0">주민등록번호 * : </label>
             <div className="row ml-3 mr-0">
-              <input
-                type="text"
-                className="col-sm"
-                name="user_ssn1"
-                value={user.user_ssn1}
-                placeholder="앞자리"
-                onChange={handleChange}
-                ref={register({ required: true, minLength: 6, maxLength: 6 })}
-              ></input>
+              {/* <input type="text" className="col-sm" name="user_ssn1" value={user.user_ssn1} placeholder="앞자리" onChange={handleChange} ref={register({ required: true, minLength: 6, maxLength: 6 })}></input> */}
+              <input type="text" className="col-sm" name="user_ssn1" value={user.user_ssn1} placeholder="앞자리" onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input
-                type="text"
-                className="col-sm"
-                name="user_ssn2"
-                value={masking}
-                placeholder="뒷자리"
-                onChange={handleChangeSsn}
-                onBlur={() => {
-                  setMasking(masking?.replace(/(?<=.{1})./gi, "*"));
-                }}
-                ref={register({ required: true, minLength: 7, maxLength: 7 })}
-              ></input>
+              <input type="text" className="col-sm" name="user_ssn2" value={masking} placeholder="뒷자리" onChange={handleChangeSsn} 
+                onBlur={() => {setMasking(masking?.replace(/(?<=.{1})./gi, "*"));}}></input>
             </div>
           </div>
           <div className="User_item">
@@ -341,26 +282,20 @@ function UserCreateForm(props) {
                 <option value="064">064</option>
               </select>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm" name="user_tel2" value={user.user_tel2} onChange={handleChange} ref={register({ required: true, minLength: 3, maxLength: 4 })}></input>
+              {/* <input type="text" className="col-sm" name="user_tel2" value={user.user_tel2} onChange={handleChange} ref={register({ required: true, minLength: 3, maxLength: 4 })}></input> */}
+              <input type="text" className="col-sm" name="user_tel2" value={user.user_tel2} onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm" name="user_tel3" value={user.user_tel3} onChange={handleChange} ref={register({ required: true, minLength: 3, maxLength: 4 })}></input>
+              {/* <input type="text" className="col-sm" name="user_tel3" value={user.user_tel3} onChange={handleChange} ref={register({ required: true, minLength: 3, maxLength: 4 })}></input> */}
+              <input type="text" className="col-sm" name="user_tel3" value={user.user_tel3} onChange={handleChange}></input>
             </div>
           </div>
           <div className="User_item">
             <label className="col-sm-3 m-0">이메일 * : </label>
             <div className="row ml-3 mr-0">
-              <input
-                type="text"
-                className="col-sm mr-1"
-                name="user_email1"
-                value={user.user_email1}
-                placeholder="ABC1234"
-                onChange={handleChange}
-                ref={register({ required: true, pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z]).{2,}$/ })}
-              ></input>
+              {/* <input type="text" className="col-sm mr-1" name="user_email1" value={user.user_email1} placeholder="ABC1234" onChange={handleChange}
+                ref={register({ required: true, pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z]).{2,}$/ })}></input> */}
+              <input type="text" className="col-sm mr-1" name="user_email1" value={user.user_email1} placeholder="ABC1234" onChange={handleChange}></input>
               <div className="mr-1 d-flex align-items-center">@</div>
-              {/* <input type="text" className="col-sm-4 mr-1" name="user_email2" value={user.user_email2} placeholder="naver.com" onChange={handleChange}
-                     ref={register({required: true, pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z].{2,}$/})} disabled={email}></input> */}
               <select className="col-sm" name="user_email2" onChange={handleChange} value={user.user_email2}>
                 <option value="naver.com">naver.com</option>
                 <option value="gmail.com">gmail.com</option>
