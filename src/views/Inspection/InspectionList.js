@@ -9,8 +9,10 @@ import Nodata from "components/common/NoData";
 let inspectionsList = [];
 
 function InspectionList(props) {
-  //검사 상세 내역 목록
+  //검사 상세 내역 전체 목록
   const [inspections, setInspections] = useState(inspectionsList);
+  //검사 상세 내역 필터된(로그인한 검사자만) 목록
+  const [filterInspections, setFilterInspections] = useState([]);
   //true 일때, 검사상태: 대기~>검사
   const [stateInspection, setStateInspection] = useState(false);
   //true 일때, 검사상태: 검사~>대기
@@ -29,6 +31,8 @@ function InspectionList(props) {
   const [loading, setLoading] = useState(false);
   //로그인한 User의 id
   const globalUid = useSelector((state) => state.authReducer.uid);
+  //로그인한 User의 권한
+  const authorityRole = useSelector((state) => state.authReducer.uauthority);
 
   ////////////////////////////////////////////////////////////
   //엑셀 저장
@@ -63,6 +67,12 @@ function InspectionList(props) {
     try {
       const response = await readInspection(treatmentId, globalUid);
       inspectionsList = response.data.inspectionList;
+      const iList = inspectionsList.filter((inspection) => {
+        if(inspection.inspection_inspector_id === globalUid){
+          return true;
+        }
+      });
+      setFilterInspections(iList);
       setInspections(inspectionsList);
     } catch (error) {
       console.log(error);
@@ -77,6 +87,16 @@ function InspectionList(props) {
     try {
       const response = await readInspection(treatmentId, globalUid);
       inspectionsList = response.data.inspectionList;
+      if(authorityRole !== "ROLE_MASTER"){
+      const iList = inspectionsList.filter((inspection) => {
+        if(inspection.inspection_inspector_id === globalUid){
+          return inspection;
+        }
+      });
+      setFilterInspections(iList);
+      } else {
+        setFilterInspections(inspectionsList);
+      }
       setInspections(inspectionsList);
     } catch (error) {
       console.log(error);
@@ -191,6 +211,8 @@ function InspectionList(props) {
   useEffect(() => {
     if (props.treatmentId) {
       getInspections(props.treatmentId, globalUid);
+    } else {
+      setInspections([]);
     }
     getStateFinishCount();
     getStateWaitCount();
@@ -338,7 +360,7 @@ function InspectionList(props) {
                 </td>
               ) : (
                 <>
-                  {inspections.map((inspection) => {
+                  {filterInspections.map((inspection) => {
                     return (
                       <InspectionListItem
                         key={inspection.inspection_id}

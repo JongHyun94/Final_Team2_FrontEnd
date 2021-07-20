@@ -78,6 +78,7 @@ function TreatmentHistoryRead(props) {
       var list = await getTreatmentHistoryRead(treatment_id);
       setSoap(list.data.treatmentSoaplist);
       setInspectionlists(list.data.treatmentInspectionlist);
+      console.log("list.data.treatmentInspectionlistssss",list.data.treatmentInspectionlist);
       setDrugLists(list.data.treatmentDrugsInjectionlist);
     }catch (e){
       console.log(e);
