@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import "./User.css";
 import { updateUser, updateUserEnabled } from "apis/users";
 import moment from "moment";
-import { get, useForm } from "react-hook-form";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 import { ValidationModal } from "components/common/ValidationModal";
 
@@ -15,6 +14,24 @@ function UserUpdateForm(props) {
   // 마스킹 상태
   const [masking, setMasking] = useState("");
 
+  //----------------------------------------------------------------------------------------
+  // validation 모달 상태(open일 떄 true로 바뀌어 열림)
+  const [validationModalOpen, setValidationModalOpen] = useState(false);
+  // 유효성 검사 오류 메시지
+  const [errorMsg, setErrorMsg] = useState({
+    title : "직원정보 수정 실패",
+    content: ""
+  });
+
+  const openvalidationModal = (event) => {
+    setValidationModalOpen(true);
+  };
+  const closeValidationModal = () => {
+    setValidationModalOpen(false);
+  };
+
+  //----------------------------------------------------------------------------------------
+  // 실행 함수
   const handleChange = (event) => {
     setUser({
       ...user,
@@ -37,14 +54,76 @@ function UserUpdateForm(props) {
 
   // 직원 정보 수정
   const handleUpdate = async (event) => {
-    console.log(user);
+    event.preventDefault();
     try {
-      const response = await updateUser(user);
-      if(response.data) {
-        // alert("직원 정보를 수정 했습니다.");
-        ToastsStore.success("직원 정보를 수정했습니다.");
-        props.publishTopic(0);
+      var userValidation = true;
+      var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z]).{2,}$/;
+
+      if(user.user_name === "") {
+        userValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "직원명을 입력해주세요."
+        });
+        return openvalidationModal();
+      } else if (user.user_name.length < 2) {
+        userValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 직원명을 입력해주세요."
+        });
+        return openvalidationModal();
+      } else if (user.user_ssn1 === "" || user.user_ssn2 === "") {
+        userValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "주민등록번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else if (user.user_ssn1.length !== 6 || user.user_ssn2.length !== 7) {
+        userValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 주민등록번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else if (user.user_tel2 === "" || user.user_tel3 === "") {
+        userValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "전화번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else if (user.user_tel2.length < 3 || user.user_tel2.length > 4 || user.user_tel3.length < 3 || user.user_tel3.length > 4) {
+        userValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 전화번호를 입력해주세요."
+        });
+        return openvalidationModal();
+      } else if (user.user_email1 === "") {
+        userValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "이메일을 입력해주세요."
+        });
+        return openvalidationModal();
+      } else if (!regex.test(user.user_email1)) {
+        userValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 이메일을 입력해주세요."
+        });
+        return openvalidationModal();
       }
+
+      if (userValidation) {
+        const response = await updateUser(user);
+        if(response.data) {
+          ToastsStore.success("직원 정보를 수정했습니다.");
+          props.publishTopic(0);
+        }
+      }      
     } catch (error) {
       console.log(error);
     }
@@ -69,6 +148,42 @@ function UserUpdateForm(props) {
   };
   
   //----------------------------------------------------------------------------------------
+  // 주소 모달 상태(open일 떄 true로 바뀌어 열림)
+  const [AddressModalOpen, setAddressModalOpen] = useState(false);
+
+  const openAddressModal = (event) => {
+    event.preventDefault();
+    setAddressModalOpen(true);
+  };
+  const closeAddressModal = () => {
+    setAddressModalOpen(false);
+  };
+  const sendModal = (data) => {
+    setAddressModalOpen(false);
+    setUser({
+      ...user,
+      user_zipcode: data.zonecode, 
+      user_address: data.address
+    })
+    if (data.buildingName === "") {
+      setUser(prevUser => {
+        return {
+          ...prevUser,
+          user_detailaddress2: data.bname          
+        };
+      });
+    } else {
+      setUser(prevUser => {
+        return {
+          ...prevUser,
+          user_detailaddress2: data.bname + ", " + data.buildingName   
+        };
+      });
+    }
+  };
+  
+  //----------------------------------------------------------------------------------------
+  // 마운트 시 실행
   useEffect(() => {
     setUser({
       user_id: props.user.user_id,
@@ -112,168 +227,11 @@ function UserUpdateForm(props) {
     }
   }, [props.message]);
 
-  //----------------------------------------------------------------------------------------
-  // 주소 모달 상태(open일 떄 true로 바뀌어 열림)
-  const [AddressModalOpen, setAddressModalOpen] = useState(false);
-
-  const openAddressModal = (event) => {
-    event.preventDefault();
-    setAddressModalOpen(true);
-  };
-  const closeAddressModal = () => {
-    setAddressModalOpen(false);
-  };
-  const sendModal = (data) => {
-    setAddressModalOpen(false);
-    setUser({
-      ...user,
-      user_zipcode: data.zonecode, 
-      user_address: data.address
-    })
-    if (data.buildingName === "") {
-      setUser(prevUser => {
-        return {
-          ...prevUser,
-          user_detailaddress2: data.bname          
-        };
-      });
-    } else {
-      setUser(prevUser => {
-        return {
-          ...prevUser,
-          user_detailaddress2: data.bname + ", " + data.buildingName   
-        };
-      });
-    }
-  };
-
-  //----------------------------------------------------------------------------------------
-  // validation 모달 상태(open일 떄 true로 바뀌어 열림)
-  const [validationModalOpen, setValidationModalOpen] = useState(false);
-  // 유효성 검사 오류 메시지
-  const [errorMsg, setErrorMsg] = useState({
-    title : "직원정보 수정 실패",
-    content: ""
-  });
-
-  const openvalidationModal = (event) => {
-    setValidationModalOpen(true);
-  };
-  const closeValidationModal = () => {
-    setValidationModalOpen(false);
-  };
-  
-  //----------------------------------------------------------------------------------------
-  // 유효성 검사를 위한 함수 사용
-  const { handleSubmit, register, errors } = useForm({ mode: "onChange" });
-
-  useEffect(() => {
-    if (get(errors, 'user_name') !== undefined) {
-      if (get(errors, 'user_name').type === "required") {
-        setErrorMsg({
-          ...errorMsg,
-          content: "직원명을 입력해주세요."
-        });
-        return openvalidationModal();
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "직원명을 2자 이상 작성해주세요."
-        });
-        return openvalidationModal();
-      }
-    } else if (get(errors, 'user_ssn1') !== undefined) {
-      if (get(errors, 'user_ssn1').type === "required") {
-        setErrorMsg({
-          ...errorMsg,
-          content: "주민등록번호 앞자리를 입력해주세요."
-        });
-        return openvalidationModal();
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "올바른 주민등록번호를 입력해주세요."
-        });
-        return openvalidationModal();
-      }
-    } else if (get(errors, 'user_ssn2') !== undefined) {
-      if (get(errors, 'user_ssn2').type === "required") {
-        setErrorMsg({
-          ...errorMsg,
-          content: "주민등록번호 뒷자리를 입력해주세요."
-        });
-        return openvalidationModal();
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "올바른 주민등록번호를 입력해주세요."
-        });
-        return openvalidationModal();
-      }
-    } else if (get(errors, 'user_tel2') !== undefined) {
-      if (get(errors, 'user_tel2').type === "required") {
-        setErrorMsg({
-          ...errorMsg,
-          content: "전화번호를 입력해주세요."
-        });
-        return openvalidationModal();
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "올바른 전화번호를 입력해주세요."
-        });
-        return openvalidationModal();
-      }
-    } else if (get(errors, 'user_tel3') !== undefined) {
-      if (get(errors, 'user_tel3').type === "required") {
-        setErrorMsg({
-          ...errorMsg,
-          content: "전화번호를 입력해주세요."
-        });
-        return openvalidationModal();
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "올바른 전화번호를 입력해주세요."
-        });
-        return openvalidationModal();
-      }
-    } else if (get(errors, 'user_email1') !== undefined) {
-      if (get(errors, 'user_email1').type === "required") {
-        setErrorMsg({
-          ...errorMsg,
-          content: "이메일을 입력해주세요."
-        });
-        return openvalidationModal();
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "올바른 이메일 형식으로 입력해주세요."
-        });
-        return openvalidationModal();
-      }
-    } else if (get(errors, 'user_email2') !== undefined) {
-      if (get(errors, 'user_email2').type === "required") {
-        setErrorMsg({
-          ...errorMsg,
-          content: "이메일을 입력해주세요."
-        });
-        return openvalidationModal();
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "올바른 이메일 형식으로 입력해주세요."
-        });
-        return openvalidationModal();
-      }
-    };
-  }, [errors]);
-
   return (
     <div>
       <div className="User_title">직원 정보 수정</div>
       <div className="border p-2">
-      <form onSubmit={handleSubmit(handleUpdate)}>
+      <form onSubmit={handleUpdate}>
           <div className="User_item">
             <label className="col-sm-3 pl-3 p-0 m-0">직원 코드: </label>
             <div className="col-sm d-flex ">{user.user_id}</div>
@@ -281,13 +239,13 @@ function UserUpdateForm(props) {
           <div className="User_item">
             <label className="col-sm-3 pl-3 p-0 m-0">직원명 * : </label>
             <div className="col-sm">
-              <input type="text" name="user_name" value={user.user_name} placeholder="직원명" onChange={handleChange} ref={register({required: true, minLength: 2})}></input>
+              <input type="text" name="user_name" value={user.user_name} placeholder="직원명" onChange={handleChange}></input>
             </div>
           </div>
           <div className="User_item">
             <label className="col-sm-3 m-0">주민등록번호 * : </label>
             <div className="row ml-3 mr-0">
-              <input type="text" className="col-sm" name="user_ssn1" value={user.user_ssn1} placeholder="앞자리" onChange={handleChange} ref={register({required: true, minLength: 6, maxLength: 6})}></input>
+              <input type="text" className="col-sm" name="user_ssn1" value={user.user_ssn1} placeholder="앞자리" onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
               <input type="text" className="col-sm" name="user_ssn2" value={masking} placeholder="뒷자리" 
                      onChange={handleChangeSsn} onBlur={() => {setMasking(masking?.replace(/(?<=.{1})./gi, '*'));}}></input>
@@ -346,19 +304,18 @@ function UserUpdateForm(props) {
                 <option value="064">064</option>
               </select>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm" name="user_tel2" value={user.user_tel2} onChange={handleChange} ref={register({required: true, minLength: 3, maxLength: 4})}></input>
+              <input type="text" className="col-sm" name="user_tel2" value={user.user_tel2} onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm" name="user_tel3" value={user.user_tel3} onChange={handleChange} ref={register({required: true, minLength: 3, maxLength: 4})}></input>
+              <input type="text" className="col-sm" name="user_tel3" value={user.user_tel3} onChange={handleChange}></input>
             </div>
           </div>
           <div className="User_item">
             <label className="col-sm-3 m-0">이메일 * : </label>
             <div className="row ml-3 mr-0">
-              <input type="text" className="col-sm mr-1" name="user_email1" value={user.user_email1} placeholder="ABC1234" onChange={handleChange}
-                     ref={register({required: true, pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z]).{2,}$/})}></input>
+              {/* <input type="text" className="col-sm mr-1" name="user_email1" value={user.user_email1} placeholder="ABC1234" onChange={handleChange}
+                     ref={register({required: true, pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z]).{2,}$/})}></input> */}
+                     <input type="text" className="col-sm mr-1" name="user_email1" value={user.user_email1} placeholder="ABC1234" onChange={handleChange}></input>
               <div className="mr-1 d-flex align-items-center">@</div>
-              {/* <input type="text" className="col-sm-4 mr-1" name="user_email2" value={user.user_email2} placeholder="naver.com" onChange={handleChange}
-                      ref={register({required: true, pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z].{2,}$/})} disabled={true}></input> */}
               <select className="col-sm" name="user_email2" onChange={handleChange} value={user.user_email2}>
                 <option value="naver.com">naver.com</option>
                 <option value="gmail.com">gmail.com</option>
