@@ -309,11 +309,14 @@ function RegisterList(props) {
             <tbody>
               {loading ? <Spinner />
                 : registerList.length === 0 ?
-                  <td colSpan="12">
-                    <React.Fragment>
-                      <Nodata />
-                    </React.Fragment>
-                  </td> : <>
+                  <tr>
+                    <td colSpan="12">
+                      <React.Fragment>
+                        <Nodata />
+                      </React.Fragment>
+                    </td>
+                  </tr>
+                  : <>
                     {registerList.map((register, index) => {
                       return (
                         <RegisterListItem
