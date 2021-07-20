@@ -1,7 +1,6 @@
 import { Modal } from "../../components/common/Address";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { createPatient } from "apis/patient";
-import { get, useForm } from "react-hook-form";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 import { ValidationModal } from "components/common/ValidationModal";
 
@@ -25,16 +24,22 @@ function PatientCreateForm(props) {
   const [masking, setMasking] = useState("");
 
   //---------------------------------------------------------------------------------------
-  // 유효성 검사를 위한 함수 사용
-  const { handleSubmit, register, errors } = useForm({ mode: "onChange" });
   // validation 모달 상태(open일 떄 true로 바뀌어 열림)
   const [validationModalOpen, setValidationModalOpen] = useState(false);
+  const openvalidationModal = () => {
+    setValidationModalOpen(true);
+  };
+  const closeValidationModal = () => {
+    setValidationModalOpen(false);
+  };
   // 유효성 검사 오류 메시지
   const [errorMsg, setErrorMsg] = useState({
     title: "환자 등록 실패",
     content: "",
   });
 
+  //---------------------------------------------------------------------------------------
+  // 실행 함수
   const handleChange = (event) => {
     setPatient({
       ...patient,
@@ -42,7 +47,7 @@ function PatientCreateForm(props) {
     });
   };
 
-  const handleChangeSSn = (event) => {
+  const handleChangeSsn = (event) => {
     setPatient({
       ...patient,
       patient_ssn2: event.target.value,
@@ -52,29 +57,77 @@ function PatientCreateForm(props) {
 
   // 환자 등록
   const handleCreate = async (event) => {
+    event.preventDefault();
     try {
-      const response = await createPatient(patient);
-      console.log(response.data.result);
-      if (response.data.result === "success") {
-        if (response.data) {
-          setPatient({
-            patient_name: "",
-            patient_ssn1: "",
-            patient_ssn2: "",
-            patient_sex: "M",
-            patient_tel1: "010",
-            patient_tel2: "",
-            patient_tel3: "",
-            patient_zipcode: "",
-            patient_address: "",
-            patient_detailaddress1: "",
-            patient_detailaddress2: "",
-          });
-          setMasking("");
-          // alert("환자를 등록했습니다.");
-          ToastsStore.success("환자를 등록했습니다.");
-          props.publishTopic(1);
-        }
+      var patientValidation = true;
+
+      if (patient.patient_name === "") {
+        patientValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "환자명을 입력해주세요.",
+        });
+        return openvalidationModal();
+      } else if (patient.patient_name.length < 2) {
+        patientValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 환자명을 작성해주세요.",
+        });
+        return openvalidationModal();
+      } else if (patient.patient_ssn1 === "" || patient.patient_ssn2 === "") {
+        patientValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "주민등록번호를 입력해주세요.",
+        });
+        return openvalidationModal();
+      } else if (patient.patient_ssn1.length !== 6 || patient.patient_ssn2.length !== 7) {
+        patientValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 주민등록번호를 입력해주세요.",
+        });
+        return openvalidationModal();
+      } else if (patient.patient_tel2 === "" || patient.patient_tel3 === "") {
+        patientValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "전화번호를 입력해주세요.",
+        });
+        return openvalidationModal();
+      } else if (patient.patient_tel2.length < 3 || patient.patient_tel2.length > 4 || patient.patient_tel3.length < 3 || patient.patient_tel3.length > 4) {
+        patientValidation = false;
+        setErrorMsg({
+          ...errorMsg,
+          content: "올바른 전화번호를 입력해주세요.",
+        });
+        return openvalidationModal();
+      }
+
+      if (patientValidation) {
+        const response = await createPatient(patient);
+        console.log(response.data.result);
+        if (response.data.result === "success") {
+          if (response.data) {
+            setPatient({
+              patient_name: "",
+              patient_ssn1: "",
+              patient_ssn2: "",
+              patient_sex: "M",
+              patient_tel1: "010",
+              patient_tel2: "",
+              patient_tel3: "",
+              patient_zipcode: "",
+              patient_address: "",
+              patient_detailaddress1: "",
+              patient_detailaddress2: "",
+            });
+            setMasking("");
+            ToastsStore.success("환자를 등록했습니다.");
+            props.publishTopic(1);
+          }
+        }      
       } else {
         setErrorMsg({
           ...errorMsg,
@@ -99,7 +152,7 @@ function PatientCreateForm(props) {
   };
   const sendModal = (data) => {
     setAddressModalOpen(false);
-    console.log("send 실행", data);
+    // console.log("send 실행", data);
     setPatient({
       ...patient,
       patient_zipcode: data.zonecode,
@@ -122,88 +175,6 @@ function PatientCreateForm(props) {
     }
   };
 
-  const openvalidationModal = () => {
-    setValidationModalOpen(true);
-  };
-
-  const closeValidationModal = () => {
-    setValidationModalOpen(false);
-  };
-
-  useEffect(() => {
-    if (get(errors, "patient_name") !== undefined) {
-      if (get(errors, "patient_name").type === "required") {
-        setErrorMsg({
-          ...errorMsg,
-          content: "환자명을 입력해주세요.",
-        });
-        return openvalidationModal();
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "환자명을 2자 이상 작성해주세요.",
-        });
-        return openvalidationModal();
-      }
-    } else if (get(errors, "patient_ssn1") !== undefined) {
-      if (get(errors, "patient_ssn1").type === "required") {
-        setErrorMsg({
-          ...errorMsg,
-          content: "주민등록번호 앞자리를 입력해주세요.",
-        });
-        return openvalidationModal();
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "올바른 주민등록번호를 입력해주세요.",
-        });
-        return openvalidationModal();
-      }
-    } else if (get(errors, "patient_ssn2") !== undefined) {
-      if (get(errors, "patient_ssn2").type === "required") {
-        setErrorMsg({
-          ...errorMsg,
-          content: "주민등록번호 뒷자리를 입력해주세요.",
-        });
-        return openvalidationModal();
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "올바른 주민등록번호를 입력해주세요.",
-        });
-        return openvalidationModal();
-      }
-    } else if (get(errors, "patient_tel2") !== undefined) {
-      if (get(errors, "patient_tel2").type === "required") {
-        setErrorMsg({
-          ...errorMsg,
-          content: "전화번호를 입력해주세요.",
-        });
-        return openvalidationModal();
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "올바른 전화번호를 입력해주세요.",
-        });
-        return openvalidationModal();
-      }
-    } else if (get(errors, "patient_tel3") !== undefined) {
-      if (get(errors, "patient_tel3").type === "required") {
-        setErrorMsg({
-          ...errorMsg,
-          content: "전화번호를 입력해주세요.",
-        });
-        return openvalidationModal();
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "올바른 전화번호를 입력해주세요.",
-        });
-        return openvalidationModal();
-      }
-    }
-  }, [errors]);
-
   return (
     <div className="mt-4">
       <div className={`Patient_title`}>
@@ -213,38 +184,20 @@ function PatientCreateForm(props) {
         </React.Fragment>
       </div>
       <div className={`border p-3`}>
-        <form onSubmit={handleSubmit(handleCreate)}>
+        <form onSubmit={handleCreate}>
           <div className="Patient_item">
             <label className="col-sm-3 m-0">환자명 * : </label>
             <div className="col-sm">
-              <input type="text" name="patient_name" placeholder="환자명" value={patient.patient_name} onChange={handleChange} ref={register({ required: true, minLength: 2 })}></input>
+              <input type="text" name="patient_name" placeholder="환자명" value={patient.patient_name} onChange={handleChange}></input>
             </div>
           </div>
           <div className="Patient_item">
             <label className="col-sm-3 m-0">주민등록번호 * : </label>
             <div className="row ml-3">
-              <input
-                type="text"
-                className="col-sm"
-                name="patient_ssn1"
-                value={patient.patient_ssn1}
-                placeholder="앞자리"
-                onChange={handleChange}
-                ref={register({ required: true, minLength: 6, maxLength: 6 })}
-              ></input>
+              <input type="text" className="col-sm" name="patient_ssn1" value={patient.patient_ssn1} placeholder="앞자리" onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input
-                type="text"
-                className="col-sm"
-                name="user_ssn2"
-                value={masking}
-                placeholder="뒷자리"
-                onChange={handleChangeSSn}
-                onBlur={() => {
-                  setMasking(masking?.replace(/(?<=.{1})./gi, "*"));
-                }}
-                ref={register({ required: true, minLength: 7, maxLength: 7 })}
-              ></input>
+              <input type="text" className="col-sm" name="user_ssn2" value={masking} placeholder="뒷자리" onChange={handleChangeSsn} 
+                onBlur={() => {setMasking(masking?.replace(/(?<=.{1})./gi, "*"));}}></input>
             </div>
           </div>
           <div className="Patient_item">
@@ -285,13 +238,13 @@ function PatientCreateForm(props) {
                 <option value="064">064</option>
               </select>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm-2" name="patient_tel2" value={patient.patient_tel2} onChange={handleChange} ref={register({ required: true, minLength: 3, maxLength: 4 })}></input>
+              <input type="text" className="col-sm-2" name="patient_tel2" value={patient.patient_tel2} onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
-              <input type="text" className="col-sm-2" name="patient_tel3" value={patient.patient_tel3} onChange={handleChange} ref={register({ required: true, minLength: 3, maxLength: 4 })}></input>
+              <input type="text" className="col-sm-2" name="patient_tel3" value={patient.patient_tel3} onChange={handleChange}></input>
             </div>
           </div>
           <div className="Patient_item">
-            <label className="col-sm-3 m-0">주소 * : </label>
+            <label className="col-sm-3 m-0">주소 : </label>
             <div className="col-sm">
               <div className="row mb-2">
                 <input type="text" className="col-sm-3 ml-3" name="patient_zipcode" value={patient.patient_zipcode} placeholder="우편번호" onChange={handleChange} readOnly></input>
