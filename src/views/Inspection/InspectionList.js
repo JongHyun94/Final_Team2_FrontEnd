@@ -61,18 +61,23 @@ function InspectionList(props) {
 
   ////////////////////////////////////////////////////////////
 
-  //DB Inspections 에서 해당 진료번호를 가지고, 로그인한 id가 검사자인 검사 목록 가져옴
-  const getInspections = async (treatmentId, globalUid) => {
+  //DB Inspections 에서 해당 진료번호를 가지고, 전체 검사 목록 가져옴
+  //로그인한 검사자의 검사 목록만 filter, 권한이 master일때는 전체 목록
+  const getInspections = async (treatmentId) => {
     setLoading(true);
     try {
-      const response = await readInspection(treatmentId, globalUid);
+      const response = await readInspection(treatmentId);
       inspectionsList = response.data.inspectionList;
+      if(authorityRole !== "ROLE_MASTER"){
       const iList = inspectionsList.filter((inspection) => {
         if(inspection.inspection_inspector_id === globalUid){
-          return true;
+          return inspection;
         }
       });
       setFilterInspections(iList);
+      } else {
+        setFilterInspections(inspectionsList);
+      }
       setInspections(inspectionsList);
     } catch (error) {
       console.log(error);
@@ -82,10 +87,11 @@ function InspectionList(props) {
   };
 
   //검사상태가 바뀔 때(검사시작, 검사취소, 검사완료)
-  //DB Inspections 에서 해당 진료번호를 가지고, 로그인한 id가 검사자인 검사 목록 가져옴
-  const getInspectionsWhenStateChange = async (treatmentId, globalUid) => {
+  //DB Inspections 에서 해당 진료번호를 가지고, 전체 검사 목록 가져옴
+  //로그인한 검사자의 검사 목록만 filter, 권한이 master일때는 전체 목록
+  const getInspectionsWhenStateChange = async (treatmentId) => {
     try {
-      const response = await readInspection(treatmentId, globalUid);
+      const response = await readInspection(treatmentId);
       inspectionsList = response.data.inspectionList;
       if(authorityRole !== "ROLE_MASTER"){
       const iList = inspectionsList.filter((inspection) => {
@@ -210,9 +216,10 @@ function InspectionList(props) {
 
   useEffect(() => {
     if (props.treatmentId) {
-      getInspections(props.treatmentId, globalUid);
+      getInspections(props.treatmentId);
     } else {
       setInspections([]);
+      setFilterInspections([]);
     }
     getStateFinishCount();
     getStateWaitCount();
@@ -220,7 +227,7 @@ function InspectionList(props) {
 
   useEffect(() => {
     if (props.treatmentId) {
-      getInspectionsWhenStateChange(props.treatmentId, globalUid);
+      getInspectionsWhenStateChange(props.treatmentId);
     }
     getStateFinishCount();
     getStateWaitCount();
@@ -352,7 +359,7 @@ function InspectionList(props) {
                     <span className="sr-only">loading...</span>
                   </div>
                 </div>
-              ) : inspections.length === 0 ? (
+              ) : filterInspections.length === 0 ? (
                 <td colSpan="12">
                   <React.Fragment>
                     <Nodata />
