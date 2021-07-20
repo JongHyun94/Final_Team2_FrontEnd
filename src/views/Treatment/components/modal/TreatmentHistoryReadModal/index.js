@@ -154,7 +154,7 @@ function TreatmentHistoryRead(props) {
                                 <tr key={inspections.inspection_id}>
                                   <td>{inspections.inspection_list_category}</td>
                                   <td>{moment(inspections.inspection_date).format("yyyy-MM-DD HH:mm")}</td>
-                                  <td>{inspections.user_name}</td>
+                                  <td>{inspections.inspection_inspector_name}</td>
                                   <td>{inspections.inspection_list_name}</td>
                                   <td>{inspections.inspection_list_reference}</td>
                                   {/* <td>{inspections.inspection_state}</td> */}
