@@ -60,10 +60,6 @@ function WeatherAPI(props) {
     getWeatherData(hlat, hlong);
   }, [hlat, hlong]);
 
-  // useEffect(() => {
-  //   getWeatherData(hlat, hlong);
-  // }, [hospitalTemp,imgUrl]);
-
   return (
     <div className={style.WeatherAPI_items}>
       <div className={style.WeatherAPI_item}>
