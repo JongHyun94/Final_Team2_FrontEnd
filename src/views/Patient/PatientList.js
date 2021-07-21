@@ -58,7 +58,7 @@ function PatientList(props) {
   }, []);
 
   useEffect(() => {
-    console.log("받습니다", props.message);
+    // console.log("받습니다", props.message);
     const work = async () => {
       try {
         const response = await getPatientList();
@@ -88,9 +88,9 @@ function PatientList(props) {
     );
   };
 
-  useEffect(() => {
-    console.log("받습니다", props.message);
-  },[props])
+  // useEffect(() => {
+  //   console.log("받습니다", props.message);
+  // },[props])
 
   return (    
     <div className="PatientList">
