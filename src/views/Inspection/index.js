@@ -92,12 +92,12 @@ function Inspection(props) {
     setIStateInspection(false);
   };
 
-  //모든 검사상태가 대기 시(총검사상태: 검사~>완료)
+  //모든 검사상태가 대기 시(총검사상태: 검사~>대기)
   const handleIStateWaitTrue = () => {
     setIStateWait(true);
   };
 
-  //모든 검사상태가 대기 후(총검사상태: 검사~>완료)
+  //모든 검사상태가 대기 후(총검사상태: 검사~>대기)
   const handleIStateWaitFalse = () => {
     setIStateWait(false);
   };
