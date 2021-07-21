@@ -24,6 +24,7 @@ function InspectionImgFormModal(props) {
           images.push({
             original: response.data.inspectionImgList[i].inspection_img_path,
             thumbnail: response.data.inspectionImgList[i].inspection_img_path,
+            originalHeight: 600,
           });
         }
 
