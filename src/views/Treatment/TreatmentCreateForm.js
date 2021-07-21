@@ -245,7 +245,7 @@ function TreatmentCreateForm(props) {
         selectedDrug: drugForm.selectedDrug,
       };
 
-      if (checkedPatientlist.treatment_state === "대기") {
+      if (checkedPatientlist.treatment_state === "대기" || checkedPatientlist.treatment_state === "") {
         if (newTreatment.treatment_id === "" || newTreatment.treatment_patient_id === "") {
           // alert("진료 아이디를 입력해주세요.");
           ToastsStore.success("환자를 클릭해주세요.");
