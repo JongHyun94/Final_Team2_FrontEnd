@@ -35,7 +35,7 @@ function Login(props) {
     try{
       // 로그인 요청
       const response = await login(user);
-      //console.log(response.data);
+      // console.log(response.data);
 
       // 로그인 성공 시 JWT 저장 및 경로 이동
       if (response.data.result === "success") {
@@ -73,7 +73,7 @@ function Login(props) {
         } else if (user.userId.slice(0,1) === "I") {      
           props.history.push("/Inspection");
         } 
-      } else if (response.data.result === "notCorrectPW") {
+      } else if (response.data.result === "notCorrectPW" || response.data.result === "notFindID") {
         openModal();
         // alert("로그인 실패 : 아이디 혹은 비밀번호가 맞지 않습니다.");
         setErrorMsg({
