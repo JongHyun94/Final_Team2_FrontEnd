@@ -6,14 +6,14 @@ import Spinner from "components/common/Spinner";
 import Nodata from "components/common/NoData";
 
 function TreatmentHistoryList(props) {
-  //진료 기록 생성 상태로
-  const [treatmentHistoryList, setTreatmentHistoryList] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
-  // spinner 
-  const [loading, setLoading] = useState(false);
+//true 일때, 바코드 모달 열림
+const [modalOpen, setModalOpen] = useState(false);
+// spinner
+const [loading, setLoading] = useState(false);
+
   //임시 환자 리스트
   var tempPatientlist = {
-    treatment_register_id :"",
+    treatment_register_id: "",
     treatment_state: "",
     treatment_patient_id: "",
     patient_name: "  ",
@@ -23,7 +23,7 @@ function TreatmentHistoryList(props) {
     register_starttime: "",
   };
 
-  //대기환자리스트에서 체크된 환자 리스트 가져오기 ->props.checkedpatient == checkedPatientlist
+  //대기환자리스트에서 체크된 환자 리스트 가져오기 -> props.checkedpatient == checkedPatientlist
   var checkedPatientlist;
   if (props.checkedpatient) {
     checkedPatientlist = props.checkedpatient;
@@ -31,6 +31,8 @@ function TreatmentHistoryList(props) {
     checkedPatientlist = tempPatientlist;
   }
 
+  //진료 기록 생성 상태로
+  const [historyLists, setHistoryLists] = useState([]);
   //선택된 진료 번호
   const [selectedTreatmentId, setSelectedTreatmentId] = useState("");
 
@@ -40,31 +42,29 @@ function TreatmentHistoryList(props) {
     setSelectedTreatmentId(treatment_id);
     setModalOpen(true);
   };
-  const openModal = () => {
-    setModalOpen(true);
-  };
+
+  //모달 안에서 취소 버튼 클릭
   const closeModal = () => {
     setModalOpen(false);
   };
-
-
-  const getTreatmentHistoryLists = async (treatment_patient_id) => {
+ 
+  //DB treatments 에서 환자아이디에 해당하는 진료기록 전부를 가져옴
+  const getList = async (treatment_patient_id) => {
     setLoading(true);
-    try{
+    try {
       var list = await getTreatmentHistoryList(treatment_patient_id);
-      // console.log(list.data.historylist);
-      setTreatmentHistoryList(list.data.historylist);
-    }catch (e){
+      setHistoryLists(list.data.historylist);
+    } catch (e) {
       console.log(e);
-    }finally {
+    } finally {
       setLoading(false);
     }
-
   };
-  
+
   useEffect(() => {
-    getTreatmentHistoryLists(checkedPatientlist.treatment_patient_id);
+    getList(checkedPatientlist.treatment_patient_id);
   }, [checkedPatientlist.treatment_patient_id, props]);
+
   return (
     <div>
       <div className="TreatmentHistoryList_title">
@@ -87,30 +87,31 @@ function TreatmentHistoryList(props) {
               </tr>
             </thead>
             <tbody>
-            {loading ? <Spinner /> 
-            :
-              treatmentHistoryList.length === 0 ?
-              <td colSpan="5">
-              <React.Fragment>
-                <Nodata />
-              </React.Fragment>
-              </td>
-            :
-            <>
-              {treatmentHistoryList.map((treatmentHistory) => {
-                return (
-                  <tr className="TreatmentHistoryList_table_tr" key={treatmentHistory.treatment_id} onClick={(event) => checkedtreatment(treatmentHistory.treatment_id)}>
-                    <td>
-                      <input type="checkbox" checked={selectedTreatmentId === treatmentHistory.treatment_id ? true : false} readOnly />
-                    </td>
-                    <th>{treatmentHistory.treatment_id}</th>
-                    <th>{treatmentHistory.treatment_date}</th>
-                    <th>{treatmentHistory.user_name}</th>
-                    <th>{treatmentHistory.treatment_communication}</th>
-                  </tr>
-                );
-              })}
-               </>}
+              {loading ? (
+                <Spinner />
+              ) : historyLists.length === 0 ? (
+                <td colSpan="5">
+                  <React.Fragment>
+                    <Nodata />
+                  </React.Fragment>
+                </td>
+              ) : (
+                <> 
+                  {historyLists.map((treatmentHistory) => {
+                    return (
+                      <tr className="TreatmentHistoryList_table_tr" key={treatmentHistory.treatment_id} onClick={(event) => checkedtreatment(treatmentHistory.treatment_id)}>
+                        <td>
+                          <input type="checkbox" checked={selectedTreatmentId === treatmentHistory.treatment_id ? true : false} readOnly />
+                        </td>
+                        <th>{treatmentHistory.treatment_id}</th>
+                        <th>{moment(treatmentHistory.treatment_date).format("yyyy-MM-DD")}</th>
+                        <th>{treatmentHistory.user_name}</th>
+                        <th>{treatmentHistory.treatment_communication}</th>
+                      </tr>
+                    );
+                  })}
+                </>
+              )}
             </tbody>
           </table>
         </div>
