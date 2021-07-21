@@ -47,7 +47,7 @@ function RegisterCreateModal(props) {
       // }
       if (registerValidation) {
         var list = await createRegister(newRegister);
-        console.log("결과값", list.data.result);
+        //console.log("결과값", list.data.result);
         if (list.data.result === "중복") {
           ToastsStore.success("이미 예약이 되어있습니다.");
         } else if (list.data.result === "성공") {
@@ -61,7 +61,7 @@ function RegisterCreateModal(props) {
   };
   const updateNewRegister = async () => {
     try {
-      console.log("접수", newRegister);
+      //console.log("접수", newRegister);
       var registerValidation = true;
       if (newRegister.register_date < new Date()) {
         registerValidation = false;
@@ -73,7 +73,7 @@ function RegisterCreateModal(props) {
       }
       if (registerValidation) {
         var list = await updateRegister(newRegister);
-        console.log("결과값", list.data.result);
+        //console.log("결과값", list.data.result);
         if (list.data.result === "중복") {
           ToastsStore.success("이미 예약이 되어있습니다.");
         } else if (list.data.result === "성공") {

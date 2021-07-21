@@ -120,13 +120,13 @@ function RegisterTimeSchedule(props) {
   }, [registerDate]);
 
   useEffect(() => {
-    console.log("MESSAGE: ", message);
+    //console.log("MESSAGE: ", message);
     const work = async () => {
       try {
         var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"), "");
         setRegisters(list.data.registerList);
-      } catch (error) {
-        console.log(error);
+      } catch (e) {
+        console.log(e);
       }
     };
     if (message.content === "refreshRegisters") {

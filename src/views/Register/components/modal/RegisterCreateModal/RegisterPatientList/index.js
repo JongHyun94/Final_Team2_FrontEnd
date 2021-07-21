@@ -62,8 +62,8 @@ function RegisterPatientList(props) {
       event.preventDefault();
       const list = await getPatientList(searchContent);
       setPatientList(list.data.patientList);
-    } catch(error) {
-      console.log(error);
+    } catch(e) {
+      console.log(e);
     }
   };
   const getPatientsLists = async () => {

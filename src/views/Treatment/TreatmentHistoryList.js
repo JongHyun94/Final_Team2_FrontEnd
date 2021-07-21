@@ -41,7 +41,14 @@ const [loading, setLoading] = useState(false);
   const checkedtreatment = (treatment_id) => {
     setSelectedTreatmentId(treatment_id);
     setModalOpen(true);
+ 
   };
+
+  // const openModal = () => {
+  //   // console.log("진료번호ㅗㅗㅗㅗ",treatment_id);
+  //   console.log("진료번ㅗㅗ",selectedTreatmentId);
+  //   setModalOpen(true);
+  // };
 
   //모달 안에서 취소 버튼 클릭
   const closeModal = () => {
@@ -64,6 +71,10 @@ const [loading, setLoading] = useState(false);
   useEffect(() => {
     getList(checkedPatientlist.treatment_patient_id);
   }, [checkedPatientlist.treatment_patient_id, props]);
+
+  useEffect(() => {
+    setSelectedTreatmentId();
+  }, [checkedPatientlist.treatment_id]);
 
   return (
     <div>

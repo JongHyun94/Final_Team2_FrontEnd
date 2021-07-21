@@ -38,7 +38,7 @@ function PatientUpdateForm(props) {
     });
   };
 
-  const handleChangeSSn = (event) => {
+  const handleChangeSsn = (event) => {
     setPatient({
       ...patient,
       patient_ssn2 : event.target.value
@@ -149,7 +149,6 @@ function PatientUpdateForm(props) {
   // 마운트 시 실행 함수
   useEffect(() => {
     setPatient({
-      ...patient,
       patient_id: props.patient.patient_id,
       patient_name: props.patient.patient_name,
       patient_ssn1: props.patient.patient_ssn1,
@@ -170,7 +169,7 @@ function PatientUpdateForm(props) {
       let ssn2Masking = props.patient.patient_ssn2.slice(0, 1) + "******";
       setMasking(ssn2Masking);
     }
-  }, [props]);
+  }, [props.patient]);
 
   return (
     <div>
@@ -196,7 +195,7 @@ function PatientUpdateForm(props) {
               <input type="text" className="col-sm" name="patient_ssn1" value={patient.patient_ssn1} placeholder="앞자리" onChange={handleChange}></input>
               <div className="mr-2 ml-2 d-flex align-items-center">-</div>
               <input type="text" className="col-sm" name="patient_ssn2" value={masking} placeholder="뒷자리" 
-                     onChange={handleChangeSSn} onBlur={() => {setMasking(masking?.replace(/(?<=.{1})./gi, '*'));}}></input>
+                     onChange={handleChangeSsn} onBlur={() => {setMasking(masking?.replace(/(?<=.{1})./gi, '*'));}}></input>
             </div>
           </div>
           <div className="Patient_item">

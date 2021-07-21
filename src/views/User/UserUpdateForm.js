@@ -49,7 +49,6 @@ function UserUpdateForm(props) {
       user_ssn2 : event.target.value
     });
     setMasking(event.target.value);
-    console.log("00", event.target.value);
   };
 
   // 직원 정보 수정
@@ -134,11 +133,9 @@ function UserUpdateForm(props) {
     try {
       await updateUserEnabled(user);
       if (user.user_enabled === 1) {
-        // alert("해당 직원을 비활성화했습니다.");
         ToastsStore.success("해당 직원을 비활성화했습니다.");
         props.publishTopic(2);
       } else {
-        // alert("해당 직원을 활성화했습니다.");
         ToastsStore.success("해당 직원을 활성화했습니다.");
         props.publishTopic(3);
       }      
@@ -213,7 +210,7 @@ function UserUpdateForm(props) {
   }, [props.user]);
 
   useEffect(() => {
-    console.log("받습니다", props.message);
+    // console.log("받습니다", props.message);
     if(props.message.content === "blockUser") {
       setUser({
         ...user,
