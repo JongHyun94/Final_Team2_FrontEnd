@@ -26,7 +26,7 @@ function TreatmentCreateForm(props) {
   //검사 선택 저장상태
   const [inspectionForm, setInspectionForm] = useState({
     selectedInspection: [],
-    selectedInspection2: [],
+    selectedInspection2: []
   });
 
   //약 리스트
@@ -271,8 +271,10 @@ function TreatmentCreateForm(props) {
             }
             setCheckList(cList);
             setSelectedTreatmentId(newTreatment.treatment_id);
+            
+            setInspectionForm({selectedInspection: [],selectedInspection2: []});
+            setDrugForm({ selectedDrug: []});
             setModalOpen(true);
-
             // let nList = [];
             // for(var dlist of druglists){
             //   nList.push({id:dlist.drug_injection_list_id, checked:false, name:dlist.drug_injection_list_name});

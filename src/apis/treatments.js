@@ -12,12 +12,12 @@ export function getTreatmentPatientList(date, state="",globalUid) {
 // }
 
 
-export function getTreatmentHistoryList(treatment_patient_id="0") {
+export function getTreatmentHistoryList(treatment_patient_id) {
   const promise = axios.get("/treatment/historyList", {params: {treatment_patient_id}});
   return promise;
 }
 
-export function getTreatmentHistoryRead(treatment_id="0") {
+export function getTreatmentHistoryRead(treatment_id) {
   const promise = axios.get("/treatment/historyRead", {params: {treatment_id}});
   return promise;
   
