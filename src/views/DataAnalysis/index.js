@@ -101,7 +101,6 @@ function DataAnalysis(props) {
     let pAge = 0;
     let yearToday = new Date().getFullYear();
     yearToday *= 1;
-    console.log("year:", yearToday);
     for (var data of datalist) {
       // 월요일
       if (new Date(data.register_starttime).getDay() === 1) {

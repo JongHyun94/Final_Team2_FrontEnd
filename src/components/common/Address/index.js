@@ -20,7 +20,7 @@ export const Modal = (props) => {
       fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
     }
 
-    console.log(fullAddress);  // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+    //console.log(fullAddress);  // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
     
     // 주소 데이터를 createForm으로 보냄
     send(data);
