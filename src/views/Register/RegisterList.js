@@ -213,8 +213,8 @@ function RegisterList(props) {
         var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"), "");
         setRegisterList(list.data.registerList);
         getRegistersState(list.data.registerList);
-      } catch (error) {
-        console.log(error);
+      } catch (e) {
+        console.log(e);
       } finally {
         setLoading(false);
       }
@@ -223,15 +223,15 @@ function RegisterList(props) {
   }, [registerDate]);
 
   useEffect(() => {
-    console.log("MESSAGE: ", message);
+    //console.log("MESSAGE: ", message);
     const work = async () => {
       setLoading(true);
       try {
         var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"), "");
         setRegisterList(list.data.registerList);
         getRegistersState(list.data.registerList);
-      } catch (error) {
-        console.log(error);
+      } catch (e) {
+        console.log(e);
       } finally {
         setLoading(false);
       }

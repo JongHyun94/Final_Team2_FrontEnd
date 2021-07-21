@@ -68,7 +68,7 @@ function UserList(props) {
     try {
       event.preventDefault();
       const response = await getUserList(keyword, condition);
-      console.log(response.data.userList)
+      // console.log(response.data.userList)
       setUsers(response.data.userList);
     } catch(error) {
       console.log(error);
@@ -88,17 +88,17 @@ function UserList(props) {
     setLoading(true);
     try {
       if (condition !== selectCondition) {
-        console.log(selectCondition, "선택");
+        // console.log(selectCondition, "선택");
         setCondition(selectCondition);
         const response = await getUserList(keyword, selectCondition);
         setUsers(response.data.userList);
-        console.log(response.data);
+        // console.log(response.data);
       } else {
         setCondition("all");
         setKeyword("");
         const response = await getAllUserList();
         setUsers(response.data.userList);
-        console.log(response.data);
+        // console.log(response.data);
       }            
     } catch(error) {
       console.log(error);
@@ -128,7 +128,7 @@ function UserList(props) {
   //----------------------------------------------------------------------------------------
   // MQTT 메시지 받기
   useEffect(() => {
-    console.log("받습니다", props.message);
+    // console.log("받습니다", props.message);
     const work = async () => {      
       try {
         const response = await getAllUserList();
