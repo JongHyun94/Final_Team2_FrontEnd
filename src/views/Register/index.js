@@ -67,7 +67,6 @@ function Register(props) {
       onSuccess: () => {
         console.log("mqtt 들어옴");
         sendSubTopic();
-        //client.current.subscribe(subTopic);
         console.log("Mqtt 접속 성공");
       }
     });

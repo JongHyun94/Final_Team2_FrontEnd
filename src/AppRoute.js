@@ -18,44 +18,37 @@ function AppRoute() {
     return (
         <Switch>
             <Route path="/" exact component={Login} />
-            {/* <Route path="/Patient" component={Patient} /> */}
             <NurseRoute
                 path="/Patient"
                 component={Patient}
                 role={Uauthority}
             />
-            {/* <Route path="/Register" component={Register} /> */}
             <NurseRoute
                 path="/Register"
                 component={Register}
                 role={Uauthority}
             />
-            {/* <Route path="/Treatment" component={Treatment}/> */}
             <DoctorRoute
                 path="/Treatment"
                 component={Treatment}
                 role={Uauthority}
             />
-            {/* <Route path="/Inspection" component={Inspection}/>    */}
             <InspectorRoute
                 path="/Inspection"
                 component={Inspection}
                 role={Uauthority}
             />
-            {/* <Route path="/DataAnalysis" component={DataAnalysis}/>  */}
             <MasterRoute
                 path="/DataAnalysis"
                 component={DataAnalysis}
                 role={Uauthority}
             />
-            {/* <Route path="/User" component={User} /> */}
             <MasterRoute
                 path="/User"
                 component={User}
                 role={Uauthority}
             />
             <Route component={Page404} />
-            {/* <Redirect to="/Register"/> */}
         </Switch>
     );
 }
