@@ -73,21 +73,22 @@ function Login(props) {
         } else if (user.userId.slice(0,1) === "I") {      
           props.history.push("/Inspection");
         } 
-      } else {
+      } else if (response.data.result === "notCorrectPW") {
         openModal();
         // alert("로그인 실패 : 아이디 혹은 비밀번호가 맞지 않습니다.");
         setErrorMsg({
           ...errorMsg,
           content: "올바른 아이디/비밀번호를 입력해주세요."
         })        
+      }  else if (response.data.result === "notEnabled") {
+        openModal();
+        setErrorMsg({
+          ...errorMsg,
+          content: "비활성화된 계정입니다."
+        });      
       } 
     } catch(error) {
-      console.log(error);
-      openModal();
-      setErrorMsg({
-        ...errorMsg,
-        content: "비활성화된 계정입니다."
-      });
+      console.log(error);      
     } finally {
       setLoading(false);
     }  
