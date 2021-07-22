@@ -615,16 +615,6 @@ th {
 .tip_normal span {
   display: none
 }
-.tip_normal span::after:checked {
-  display: none
-}
-.tip_normal span::selection {
-  -ms-user-select: none; 
-  -moz-user-select: -moz-none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-}
 .tip_normal:hover span {
   border: #cff1ff 1px solid;
   padding: 5px 20px 5px 5px;
@@ -708,7 +698,7 @@ th {
   -webkit-user-select: none;
   user-select: none;
 }
-.balloon_ready:after {
+.balloon_ready::after {
   border-top: 0px solid transparent;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
@@ -726,7 +716,7 @@ th {
   background: #18e273;
   border-radius: 10px;
 }
-.tip_upside >.balloon_ready:after {
+.tip_upside >.balloon_ready::after {
   border-top: 8px solid #cff1ff;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
@@ -744,7 +734,7 @@ th {
   background: #18e273;
   border-radius: 10px;
 }
-.tip_rightside >.balloon_ready:after {
+.tip_rightside >.balloon_ready::after {
   border-top: 0px solid transparent;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
@@ -762,7 +752,7 @@ th {
   background: #18e273;
   border-radius: 10px;
 }
-.tip_uprightside >.balloon_ready:after {
+.tip_uprightside >.balloon_ready::after {
   border-top: 8px solid #cff1ff;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
@@ -787,7 +777,7 @@ th {
   -webkit-user-select: none;
   user-select: none;
 }
-.balloon_success:after {
+.balloon_success::after {
   border-top: 0px solid transparent;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
@@ -805,7 +795,7 @@ th {
   background: #00aaf0;
   border-radius: 10px;
 }
-.tip_upside >.balloon_success:after {
+.tip_upside >.balloon_success::after {
   border-top: 8px solid #cff1ff;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
@@ -823,7 +813,7 @@ th {
   background: #00aaf0;
   border-radius: 10px;
 }
-.tip_rightside >.balloon_success:after {
+.tip_rightside >.balloon_success::after {
   border-top: 0px solid transparent;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
@@ -841,7 +831,7 @@ th {
   background: #00aaf0;
   border-radius: 10px;
 }
-.tip_uprightside >.balloon_success:after {
+.tip_uprightside >.balloon_success::after {
   border-top: 8px solid #cff1ff;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
@@ -866,7 +856,7 @@ th {
   -webkit-user-select: none;
   user-select: none;
 }
-.balloon_cancel:after {
+.balloon_cancel::after {
   border-top: 0px solid transparent;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
@@ -884,7 +874,7 @@ th {
   background: #ff6600;
   border-radius: 10px;
 }
-.tip_upside >.balloon_cancel:after {
+.tip_upside >.balloon_cancel::after {
   border-top: 8px solid #cff1ff;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
@@ -902,7 +892,7 @@ th {
   background: #ff6600;
   border-radius: 10px;
 }
-.tip_rightside >.balloon_cancel:after {
+.tip_rightside >.balloon_cancel::after {
   border-top: 0px solid transparent;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
@@ -920,7 +910,7 @@ th {
   background: #ff6600;
   border-radius: 10px;
 }
-.tip_uprightside >.balloon_cancel:after {
+.tip_uprightside >.balloon_cancel::after {
   border-top: 8px solid #cff1ff;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
