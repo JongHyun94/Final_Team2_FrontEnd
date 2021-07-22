@@ -7,7 +7,7 @@ import { registerLocale } from "react-datepicker";
 import ko from 'date-fns/locale/ko';
 import RegisterWeekTimeTableModal from "./components/modal/RegisterWeekTimeTableModal";
 import { getDoctorList, getRegisterList } from "apis/register";
-import RegisterTimeScheduleItems from "views/Register/components/items/RegisterTimeScheduleItems";
+// import RegisterTimeScheduleItems from "views/Register/components/items/RegisterTimeScheduleItems";
 
 registerLocale("ko", ko);
 // 타임테이블 - 진료 시간 
@@ -72,8 +72,8 @@ function RegisterTimeSchedule(props) {
 
   const openSelectTimeModal = (h, m) => {
     //console.log(h, m);
-    setSelectedTime(new Date(registerDate.getFullYear(),registerDate.getMonth(),registerDate.getDate(), h, m));
-    //console.log(selectedTime);
+    setSelectedTime(new Date(registerDate.getFullYear(), registerDate.getMonth(), registerDate.getDate(), h, m));
+    console.log(selectedTime);
     setSelectTimeModalOpen(true);
   };
 
@@ -109,8 +109,8 @@ function RegisterTimeSchedule(props) {
   const getRegisterLists = async (date) => {
     try {
       var list = await getRegisterList(date);
-      console.log(list.data.registerList);
-      setRegisters(list.data.registerList);
+      //console.log(list.data.tableRegisterList);
+      setRegisters(list.data.tableRegisterList);
     } catch (e) {
       console.log(e);
     }
@@ -141,7 +141,7 @@ function RegisterTimeSchedule(props) {
     const work = async () => {
       try {
         var list = await getRegisterList(moment(registerDate).format("yyyy-MM-DD HH:mm"), "");
-        setRegisters(list.data.registerList);
+        setRegisters(list.data.tableRegisterList);
       } catch (e) {
         console.log(e);
       }
@@ -269,11 +269,18 @@ function RegisterTimeSchedule(props) {
                                           className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_normal"
                                           onClick={() => { openRegisterModal(register) }} key={index3}
                                         >
-                                          <RegisterTimeScheduleItems
-                                            patient_name={register.patient_name}
-                                            register_state={register.register_state}
-                                            user_name={register.user_name}
-                                          />
+                                          {register.patient_name}<br></br>{register.register_state}
+
+                                          <span className={register.register_state === "대기" ? "balloon_ready" : ""
+                                            || register.register_state === "완료" ? "balloon_success" : ""
+                                              || register.register_state === "취소" ? "balloon_cancel" : ""}>
+                                            <div>
+                                              환자명:{register.patient_name}
+                                            </div>
+                                            <div>
+                                              담당의:{register.user_name}
+                                            </div>
+                                          </span>
                                         </div>
                                       )
                                     } else {
@@ -283,11 +290,18 @@ function RegisterTimeSchedule(props) {
                                             className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_upside"
                                             onClick={() => { openRegisterModal(register) }} key={index3}
                                           >
-                                            <RegisterTimeScheduleItems
-                                              patient_name={register.patient_name}
-                                              register_state={register.register_state}
-                                              user_name={register.user_name}
-                                            />
+                                            {register.patient_name}<br></br>{register.register_state}
+
+                                            <span className={register.register_state === "대기" ? "balloon_ready" : ""
+                                              || register.register_state === "완료" ? "balloon_success" : ""
+                                                || register.register_state === "취소" ? "balloon_cancel" : ""}>
+                                              <div>
+                                                환자명:{register.patient_name}
+                                              </div>
+                                              <div>
+                                                담당의:{register.user_name}
+                                              </div>
+                                            </span>
                                           </div>
                                         )
                                       } else if (index < 4 && index1 >= 8) {
@@ -296,11 +310,18 @@ function RegisterTimeSchedule(props) {
                                             className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_rightside"
                                             onClick={() => { openRegisterModal(register) }} key={index3}
                                           >
-                                            <RegisterTimeScheduleItems
-                                              patient_name={register.patient_name}
-                                              register_state={register.register_state}
-                                              user_name={register.user_name}
-                                            />
+                                            {register.patient_name}<br></br>{register.register_state}
+
+                                            <span className={register.register_state === "대기" ? "balloon_ready" : ""
+                                              || register.register_state === "완료" ? "balloon_success" : ""
+                                                || register.register_state === "취소" ? "balloon_cancel" : ""}>
+                                              <div>
+                                                환자명:{register.patient_name}
+                                              </div>
+                                              <div>
+                                                담당의:{register.user_name}
+                                              </div>
+                                            </span>
                                           </div>
                                         )
                                       } else {
@@ -309,11 +330,18 @@ function RegisterTimeSchedule(props) {
                                             className="RegisterTimeSchedule_content_timetable_doctors_registers_register_ready tip_uprightside"
                                             onClick={() => { openRegisterModal(register) }} key={index3}
                                           >
-                                            <RegisterTimeScheduleItems
-                                              patient_name={register.patient_name}
-                                              register_state={register.register_state}
-                                              user_name={register.user_name}
-                                            />
+                                            {register.patient_name}<br></br>{register.register_state}
+
+                                            <span className={register.register_state === "대기" ? "balloon_ready" : ""
+                                              || register.register_state === "완료" ? "balloon_success" : ""
+                                                || register.register_state === "취소" ? "balloon_cancel" : ""}>
+                                              <div>
+                                                환자명:{register.patient_name}
+                                              </div>
+                                              <div>
+                                                담당의:{register.user_name}
+                                              </div>
+                                            </span>
                                           </div>
                                         )
                                       }
@@ -325,11 +353,18 @@ function RegisterTimeSchedule(props) {
                                           className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_normal"
                                           onClick={() => { openRegisterModal(register) }} key={index3}
                                         >
-                                          <RegisterTimeScheduleItems
-                                            patient_name={register.patient_name}
-                                            register_state={register.register_state}
-                                            user_name={register.user_name}
-                                          />
+                                          {register.patient_name}<br></br>{register.register_state}
+
+                                          <span className={register.register_state === "대기" ? "balloon_ready" : ""
+                                            || register.register_state === "완료" ? "balloon_success" : ""
+                                              || register.register_state === "취소" ? "balloon_cancel" : ""}>
+                                            <div>
+                                              환자명:{register.patient_name}
+                                            </div>
+                                            <div>
+                                              담당의:{register.user_name}
+                                            </div>
+                                          </span>
                                         </div>
                                       )
                                     } else {
@@ -339,11 +374,18 @@ function RegisterTimeSchedule(props) {
                                             className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_upside"
                                             onClick={() => { openRegisterModal(register) }} key={index3}
                                           >
-                                            <RegisterTimeScheduleItems
-                                              patient_name={register.patient_name}
-                                              register_state={register.register_state}
-                                              user_name={register.user_name}
-                                            />
+                                            {register.patient_name}<br></br>{register.register_state}
+
+                                            <span className={register.register_state === "대기" ? "balloon_ready" : ""
+                                              || register.register_state === "완료" ? "balloon_success" : ""
+                                                || register.register_state === "취소" ? "balloon_cancel" : ""}>
+                                              <div>
+                                                환자명:{register.patient_name}
+                                              </div>
+                                              <div>
+                                                담당의:{register.user_name}
+                                              </div>
+                                            </span>
                                           </div>
                                         )
                                       } else if (index < 4 && index1 >= 8) {
@@ -352,11 +394,18 @@ function RegisterTimeSchedule(props) {
                                             className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_rightside"
                                             onClick={() => { openRegisterModal(register) }} key={index3}
                                           >
-                                            <RegisterTimeScheduleItems
-                                              patient_name={register.patient_name}
-                                              register_state={register.register_state}
-                                              user_name={register.user_name}
-                                            />
+                                            {register.patient_name}<br></br>{register.register_state}
+
+                                            <span className={register.register_state === "대기" ? "balloon_ready" : ""
+                                              || register.register_state === "완료" ? "balloon_success" : ""
+                                                || register.register_state === "취소" ? "balloon_cancel" : ""}>
+                                              <div>
+                                                환자명:{register.patient_name}
+                                              </div>
+                                              <div>
+                                                담당의:{register.user_name}
+                                              </div>
+                                            </span>
                                           </div>
                                         )
                                       } else {
@@ -365,71 +414,106 @@ function RegisterTimeSchedule(props) {
                                             className="RegisterTimeSchedule_content_timetable_doctors_registers_register_success tip_uprightside"
                                             onClick={() => { openRegisterModal(register) }} key={index3}
                                           >
-                                            <RegisterTimeScheduleItems
-                                              patient_name={register.patient_name}
-                                              register_state={register.register_state}
-                                              user_name={register.user_name}
-                                            />
+                                            {register.patient_name}<br></br>{register.register_state}
+
+                                            <span className={register.register_state === "대기" ? "balloon_ready" : ""
+                                              || register.register_state === "완료" ? "balloon_success" : ""
+                                                || register.register_state === "취소" ? "balloon_cancel" : ""}>
+                                              <div>
+                                                환자명:{register.patient_name}
+                                              </div>
+                                              <div>
+                                                담당의:{register.user_name}
+                                              </div>
+                                            </span>
                                           </div>
                                         )
                                       }
                                     }
-                                  // } else if (register.register_state === "취소") {
-                                  //   if (index < 4 && index1 < 8) {
-                                  //     return (
-                                  //       <div
-                                  //         className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_normal"
-                                  //         onClick={() => { openRegisterModal(register) }} key={index3}
-                                  //       >
-                                  //         <RegisterTimeScheduleItems
-                                  //           patient_name={register.patient_name}
-                                  //           register_state={register.register_state}
-                                  //           user_name={register.user_name}
-                                  //         />
-                                  //       </div>
-                                  //     )
-                                  //   } else {
-                                  //     if (index >= 4 && index1 < 8) {
-                                  //       return (
-                                  //         <div
-                                  //           className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_upside"
-                                  //           onClick={() => { openRegisterModal(register) }} key={index3}
-                                  //         >
-                                  //           <RegisterTimeScheduleItems
-                                  //             patient_name={register.patient_name}
-                                  //             register_state={register.register_state}
-                                  //             user_name={register.user_name}
-                                  //           />
-                                  //         </div>
-                                  //       )
-                                  //     } else if (index < 4 && index1 >= 8) {
-                                  //       return (
-                                  //         <div
-                                  //           className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_rightside"
-                                  //           onClick={() => { openRegisterModal(register) }} key={index3}
-                                  //         >
-                                  //           <RegisterTimeScheduleItems
-                                  //             patient_name={register.patient_name}
-                                  //             register_state={register.register_state}
-                                  //             user_name={register.user_name}
-                                  //           />
-                                  //         </div>
-                                  //       )
-                                  //     } else {
-                                  //       return (
-                                  //         <div
-                                  //           className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_uprightside"
-                                  //           onClick={() => { openRegisterModal(register) }} key={index3}
-                                  //         >
-                                  //           <RegisterTimeScheduleItems
-                                  //             patient_name={register.patient_name}
-                                  //             register_state={register.register_state}
-                                  //             user_name={register.user_name}
-                                  //           />
-                                  //         </div>
-                                  //       )
-                                  //     }
-                                  //   }
+                                  } else if (register.register_state === "취소") {
+                                    if (index < 4 && index1 < 8) {
+                                      return (
+                                        <div
+                                          className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_normal"
+                                          onClick={() => { openRegisterModal(register) }} key={index3}
+                                        >
+                                          {register.patient_name}<br></br>{register.register_state}
+
+                                          <span className={register.register_state === "대기" ? "balloon_ready" : ""
+                                            || register.register_state === "완료" ? "balloon_success" : ""
+                                              || register.register_state === "취소" ? "balloon_cancel" : ""}>
+                                            <div>
+                                              환자명:{register.patient_name}
+                                            </div>
+                                            <div>
+                                              담당의:{register.user_name}
+                                            </div>
+                                          </span>
+                                        </div>
+                                      )
+                                    } else {
+                                      if (index >= 4 && index1 < 8) {
+                                        return (
+                                          <div
+                                            className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_upside"
+                                            onClick={() => { openRegisterModal(register) }} key={index3}
+                                          >
+                                            {register.patient_name}<br></br>{register.register_state}
+
+                                            <span className={register.register_state === "대기" ? "balloon_ready" : ""
+                                              || register.register_state === "완료" ? "balloon_success" : ""
+                                                || register.register_state === "취소" ? "balloon_cancel" : ""}>
+                                              <div>
+                                                환자명:{register.patient_name}
+                                              </div>
+                                              <div>
+                                                담당의:{register.user_name}
+                                              </div>
+                                            </span>
+                                          </div>
+                                        )
+                                      } else if (index < 4 && index1 >= 8) {
+                                        return (
+                                          <div
+                                            className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_rightside"
+                                            onClick={() => { openRegisterModal(register) }} key={index3}
+                                          >
+                                            {register.patient_name}<br></br>{register.register_state}
+
+                                            <span className={register.register_state === "대기" ? "balloon_ready" : ""
+                                              || register.register_state === "완료" ? "balloon_success" : ""
+                                                || register.register_state === "취소" ? "balloon_cancel" : ""}>
+                                              <div>
+                                                환자명:{register.patient_name}
+                                              </div>
+                                              <div>
+                                                담당의:{register.user_name}
+                                              </div>
+                                            </span>
+                                          </div>
+                                        )
+                                      } else {
+                                        return (
+                                          <div
+                                            className="RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel tip_uprightside"
+                                            onClick={() => { openRegisterModal(register) }} key={index3}
+                                          >
+                                            {register.patient_name}<br></br>{register.register_state}
+
+                                            <span className={register.register_state === "대기" ? "balloon_ready" : ""
+                                              || register.register_state === "완료" ? "balloon_success" : ""
+                                                || register.register_state === "취소" ? "balloon_cancel" : ""}>
+                                              <div>
+                                                환자명:{register.patient_name}
+                                              </div>
+                                              <div>
+                                                담당의:{register.user_name}
+                                              </div>
+                                            </span>
+                                          </div>
+                                        )
+                                      }
+                                    }
                                   }
                                 }
                               })}
