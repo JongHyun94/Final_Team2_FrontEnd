@@ -34,9 +34,8 @@ function TreatmentCreateForm(props) {
 
   //약 선택 저장상태
   const [drugForm, setDrugForm] = useState({
-    selectedDrug: [],
+    selectedDrug: []
   });
-  const [checkDrugList, setCheckDrugList] = useState([{ index: 0, checked: false, id: "", name: "", category: "" }]);
 
   //선택한 약id 상태
   const [selectDrugId, setSelectDrugId] = useState("");
@@ -122,16 +121,15 @@ function TreatmentCreateForm(props) {
     try {
       var list = await getSearchDurg();
       // console.log("dddddi",list.data.druglist);
-      
-      let nList = [];
-      var index3 = 0;
-      for (var dlist of list.data.druglist) {
-        nList.push({ index: index3, checked: false, drug_injection_list_id: dlist.drug_injection_list_id, drug_injection_list_name: dlist.drug_injection_list_name, drug_injection_list_category: dlist.drug_injection_list_category });
-        index3++;
-      }
-      console.log("nList 확인 : ", nList);
-      setCheckDrugList(nList);
-      setDrugLists(nList);
+      setDrugLists(list.data.druglist);
+      // let nList = [];
+      // var index3=0;
+      // for(var dlist of list.data.druglist){
+      //   nList.push({id:index3, checked:false, name:dlist.drug_injection_list_name});
+      //   index3++;
+      // }
+      // console.log("nList 확인 : ",nList);
+      // setCheckDrugList(nList);
     } catch (e) {
       console.log(e);
     } finally {
@@ -273,17 +271,15 @@ function TreatmentCreateForm(props) {
             }
             setCheckList(cList);
             setSelectedTreatmentId(newTreatment.treatment_id);
-
-            setInspectionForm({ selectedInspection: [], selectedInspection2: [] });
-            setDrugForm({ selectedDrug: [] });
             setModalOpen(true);
-            let nList = [];
-            var index3 = 0;
-            for (var dlist of list.data.druglist) {
-              nList.push({ index: index3, checked: false, id: dlist.drug_injection_list_id, name: dlist.drug_injection_list_name, category: dlist.drug_injection_list_category });
-              index3++;
-            }
-            setCheckDrugList(nList);
+            setInspectionForm({selectedInspection: [], selectedInspection2: []});
+            setDrugForm({ selectedDrug: []});
+
+            // let nList = [];
+            // for(var dlist of druglists){
+            //   nList.push({id:dlist.drug_injection_list_id, checked:false, name:dlist.drug_injection_list_name});
+            // }
+            // setCheckDrugList(nList);
           }
         }
       } else {
@@ -376,21 +372,17 @@ function TreatmentCreateForm(props) {
     setModalOpen(false);
   };
 
-
-  const handleCheckDrugClick = (id) => {
-    console.log("id");
-    console.log(id);
-    let newCheckDruglist = checkDrugList.map((item) => {
-      if (item.id === id) {
-        return { ...item, checked: !item.checked }
-      } else {
-        return item;
-      }
-    });
-    console.log("newCheckDruglist");
-    console.log(newCheckDruglist);
-    setCheckDrugList(newCheckDruglist);
-  };
+  // const [checkDrugList, setCheckDrugList] = useState([{id:0, checked:false, name:""}]);
+  // const handleCheckDrugClick = (id) => {
+  //   let newCheckDruglist = checkDrugList.map((item) => {
+  //     if(item.id === id){
+  //       return {...item, checked: !item.checked}
+  //     }else{
+  //       return item;
+  //     }
+  //   });
+  //   setCheckDrugList(newCheckDruglist);
+  // };
 
   useEffect(() => {
     getTotalInspectionsList(inspectionOption);
@@ -543,13 +535,12 @@ function TreatmentCreateForm(props) {
                       <>
                         {druglists.map((druglist, index) => {
                           return (
-                            <tr className="TreatmentSearch_2_2_tr" key={druglist.drug_injection_list_id}
-                              onClick={() => handleCheckDrugClick(druglist.drug_injection_list_id)} onChange={handleChangeDrugInjections} >
+                            <tr className="TreatmentSearch_2_2_tr" key={druglist.drug_injection_list_id}>
                               {/* // onClick={(event) => checkedDrugId(druglist.drug_injection_list_id)}> */}
                               <td>
-                                {/* <input type="checkbox" name="selectedDrug" value={druglist.drug_injection_list_id} onChange={handleChangeDrugInjections} /> */}
-                                <input type="checkbox" checked={checkDrugList[index].checked}  name="selectedDrug" value={druglist.drug_injection_list_id}
-                                />
+                                <input type="checkbox" name="selectedDrug" value={druglist.drug_injection_list_id} onChange={handleChangeDrugInjections} />
+                                {/* <input type="checkbox" checked={checkDrugList[index].checked} name="selectedDrug" value={druglist.drug_injection_list_id} 
+                            onClick={() => handleCheckDrugClick(index)} onChange={handleChangeDrugInjections} /> */}
                               </td>
                               <th>{druglist.drug_injection_list_id}</th>
                               <th>{druglist.drug_injection_list_name}</th>
