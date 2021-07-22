@@ -8,7 +8,7 @@ import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toa
 import RegisterStateChange from "./RegisterStateChange";
 function RegisterCreateModal(props) {
   // props 상속
-  const { open, close, header, doctors, register, publishTopic } = props;
+  const { open, close, header, doctors, register, publishTopic, selectedTime } = props;
   //-------------------------------------------------------------  
   //상태 선언
   //-------------------------------------------------------------
@@ -19,7 +19,7 @@ function RegisterCreateModal(props) {
   const createNewRegister = async () => {
     try {
       var registerValidation = true;
-
+      //console.log(newRegister);
       if (newRegister.register_patient_id === "") {
         registerValidation = false;
         ToastsStore.success("환자를 선택해 주세요.");
@@ -96,6 +96,11 @@ function RegisterCreateModal(props) {
   useEffect(() => {
     setNewRegister({ ...register, register_date: new Date() });
   }, [open]);
+  useEffect(() => {
+    if(selectedTime){
+      setNewRegister({ ...register, register_date: moment(selectedTime).format("yyyy-MM-DD H:mm")});
+    }
+  },[open,selectedTime]);
   //-------------------------------------------------------------
   //렌더링 내용
   //-------------------------------------------------------------
@@ -117,7 +122,7 @@ function RegisterCreateModal(props) {
                 : 
                 <RegisterStateChange register={register} publishTopic={publishTopic} close={close}/>
                 }
-                <RegisterCreateForm doctors={doctors} register={register} newRegister={newRegister} setNewRegister={setNewRegister} open={open} />
+                <RegisterCreateForm doctors={doctors} register={register} newRegister={newRegister} setNewRegister={setNewRegister} open={open} selectedTime={selectedTime}/>
               </div>
             </main>
             <footer>
