@@ -64,6 +64,15 @@ function TreatmentCreateForm(props) {
   //soap - 의사소통 메모 상태
   const [cmemo, setCmemo] = useState("");
 
+  // 모든 약품 리스트 
+  const [totalDrug, setTotalDrug] = useState([]);
+
+  // 약품 카테고리 선택
+  const [selectedDrugCategory, setSelectedDrugCategory] = useState("검색");
+
+  const [keywordDrugList, setKeywordDrugList] = useState([]);
+  const [checkDrugList, setCheckDrugList] = useState([]);
+
   //임시 환자 리스트
   var tempPatientlist = {
     treatment_register_id: "",
@@ -115,15 +124,9 @@ function TreatmentCreateForm(props) {
     }
   };
 
-  // 모든 약품 리스트 
-  const [totalDrug, setTotalDrug] = useState([]);
-
-  // 약품 카테고리 선택
-  const [selectedDrugCategory, setSelectedDrugCategory] = useState("");
-
   //DB 에서 약리스트 가져오기
   const getSearchDurgs = async () => {
-    setLoading(true);
+    //setLoading(true);
     try {
       var list = await getSearchDurg();
       // console.log("dddddi",list.data.druglist);
@@ -147,26 +150,65 @@ function TreatmentCreateForm(props) {
       console.log("totalDrugList", totalDrugList);
       setTotalDrug(totalDrugList);
       setCheckDrugList(totalDrugList);
-      //setKeywordDrugList(totalDrugList);
+      setKeywordDrugList(totalDrugList);
     } catch (e) {
       console.log(e);
-    } finally {
-      setLoading(false);
     }
   };
-  const [keywordDrugList, setKeywordDrugList] = useState([]);
-  const [checkDrugList, setCheckDrugList] = useState([]);
+
   const handleCheckDrugClick = (id) => {
-    console.log(id);
+    //console.log(id);
+    
     let newCheckDruglist = checkDrugList.map((drug) => {
       if (drug.indexId === id) {
-        return { ...drug, checked: !drug.checked }
+        if (drug.checked === false) {
+          setDrugForm((prevDrugForm) => {
+            return {
+              ...prevDrugForm,
+              selectedDrug: prevDrugForm.selectedDrug.concat(drug.drug_injection_list_id),
+            };
+          });
+        } else {
+          setDrugForm((prevDrugForm) => {
+            return {
+              ...prevDrugForm,
+              selectedDrug: prevDrugForm.selectedDrug.filter((item) => item !== drug.drug_injection_list_id),
+            };
+          });
+        }
+        return { ...drug, checked: !drug.checked };
       } else {
         return drug;
       }
     });
     setCheckDrugList(newCheckDruglist);
+    console.log(drugForm);
   };
+  //drugInjection
+  // const handleChangeDrugInjections = (id) => {
+  //   //console.log(id);
+  //   console.log("hihi")
+  //   console.log(drugForm);
+  //   for (var drug of checkDrugList) {
+  //     if (drug.indexId === id) {
+  //       if (drug.checked === true) {
+  //         setDrugForm((prevDrugForm, drug) => {
+  //           return {
+  //             ...prevDrugForm,
+  //             selectedDrug: prevDrugForm.selectedDrug.concat(drug.drug_injection_list_id),
+  //           };
+  //         });
+  //       } else {
+  //         setDrugForm((prevDrugForm, drug) => {
+  //           return {
+  //             ...prevDrugForm,
+  //             selectedDrug: prevDrugForm.selectedDrug.filter((item) => item !== drug.drug_injection_list_id),
+  //           };
+  //         });
+  //       }
+  //     }
+  //   }
+  // };
 
   //검사 - 카테고리 바꾸기
   const changeCategory = (event) => {
@@ -369,25 +411,23 @@ function TreatmentCreateForm(props) {
     setSelectDrugId(drug_injection_list_id);
   };
 
-  //drugInjection
-  const handleChangeDrugInjections = (event) => {
-    if (event.target.checked) {
-      //체크되었는지 유무
-      setDrugForm((prevDrugForm) => {
-        return {
-          ...prevDrugForm,
-          selectedDrug: prevDrugForm.selectedDrug.concat(event.target.value),
-        };
-      });
-    } else {
-      setDrugForm((prevDrugForm) => {
-        return {
-          ...prevDrugForm,
-          selectedDrug: prevDrugForm.selectedDrug.filter((item) => item !== event.target.value),
-        };
-      });
-    }
-  };
+
+  // if (event.target.checked) {
+  //   //체크되었는지 유무
+  //   setDrugForm((prevDrugForm) => {
+  //     return {
+  //       ...prevDrugForm,
+  //       selectedDrug: prevDrugForm.selectedDrug.concat(event.target.value),
+  //     };
+  //   });
+  // } else {
+  //   setDrugForm((prevDrugForm) => {
+  //     return {
+  //       ...prevDrugForm,
+  //       selectedDrug: prevDrugForm.selectedDrug.filter((item) => item !== event.target.value),
+  //     };
+  //   });
+  // }
 
   // Inspection - 혈액검사
   const handleChangeBloodInspections = (event) => {
@@ -444,6 +484,10 @@ function TreatmentCreateForm(props) {
   useEffect(() => {
     getSearchDurgs();
   }, []);
+  // useEffect(() => {
+  //   getSearchDurgs();
+  // }, []);
+
 
   return (
     <div>
@@ -580,7 +624,8 @@ function TreatmentCreateForm(props) {
                         return (
                           <tr className="TreatmentSearch_2_2_tr" key={drug.drug_injection_list_id}
                             onClick={() => handleCheckDrugClick(drug.indexId)}
-                            onChange={handleChangeDrugInjections}>
+                          //onChange={() => handleChangeDrugInjections(drug.indexId)}
+                          >
                             <td>
                               <input type="checkbox"
                                 name="selectedDrug"
@@ -601,7 +646,8 @@ function TreatmentCreateForm(props) {
                           return (
                             <tr className="TreatmentSearch_2_2_tr" key={drug.drug_injection_list_id}
                               onClick={() => handleCheckDrugClick(drug.indexId)}
-                              onChange={handleChangeDrugInjections}>
+                            //onChange={() => handleChangeDrugInjections(drug.indexId)}
+                            >
                               <td>
                                 <input type="checkbox"
                                   name="selectedDrug"
@@ -624,7 +670,8 @@ function TreatmentCreateForm(props) {
                               return (
                                 <tr className="TreatmentSearch_2_2_tr" key={drug.drug_injection_list_id}
                                   onClick={() => handleCheckDrugClick(drug.indexId)}
-                                  onChange={handleChangeDrugInjections}>
+                                //onChange={() => handleChangeDrugInjections(drug.indexId)}
+                                >
                                   <td>
                                     <input type="checkbox"
                                       name="selectedDrug"
