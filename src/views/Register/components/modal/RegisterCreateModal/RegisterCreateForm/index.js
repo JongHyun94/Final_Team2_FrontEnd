@@ -60,6 +60,7 @@ function RegisterCreateForm(props) {
   } else {
     doctors = noneDoctor;
   }
+  
 
   //-------------------------------------------------------------  
   //상태 선언
@@ -104,6 +105,12 @@ function RegisterCreateForm(props) {
   //-------------------------------------------------------------
   //마운트 및 언마운트에 실행할 내용
   //-------------------------------------------------------------
+  useEffect(() =>{
+    if(props.selectedTime){
+      //console.log(props.selectedTime);
+      setStartDate(props.selectedTime);
+    }
+  },[props.selectedTime, startDate]);
 
   useEffect(() => {
     setStartDate(props.register ? new Date(props.register.register_date) : new Date());
@@ -111,6 +118,9 @@ function RegisterCreateForm(props) {
   }, [doctors, props.register]);
 
   useEffect(() => {
+    if(props.selectedTime){
+      setStartDate(props.selectedTime? props.selectedTime : new Date());
+    }
     setShowTimeSelect(() =>
     ((startDate.getFullYear() === new Date().getFullYear())
       && (startDate.getMonth() === new Date().getMonth())

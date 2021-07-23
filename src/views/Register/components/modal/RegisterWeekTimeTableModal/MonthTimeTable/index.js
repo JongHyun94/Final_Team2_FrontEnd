@@ -166,7 +166,7 @@ function MonthTimeTable(props) {
                 <div className={style.count}>
                   {registerListByDoctor.map((Rdate,index) => {
                     if ((Rdate.date *= 1) === (date *= 1)) {
-                      return (<div key={index}>{Rdate.count}명</div>)
+                      return (<div key={index} className={style.count_font}>진료수: {Rdate.count}명</div>)
                     }
                   })}
                 </div>
@@ -205,7 +205,7 @@ function MonthTimeTable(props) {
                   <div className={style.count}>
                     {registerListByDoctor.map((Rdate, index) => {
                       if ((Rdate.date *= 1) === (date *= 1)) {
-                        return (<div key={index}>{Rdate.count}명</div>)
+                        return (<div className={style.count_font} key={index}>진료수: {Rdate.count}명</div>)
                       }
                     })}
                   </div>
