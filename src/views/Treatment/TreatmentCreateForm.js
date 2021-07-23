@@ -115,26 +115,57 @@ function TreatmentCreateForm(props) {
     }
   };
 
+  // 모든 약품 리스트 
+  const [totalDrug, setTotalDrug] = useState([]);
+
+  // 약품 카테고리 선택
+  const [selectedDrugCategory, setSelectedDrugCategory] = useState("");
+
   //DB 에서 약리스트 가져오기
   const getSearchDurgs = async () => {
     setLoading(true);
     try {
       var list = await getSearchDurg();
       // console.log("dddddi",list.data.druglist);
+
       setDrugLists(list.data.druglist);
-      // let nList = [];
-      // var index3=0;
-      // for(var dlist of list.data.druglist){
-      //   nList.push({id:index3, checked:false, name:dlist.drug_injection_list_name});
-      //   index3++;
-      // }
-      // console.log("nList 확인 : ",nList);
-      // setCheckDrugList(nList);
+
+      let totalDrugList = [];
+      let indexForDrug = 0;
+      for (var drug of list.data.druglist) {
+        totalDrugList.push(
+          {
+            indexId: indexForDrug,
+            drug_injection_list_id: drug.drug_injection_list_id,
+            drug_injection_list_name: drug.drug_injection_list_name,
+            drug_injection_list_category: drug.drug_injection_list_category,
+            checked: false,
+          }
+        );
+        indexForDrug++;
+      }
+      console.log("totalDrugList", totalDrugList);
+      setTotalDrug(totalDrugList);
+      setCheckDrugList(totalDrugList);
+      //setKeywordDrugList(totalDrugList);
     } catch (e) {
       console.log(e);
     } finally {
       setLoading(false);
     }
+  };
+  const [keywordDrugList, setKeywordDrugList] = useState([]);
+  const [checkDrugList, setCheckDrugList] = useState([]);
+  const handleCheckDrugClick = (id) => {
+    console.log(id);
+    let newCheckDruglist = checkDrugList.map((drug) => {
+      if (drug.indexId === id) {
+        return { ...drug, checked: !drug.checked }
+      } else {
+        return drug;
+      }
+    });
+    setCheckDrugList(newCheckDruglist);
   };
 
   //검사 - 카테고리 바꾸기
@@ -149,64 +180,81 @@ function TreatmentCreateForm(props) {
 
   //검색 클릭 함수 -> DB에서 키워드에 해당하는 약리스트 가져오기
   const searchClick = async () => {
-    setLoading(true);
+    setSelectedDrugCategory("검색");
+    //setLoading(true);
     try {
       var list = await getSearchDurg(searchKeyword, "");
-      setDrugLists(list.data.druglist);
+      let searchDrugList = [];
+      for (var sDrug of list.data.druglist) {
+        for (var drug of totalDrug) {
+          if (drug.drug_injection_list_id === sDrug.drug_injection_list_id) {
+            searchDrugList.push(drug);
+          }
+        }
+      }
+      console.log("searchDrugList", searchDrugList);
+      setKeywordDrugList(searchDrugList);
+
+      //setDrugLists(list.data.druglist);
     } catch (error) {
       console.log(error);
-    } finally {
-      setLoading(false);
     }
+    // finally {
+    //   setLoading(false);
+    // }
   };
 
   //필터 - 전체
   const totalFilter = async () => {
-    setLoading(true);
-    try {
-      var list = await getSearchDurg(searchKeyword, "");
-      setDrugLists(list.data.druglist);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setLoading(false);
-    }
+    setSelectedDrugCategory("");
+    // setLoading(true);
+    // try {
+    //   var list = await getSearchDurg(searchKeyword, "");
+    //   setDrugLists(list.data.druglist);
+    // } catch (e) {
+    //   console.log(e);
+    // } finally {
+    //   setLoading(false);
+    // }
   };
   //필터 - 내복약
   const innerFilter = async () => {
-    setLoading(true);
-    try {
-      var list = await getSearchDurg(searchKeyword, "약품(내복약)");
-      setDrugLists(list.data.druglist);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setLoading(false);
-    }
+    setSelectedDrugCategory("약품(내복약)");
+    // setLoading(true);
+    // try {
+    //   var list = await getSearchDurg(searchKeyword, "약품(내복약)");
+    //   setDrugLists(list.data.druglist);
+    // } catch (e) {
+    //   console.log(e);
+    // } finally {
+    //   setLoading(false);
+    // }
   };
   //필터 - 외용약
   const outerFilter = async () => {
-    setLoading(true);
-    try {
-      var list = await getSearchDurg(searchKeyword, "약품(외용약)");
-      setDrugLists(list.data.druglist);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setLoading(false);
-    }
+    setSelectedDrugCategory("약품(외용약)");
+    // setLoading(true);
+    // try {
+    //   var list = await getSearchDurg(searchKeyword, "약품(외용약)");
+    //   setDrugLists(list.data.druglist);
+    // } catch (e) {
+    //   console.log(e);
+    // } finally {
+    //   setLoading(false);
+    // }
   };
   //필터 - 주사
   const injectionFilter = async () => {
-    setLoading(true);
-    try {
-      var list = await getSearchDurg(searchKeyword, "주사");
-      setDrugLists(list.data.druglist);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setLoading(false);
-    }
+    setSelectedDrugCategory("주사");
+    // setLoading(true);
+    // try {
+    //   var list = await getSearchDurg(searchKeyword, "주사");
+    //   setDrugLists(list.data.druglist);
+    // } catch (e) {
+    //   console.log(e);
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   //soap , 의사소통메모 상태 바꾸기
@@ -271,15 +319,31 @@ function TreatmentCreateForm(props) {
             }
             setCheckList(cList);
             setSelectedTreatmentId(newTreatment.treatment_id);
-            setModalOpen(true);
-            setInspectionForm({selectedInspection: [], selectedInspection2: []});
-            setDrugForm({ selectedDrug: []});
+            setInspectionForm({ selectedInspection: [], selectedInspection2: [] });
+            setDrugForm({ selectedDrug: [] });
 
+            setModalOpen(true);
             // let nList = [];
             // for(var dlist of druglists){
             //   nList.push({id:dlist.drug_injection_list_id, checked:false, name:dlist.drug_injection_list_name});
             // }
             // setCheckDrugList(nList);
+            let totalDrugList = [];
+            let indexForDrug = 0;
+            for (var drug of totalDrug) {
+              totalDrugList.push(
+                {
+                  indexId: indexForDrug,
+                  drug_injection_list_id: drug.drug_injection_list_id,
+                  drug_injection_list_name: drug.drug_injection_list_name,
+                  drug_injection_list_category: drug.drug_injection_list_category,
+                  checked: false,
+                }
+              );
+              indexForDrug++;
+            }
+            console.log("totalDrugList", totalDrugList);
+            setCheckDrugList(totalDrugList);
           }
         }
       } else {
@@ -371,18 +435,6 @@ function TreatmentCreateForm(props) {
   const closeModal = () => {
     setModalOpen(false);
   };
-
-  // const [checkDrugList, setCheckDrugList] = useState([{id:0, checked:false, name:""}]);
-  // const handleCheckDrugClick = (id) => {
-  //   let newCheckDruglist = checkDrugList.map((item) => {
-  //     if(item.id === id){
-  //       return {...item, checked: !item.checked}
-  //     }else{
-  //       return item;
-  //     }
-  //   });
-  //   setCheckDrugList(newCheckDruglist);
-  // };
 
   useEffect(() => {
     getTotalInspectionsList(inspectionOption);
@@ -523,40 +575,119 @@ function TreatmentCreateForm(props) {
                     </tr>
                   </thead>
                   <tbody>
-                    {loading ? (
+                    {selectedDrugCategory === "검색" ?
+                      keywordDrugList.map((drug, index) => {
+                        return (
+                          <tr className="TreatmentSearch_2_2_tr" key={drug.drug_injection_list_id}
+                            onClick={() => handleCheckDrugClick(drug.indexId)}
+                            onChange={handleChangeDrugInjections}>
+                            <td>
+                              <input type="checkbox"
+                                name="selectedDrug"
+                                checked={checkDrugList[drug.indexId].checked}
+                                value={drug.drug_injection_list_id}
+                              />
+                            </td>
+                            <th>{drug.drug_injection_list_id}</th>
+                            <th>{drug.drug_injection_list_name}</th>
+                            <th>{drug.drug_injection_list_category}</th>
+                          </tr>
+                        );
+                      }
+                      )
+                      :
+                      (selectedDrugCategory === "" ?
+                        (totalDrug.map((drug, index) => {
+                          return (
+                            <tr className="TreatmentSearch_2_2_tr" key={drug.drug_injection_list_id}
+                              onClick={() => handleCheckDrugClick(drug.indexId)}
+                              onChange={handleChangeDrugInjections}>
+                              <td>
+                                <input type="checkbox"
+                                  name="selectedDrug"
+                                  checked={checkDrugList[drug.indexId].checked}
+                                  value={drug.drug_injection_list_id}
+
+                                />
+                              </td>
+                              <th>{drug.drug_injection_list_id}</th>
+                              <th>{drug.drug_injection_list_name}</th>
+                              <th>{drug.drug_injection_list_category}</th>
+                            </tr>
+                          );
+                        })
+                        )
+                        :
+                        (
+                          totalDrug.map((drug, index) => {
+                            if (drug.drug_injection_list_category === selectedDrugCategory) {
+                              return (
+                                <tr className="TreatmentSearch_2_2_tr" key={drug.drug_injection_list_id}
+                                  onClick={() => handleCheckDrugClick(drug.indexId)}
+                                  onChange={handleChangeDrugInjections}>
+                                  <td>
+                                    <input type="checkbox"
+                                      name="selectedDrug"
+                                      checked={checkDrugList[drug.indexId].checked}
+                                      value={drug.drug_injection_list_id}
+                                    />
+                                  </td>
+                                  <th>{drug.drug_injection_list_id}</th>
+                                  <th>{drug.drug_injection_list_name}</th>
+                                  <th>{drug.drug_injection_list_category}</th>
+                                </tr>
+                              );
+                            }
+                          }
+                          )
+                        )
+
+
+                      )
+                    }
+                    {/* {loading ? 
+                    (
                       <Spinner />
-                    ) : druglists.length === 0 ? (
+                    ) 
+                    : 
+                    totalDrug.length === 0 ? 
+                    (
                       <td colSpan="4">
                         <React.Fragment>
                           <Nodata />
                         </React.Fragment>
                       </td>
-                    ) : (
+                    ) : 
+                    ( 
                       <>
-                        {druglists.map((druglist, index) => {
-                          return (
-                            <tr className="TreatmentSearch_2_2_tr" key={druglist.drug_injection_list_id}>
-                              {/* // onClick={(event) => checkedDrugId(druglist.drug_injection_list_id)}> */}
-                              <td>
-                                <input type="checkbox" name="selectedDrug" value={druglist.drug_injection_list_id} onChange={handleChangeDrugInjections} />
-                                {/* <input type="checkbox" checked={checkDrugList[index].checked} name="selectedDrug" value={druglist.drug_injection_list_id} 
-                            onClick={() => handleCheckDrugClick(index)} onChange={handleChangeDrugInjections} /> */}
-                              </td>
-                              <th>{druglist.drug_injection_list_id}</th>
-                              <th>{druglist.drug_injection_list_name}</th>
-                              <th>{druglist.drug_injection_list_category}</th>
-                            </tr>
-                          );
+                        {totalDrug.map((drug, index) => {
+                          if(selectedDrugCategory === ""){
+                            return (
+                              <tr className="TreatmentSearch_2_2_tr" key={drug.drug_injection_list_id}>*/}
+                    {/* // onClick={(event) => checkedDrugId(druglist.drug_injection_list_id)}> */}
+                    {/* <td>
+                                  <input type="checkbox" 
+                                         name="selectedDrug" 
+                                         checked={drug.indexId}
+                                         value={drug.drug_injection_list_id} 
+                                         onChange={handleChangeDrugInjections} 
+                                  /> */}
+                    {/* <input type="checkbox" checked={checkDrugList[index].checked} name="selectedDrug" value={druglist.drug_injection_list_id} 
+                              onClick={() => handleCheckDrugClick(index)} onChange={handleChangeDrugInjections} /> */}
+                    {/* </td>
+                                <th>{drug.drug_injection_list_id}</th>
+                                <th>{drug.drug_injection_list_name}</th>
+                                <th>{drug.drug_injection_list_category}</th>
+                              </tr>
+                            );
+                          } else if(drug.drug_injection_list_category===selectedDrugCategory){}
                         })}
                       </>
-                    )}
+                    )} */}
                   </tbody>
                 </table>
               </div>
             </div>
-            {/* <div className="TreatmentSearch_3">
-                                              <button className="button_team2_fill" >확인</button>
-                                          </div> */}
           </div>
         </div>
       </div>

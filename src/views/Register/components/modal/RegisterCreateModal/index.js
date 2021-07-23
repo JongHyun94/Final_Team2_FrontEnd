@@ -19,7 +19,7 @@ function RegisterCreateModal(props) {
   const createNewRegister = async () => {
     try {
       var registerValidation = true;
-      //console.log(newRegister);
+      console.log(newRegister);
       if (newRegister.register_patient_id === "") {
         registerValidation = false;
         ToastsStore.success("환자를 선택해 주세요.");
@@ -30,7 +30,7 @@ function RegisterCreateModal(props) {
       }
       else if (newRegister.register_date < new Date()) {
         registerValidation = false;
-        ToastsStore.success("예약 시간을 선택해 주세요.1");
+        ToastsStore.success("예약 시간을 선택해 주세요.");
       }
       // else if (new Date(newRegister.register_date).getHours() >= 18 
       // || new Date(newRegister.register_date).getHours() <= 9 ) {
@@ -98,7 +98,10 @@ function RegisterCreateModal(props) {
   // }, [open]);
   useEffect(() => {
     if(selectedTime){
-      setNewRegister({ ...register, register_date: moment(selectedTime).format("yyyy-MM-DD H:mm")});
+      if(selectedTime >= new Date()){
+        console.log("나 여기야");
+        setNewRegister({ ...register, register_date: moment(selectedTime).format("yyyy-MM-DD H:mm")});
+      }
     }
   },[open,selectedTime]);
   //-------------------------------------------------------------
