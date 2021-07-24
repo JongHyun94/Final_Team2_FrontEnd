@@ -309,6 +309,7 @@ function InspectionList(props) {
           </button>
 
           <ExcelFile
+            filename="검사 상세 내역"
             element={
               <button className="button_team2_fill InspectionList_1_2" onClick={excelBtn}>
                 엑셀 저장
