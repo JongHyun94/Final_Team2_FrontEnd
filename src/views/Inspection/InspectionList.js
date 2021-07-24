@@ -57,7 +57,7 @@ function InspectionList(props) {
     // dataSet.columns.push({title:"검사자"});
     // dataSet.columns.push({title:"검사실"});
     for (var i = 0; i <= inspections.length - 1; i++) {
-      dataSet.data.push({
+      dataSet.push({
         category: inspections[i].inspection_list_category,
         specimen: inspections[i].inspection_list_specimen,
         name: inspections[i].inspection_list_name,
@@ -323,7 +323,7 @@ function InspectionList(props) {
           </button>
 
           <ExcelFile
-            filename="검사 상세 내역"
+            filename={props.treatmentId+" 검사 상세 내역"}
             element={
               <button className="button_team2_fill InspectionList_1_2" onClick={excelBtn}>
                 엑셀 저장
