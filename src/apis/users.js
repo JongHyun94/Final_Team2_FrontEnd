@@ -1,5 +1,4 @@
 import axios from "axios";
-import qs from "qs";
 
 export function getAllUserList(){
   const promise = axios.get("/user");
@@ -22,6 +21,5 @@ export function updateUserEnabled(user) {
 
 export function createUser(user) {
   const promise = axios.post("/user", user);
-  // const promise = axios.post("/user", qs.stringify(user));
   return promise;
 }

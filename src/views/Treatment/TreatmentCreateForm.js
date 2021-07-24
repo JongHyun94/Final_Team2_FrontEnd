@@ -104,7 +104,6 @@ function TreatmentCreateForm(props) {
       }
     });
     setCheckList(newChecklist);
-    // setCheckList((checks) => checks.map((c, i) => (i === index ? !c.checked : c.checked)))
   };
 
   //DB 에서 카테고리별 검사 리스트 가져오기
@@ -147,7 +146,7 @@ function TreatmentCreateForm(props) {
         );
         indexForDrug++;
       }
-      console.log("totalDrugList", totalDrugList);
+      // console.log("totalDrugList", totalDrugList);
       setTotalDrug(totalDrugList);
       setCheckDrugList(totalDrugList);
       setKeywordDrugList(totalDrugList);
@@ -184,31 +183,6 @@ function TreatmentCreateForm(props) {
     setCheckDrugList(newCheckDruglist);
     console.log(drugForm);
   };
-  //drugInjection
-  // const handleChangeDrugInjections = (id) => {
-  //   //console.log(id);
-  //   console.log("hihi")
-  //   console.log(drugForm);
-  //   for (var drug of checkDrugList) {
-  //     if (drug.indexId === id) {
-  //       if (drug.checked === true) {
-  //         setDrugForm((prevDrugForm, drug) => {
-  //           return {
-  //             ...prevDrugForm,
-  //             selectedDrug: prevDrugForm.selectedDrug.concat(drug.drug_injection_list_id),
-  //           };
-  //         });
-  //       } else {
-  //         setDrugForm((prevDrugForm, drug) => {
-  //           return {
-  //             ...prevDrugForm,
-  //             selectedDrug: prevDrugForm.selectedDrug.filter((item) => item !== drug.drug_injection_list_id),
-  //           };
-  //         });
-  //       }
-  //     }
-  //   }
-  // };
 
   //검사 - 카테고리 바꾸기
   const changeCategory = (event) => {
@@ -249,54 +223,22 @@ function TreatmentCreateForm(props) {
   //필터 - 전체
   const totalFilter = async () => {
     setSelectedDrugCategory("");
-    // setLoading(true);
-    // try {
-    //   var list = await getSearchDurg(searchKeyword, "");
-    //   setDrugLists(list.data.druglist);
-    // } catch (e) {
-    //   console.log(e);
-    // } finally {
-    //   setLoading(false);
-    // }
+
   };
   //필터 - 내복약
   const innerFilter = async () => {
     setSelectedDrugCategory("약품(내복약)");
-    // setLoading(true);
-    // try {
-    //   var list = await getSearchDurg(searchKeyword, "약품(내복약)");
-    //   setDrugLists(list.data.druglist);
-    // } catch (e) {
-    //   console.log(e);
-    // } finally {
-    //   setLoading(false);
-    // }
+
   };
   //필터 - 외용약
   const outerFilter = async () => {
     setSelectedDrugCategory("약품(외용약)");
-    // setLoading(true);
-    // try {
-    //   var list = await getSearchDurg(searchKeyword, "약품(외용약)");
-    //   setDrugLists(list.data.druglist);
-    // } catch (e) {
-    //   console.log(e);
-    // } finally {
-    //   setLoading(false);
-    // }
+
   };
   //필터 - 주사
   const injectionFilter = async () => {
     setSelectedDrugCategory("주사");
-    // setLoading(true);
-    // try {
-    //   var list = await getSearchDurg(searchKeyword, "주사");
-    //   setDrugLists(list.data.druglist);
-    // } catch (e) {
-    //   console.log(e);
-    // } finally {
-    //   setLoading(false);
-    // }
+
   };
 
   //soap , 의사소통메모 상태 바꾸기
@@ -365,11 +307,7 @@ function TreatmentCreateForm(props) {
             setDrugForm({ selectedDrug: [] });
 
             setModalOpen(true);
-            // let nList = [];
-            // for(var dlist of druglists){
-            //   nList.push({id:dlist.drug_injection_list_id, checked:false, name:dlist.drug_injection_list_name});
-            // }
-            // setCheckDrugList(nList);
+ 
             let totalDrugList = [];
             let indexForDrug = 0;
             for (var drug of totalDrug) {
@@ -411,23 +349,6 @@ function TreatmentCreateForm(props) {
     setSelectDrugId(drug_injection_list_id);
   };
 
-
-  // if (event.target.checked) {
-  //   //체크되었는지 유무
-  //   setDrugForm((prevDrugForm) => {
-  //     return {
-  //       ...prevDrugForm,
-  //       selectedDrug: prevDrugForm.selectedDrug.concat(event.target.value),
-  //     };
-  //   });
-  // } else {
-  //   setDrugForm((prevDrugForm) => {
-  //     return {
-  //       ...prevDrugForm,
-  //       selectedDrug: prevDrugForm.selectedDrug.filter((item) => item !== event.target.value),
-  //     };
-  //   });
-  // }
 
   // Inspection - 혈액검사
   const handleChangeBloodInspections = (event) => {
@@ -484,9 +405,6 @@ function TreatmentCreateForm(props) {
   useEffect(() => {
     getSearchDurgs();
   }, []);
-  // useEffect(() => {
-  //   getSearchDurgs();
-  // }, []);
 
 
   return (
@@ -624,7 +542,7 @@ function TreatmentCreateForm(props) {
                         return (
                           <tr className="TreatmentSearch_2_2_tr" key={drug.drug_injection_list_id}
                             onClick={() => handleCheckDrugClick(drug.indexId)}
-                          //onChange={() => handleChangeDrugInjections(drug.indexId)}
+
                           >
                             <td>
                               <input type="checkbox"
@@ -647,7 +565,6 @@ function TreatmentCreateForm(props) {
                           return (
                             <tr className="TreatmentSearch_2_2_tr" key={drug.drug_injection_list_id}
                               onClick={() => handleCheckDrugClick(drug.indexId)}
-                            //onChange={() => handleChangeDrugInjections(drug.indexId)}
                             >
                               <td>
                                 <input type="checkbox"
@@ -672,7 +589,6 @@ function TreatmentCreateForm(props) {
                               return (
                                 <tr className="TreatmentSearch_2_2_tr" key={drug.drug_injection_list_id}
                                   onClick={() => handleCheckDrugClick(drug.indexId)}
-                                //onChange={() => handleChangeDrugInjections(drug.indexId)}
                                 >
                                   <td>
                                     <input type="checkbox"
@@ -695,45 +611,6 @@ function TreatmentCreateForm(props) {
 
                       )
                     }
-                    {/* {loading ? 
-                    (
-                      <Spinner />
-                    ) 
-                    : 
-                    totalDrug.length === 0 ? 
-                    (
-                      <td colSpan="4">
-                        <React.Fragment>
-                          <Nodata />
-                        </React.Fragment>
-                      </td>
-                    ) : 
-                    ( 
-                      <>
-                        {totalDrug.map((drug, index) => {
-                          if(selectedDrugCategory === ""){
-                            return (
-                              <tr className="TreatmentSearch_2_2_tr" key={drug.drug_injection_list_id}>*/}
-                    {/* // onClick={(event) => checkedDrugId(druglist.drug_injection_list_id)}> */}
-                    {/* <td>
-                                  <input type="checkbox" 
-                                         name="selectedDrug" 
-                                         checked={drug.indexId}
-                                         value={drug.drug_injection_list_id} 
-                                         onChange={handleChangeDrugInjections} 
-                                  /> */}
-                    {/* <input type="checkbox" checked={checkDrugList[index].checked} name="selectedDrug" value={druglist.drug_injection_list_id} 
-                              onClick={() => handleCheckDrugClick(index)} onChange={handleChangeDrugInjections} /> */}
-                    {/* </td>
-                                <th>{drug.drug_injection_list_id}</th>
-                                <th>{drug.drug_injection_list_name}</th>
-                                <th>{drug.drug_injection_list_category}</th>
-                              </tr>
-                            );
-                          } else if(drug.drug_injection_list_category===selectedDrugCategory){}
-                        })}
-                      </>
-                    )} */}
                   </tbody>
                 </table>
               </div>

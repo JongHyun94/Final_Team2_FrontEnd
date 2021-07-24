@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import DaumPostcode from 'react-daum-postcode';
 import style from "./style.module.css";
 

@@ -107,7 +107,7 @@ function PatientCreateForm(props) {
 
       if (patientValidation) {
         const response = await createPatient(patient);
-        console.log(response.data.result);
+        // console.log(response.data.result);
         if (response.data.result === "success") {
           if (response.data) {
             setPatient({
@@ -127,13 +127,13 @@ function PatientCreateForm(props) {
             ToastsStore.success("환자를 등록했습니다.");
             props.publishTopic(1);
           }
-        }      
-      } else {
-        setErrorMsg({
-          ...errorMsg,
-          content: "이미 등록된 환자입니다.",
-        });
-        return openvalidationModal();
+        } else if (response.data.result === "notUnique") {
+          setErrorMsg({
+            ...errorMsg,
+            content: "이미 등록된 환자입니다.",
+          });
+          return openvalidationModal();
+        }     
       }
     } catch (error) {
       console.log(error);
@@ -145,6 +145,7 @@ function PatientCreateForm(props) {
   const [addressModalOpen, setAddressModalOpen] = useState(false);
 
   const openAddressModal = (event) => {
+    event.preventDefault();
     setAddressModalOpen(true);
   };
   const closeAddressModal = () => {
@@ -152,7 +153,6 @@ function PatientCreateForm(props) {
   };
   const sendModal = (data) => {
     setAddressModalOpen(false);
-    // console.log("send 실행", data);
     setPatient({
       ...patient,
       patient_zipcode: data.zonecode,

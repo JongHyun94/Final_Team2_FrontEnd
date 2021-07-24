@@ -61,9 +61,11 @@ function PatientList(props) {
     // console.log("받습니다", props.message);
     const work = async () => {
       try {
-        const response = await getPatientList();
-        setPatients(response.data.patientList);
-        setLoading(true);
+        if (props.message.content === "updatePatient" || props.message.content === "addPatient") {
+           const response = await getPatientList();
+          setPatients(response.data.patientList);
+          setLoading(true);
+        }        
       } catch(error) {
         console.log(error);
       } finally {

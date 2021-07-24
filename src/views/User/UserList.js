@@ -131,11 +131,13 @@ function UserList(props) {
     // console.log("받습니다", props.message);
     const work = async () => {      
       try {
-        const response = await getAllUserList();
-        // console.log(response.data.userList)
-        setUsers(response.data.userList);
-        setUserCount(() => getUsersCount(response.data.userList));
-        setLoading(true);
+        if(props.message.content === "updateUser" || props.message.content === "addUser" || props.message.content === "blockUser" || props.message.content === "allowUser") {
+          const response = await getAllUserList();
+          // console.log(response.data.userList)
+          setUsers(response.data.userList);
+          setUserCount(() => getUsersCount(response.data.userList));
+          setLoading(true);
+        }        
       } catch(error) {
         console.log(error);
       } finally {
