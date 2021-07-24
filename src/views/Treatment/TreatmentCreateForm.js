@@ -631,6 +631,7 @@ function TreatmentCreateForm(props) {
                                 name="selectedDrug"
                                 checked={checkDrugList[drug.indexId].checked}
                                 value={drug.drug_injection_list_id}
+                                readOnly
                               />
                             </td>
                             <th>{drug.drug_injection_list_id}</th>
@@ -653,6 +654,7 @@ function TreatmentCreateForm(props) {
                                   name="selectedDrug"
                                   checked={checkDrugList[drug.indexId].checked}
                                   value={drug.drug_injection_list_id}
+                                  readOnly
 
                                 />
                               </td>
@@ -677,6 +679,7 @@ function TreatmentCreateForm(props) {
                                       name="selectedDrug"
                                       checked={checkDrugList[drug.indexId].checked}
                                       value={drug.drug_injection_list_id}
+                                      readOnly
                                     />
                                   </td>
                                   <th>{drug.drug_injection_list_id}</th>

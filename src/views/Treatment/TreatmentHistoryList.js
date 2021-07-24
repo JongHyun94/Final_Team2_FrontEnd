@@ -69,7 +69,9 @@ const [loading, setLoading] = useState(false);
   };
 
   useEffect(() => {
-    getList(checkedPatientlist.treatment_patient_id);
+    if(checkedPatientlist.treatment_patient_id){
+      getList(checkedPatientlist.treatment_patient_id);
+    }
   }, [checkedPatientlist.treatment_patient_id, props]);
 
   useEffect(() => {

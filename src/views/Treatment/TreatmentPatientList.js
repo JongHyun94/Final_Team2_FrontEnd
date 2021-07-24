@@ -46,7 +46,7 @@ function TreatmentPatientList(props) {
   const getList = async (inputdate2, globalUid) => {
     setLoading(true);
     try {
-      const list = await getTreatmentPatientList(inputdate2, "", globalUid);
+      const list = await getTreatmentPatientList(moment(inputdate2).format("yyyy-MM-DD"), globalUid,"");
       // console.log(list.data.treatmentlist);
       setPatientlists(list.data.treatmentlist);
       getState(list.data.treatmentlist);
@@ -75,8 +75,8 @@ function TreatmentPatientList(props) {
 //버튼 이벤트 처리---------------------------------------------------
 
   //선택한 날짜 이동 버튼
-  const searchDateBtn = (inputdate) => {
-    setInputdate2(moment(inputdate).format("yyyy-MM-DD HH:mm"));
+  const searchDateBtn = (date) => {
+    setInputdate2(date);
     // getPatient2(treatmentDate2);
   };
 
@@ -91,7 +91,7 @@ function TreatmentPatientList(props) {
   const totalFilter = async () => {
     setLoading(true);
     try {
-      var list = await getTreatmentPatientList(inputdate2, "", globalUid);
+      var list = await getTreatmentPatientList(moment(inputdate2).format("yyyy-MM-DD"), globalUid, "");
       setPatientlists(list.data.treatmentlist);
     } catch (e) {
       console.log(e);
@@ -103,7 +103,7 @@ function TreatmentPatientList(props) {
   const readyFilter = async () => {
     setLoading(true);
     try {
-      var list = await getTreatmentPatientList(inputdate2, "대기", globalUid);
+      var list = await getTreatmentPatientList(moment(inputdate2).format("yyyy-MM-DD"), globalUid, "대기");
       setPatientlists(list.data.treatmentlist);
     } catch (e) {
       console.log(e);
@@ -115,7 +115,7 @@ function TreatmentPatientList(props) {
   const finishFilter = async () => {
     setLoading(true);
     try {
-      var list = await getTreatmentPatientList(inputdate2, "완료", globalUid);
+      var list = await getTreatmentPatientList(moment(inputdate2).format("yyyy-MM-DD"), globalUid, "완료");
       setPatientlists(list.data.treatmentlist);
     } catch (e) {
       console.log(e);
@@ -130,10 +130,10 @@ function TreatmentPatientList(props) {
     const work = async () => {
       setLoading(true);
       try {
-        var list = await getTreatmentPatientList(inputdate2, "", globalUid);
+        var list = await getTreatmentPatientList(moment(inputdate2).format("yyyy-MM-DD"), globalUid, "");
         setPatientlists(list.data.treatmentlist);
         getState(list.data.treatmentlist);
-        getList(inputdate2);
+        //getList(inputdate2,globalUid);
       } catch (error) {
         console.log(error);
       } finally {
@@ -144,14 +144,14 @@ function TreatmentPatientList(props) {
   }, [inputdate2]);
 
   useEffect(() => {
-    getList(inputdate2);
+    getList(inputdate2,globalUid);
   }, [inputdate2]);
 
   useEffect(() => {
     const work = async () => {
       setLoading(true);
       try {
-        var list = await getTreatmentPatientList(inputdate2, "", globalUid);
+        var list = await getTreatmentPatientList(moment(inputdate2).format("yyyy-MM-DD"), globalUid, "");
         setPatientlists(list.data.treatmentlist);
         getState(list.data.treatmentlist);
       } catch (error) {

@@ -1,16 +1,10 @@
 import axios from "axios";
 
 
-export function getTreatmentPatientList(date, state="",globalUid) {
+export function getTreatmentPatientList(date,globalUid,state="") {
   const promise = axios.get("/treatment/treatmentlist", {params: {date, state, globalUid}});
   return promise;
 }
-
-// export function getTreatmentPatientList(date, state="") {
-//   const promise = axios.get("/treatment/treatmentlist", {params: {date, state}});
-//   return promise;
-// }
-
 
 export function getTreatmentHistoryList(treatment_patient_id) {
   const promise = axios.get("/treatment/historyList", {params: {treatment_patient_id}});
@@ -23,7 +17,6 @@ export function getTreatmentHistoryRead(treatment_id) {
   
 }
 
-
 export function updateTreatment(treatment) {
   const promise = axios.put("/treatment",treatment);
   return promise;
@@ -35,10 +28,6 @@ export function getSearchDurg(keyword="", condition="") {
   return promise;
 }
 
-// export function getCategoryInspectionList(categoryValue) {
-//   const promise = axios.get("/treatment/categoryValue", {params: {categoryValue}});
-//   return promise;
-// }
 export function getCategoryInspectionList() {
   const promise = axios.get("/treatment/categoryValue");
   return promise;
