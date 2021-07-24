@@ -44,12 +44,6 @@ const [loading, setLoading] = useState(false);
  
   };
 
-  // const openModal = () => {
-  //   // console.log("진료번호ㅗㅗㅗㅗ",treatment_id);
-  //   console.log("진료번ㅗㅗ",selectedTreatmentId);
-  //   setModalOpen(true);
-  // };
-
   //모달 안에서 취소 버튼 클릭
   const closeModal = () => {
     setModalOpen(false);
