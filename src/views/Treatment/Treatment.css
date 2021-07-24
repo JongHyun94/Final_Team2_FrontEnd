@@ -208,6 +208,7 @@
  margin-bottom: 10px;
  
 }
+
 .TreatmentCreateForm_2_1_title{
   font-weight: bold;
   font-size: small;
@@ -261,10 +262,6 @@
   background-color: lightgray;
 }
 
-
-
-
-
 .TreatmentCreateForm_checkbox_1{
  
   height: 15px;
@@ -279,9 +276,9 @@
 
 .TreatmentCreateForm_2_2_border{
   height: 410px;
-  padding: 10px 10px 0 10px;
   font-size: small;
  }
+
 .TreatmentCreateForm_2_2_title{
   /* margin-top: 15px; */
   font-weight: bold;
@@ -289,6 +286,7 @@
   text-align: center;
   background-color: lightgray;
 }
+
 .TreatmentCreateForm_2_2_content{
   padding: 10px 10px 0 10px;
 
