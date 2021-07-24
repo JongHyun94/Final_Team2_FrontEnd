@@ -147,7 +147,7 @@ function TreatmentCreateForm(props) {
         );
         indexForDrug++;
       }
-      console.log("totalDrugList", totalDrugList);
+      // console.log("totalDrugList", totalDrugList);
       setTotalDrug(totalDrugList);
       setCheckDrugList(totalDrugList);
       setKeywordDrugList(totalDrugList);

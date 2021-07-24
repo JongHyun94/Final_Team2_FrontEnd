@@ -2,7 +2,7 @@ import { Modal } from "../../components/common/Address";
 import React, { useEffect, useState } from "react";
 import style from "./style.module.css";
 import { useSelector } from "react-redux";
-import { get, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { getUser, updateUserInfo } from "apis/auth";
 import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toasts";
 import { ValidationModal } from "components/common/ValidationModal";
@@ -97,7 +97,8 @@ function Auth(props) {
   // 주소 모달 상태(open일 떄 true로 바뀌어 열림)
   const [addressModalOpen, setAddressModalOpen] = useState(false);
 
-  const openAddressModal = () => {
+  const openAddressModal = (event) => {
+    event.preventDefault();
     setAddressModalOpen(true); 
   };
   const closeAddressModal = () => {
