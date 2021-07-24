@@ -152,8 +152,8 @@ function UserList(props) {
         <div style={{width: "3%"}} key={users.user_id}><input type="checkbox" width={50} checked={id === users[index].user_id? true : false} readOnly></input></div>
         <div style={{width: "11%"}}>{users[index].user_id}</div>
         <div style={{width: "6%"}}>{users[index].user_name}</div>
-        <div style={{width: "9%"}}>{users[index].user_authority === "ROLE_DOCTOR"? "의사" 
-                                    : (users[index].user_authority === "ROLE_NURSE"? "간호사" : "임상병리사")}</div>
+        <div className={users[index].user_authority === 'ROLE_DOCTOR' ? "UserList_Doctor" : users[index].user_authority === 'ROLE_NURSE' ? "UserList_Nurse" : "UserList_Inspector"} style={{width: "9%"}}>
+          {users[index].user_authority === "ROLE_DOCTOR"? "의사" : (users[index].user_authority === "ROLE_NURSE"? "간호사" : "임상병리사")}</div>
         <div style={{width: "8%"}}>{users[index].user_ssn1}</div>
         <div style={{width: "4%"}}>{users[index].user_sex === "M"? "남" : "여"}</div>
         <div style={{width: "12%"}}>{users[index].user_tel1} - {users[index].user_tel2} - {users[index].user_tel3}</div>

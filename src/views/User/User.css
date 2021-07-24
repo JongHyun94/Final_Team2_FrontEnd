@@ -89,6 +89,16 @@
   cursor: pointer;
 }
 
+.UserList_Doctor {
+  color : #3DBFF2;
+}
+.UserList_Nurse {
+  color : #F2C53D;
+}
+.UserList_Inspector {
+  color : #47C83E;
+}
+
 /* UserCreateForm & UserUpdateForm 공통 */
 .User_item {
   display: flex;
