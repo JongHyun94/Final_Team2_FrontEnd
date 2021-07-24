@@ -41,9 +41,23 @@ function InspectionList(props) {
   const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
   const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
   let dataSet = [];
+  //{
+  //   columns: [{title:""}],
+  //   data: [],
+  // };
   function getDataSet() {
+    // dataSet.columns.push({title:"진단검사명"});
+    // dataSet.columns.push({title:"검체명"});
+    // dataSet.columns.push({title:"검사명"});
+    // dataSet.columns.push({title:"결과"});
+    // dataSet.columns.push({title:"참고치"});
+    // dataSet.columns.push({title:"검사시간"});
+    // dataSet.columns.push({title:"용기"});
+    // dataSet.columns.push({title:"담당의"});
+    // dataSet.columns.push({title:"검사자"});
+    // dataSet.columns.push({title:"검사실"});
     for (var i = 0; i <= inspections.length - 1; i++) {
-      dataSet.push({
+      dataSet.data.push({
         category: inspections[i].inspection_list_category,
         specimen: inspections[i].inspection_list_specimen,
         name: inspections[i].inspection_list_name,
@@ -317,7 +331,7 @@ function InspectionList(props) {
             }
           >
             <ExcelSheet data={getDataSet} name="inspectionsExcel">
-              <ExcelColumn label="진단검사명" value="category" />
+              <ExcelColumn label="진단검사명" value="category"/>
               <ExcelColumn label="검체명" value="specimen" />
               <ExcelColumn label="검사명" value="name" />
               <ExcelColumn label="결과" value="result" />
