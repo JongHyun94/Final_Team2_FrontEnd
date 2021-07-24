@@ -90,13 +90,13 @@
 }
 
 .UserList_Doctor {
-  color : #3DBFF2;
+  color: #15A0BF;
 }
 .UserList_Nurse {
-  color : #F2C53D;
+  color: #F29B30;
 }
 .UserList_Inspector {
-  color : #47C83E;
+  color: #AEBF2A;
 }
 
 /* UserCreateForm & UserUpdateForm 공통 */
