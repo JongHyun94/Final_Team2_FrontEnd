@@ -5,7 +5,7 @@ function Help(props) {
   return (
     <div className={`Help`}>
       <div className={`user_guide`}>
-        <a  className="user_guide_a" href="/resources/pdf/더존ICT그룹_프로젝트과제_H_ERP_0527.pdf" download>
+        <a  className="user_guide_a" href="/resources/pdf/사용자가이드.pdf" download>
         <div>사용자 가이드</div>
         <div className={`icon mt-3`}><i className="bi bi-question-circle"></i></div> 
         <div className="user_guide_explain">※ 클릭 시 사용자 가이드가 <br/>다운로드 됩니다.</div>
