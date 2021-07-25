@@ -110,7 +110,7 @@ function RegisterCreateForm(props) {
       //console.log(props.selectedTime);
       setStartDate(props.selectedTime);
     }
-  },[props.selectedTime, startDate]);
+  },[props.selectedTime]);
 
   useEffect(() => {
     setStartDate(props.register ? new Date(props.register.register_date) : new Date());
@@ -192,6 +192,11 @@ function RegisterCreateForm(props) {
     );
 
   }, [startDate]);
+
+  useEffect(()=> {
+    console.log("hihi");
+    setNewDoctor(props.newRegister.register_user_id);
+  },[props.newRegister]);
 
   //-------------------------------------------------------------
   //렌더링 내용

@@ -8,7 +8,7 @@ import { ToastsContainer, ToastsContainerPosition, ToastsStore } from "react-toa
 import RegisterStateChange from "./RegisterStateChange";
 function RegisterCreateModal(props) {
   // props 상속
-  const { open, close, header, doctors, register, publishTopic, selectedTime } = props;
+  const { open, close, header, doctors, register, publishTopic, selectedTime, selectedRegisterDoctor } = props;
   //-------------------------------------------------------------  
   //상태 선언
   //-------------------------------------------------------------
@@ -24,11 +24,11 @@ function RegisterCreateModal(props) {
         registerValidation = false;
         ToastsStore.success("환자를 선택해 주세요.");
       }
-      else if (newRegister.register_user_id === "") {
+      else if (newRegister.register_user_id === "" || newRegister.register_user_id === "doctor") {
         registerValidation = false;
         ToastsStore.success("담당의를 선택해 주세요.");
       }
-      else if (newRegister.register_date < new Date()) {
+      else if (newRegister.register_date < new Date() || moment(newRegister.register_date) < moment()) {
         registerValidation = false;
         ToastsStore.success("예약 시간을 선택해 주세요.");
       }
@@ -61,9 +61,9 @@ function RegisterCreateModal(props) {
   };
   const updateNewRegister = async () => {
     try {
-      //console.log("접수", newRegister);
+      console.log("접수", newRegister);
       var registerValidation = true;
-      if (newRegister.register_date < new Date()) {
+      if (newRegister.register_date < new Date() || moment(newRegister.register_date) < moment()) {
         registerValidation = false;
         ToastsStore.success("예약시간을 확인해 주세요.");
       } else if (new Date(newRegister.register_date).getHours() >= 18 
@@ -97,13 +97,20 @@ function RegisterCreateModal(props) {
   //   setNewRegister({ ...register, register_date: new Date() });
   // }, [open]);
   useEffect(() => {
+    console.log(selectedTime);
     if(selectedTime){
       if(selectedTime >= new Date()){
-        console.log("나 여기야");
         setNewRegister({ ...register, register_date: moment(selectedTime).format("yyyy-MM-DD H:mm")});
       }
     }
   },[open,selectedTime]);
+
+  useEffect(() => { 
+    if(selectedRegisterDoctor){
+      console.log(selectedRegisterDoctor);
+      setNewRegister({ ...register, register_user_id: selectedRegisterDoctor});
+    }
+  },[selectedRegisterDoctor]);
   //-------------------------------------------------------------
   //렌더링 내용
   //-------------------------------------------------------------

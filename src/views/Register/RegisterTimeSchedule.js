@@ -52,7 +52,12 @@ function RegisterTimeSchedule(props) {
 
   //신규 시간을 누른 모달
   const [selectTimeModalOpen, setSelectTimeModalOpen] = useState(false);
+
+  //선택된 시간 상태
   const [selectedTime, setSelectedTime] = useState(new Date());
+
+  //선택된 의사 상태
+  const [selectedRegisterDoctor, setSelectedRegisterDoctor] = useState("");
 
   // 의사별 개인 타임 테이블 모달
   const [selectedDoctor, setSelectedDoctor] = useState({});
@@ -63,17 +68,18 @@ function RegisterTimeSchedule(props) {
   //-------------------------------------------------------------
 
   const openModal = () => {
+    setSelectedRegisterDoctor("doctor");
     setModalOpen(true);
   };
   const closeModal = () => {
     setModalOpen(false);
   };
 
-
-  const openSelectTimeModal = (h, m) => {
-    //console.log(h, m);
+  const openSelectTimeModal = (h, m, d) => {
+    //console.log(registerDate);
     setSelectedTime(new Date(registerDate.getFullYear(), registerDate.getMonth(), registerDate.getDate(), h, m));
-    console.log(selectedTime);
+    //console.log(selectedTime);
+    setSelectedRegisterDoctor(d);
     setSelectTimeModalOpen(true);
   };
 
@@ -169,6 +175,7 @@ function RegisterTimeSchedule(props) {
             register={selectedRegister}
             setPubMessage={setPubMessage}
             publishTopic={publishTopic}
+            selectedRegisterDoctor={selectedRegisterDoctor}
           />
           <RegisterCreateModal
             open={selectTimeModalOpen}
@@ -179,6 +186,7 @@ function RegisterTimeSchedule(props) {
             setPubMessage={setPubMessage}
             publishTopic={publishTopic}
             selectedTime={selectedTime}
+            selectedRegisterDoctor={selectedRegisterDoctor}
           />
           <RegisterCreateModal
             open={registerModalOpen}
@@ -258,7 +266,7 @@ function RegisterTimeSchedule(props) {
                       <div className="RegisterTimeSchedule_content_timetable_doctors_registers_group" key={index1}>
                         {mins.map((min, index2) => {
                           return (
-                            <div className="RegisterTimeSchedule_content_timetable_doctors_registers_register" onDoubleClick={() => openSelectTimeModal(hour, min)} key={index2}>
+                            <div className="RegisterTimeSchedule_content_timetable_doctors_registers_register" onDoubleClick={() => openSelectTimeModal(hour, min, doctor.user_id)} key={index2}>
                               {registers.map((register, index3) => {
                                 if ((register.register_user_id === doctor.user_id)
                                   && (moment(register.register_date).format("YYYY-MM-DD H:m") === (moment(registerDate).format("YYYY-MM-DD") + " " + hour + ":" + min))) {
