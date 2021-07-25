@@ -107,7 +107,7 @@ function RegisterCreateForm(props) {
   //-------------------------------------------------------------
   useEffect(() => {
     if (props.selectedTime) {
-      console.log("bububu", props.selectedTime);
+      //console.log("bububu", props.selectedTime);
       setStartDate(props.selectedTime);
     }
   }, [props.selectedTime]);
@@ -200,7 +200,7 @@ function RegisterCreateForm(props) {
   }, [props.newRegister]);
 
   useEffect(() => {
-    console.log("hihihi", props.selectedTime);
+    //console.log("hihihi", props.selectedTime);
     if (props.selectedTime) {
       setStartDate(props.selectedTime ? props.selectedTime : new Date());
     }

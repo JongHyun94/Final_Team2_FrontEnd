@@ -94,7 +94,7 @@ function RegisterCreateModal(props) {
   }, [register]);
 
   useEffect(() => {
-    console.log("닥터1",selectedRegisterDoctor);
+    //console.log("닥터1",selectedRegisterDoctor);
     if (selectedRegisterDoctor) {
       setNewRegister({
         ...register,
@@ -112,7 +112,7 @@ function RegisterCreateModal(props) {
   }, [open, selectedTime]);
 
   useEffect(() => {
-    console.log("닥터2",selectedRegisterDoctor);
+    //console.log("닥터2",selectedRegisterDoctor);
     if (selectedRegisterDoctor) {
       setNewRegister({
         ...register,
