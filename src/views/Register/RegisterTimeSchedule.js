@@ -68,10 +68,13 @@ function RegisterTimeSchedule(props) {
   //-------------------------------------------------------------
 
   const openModal = () => {
+    //setSelectedRegister(noneRegister);
     setSelectedRegisterDoctor("doctor");
     setModalOpen(true);
   };
   const closeModal = () => {
+    setSelectedRegister(noneRegister);
+    setSelectedRegisterDoctor("doctor");
     setModalOpen(false);
   };
 
@@ -84,6 +87,7 @@ function RegisterTimeSchedule(props) {
   };
 
   const closeSelectTimeModal = () => {
+    setSelectedRegisterDoctor("doctor");
     setSelectTimeModalOpen(false);
   };
 
@@ -99,6 +103,7 @@ function RegisterTimeSchedule(props) {
     setRegisterModalOpen(false);
   };
 
+  // 의사 투두 리스트 모달
   const openRegisterWeekTimeTableOpen = (doctor) => {
     setSelectedDoctor(doctor);
     setRegisterWeekTimeTableOpen(true);

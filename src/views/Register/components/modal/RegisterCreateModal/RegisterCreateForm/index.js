@@ -60,7 +60,7 @@ function RegisterCreateForm(props) {
   } else {
     doctors = noneDoctor;
   }
-  
+
 
   //-------------------------------------------------------------  
   //상태 선언
@@ -105,29 +105,30 @@ function RegisterCreateForm(props) {
   //-------------------------------------------------------------
   //마운트 및 언마운트에 실행할 내용
   //-------------------------------------------------------------
-  useEffect(() =>{
-    if(props.selectedTime){
-      //console.log(props.selectedTime);
+  useEffect(() => {
+    if (props.selectedTime) {
       setStartDate(props.selectedTime);
     }
-  },[props.selectedTime]);
+  }, [props.selectedTime]);
 
   useEffect(() => {
-    setStartDate(props.register ? new Date(props.register.register_date) : new Date());
+    //console.log("ttet",props.register.register_date)
+    //setStartDate(props.register ? new Date(props.register.register_date) : new Date());
     setDoctorsList(doctors);
-  }, [doctors, props.register]);
+  }, [doctors]);
 
   useEffect(() => {
-    if(props.selectedTime){
-      setStartDate(props.selectedTime? props.selectedTime : new Date());
-    }
+    // if(props.selectedTime){
+    //   setStartDate(props.selectedTime? props.selectedTime : new Date());
+    // }
+    setStartDate(props.register ? new Date(props.register.register_date) : new Date());
     setShowTimeSelect(() =>
-    ((startDate.getFullYear() === new Date().getFullYear())
-      && (startDate.getMonth() === new Date().getMonth())
-      && (startDate.getDate() === new Date().getDate())
-      && (startDate.getHours() >= 18))
-      ? false : true
-  );
+      ((startDate.getFullYear() === new Date().getFullYear())
+        && (startDate.getMonth() === new Date().getMonth())
+        && (startDate.getDate() === new Date().getDate())
+        && (startDate.getHours() >= 18))
+        ? false : true
+    );
     setMinDate(() =>
       ((startDate.getFullYear() === new Date().getFullYear())
         && (startDate.getMonth() === new Date().getMonth())
@@ -160,12 +161,12 @@ function RegisterCreateForm(props) {
 
   useEffect(() => {
     setShowTimeSelect(() =>
-    ((startDate.getFullYear() === new Date().getFullYear())
-      && (startDate.getMonth() === new Date().getMonth())
-      && (startDate.getDate() === new Date().getDate())
-      && (startDate.getHours() >= 18))
-      ? false : true
-  );
+      ((startDate.getFullYear() === new Date().getFullYear())
+        && (startDate.getMonth() === new Date().getMonth())
+        && (startDate.getDate() === new Date().getDate())
+        && (startDate.getHours() >= 18))
+        ? false : true
+    );
     // setMinDate(() =>
     //   ((startDate.getFullYear() === new Date().getFullYear())
     //     && (startDate.getMonth() === new Date().getMonth())
@@ -193,10 +194,15 @@ function RegisterCreateForm(props) {
 
   }, [startDate]);
 
-  useEffect(()=> {
-    console.log("hihi");
+  useEffect(() => {
     setNewDoctor(props.newRegister.register_user_id);
-  },[props.newRegister]);
+  }, [props.newRegister]);
+
+  useEffect(() => {
+    if (props.selectedTime) {
+      setStartDate(props.selectedTime ? props.selectedTime : new Date());
+    }
+  }, [props.selectedTime])
 
   //-------------------------------------------------------------
   //렌더링 내용

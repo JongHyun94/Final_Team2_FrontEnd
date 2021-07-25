@@ -19,7 +19,7 @@ function RegisterCreateModal(props) {
   const createNewRegister = async () => {
     try {
       var registerValidation = true;
-      console.log(newRegister);
+      console.log("생성", newRegister);
       if (newRegister.register_patient_id === "") {
         registerValidation = false;
         ToastsStore.success("환자를 선택해 주세요.");
@@ -61,13 +61,13 @@ function RegisterCreateModal(props) {
   };
   const updateNewRegister = async () => {
     try {
-      console.log("접수", newRegister);
+      console.log("갱신", newRegister);
       var registerValidation = true;
       if (newRegister.register_date < new Date() || moment(newRegister.register_date) < moment()) {
         registerValidation = false;
         ToastsStore.success("예약시간을 확인해 주세요.");
-      } else if (new Date(newRegister.register_date).getHours() >= 18 
-      || new Date(newRegister.register_date).getHours() <= 9 ) {
+      } else if (new Date(newRegister.register_date).getHours() >= 18
+        || new Date(newRegister.register_date).getHours() <= 9) {
         registerValidation = false;
         ToastsStore.success("예약 시간을 선택해 주세요.");
       }
@@ -91,26 +91,37 @@ function RegisterCreateModal(props) {
   //-------------------------------------------------------------  
   useEffect(() => {
     setNewRegister(register);
-  }, [props, register]);
+  }, [register]);
 
-  // useEffect(() => {
-  //   setNewRegister({ ...register, register_date: new Date() });
-  // }, [open]);
   useEffect(() => {
-    console.log(selectedTime);
-    if(selectedTime){
-      if(selectedTime >= new Date()){
-        setNewRegister({ ...register, register_date: moment(selectedTime).format("yyyy-MM-DD H:mm")});
+    console.log(selectedRegisterDoctor);
+    if (selectedRegisterDoctor) {
+      setNewRegister({
+        ...register,
+        register_user_id: selectedRegisterDoctor
+      });
+    }
+  }, [open]);
+
+  useEffect(() => {
+    if (selectedTime) {
+      if (selectedTime >= new Date()) {
+        setNewRegister({ ...register, register_date: moment(selectedTime).format("yyyy-MM-DD H:mm") });
       }
     }
-  },[open,selectedTime]);
+  }, [open, selectedTime]);
 
-  useEffect(() => { 
-    if(selectedRegisterDoctor){
-      console.log(selectedRegisterDoctor);
-      setNewRegister({ ...register, register_user_id: selectedRegisterDoctor});
+  useEffect(() => {
+    console.log(selectedRegisterDoctor);
+    if (selectedRegisterDoctor) {
+      setNewRegister({
+        ...register,
+        register_date: moment(selectedTime).format("yyyy-MM-DD H:mm"),
+        register_user_id: selectedRegisterDoctor
+      });
     }
-  },[selectedRegisterDoctor]);
+  }, [selectedRegisterDoctor]);
+
   //-------------------------------------------------------------
   //렌더링 내용
   //-------------------------------------------------------------
@@ -127,12 +138,12 @@ function RegisterCreateModal(props) {
             <main>
               <div className={style.RegisterCreateModal_main}>
                 <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_CENTER} lightBackground />
-                {register.register_state === "" || register.register_state === "취소"? 
-                <RegisterPatientList register={register} newRegister={newRegister} setNewRegister={setNewRegister} /> 
-                : 
-                <RegisterStateChange register={register} publishTopic={publishTopic} close={close}/>
+                {register.register_state === "" || register.register_state === "취소" ?
+                  <RegisterPatientList register={register} newRegister={newRegister} setNewRegister={setNewRegister} />
+                  :
+                  <RegisterStateChange register={register} publishTopic={publishTopic} close={close} />
                 }
-                <RegisterCreateForm doctors={doctors} register={register} newRegister={newRegister} setNewRegister={setNewRegister} open={open} selectedTime={selectedTime}/>
+                <RegisterCreateForm doctors={doctors} register={register} newRegister={newRegister} setNewRegister={setNewRegister} open={open} selectedTime={selectedTime} />
               </div>
             </main>
             <footer>
