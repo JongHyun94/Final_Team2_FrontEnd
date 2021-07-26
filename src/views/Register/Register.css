@@ -562,7 +562,7 @@ th {
   line-height: 20px;
   background-color: #18e273;
   height: 100%;
-  color: white;
+  color: black;
   border-radius: 5px;
 }
 .RegisterTimeSchedule_content_timetable_doctors_registers_register_ready::selection {
@@ -579,7 +579,7 @@ th {
   line-height: 20px;
   background-color: #00aaf0;
   height: 100%;
-  color: white;
+  color: black;
   border-radius: 5px;
 }
 .RegisterTimeSchedule_content_timetable_doctors_registers_register_success::selection {
@@ -596,7 +596,7 @@ th {
   line-height: 20px;
   background-color: #ff6600;
   height: 100%;
-  color: white;
+  color: black;
   border-radius: 5px;
 }
 .RegisterTimeSchedule_content_timetable_doctors_registers_register_cancel::selection {

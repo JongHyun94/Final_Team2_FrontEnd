@@ -60,7 +60,11 @@ function Header(props) {
           <span className="logo">TEAM2<img className="ml-1" src="/resources/img/logo_white_bold.png" alt="" width={30}></img></span>
         </div>
         <div className="header1_2">
+          {globalUid?
           <WeatherAPI hlat={hlat} hlong={hlong}/>
+          :
+          false
+          }
         </div>
         <div className="header1_3">
           {globalUid !== ""?
